@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from www.kallemarjokorpi.fi/blog/technical-changes-of-the-blog-inspired-by-az-202-certification-study by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 14 Apr 2021 13:57:21 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+
+    <!-- Google Tag Manager -->
+    <script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    '../../www.googletagmanager.com/gtm5445.html?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-MPLFPSF');</script>
+    <!-- End Google Tag Manager -->
+
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+
+    
+    <title>Technical changes of the Blog inspired by AZ-202 certification study - Blog by Kalle Marjokorpi</title>
+    <meta name="description" content="I studied to AZ-202 Azure Developer transition certification during March. I was earlier completed the 70-532 certification so I was able to">
+    <meta name="author" content="Kalle Marjokorpi">
+
+
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/vendor.css">
+    <link rel="stylesheet" href="../css/main.css">
+
+    <script src="../js/modernizr.js"></script>
+    <script src="../js/pace.min.js"></script>
+
+    <script type="text/javascript">!function(T,l,y){var S=T.location,u="script",k="instrumentationKey",D="ingestionendpoint",C="disableExceptionTracking",E="ai.device.",I="toLowerCase",b="crossOrigin",w="POST",e="appInsightsSDK",t=y.name||"appInsights";(y.name||T[e])&&(T[e]=t);var n=T[t]||function(d){var g=!1,f=!1,m={initialize:!0,queue:[],sv:"4",version:2,config:d};function v(e,t){var n={},a="Browser";return n[E+"id"]=a[I](),n[E+"type"]=a,n["ai.operation.name"]=S&&S.pathname||"_unknown_",n["ai.internal.sdkVersion"]="javascript:snippet_"+(m.sv||m.version),{time:function(){var e=new Date;function t(e){var t=""+e;return 1===t.length&&(t="0"+t),t}return e.getUTCFullYear()+"-"+t(1+e.getUTCMonth())+"-"+t(e.getUTCDate())+"T"+t(e.getUTCHours())+":"+t(e.getUTCMinutes())+":"+t(e.getUTCSeconds())+"."+((e.getUTCMilliseconds()/1e3).toFixed(3)+"").slice(2,5)+"Z"}(),iKey:e,name:"Microsoft.ApplicationInsights."+e.replace(/-/g,"")+"."+t,sampleRate:100,tags:n,data:{baseData:{ver:2}}}}var h=d.url||y.src;if(h){function a(e){var t,n,a,i,r,o,s,c,p,l,u;g=!0,m.queue=[],f||(f=!0,t=h,s=function(){var e={},t=d.connectionString;if(t)for(var n=t.split(";"),a=0;a<n.length;a++){var i=n[a].split("=");2===i.length&&(e[i[0][I]()]=i[1])}if(!e[D]){var r=e.endpointsuffix,o=r?e.location:null;e[D]="https://"+(o?o+".":"")+"dc."+(r||"services.visualstudio.com")}return e}(),c=s[k]||d[k]||"",p=s[D],l=p?p+"/v2/track":config.endpointUrl,(u=[]).push((n="SDK LOAD Failure: Failed to load Application Insights SDK script (See stack for details)",a=t,i=l,(o=(r=v(c,"Exception")).data).baseType="ExceptionData",o.baseData.exceptions=[{typeName:"SDKLoadFailed",message:n.replace(/\./g,"-"),hasFullStack:!1,stack:n+"\nSnippet failed to load ["+a+"] -- Telemetry is disabled\nHelp Link: https://go.microsoft.com/fwlink/?linkid=2128109\nHost: "+(S&&S.pathname||"_unknown_")+"\nEndpoint: "+i,parsedStack:[]}],r)),u.push(function(e,t,n,a){var i=v(c,"Message"),r=i.data;r.baseType="MessageData";var o=r.baseData;return o.message='AI (Internal): 99 message:"'+("SDK LOAD Failure: Failed to load Application Insights SDK script (See stack for details) ("+n+")").replace(/\"/g,"")+'"',o.properties={endpoint:a},i}(0,0,t,l)),function(e,t){if(JSON){var n=T.fetch;if(n&&!y.useXhr)n(t,{method:w,body:JSON.stringify(e),mode:"cors"});else if(XMLHttpRequest){var a=new XMLHttpRequest;a.open(w,t),a.setRequestHeader("Content-type","application/json"),a.send(JSON.stringify(e))}}}(u,l))}function i(e,t){f||setTimeout(function(){!t&&m.core||a()},500)}var e=function(){var n=l.createElement(u);n.src=h;var e=y[b];return!e&&""!==e||"undefined"==n[b]||(n[b]=e),n.onload=i,n.onerror=a,n.onreadystatechange=function(e,t){"loaded"!==n.readyState&&"complete"!==n.readyState||i(0,t)},n}();y.ld<0?l.getElementsByTagName("head")[0].appendChild(e):setTimeout(function(){l.getElementsByTagName(u)[0].parentNode.appendChild(e)},y.ld||0)}try{m.cookie=l.cookie}catch(p){}function t(e){for(;e.length;)!function(t){m[t]=function(){var e=arguments;g||m.queue.push(function(){m[t].apply(m,e)})}}(e.pop())}var n="track",r="TrackPage",o="TrackEvent";t([n+"Event",n+"PageView",n+"Exception",n+"Trace",n+"DependencyData",n+"Metric",n+"PageViewPerformance","start"+r,"stop"+r,"start"+o,"stop"+o,"addTelemetryInitializer","setAuthenticatedUserContext","clearAuthenticatedUserContext","flush"]),m.SeverityLevel={Verbose:0,Information:1,Warning:2,Error:3,Critical:4};var s=(d.extensionConfig||{}).ApplicationInsightsAnalytics||{};if(!0!==d[C]&&!0!==s[C]){method="onerror",t(["_"+method]);var c=T[method];T[method]=function(e,t,n,a,i){var r=c&&c(e,t,n,a,i);return!0!==r&&m["_"+method]({message:e,url:t,lineNumber:n,columnNumber:a,error:i}),r},d.autoExceptionInstrumented=!0}return m}(y.cfg);(T[t]=n).queue&&0===n.queue.length&&n.trackPageView({})}(window,document,{
+src: "../../az416426.vo.msecnd.net/scripts/b/ai.2.min.js",
+cfg: { 
+    connectionString: 'InstrumentationKey=64b5b58f-6682-4e4d-98f5-1dc1ae7b1f36'
+}});
+    </script>
+</head>
+<body id="top">
+
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MPLFPSF"
+                height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <!-- header
+    ================================================== -->
+
+    
+        <!-- header
+   ================================================== -->
+
+<header class="s-header">
+
+    <div class="header-logo">
+        <a class="site-logo" href="../index.html"><img src="../images/logo2.png" alt="Homepage"></a>
+    </div>
+
+    
+
+    <nav class="header-nav-wrap">
+
+        <ul class="header-nav">
+
+
+            <li class=""><a id="top-navigation-link-root" href="../index.html" title="">Home</a></li>
+
+                <li id="top-navigation-link-about" class="smoothscroll"><a href="../about.html" title="">About me</a></li>
+
+        </ul>
+    </nav> <!-- end main-nav-wrap -->
+
+
+
+
+    <a class="header-menu-toggle" href="#0"><span>Menu</span></a>
+
+</header> <!-- end s-header -->
+
+
+    
+
+    
+
+<!-- content
+   ================================================== -->
+
+
+    <article class="blog-single">
+
+        <!-- page header/blog hero
+    ================================================== -->
+
+        
+        <div class="page-header page-header--single page-hero" style=background-image:url(https://cdn.buttercms.com/xhvuRCyRYqFMR13G5nae)>
+
+            <div class="row page-header__content narrow">
+                <article class="col-full">
+                    <div class="page-header__info">
+                        <div class="page-header__cat">
+                                <a id="post-category-azure" href="category/azure.html">Azure</a>
+                                <a id="post-category-micro-services" href="category/micro-services.html">Micro Services</a>
+                                <a id="post-category-service-fabric" href="category/service-fabric.html">Service Fabric</a>
+                        </div>
+                    </div>
+                    <h1 class="page-header__title">
+                        <a href="#0" title="">
+                            Service Fabric testing inspired by AZ-202 certification study
+                        </a>
+                    </h1>
+                    <ul class="page-header__meta">
+                        <li class="date">
+19.05.2019 06:38                        </li>
+                        <li class="author">
+                            By
+                            <span>Kalle Marjokorpi</span>
+                        </li>
+                    </ul>
+
+                </article>
+                
+            </div>
+
+        </div> <!-- end page-header -->
+
+        <div class="row blog-content">
+            <div class="col-full blog-content__main">
+
+                <p><p>I studied to AZ-202 Azure Developer transition certification during March. I was earlier completed the 70-532 certification so I was able to go AZ-202 (transition) certification exam. AZ-202 covered the following topics:</p>
+<p><strong>Develop for cloud storage </strong></p>
+<ul>
+<li>Develop solutions that use file storage</li>
+<li>Develop solutions that use a relational database</li>
+</ul>
+<p><strong>Create Platform as a Service (PaaS) Solutions </strong></p>
+<ul>
+<li>Create an app service Logic App</li>
+<li>Create app or service that runs on Service Fabric</li>
+<li>Schedule bulk operations</li>
+<li>Design and develop applications that run in containers</li>
+</ul>
+<p><strong>Secure cloud solutions </strong></p>
+<ul>
+<li>Implement access control</li>
+</ul>
+<p><strong>Develop for an Azure cloud model </strong></p>
+<ul>
+<li>Develop for autoscaling</li>
+</ul>
+<p><strong>Implement cloud integration solutions </strong></p>
+<ul>
+<li>Configure a message-based integration architecture</li>
+<li>Develop an application message model</li>
+</ul>
+<p>Topics were quite familiar to me except Service Fabric. It was a new technology what I haven't used in any work or personal projects. The best study method for me is to do hands on practices while browsing materials and documents. So I decided to refactor my Blog application while learning Service Fabric. This blog is now running top of the Service Fabric.</p>
+<p>This blog post is not a deep dive to the Service Fabric. I describe this Blog application changes mostly from the architectural point of view. I had some difficulties with the SSL configuration show I described that more detailed.&nbsp;</p>
+<h2>Basic information about Azure Service Fabric</h2>
+<p>A few words about Service Fabric. What is a Azure Service Fabric? Microsoft has described <a href="https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-technical-overview">Azure Service Fabric</a>: "Azure Service Fabric is a distributed systems platform that makes it easy to package, deploy, and manage scalable and reliable micro services. You can host Service Fabric clusters anywhere: Azure, in an on-premises data center, or on any cloud provider. Basically Service Fabric is a micro service backbone which enables you to build scalable and reliable applications. Microsoft has built multiple Azure services top of Service Fabric like Azure SQL Database, Cosmos DB, PowerBI etc.</p>
+<p>Service Fabric has Stateless and Statefull services. Stateless service is a logical choice when service's persistent state is stored in an external service (ex. Database). Statefull Service allows Service Fabric to maintain the state via Reliable Collections or Reliable Actors.</p>
+<h2>Pluralsight cources</h2>
+<p>Pluralsight have good cources about Service Fabric which I recommend to go through while learning:</p>
+<p><a href="https://www.pluralsight.com/courses/azure-service-fabric-programming-models">Understanding the Programming Models of Azure Service Fabric by Ivan Gavryliuk</a><br /><a href="https://www.pluralsight.com/courses/azure-service-fabric-production">Using Azure Service Fabric in Production by Ivan Gavryliuk</a><br /><a href="https://www.pluralsight.com/courses/building-application-azure-service-fabric-mesh">Building an Application with Azure Service Fabric Mesh by Ivan Gavryliuk</a></p>
+<h2>Creating a Service Fabric Cluster</h2>
+<p>You can create Service Fabric Cluster via Azure CLI by using az sf cluster create command. More details about the command you can find from <a href="https://docs.microsoft.com/en-us/cli/azure/sf/cluster?view=azure-cli-latest#az-sf-cluster-create">here</a>. And of course you can create cluster in <a href="https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-cluster-creation-via-portal">Azure Portal</a>. Notice that provisioning the Service Fabric Cluster might take some time.&nbsp;<a href="https://blog.nilayparikh.com/azure/computing/a-step-by-step-to-guide-to-setup-service-fabric-cluster-and-node-types/">Nilay Parikh</a> has written a good step-by-step guide to setup Service Fabric Cluster.</p>
+<h2>Service Fabric Blog Application architecture</h2>
+<p>I currently have three micro service components in my Service Fabric Cluster:</p>
+<p>1) Blog Web Application (Stateless Service)<br />2) Backend Content Service (Stateless Service)<br />3) Analytics Service (Statefull Service)<br /><br />Communication between services is handled via Service Fabric service remoting. Other possibility is of course to use HTTP endpoints. I wanted to use service remoting because it's a Service Fabric's unique way to do communication between services.</p>
+<p><img src="https://cdn.buttercms.com/8mqYoY2ES7yQXOqVveDc" alt="undefined" /></p>
+<h3>Blog Web Application (Stateless Service)</h3>
+<p>Blog Web is the application which shows the Blog content for end users (front-end). Application is stateless because it doesn't have any state. This application is the same .NET Core MVC application which I created a year ago.</p>
+<h3>Content Service (Stateless Service)</h3>
+<p>Content Service is a stateless component which delivers all blog contents for Blog Web Application. Basically during the refactoring I moved all ButterCMS API call logic from earlier version of my Blog Application to this new Service Fabric Stateless Service project. Project has no nothing specially. It executes calls to the ButterCMS API which is outside of the Service Fabric Cluster. Mae by later I change this project to Statefull and I'll use Reliable Collections as a caching purposes.</p>
+<h3>Analytics Service (Statefull Service)</h3>
+<p>I wanted also learn more about Reliable Collections so I created one Statefull Service. Analytics Statefull service stores all pageview data to the Reliable Collection. Data in the Reliable Collections are replicated across the Service Fabric Cluster.</p>
+<p>Basically I have ASP.NET Core Middleware component in the Blog application which gets page and user agent information and sends it to the Analytics service via service remoting.</p>
+<h2>Configure SSL certificate for your site</h2>
+<p>I found several instructions from internet, how to do this but didn't find a complete guide which works. This section shows how I managed to get this working.</p>
+<h3>Upload your site SSL certificate to the KeyVault</h3>
+<p>Before uploading your site certificate to KeyVault convert your CRT-file certificate to PFX using ex. Openssl:</p>
+<pre class="language-undefined"><code>openssl pkcs12 -export -out "d:\certificates\mysite.pfx" -inkey "d:\certificates\mysite.key" -in "d:\certificates\mysite.crt"</code></pre>
+<p><img src="https://cdn.buttercms.com/5XCI0XApRE2H87FwjfpD" alt="undefined" /></p>
+<p><img src="https://cdn.buttercms.com/6Onx7NHTkS07mUUER2gA" alt="undefined" /></p>
+<p>After upload open certificate from Keyvault and copy the secret identifier value to the clipboard</p>
+<p><img src="https://cdn.buttercms.com/wXyOOfBHTMiN3mJtmmzv" alt="undefined" /></p>
+<h3>Add certificate to the Service Fabric nodes</h3>
+<p>Use Add-AzureRmServiceFabricApplicationCertificate to install a certificate to all nodes in the cluster. You can specify a certificate you already have or have the system generate a new one for you, and upload it to a new or existing Azure key vault. Source:&nbsp;<a href="https://docs.microsoft.com/en-us/powershell/module/azurerm.servicefabric/add-azurermservicefabricapplicationcertificate?view=azurermps-6.13.0">Add-AzureRmServiceFabricApplicationCertificate</a></p>
+<pre class="language-undefined"><code>$secret = "https://[MyKeyvault].vault.azure.net/secrets/[MyCertificate]/[MyCertificateId]"
+$groupname="[MyResourceGroupName]"
+$clustername = "[MyServiceFabricClusterName]"
+
+Add-AzureRmServiceFabricApplicationCertificate -ResourceGroupName $groupname -Name $clustername -SecretIdentifier $secret -Verbose</code></pre>
+<h3>Open 443 Port in Load Balancer</h3>
+<p>I found this script from <a href="https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-tutorial-dotnet-app-enable-https-endpoint#open-port-443-in-the-azure-load-balancer">here</a>.</p>
+<pre class="language-undefined"><code>$probename = "AppPortProbe"
+$rulename="AppPortLBRule"
+$RGname="[MyResourceGroupName]"
+$port=443
+
+# Get the load balancer resource
+$resource = Get-AzResource | Where {$_.ResourceGroupName &ndash;eq $RGname -and $_.ResourceType -eq "Microsoft.Network/loadBalancers"}
+$slb = Get-AzLoadBalancer -Name $resource.Name -ResourceGroupName $RGname
+
+# Add a new probe configuration to the load balancer
+$slb | Add-AzLoadBalancerProbeConfig -Name $probename -Protocol Tcp -Port $port -IntervalInSeconds 15 -ProbeCount 2
+
+# Add rule configuration to the load balancer
+$probe = Get-AzLoadBalancerProbeConfig -Name $probename -LoadBalancer $slb
+$slb | Add-AzLoadBalancerRuleConfig -Name $rulename -BackendAddressPool $slb.BackendAddressPools[0] -FrontendIpConfiguration $slb.FrontendIpConfigurations[0] -Probe $probe -Protocol Tcp -FrontendPort $port -BackendPort $port
+
+# Set the goal state for the load balancer
+$slb | Set-AzLoadBalancer</code></pre>
+<h3>Service Fabric ApplicationManifest changes</h3>
+<p>This rule allows Network service to get access to the certificate.</p>
+<pre class="language-undefined"><code> &lt;Principals&gt;
+    &lt;Users&gt;
+      &lt;User Name="NETWORK SERVICE" AccountType="NetworkService" /&gt;
+    &lt;/Users&gt;
+  &lt;/Principals&gt;
+  &lt;Policies&gt;
+    &lt;SecurityAccessPolicies&gt;
+      &lt;SecurityAccessPolicy ResourceRef="HttpsCert" PrincipalRef="NETWORK SERVICE" ResourceType="Certificate" /&gt;
+    &lt;/SecurityAccessPolicies&gt;
+  &lt;/Policies&gt;
+  &lt;Certificates&gt;
+    &lt;SecretsCertificate X509FindValue="[MyCertificateThumbprint]" Name="HttpsCert" /&gt;
+  &lt;/Certificates&gt;</code></pre>
+<h3>ServiceManifest changes in the web project</h3>
+<p>Add new 443 HTTPS endpoint to the service manifest.</p>
+<pre class="language-undefined"><code>  &lt;Resources&gt;
+    &lt;Endpoints&gt;
+      &lt;Endpoint Protocol="http" Name="ServiceEndpoint" Type="Input" Port="80" /&gt;      
+      &lt;Endpoint Protocol="https" Name="ServiceHttpsEndpoint" Type="Input" Port="443" /&gt;
+    &lt;/Endpoints&gt;
+  &lt;/Resources&gt;</code></pre>
+<h3>Endpoint changes (web project)</h3>
+<p>Service Listener changed to use new HTTPS endpoint. Certificate will be fetched from the VM nodes certificate store.</p>
+<pre class="language-csharp"><code> /// &lt;summary&gt;
+        /// Optional override to create listeners (like tcp, http) for this service instance.
+        /// &lt;/summary&gt;
+        /// &lt;returns&gt;The collection of listeners.&lt;/returns&gt;
+        protected override IEnumerable&lt;ServiceInstanceListener&gt; CreateServiceInstanceListeners()
+        {
+            return new ServiceInstanceListener[]
+              {
+                      new ServiceInstanceListener(serviceContext =&gt;
+                          new KestrelCommunicationListener(serviceContext, "ServiceHttpsEndpoint", (url, listener) =&gt;
+                          {
+                              ServiceEventSource.Current.ServiceMessage(serviceContext, $"Starting Kestrel on {url}");
+
+                              return new WebHostBuilder()
+                                          .UseKestrel(opt =&gt;
+                                          {
+                                              int port = serviceContext.CodePackageActivationContext.GetEndpoint("ServiceHttpsEndpoint").Port;
+                                              opt.Listen(IPAddress.IPv6Any, port, listenOptions =&gt;
+                                              {
+                                                  listenOptions.UseHttps(GetCertificateFromStore());
+                                              });
+                                          })
+                                          .ConfigureServices(
+                                              services =&gt; services
+                                                  .AddSingleton&lt;StatelessServiceContext&gt;(serviceContext))
+                                          .UseContentRoot(Directory.GetCurrentDirectory())
+                                          .UseStartup&lt;Startup&gt;()
+                                          .UseServiceFabricIntegration(listener, ServiceFabricIntegrationOptions.None)
+                                          .UseUrls(url)
+                                          .Build();
+                          }))
+              };
+        }
+
+ public static X509Certificate2 GetCertificateFromStore()
+        {
+            var store = new X509Store(StoreName.My, StoreLocation.LocalMachine);
+            try
+            {
+                store.Open(OpenFlags.ReadOnly);
+                var certCollection = store.Certificates;
+                var currentCerts = certCollection.Find(X509FindType.FindByThumbprint, "[MyCertificateThumbprintFromConfiguration]", false);
+                return currentCerts.Count == 0 ? null : currentCerts[0];
+            }
+            finally
+            {
+                store.Close();
+            }
+        }</code></pre>
+<p>That's it now it's working.</p></p>
+
+            <h2>Comments</h2>
+
+                <p><div id="disqus_thread"></div></p>
+
+                <div class="blog-content__pagenav">
+                    <div class="blog-content__nav">
+                            <div class="blog-content__prev">
+                                <a id="post-previous-how-to-import-exercise-data-to-strava" href="how-to-import-exercise-data-to-strava.html" rel="prev">
+                                    <span>Previous Post</span>
+                                    How to import exercise data to Strava
+                                </a>
+                            </div>
+                            <div class="blog-content__next">
+                                <a id="post-next-how-to-configure-azure-ad-b2c-and-b2b-work-together" href="how-to-configure-azure-ad-b2c-and-b2b-work-together.html" rel="next">
+                                    <span>Next Post</span>
+                                    Identity management - How to configure Azure AD B2C and B2B work together?
+                                </a>
+                            </div>
+                        </div>
+
+
+                    <div class="blog-content__all">
+                        <a href="../index.html" class="btn btn--primary">
+                            View All Post
+                        </a>
+                    </div>
+                </div>
+
+            </div><!-- end blog-content__main -->
+        </div> <!-- end blog-content -->
+
+    </article>
+
+
+
+    
+        
+
+<!-- footer
+    ================================================== -->
+<footer>
+    <div class="row">
+        <div class="col-full">
+
+            <div class="footer-logo">
+                <a class="footer-site-logo" href="#0"><img src="../images/name.png" alt="Homepage"></a>
+            </div>
+
+            <ul class="footer-social">
+                <li>
+                    <a href="https://www.twitter.com/">
+                        <i class="im im-twitter" aria-hidden="true"></i>
+                        <span>Twitter</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.linkedin.com/in/kallemarjokorpi">
+                        <i class="im im-linkedin" aria-hidden="true"></i>
+                        <span>Linkedin</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://github.com/kalleantero">
+                        <i class="im im-github" aria-hidden="true"></i>
+                        <span>Github</span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+    <div class="row footer-bottom">
+
+        <div class="col-twelve">
+            <div class="copyright">
+                <span>Copyright Kalle Marjokorpi 2021</span>
+                <span>Design by <a href="http://www.styleshout.com/">styleshout</a></span>
+                <span>Content management by <a href="http://www.buttercms.com/">Headless ButterCMS</a></span>
+
+            </div>
+
+        </div>
+
+    </div> <!-- end footer-bottom -->
+
+</footer> <!-- end footer -->
+    
+
+
+    <div id="preloader">
+        <div id="loader"></div>
+    </div>
+
+    <!-- Java Script
+     ================================================== -->
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/plugins.js"></script>
+    <script src="../js/main.min.js"></script>
+    
+
+    <script>
+        (function () { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = '../../blog-by-kalle-marjokorpi.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <script id="dsq-count-scr" src="../../blog-by-kalle-marjokorpi.disqus.com/count.js" async></script>
+
+    <!-- Cloudflare Web Analytics -->
+    <script defer src='../../static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cac9fd24c1c04b6d9984ea31685b0414"}'></script><!-- End Cloudflare Web Analytics -->
+
+</body>
+
+<!-- Mirrored from www.kallemarjokorpi.fi/blog/technical-changes-of-the-blog-inspired-by-az-202-certification-study by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 14 Apr 2021 13:57:21 GMT -->
+</html>

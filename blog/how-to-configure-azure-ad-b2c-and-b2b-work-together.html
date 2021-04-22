@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from www.kallemarjokorpi.fi/blog/how-to-configure-azure-ad-b2c-and-b2b-work-together by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 14 Apr 2021 13:57:21 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+
+    <!-- Google Tag Manager -->
+    <script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    '../../www.googletagmanager.com/gtm5445.html?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-MPLFPSF');</script>
+    <!-- End Google Tag Manager -->
+
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+
+    
+    <title>How to configure Azure AD B2C and B2B work together - Blog by Kalle Marjokorpi</title>
+    <meta name="description" content="This blog post shows how to configure an environment where users can login to Azure Web app using B2B or B2C accounts.">
+    <meta name="author" content="Kalle Marjokorpi">
+
+
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/vendor.css">
+    <link rel="stylesheet" href="../css/main.css">
+
+    <script src="../js/modernizr.js"></script>
+    <script src="../js/pace.min.js"></script>
+
+    <script type="text/javascript">!function(T,l,y){var S=T.location,u="script",k="instrumentationKey",D="ingestionendpoint",C="disableExceptionTracking",E="ai.device.",I="toLowerCase",b="crossOrigin",w="POST",e="appInsightsSDK",t=y.name||"appInsights";(y.name||T[e])&&(T[e]=t);var n=T[t]||function(d){var g=!1,f=!1,m={initialize:!0,queue:[],sv:"4",version:2,config:d};function v(e,t){var n={},a="Browser";return n[E+"id"]=a[I](),n[E+"type"]=a,n["ai.operation.name"]=S&&S.pathname||"_unknown_",n["ai.internal.sdkVersion"]="javascript:snippet_"+(m.sv||m.version),{time:function(){var e=new Date;function t(e){var t=""+e;return 1===t.length&&(t="0"+t),t}return e.getUTCFullYear()+"-"+t(1+e.getUTCMonth())+"-"+t(e.getUTCDate())+"T"+t(e.getUTCHours())+":"+t(e.getUTCMinutes())+":"+t(e.getUTCSeconds())+"."+((e.getUTCMilliseconds()/1e3).toFixed(3)+"").slice(2,5)+"Z"}(),iKey:e,name:"Microsoft.ApplicationInsights."+e.replace(/-/g,"")+"."+t,sampleRate:100,tags:n,data:{baseData:{ver:2}}}}var h=d.url||y.src;if(h){function a(e){var t,n,a,i,r,o,s,c,p,l,u;g=!0,m.queue=[],f||(f=!0,t=h,s=function(){var e={},t=d.connectionString;if(t)for(var n=t.split(";"),a=0;a<n.length;a++){var i=n[a].split("=");2===i.length&&(e[i[0][I]()]=i[1])}if(!e[D]){var r=e.endpointsuffix,o=r?e.location:null;e[D]="https://"+(o?o+".":"")+"dc."+(r||"services.visualstudio.com")}return e}(),c=s[k]||d[k]||"",p=s[D],l=p?p+"/v2/track":config.endpointUrl,(u=[]).push((n="SDK LOAD Failure: Failed to load Application Insights SDK script (See stack for details)",a=t,i=l,(o=(r=v(c,"Exception")).data).baseType="ExceptionData",o.baseData.exceptions=[{typeName:"SDKLoadFailed",message:n.replace(/\./g,"-"),hasFullStack:!1,stack:n+"\nSnippet failed to load ["+a+"] -- Telemetry is disabled\nHelp Link: https://go.microsoft.com/fwlink/?linkid=2128109\nHost: "+(S&&S.pathname||"_unknown_")+"\nEndpoint: "+i,parsedStack:[]}],r)),u.push(function(e,t,n,a){var i=v(c,"Message"),r=i.data;r.baseType="MessageData";var o=r.baseData;return o.message='AI (Internal): 99 message:"'+("SDK LOAD Failure: Failed to load Application Insights SDK script (See stack for details) ("+n+")").replace(/\"/g,"")+'"',o.properties={endpoint:a},i}(0,0,t,l)),function(e,t){if(JSON){var n=T.fetch;if(n&&!y.useXhr)n(t,{method:w,body:JSON.stringify(e),mode:"cors"});else if(XMLHttpRequest){var a=new XMLHttpRequest;a.open(w,t),a.setRequestHeader("Content-type","application/json"),a.send(JSON.stringify(e))}}}(u,l))}function i(e,t){f||setTimeout(function(){!t&&m.core||a()},500)}var e=function(){var n=l.createElement(u);n.src=h;var e=y[b];return!e&&""!==e||"undefined"==n[b]||(n[b]=e),n.onload=i,n.onerror=a,n.onreadystatechange=function(e,t){"loaded"!==n.readyState&&"complete"!==n.readyState||i(0,t)},n}();y.ld<0?l.getElementsByTagName("head")[0].appendChild(e):setTimeout(function(){l.getElementsByTagName(u)[0].parentNode.appendChild(e)},y.ld||0)}try{m.cookie=l.cookie}catch(p){}function t(e){for(;e.length;)!function(t){m[t]=function(){var e=arguments;g||m.queue.push(function(){m[t].apply(m,e)})}}(e.pop())}var n="track",r="TrackPage",o="TrackEvent";t([n+"Event",n+"PageView",n+"Exception",n+"Trace",n+"DependencyData",n+"Metric",n+"PageViewPerformance","start"+r,"stop"+r,"start"+o,"stop"+o,"addTelemetryInitializer","setAuthenticatedUserContext","clearAuthenticatedUserContext","flush"]),m.SeverityLevel={Verbose:0,Information:1,Warning:2,Error:3,Critical:4};var s=(d.extensionConfig||{}).ApplicationInsightsAnalytics||{};if(!0!==d[C]&&!0!==s[C]){method="onerror",t(["_"+method]);var c=T[method];T[method]=function(e,t,n,a,i){var r=c&&c(e,t,n,a,i);return!0!==r&&m["_"+method]({message:e,url:t,lineNumber:n,columnNumber:a,error:i}),r},d.autoExceptionInstrumented=!0}return m}(y.cfg);(T[t]=n).queue&&0===n.queue.length&&n.trackPageView({})}(window,document,{
+src: "../../az416426.vo.msecnd.net/scripts/b/ai.2.min.js",
+cfg: { 
+    connectionString: 'InstrumentationKey=64b5b58f-6682-4e4d-98f5-1dc1ae7b1f36'
+}});
+    </script>
+</head>
+<body id="top">
+
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MPLFPSF"
+                height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <!-- header
+    ================================================== -->
+
+    
+        <!-- header
+   ================================================== -->
+
+<header class="s-header">
+
+    <div class="header-logo">
+        <a class="site-logo" href="../index.html"><img src="../images/logo2.png" alt="Homepage"></a>
+    </div>
+
+    
+
+    <nav class="header-nav-wrap">
+
+        <ul class="header-nav">
+
+
+            <li class=""><a id="top-navigation-link-root" href="../index.html" title="">Home</a></li>
+
+                <li id="top-navigation-link-about" class="smoothscroll"><a href="../about.html" title="">About me</a></li>
+
+        </ul>
+    </nav> <!-- end main-nav-wrap -->
+
+
+
+
+    <a class="header-menu-toggle" href="#0"><span>Menu</span></a>
+
+</header> <!-- end s-header -->
+
+
+    
+
+    
+
+<!-- content
+   ================================================== -->
+
+
+    <article class="blog-single">
+
+        <!-- page header/blog hero
+    ================================================== -->
+
+        
+        <div class="page-header page-header--single page-hero" style=background-image:url(https://cdn.buttercms.com/sNkEY7T6RZyMapuKlTyo)>
+
+            <div class="row page-header__content narrow">
+                <article class="col-full">
+                    <div class="page-header__info">
+                        <div class="page-header__cat">
+                                <a id="post-category-azure-ad" href="category/azure-ad.html">Azure AD</a>
+                                <a id="post-category-azure-b2b" href="category/azure-b2b.html">Azure B2B</a>
+                                <a id="post-category-azure-b2c" href="category/azure-b2c.html">Azure B2C</a>
+                                <a id="post-category-identity-magement" href="category/identity-magement.html">Identity Magement</a>
+                        </div>
+                    </div>
+                    <h1 class="page-header__title">
+                        <a href="#0" title="">
+                            Identity management - How to configure Azure AD B2C and B2B work together?
+                        </a>
+                    </h1>
+                    <ul class="page-header__meta">
+                        <li class="date">
+28.08.2019 17:30                        </li>
+                        <li class="author">
+                            By
+                            <span>Kalle Marjokorpi</span>
+                        </li>
+                    </ul>
+
+                </article>
+                
+            </div>
+
+        </div> <!-- end page-header -->
+
+        <div class="row blog-content">
+            <div class="col-full blog-content__main">
+
+                <p><p>This blog post shows how to configure an environment where users can login to Azure Web application using B2B (business) accounts or B2C (consumer) accounts. Azure B2C is a separate product from Azure AD which enables to federate authentication to the social platforms (ext. Facebook, LinkedIn, Twitter, Google) using the Open ID Connection protocol. It's also important to know that O365 services are only available for B2B users.</p>
+<p>If you're more interested about the differences between Azure AD B2B and B2C the I suggest that you read <a href="https://docs.microsoft.com/en-us/azure/active-directory/b2b/compare-with-b2c">Microsoft document</a> about it.</p>
+<h2>Big picture about the environment</h2>
+<p><img src="https://cdn.buttercms.com/lhGt7D6DRF172qE4KQ0g" alt="undefined" /></p>
+<p>Enviroment has a one Web application which is using Azure AD B2C as a IDP. This configuration makes possible to login that web application by using B2C or B2B account. Web application is not directly aware of Azure AD B2B because it's hidden behind the B2C.</p>
+<h2>Create Azure AD B2B Directory</h2>
+<p>First create a normal Azure Active Directory which is the main directory for the B2B users. You can find Azure Active Directory from the Azure Portal marketplace.</p>
+<p><img src="https://cdn.buttercms.com/WrDO7VAgTAa13nEBUoZx" alt="ad2.png" /></p>
+<p>After clicking create you can determine the name for the directory.</p>
+<p><img src="https://cdn.buttercms.com/oaeOp2k4SfKIylxBrooJ" alt="ad3.png" /></p>
+<p>In this environment all external B2B users are invited to this directory. Before that let's create also a Azure AD B2C service.</p>
+<h2>Create Azure AD B2C directory</h2>
+<p>After clicking create select "Create a new Azure AD B2C Tenant"</p>
+<p><img src="https://cdn.buttercms.com/ImbnhIa8QwKcJOaFdMFm" alt="ad5.png" /></p>
+<p>Next determine the name for the directory.</p>
+<p><img src="https://cdn.buttercms.com/qO2yIUkRSo59YGdMwTbQ" alt="ad6.png" /></p>
+<p>After creation go to the frontpage of the Azure AD B2C. First you have to linked B2C tenant to the active Azure subscription.</p>
+<p><img src="https://cdn.buttercms.com/9KaJPXVfSVBLsr70UXGv" alt="ad7.png" /></p>
+<h2>Link Azure AD B2C to active Azure subscription</h2>
+<p>Open Directory switcher and select directory which has Azure subscription and go to marketplace and search "Azure Active Directory B2C".<br /><br /><img src="https://cdn.buttercms.com/8EKeEoaTIuOVTUYC6n1E" alt="ad9.png" /></p>
+<p><img src="https://cdn.buttercms.com/jXQprK0DQ4SQssSKC7eB" alt="ad10.png" /></p>
+<p>Click create and select "Link an existing Azure AD B2C Tenant to my Azure subscription"</p>
+<p><img src="https://cdn.buttercms.com/VzOJXhCTSL2feCrFI1ZA" alt="ad11.png" /></p>
+<p>Select just created Azure AD B2C tenant.</p>
+<p><img src="https://cdn.buttercms.com/ojCFtT1rRFyVfuAl2A8P" alt="ad12.png" /></p>
+<p>Now you can find the Azure B2C tenant from the Resource Group.</p>
+<p><img src="https://cdn.buttercms.com/UjrUnhknSFWMFRHGbKnl" alt="ad13.png" /></p>
+<p>Next configure B2C identity providers and applications.</p>
+<h2>Configure identity providers for Azure AD B2C</h2>
+<p>Select B2C directory and go back to B2C frontpage</p>
+<p><img src="https://cdn.buttercms.com/2ETfxQSK40b1uQfiy5A0" alt="ad14.png" /></p>
+<p>Select Identity Providers</p>
+<p><img src="https://cdn.buttercms.com/ntbzvOkSaumzC7WNC2gw" alt="ad15.png" /></p>
+<p>Select Google</p>
+<p style="margin: 0in; font-family: Calibri; font-size: 11.0pt;"><img src="https://cdn.buttercms.com/gpj4DSFnRbyKUyvxEZJm" alt="ad16.png" /></p>
+<p>Follow this <a href="https://docs.microsoft.com/en-us/azure/active-directory-b2c/active-directory-b2c-setup-goog-app">guide</a> to configure Client in the Google Console portal.</p>
+<h2>Configure connection between Azure AD B2C and Azure AD B2B</h2>
+<p>This Azure AD B2B application is configured later as a Open Id Connection provider to the Azure AD B2C.</p>
+<p><img src="https://cdn.buttercms.com/ZNLttftQy6wGyCsm83Dl" alt="ad17.png" /></p>
+<p></p>
+<p>Select B2B Azure AD directory (cloudcompanyb2b)</p>
+<p style="margin: 0in; font-family: Calibri; font-size: 11.0pt;"></p>
+<p style="margin: 0in; font-family: Calibri; font-size: 11.0pt;"><img src="https://cdn.buttercms.com/r8Jtg6oqSWWJZnlGj0R2" alt="ad18.png" /></p>
+<p>Open App registrations</p>
+<p style="margin: 0in; font-family: Calibri; font-size: 11.0pt;"><img src="https://cdn.buttercms.com/fMFGkzDS8KaqvlKMWTFR" alt="ad19.png" /></p>
+<p>Select a new registration. Give the name for application and select account type.</p>
+<p style="margin: 0in; font-family: Calibri; font-size: 11.0pt;"><img src="https://cdn.buttercms.com/idWD3jlWRrGEMbXWUiKW" alt="ad20.png" /></p>
+<p>Next copy the ApplicationId (=ClientId) to the notepad because we need it later.</p>
+<p style="margin: 0in; font-family: Calibri; font-size: 11.0pt;"><img src="https://cdn.buttercms.com/mzGySjB3RpSUFXtxhvmH" alt="ad21.png" /></p>
+<p>Select authentication. Next we should configure the redirect URI where Azure B2B is redirect user back. This address should be point to the B2C authresp endpoint. The URI should be https://login.microsoftonline.com/te/[B2CTENANT].onmicrosoft.com/oauth2/authresp.&nbsp;Select also Access and ID tokens and then click Save.</p>
+<p style="margin: 0in; font-family: Calibri; font-size: 11.0pt;"><img src="https://cdn.buttercms.com/fSG2x4hSjaJ398HPW1TS" alt="ad22.png" /></p>
+<p>Select certificates &amp; secrets</p>
+<p style="margin: 0in; font-family: Calibri; font-size: 11.0pt;"><img src="https://cdn.buttercms.com/B9kWTMJvS2m6OnQbrI8C" alt="ad23.png" /></p>
+<p>Select new client secret</p>
+<p style="margin: 0in; font-family: Calibri; font-size: 11.0pt;"><img src="https://cdn.buttercms.com/MKJP5gfpTwGIZhccaVTg" alt="ad24.png" /></p>
+<p>After creation client secret is revealed. Copy it to ex. Notepad.</p>
+<h2>Configure Azure AD B2B OIDC connection in Azure AD B2C</h2>
+<p>Go back to B2C directory (cloudcompanyb2c) and open identity providers.&nbsp;</p>
+<p style="margin: 0in; font-family: Calibri; font-size: 11.0pt;"><img src="https://cdn.buttercms.com/7RLl4pGdRsqXmt67JFaJ" alt="ad25.png" /></p>
+<p>Click new OpenId Connect provider.</p>
+<p style="margin: 0in; font-family: Calibri; font-size: 11.0pt;"><img src="https://cdn.buttercms.com/lzxLStZkSmG5NQTqKMqu" alt="ad26.png" /></p>
+<p><span lang="fi">Metadata url = B2B OIDC metadata endpoint url </span><a href="https://login.microsoftonline.com/%5bB2BTENANT%5d.onmicrosoft.com/.well-known/openid-configuration"><span lang="fi">https://login.microsoftonline.com/[B2BTENANT].onmicrosoft.com/.well-known/openid-configuration</span></a></p>
+<p>After configuration the Identity Provider listing should look like this.</p>
+<p style="margin: 0in; font-family: Calibri; font-size: 11.0pt;"><img src="https://cdn.buttercms.com/MPgHUZP8RtnPAX9yXwAg" alt="ad27.png" /></p>
+<h2>Configure Sample Web application</h2>
+<p>Next we configure the Sample Web application which is using a Azure AD B2C as a IDP. Go to Azure AD B2C configuration view and select Applications.</p>
+<p><img src="https://cdn.buttercms.com/CPXtlSMVRuil1L3gnobM" alt="ad28.png" /></p>
+<p>Click Add and give the name of the application. Reply URL should point to the OIDC endpoint of the application. First I'm testing a app in the localhost.</p>
+<p><img src="https://cdn.buttercms.com/46VW5ZMwSl68d2JUgHRL" alt="ad29.png" /></p>
+<p>Click Keys section and then click generate key. After creation client secret is revealed. Copy it to ex. Notepad.</p>
+<p><img src="https://cdn.buttercms.com/omQ8Q3OrT30aQICGwS3g" alt="ad30.png" /></p>
+<h2>Configure Azure AD B2C user flows (policies)</h2>
+<p>Next user flows should be configured that Identity Provider selections will be visible in the login screen. Click user flows (policies).</p>
+<p style="margin: 0in; font-family: Calibri; font-size: 11.0pt;"><img src="https://cdn.buttercms.com/MBdfZXsCTuSpAp5FFO8N" alt="ad31.png" /></p>
+<p>New user flow</p>
+<p style="margin: 0in; font-family: Calibri; font-size: 11.0pt;"><img src="https://cdn.buttercms.com/4pe6qIFMR1yLa9MjF3Sh" alt="ad32.png" /></p>
+<p>Select "Sign up and sign in". Give the name and select Google and Cloud Company B2B Identity Providers. Select also all user attributes and claims.</p>
+<p style="margin: 0in; font-family: Calibri; font-size: 11.0pt;"><img src="https://cdn.buttercms.com/XpxDa58ES4mueUb3y8wM" alt="ad33.png" /></p>
+<h2>Invite Azure B2B user</h2>
+<p>Go to B2B AAD (cloudcompanyb2b)</p>
+<p><img src="https://cdn.buttercms.com/KUdSFT1vQaWGY3bD01kb" alt="ad34.png" /></p>
+<p>Click New guest user and input email address. This is my MS Account address.</p>
+<p><img src="https://cdn.buttercms.com/8cBM1DT1Q4axj8zvWE19" alt="ad35.png" /></p>
+<p>After invitation user is listed as a Guest user (Invited User).</p>
+<p><img src="https://cdn.buttercms.com/csJ88jDQV6AcPMAonvkW" alt="ad36.png" /></p>
+<p>Next email invitation arrives. Click the link in the email.</p>
+<p><img src="https://cdn.buttercms.com/snsZFbBSTMSURdYdmUTK" alt="ad37.png" /></p>
+<p></p>
+<p>After invitation process user is listed a Guest (External Azure Active Directory)</p>
+<p><img src="https://cdn.buttercms.com/AwOxMG6RSeCeW0aobdzB" alt="ad38.png" /></p>
+<h2>Test authentication with Sample Web application</h2>
+<p>My sample web application code based on WebApp-OpenIdConnect-Dotnet example project. Example project can be find from <a href="https://github.com/Azure-Samples/active-directory-b2c-dotnetcore-webapp/tree/master/WebApp-OpenIDConnect-DotNet">here</a>.</p>
+<p><a href="https://github.com/Azure-Samples/active-directory-b2c-dotnetcore-webapp/tree/master/WebApp-OpenIDConnect-DotNet"></a></p>
+<p>Sample application shows the following Identity Providers in the login screen. I want to test B2B login so I click "Cloud Company B2B".</p>
+<p><img src="https://cdn.buttercms.com/hiM8pC2DTtaG3HlGjgWm" alt="ad39.png" /></p>
+<p>Consent view appears.</p>
+<p><img src="https://cdn.buttercms.com/WpZLJE66Ryuvgn9zy1oP" alt="ad40.png" /></p>
+<p>After consent the following information is asked.</p>
+<p><img src="https://cdn.buttercms.com/yBN1if1uTIul60FmtDFS" alt="ad41.png" /></p>
+<p>After clicking continue I'm redirected to the application. Example project shows all the claims from the About view.</p>
+<p><img src="https://cdn.buttercms.com/MCR0oGTfTFeSZ3kA9ieS" alt="undefined" /></p>
+<h2>Summary</h2>
+<p>Configuration requires a quite a many steps but it's pretty straightforward to do. This was my first test with Azure B2C and I'm very interested about it. Later I want to get more information about claims transformation. My next post will show how to configure Azure AD B2B and B2C as a external provider in the Identity Server.</p>
+<p></p>
+<p></p>
+<p style="margin: 0in; font-family: Calibri; font-size: 11.0pt;"></p>
+<p style="margin: 0in; font-family: Calibri; font-size: 11.0pt;"></p></p>
+
+            <h2>Comments</h2>
+
+                <p><div id="disqus_thread"></div></p>
+
+                <div class="blog-content__pagenav">
+                    <div class="blog-content__nav">
+                            <div class="blog-content__prev">
+                                <a id="post-previous-technical-changes-of-the-blog-inspired-by-az-202-certification-study" href="technical-changes-of-the-blog-inspired-by-az-202-certification-study.html" rel="prev">
+                                    <span>Previous Post</span>
+                                    Service Fabric testing inspired by AZ-202 certification study
+                                </a>
+                            </div>
+                            <div class="blog-content__next">
+                                <a id="post-next-status-notifier-app-powered-by-philips-hue-lights" href="status-notifier-app-powered-by-philips-hue-lights.html" rel="next">
+                                    <span>Next Post</span>
+                                    Status notifier app powered by Philips Hue lights
+                                </a>
+                            </div>
+                        </div>
+
+
+                    <div class="blog-content__all">
+                        <a href="../index.html" class="btn btn--primary">
+                            View All Post
+                        </a>
+                    </div>
+                </div>
+
+            </div><!-- end blog-content__main -->
+        </div> <!-- end blog-content -->
+
+    </article>
+
+
+
+    
+        
+
+<!-- footer
+    ================================================== -->
+<footer>
+    <div class="row">
+        <div class="col-full">
+
+            <div class="footer-logo">
+                <a class="footer-site-logo" href="#0"><img src="../images/name.png" alt="Homepage"></a>
+            </div>
+
+            <ul class="footer-social">
+                <li>
+                    <a href="https://www.twitter.com/">
+                        <i class="im im-twitter" aria-hidden="true"></i>
+                        <span>Twitter</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.linkedin.com/in/kallemarjokorpi">
+                        <i class="im im-linkedin" aria-hidden="true"></i>
+                        <span>Linkedin</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://github.com/kalleantero">
+                        <i class="im im-github" aria-hidden="true"></i>
+                        <span>Github</span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+    <div class="row footer-bottom">
+
+        <div class="col-twelve">
+            <div class="copyright">
+                <span>Copyright Kalle Marjokorpi 2021</span>
+                <span>Design by <a href="http://www.styleshout.com/">styleshout</a></span>
+                <span>Content management by <a href="http://www.buttercms.com/">Headless ButterCMS</a></span>
+
+            </div>
+
+        </div>
+
+    </div> <!-- end footer-bottom -->
+
+</footer> <!-- end footer -->
+    
+
+
+    <div id="preloader">
+        <div id="loader"></div>
+    </div>
+
+    <!-- Java Script
+     ================================================== -->
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/plugins.js"></script>
+    <script src="../js/main.min.js"></script>
+    
+
+    <script>
+        (function () { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = '../../blog-by-kalle-marjokorpi.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <script id="dsq-count-scr" src="../../blog-by-kalle-marjokorpi.disqus.com/count.js" async></script>
+
+    <!-- Cloudflare Web Analytics -->
+    <script defer src='../../static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cac9fd24c1c04b6d9984ea31685b0414"}'></script><!-- End Cloudflare Web Analytics -->
+
+</body>
+
+<!-- Mirrored from www.kallemarjokorpi.fi/blog/how-to-configure-azure-ad-b2c-and-b2b-work-together by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 14 Apr 2021 13:57:21 GMT -->
+</html>

@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from www.kallemarjokorpi.fi/blog/participant-registration-system by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 14 Apr 2021 13:57:21 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+
+    <!-- Google Tag Manager -->
+    <script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    '../../www.googletagmanager.com/gtm5445.html?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-MPLFPSF');</script>
+    <!-- End Google Tag Manager -->
+
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+
+    
+    <title>Simple participant registration system - Blog by Kalle Marjokorpi</title>
+    <meta name="description" content="This blog post shows how simple participant registration system is created top of Wordpress site using Google and Azure platforms.">
+    <meta name="author" content="Kalle Marjokorpi">
+
+
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/vendor.css">
+    <link rel="stylesheet" href="../css/main.css">
+
+    <script src="../js/modernizr.js"></script>
+    <script src="../js/pace.min.js"></script>
+
+    <script type="text/javascript">!function(T,l,y){var S=T.location,u="script",k="instrumentationKey",D="ingestionendpoint",C="disableExceptionTracking",E="ai.device.",I="toLowerCase",b="crossOrigin",w="POST",e="appInsightsSDK",t=y.name||"appInsights";(y.name||T[e])&&(T[e]=t);var n=T[t]||function(d){var g=!1,f=!1,m={initialize:!0,queue:[],sv:"4",version:2,config:d};function v(e,t){var n={},a="Browser";return n[E+"id"]=a[I](),n[E+"type"]=a,n["ai.operation.name"]=S&&S.pathname||"_unknown_",n["ai.internal.sdkVersion"]="javascript:snippet_"+(m.sv||m.version),{time:function(){var e=new Date;function t(e){var t=""+e;return 1===t.length&&(t="0"+t),t}return e.getUTCFullYear()+"-"+t(1+e.getUTCMonth())+"-"+t(e.getUTCDate())+"T"+t(e.getUTCHours())+":"+t(e.getUTCMinutes())+":"+t(e.getUTCSeconds())+"."+((e.getUTCMilliseconds()/1e3).toFixed(3)+"").slice(2,5)+"Z"}(),iKey:e,name:"Microsoft.ApplicationInsights."+e.replace(/-/g,"")+"."+t,sampleRate:100,tags:n,data:{baseData:{ver:2}}}}var h=d.url||y.src;if(h){function a(e){var t,n,a,i,r,o,s,c,p,l,u;g=!0,m.queue=[],f||(f=!0,t=h,s=function(){var e={},t=d.connectionString;if(t)for(var n=t.split(";"),a=0;a<n.length;a++){var i=n[a].split("=");2===i.length&&(e[i[0][I]()]=i[1])}if(!e[D]){var r=e.endpointsuffix,o=r?e.location:null;e[D]="https://"+(o?o+".":"")+"dc."+(r||"services.visualstudio.com")}return e}(),c=s[k]||d[k]||"",p=s[D],l=p?p+"/v2/track":config.endpointUrl,(u=[]).push((n="SDK LOAD Failure: Failed to load Application Insights SDK script (See stack for details)",a=t,i=l,(o=(r=v(c,"Exception")).data).baseType="ExceptionData",o.baseData.exceptions=[{typeName:"SDKLoadFailed",message:n.replace(/\./g,"-"),hasFullStack:!1,stack:n+"\nSnippet failed to load ["+a+"] -- Telemetry is disabled\nHelp Link: https://go.microsoft.com/fwlink/?linkid=2128109\nHost: "+(S&&S.pathname||"_unknown_")+"\nEndpoint: "+i,parsedStack:[]}],r)),u.push(function(e,t,n,a){var i=v(c,"Message"),r=i.data;r.baseType="MessageData";var o=r.baseData;return o.message='AI (Internal): 99 message:"'+("SDK LOAD Failure: Failed to load Application Insights SDK script (See stack for details) ("+n+")").replace(/\"/g,"")+'"',o.properties={endpoint:a},i}(0,0,t,l)),function(e,t){if(JSON){var n=T.fetch;if(n&&!y.useXhr)n(t,{method:w,body:JSON.stringify(e),mode:"cors"});else if(XMLHttpRequest){var a=new XMLHttpRequest;a.open(w,t),a.setRequestHeader("Content-type","application/json"),a.send(JSON.stringify(e))}}}(u,l))}function i(e,t){f||setTimeout(function(){!t&&m.core||a()},500)}var e=function(){var n=l.createElement(u);n.src=h;var e=y[b];return!e&&""!==e||"undefined"==n[b]||(n[b]=e),n.onload=i,n.onerror=a,n.onreadystatechange=function(e,t){"loaded"!==n.readyState&&"complete"!==n.readyState||i(0,t)},n}();y.ld<0?l.getElementsByTagName("head")[0].appendChild(e):setTimeout(function(){l.getElementsByTagName(u)[0].parentNode.appendChild(e)},y.ld||0)}try{m.cookie=l.cookie}catch(p){}function t(e){for(;e.length;)!function(t){m[t]=function(){var e=arguments;g||m.queue.push(function(){m[t].apply(m,e)})}}(e.pop())}var n="track",r="TrackPage",o="TrackEvent";t([n+"Event",n+"PageView",n+"Exception",n+"Trace",n+"DependencyData",n+"Metric",n+"PageViewPerformance","start"+r,"stop"+r,"start"+o,"stop"+o,"addTelemetryInitializer","setAuthenticatedUserContext","clearAuthenticatedUserContext","flush"]),m.SeverityLevel={Verbose:0,Information:1,Warning:2,Error:3,Critical:4};var s=(d.extensionConfig||{}).ApplicationInsightsAnalytics||{};if(!0!==d[C]&&!0!==s[C]){method="onerror",t(["_"+method]);var c=T[method];T[method]=function(e,t,n,a,i){var r=c&&c(e,t,n,a,i);return!0!==r&&m["_"+method]({message:e,url:t,lineNumber:n,columnNumber:a,error:i}),r},d.autoExceptionInstrumented=!0}return m}(y.cfg);(T[t]=n).queue&&0===n.queue.length&&n.trackPageView({})}(window,document,{
+src: "../../az416426.vo.msecnd.net/scripts/b/ai.2.min.js",
+cfg: { 
+    connectionString: 'InstrumentationKey=64b5b58f-6682-4e4d-98f5-1dc1ae7b1f36'
+}});
+    </script>
+</head>
+<body id="top">
+
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MPLFPSF"
+                height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <!-- header
+    ================================================== -->
+
+    
+        <!-- header
+   ================================================== -->
+
+<header class="s-header">
+
+    <div class="header-logo">
+        <a class="site-logo" href="../index.html"><img src="../images/logo2.png" alt="Homepage"></a>
+    </div>
+
+    
+
+    <nav class="header-nav-wrap">
+
+        <ul class="header-nav">
+
+
+            <li class=""><a id="top-navigation-link-root" href="../index.html" title="">Home</a></li>
+
+                <li id="top-navigation-link-about" class="smoothscroll"><a href="../about.html" title="">About me</a></li>
+
+        </ul>
+    </nav> <!-- end main-nav-wrap -->
+
+
+
+
+    <a class="header-menu-toggle" href="#0"><span>Menu</span></a>
+
+</header> <!-- end s-header -->
+
+
+    
+
+    
+
+<!-- content
+   ================================================== -->
+
+
+    <article class="blog-single">
+
+        <!-- page header/blog hero
+    ================================================== -->
+
+        
+        <div class="page-header page-header--single page-hero" style=background-image:url(https://cdn.buttercms.com/6od0P0jURUqBGHmWP9bB)>
+
+            <div class="row page-header__content narrow">
+                <article class="col-full">
+                    <div class="page-header__info">
+                        <div class="page-header__cat">
+                                <a id="post-category-azure" href="category/azure.html">Azure</a>
+                                <a id="post-category-google-cloud" href="category/google-cloud.html">Google Cloud</a>
+                        </div>
+                    </div>
+                    <h1 class="page-header__title">
+                        <a href="#0" title="">
+                            Participant registration system for runners event
+                        </a>
+                    </h1>
+                    <ul class="page-header__meta">
+                        <li class="date">
+12.08.2018 11:37                        </li>
+                        <li class="author">
+                            By
+                            <span>Kalle Marjokorpi</span>
+                        </li>
+                    </ul>
+
+                </article>
+                
+            </div>
+
+        </div> <!-- end page-header -->
+
+        <div class="row blog-content">
+            <div class="col-full blog-content__main">
+
+                <p><p>A few months ago I got an task to create a simple participant registration system (personal project). People are registering to the running event via this system. This blog post contains information how this system was built. I'm interested to investigate new technologies so I decided to create mixed system which is using Google and MS Azure platform.</p>
+<h2>General requirements for the system</h2>
+<ul>
+<li>Simple responsive registration form + thanks page</li>
+<li>Registered persons should be listed on the another application</li>
+<li>Admin users are already using Google ecosystem</li>
+</ul>
+<h2>Solution architecture</h2>
+<p><img src="https://cdn.buttercms.com/lLTMoV6Rf6fKPKxUeXp6" alt="undefined" /></p>
+<h2>Registration form powered by Google Forms</h2>
+<p>Google Forms is a tool which makes possible to create forms using browser user interface. Microsoft has also similar application called Microsoft Forms which requires O365 subscription. Google Forms was an easy choice because admin users were already using Gmail email and Google Drive. More detailed information about how to use Google Forms can be found from <a href="https://gsuite.google.com/learning-center/products/forms/get-started/#!/" title="Google Forms">here</a>. In this project Google Forms is used to create registration form for end users.&nbsp;</p>
+<p>Let's start. First sign in with your Google account to the Forms <a href="https://forms.google.com/">site</a> and design your form.&nbsp;<span>Google Forms includes 12 field types: 9 question types, along with&nbsp;</span>text<span>, photo, and video fields.&nbsp;</span>Registration form in this case has the following fields:</p>
+<ul>
+<li><span>Name (Text field)</span></li>
+<li><span>Distance (Radio button)</span></li>
+<li><span>Birth date (Date)</span></li>
+<li><span>Team (Text field)</span></li>
+<li><span>Street Address&nbsp;(Text field)</span></li>
+<li><span>Postal Number&nbsp;(Text field)<br /></span></li>
+<li><span>City&nbsp;(Text field)<br /></span></li>
+<li><span>Country&nbsp;(Text field)<br /></span></li>
+<li><span>Phone number&nbsp;(Text field)<br /></span></li>
+<li><span>Email&nbsp;(Text field)<br /></span></li>
+<li><span>Gender&nbsp;(Radio button)</span></li>
+</ul>
+<h3>Form settings</h3>
+<p>From settings view you can determine if email addresses collection is required. This settings creates Email Address field to the top of the form.</p>
+<p><img src="https://cdn.buttercms.com/Fwy2QO3ZQ4Sk7XMfUK56" alt="Email field" /></p>
+<p>One requirement was to show thanks message. You can determine confirmation message which is shown after submit from the presentation tab.</p>
+<p><img src="https://cdn.buttercms.com/bqh9sJMZSwi2xQNXWodV" alt="Thanks message" /></p>
+<h3>Response data destination</h3>
+<p>Google Forms stores data of the form to the Google Spreadsheet file which is stored to the Google Drive. If you want to change name or destination of the spreadsheet where form data is stored open "Select response destination"</p>
+<p><img src="https://cdn.buttercms.com/s51kYocS9prh72avrGQ8" alt="Response destination" /></p>
+<p><img src="https://cdn.buttercms.com/Oztj7oCTTA2UeIU0NTON" alt="Response destination" /></p>
+<p>Now basic functionalities of the form are ready. Now Form can be embedded to the Wordpress site using Iframe.</p>
+<h2>Enable Google Spreadsheet API</h2>
+<p>Next we will configure Google APIs to allow external application to fetch data from Google Spreadsheet. This external application will be created later. Open Google Cloud <a href="https://console.cloud.google.com/projectcreate">console</a> and sign in with your Google credentials. Give the name of the project and click Create.</p>
+<p><img src="https://cdn.buttercms.com/k6zvfcodSq9xblMwdSu0" alt="Project" /></p>
+<p>Next select APIs &amp; Services and select Dashboard</p>
+<p><img src="https://cdn.buttercms.com/R5gypA3oQkZ47KutXpYz" alt="Dashboard" /></p>
+<p>Click Enable APIs and Services</p>
+<p><img src="https://cdn.buttercms.com/rJI2o7H7S36zXT1vdVHg" alt="Enable API" /></p>
+<p>We are interested about Google Sheets API. Use Search to find Sheets API.</p>
+<p><img src="https://cdn.buttercms.com/7skGL078TFOt5A3P9lXU" alt="Sheets API" /></p>
+<p>Enable Sheets API</p>
+<p><img src="https://cdn.buttercms.com/1R1ybBkSsq0SVIQB7dKw" alt="Enable API" /></p>
+<p>Next select Credentials. We will create a service account which is later used in the Azure Web App to fetch data from Google API.</p>
+<p><img src="https://cdn.buttercms.com/SGReo2nCQdmzRuOfBbxA" alt="Credentials" /></p>
+<p>Select Service account key under Credentials Tab.</p>
+<p><img src="https://cdn.buttercms.com/wjEcKAyQjimx6JFaJBHg" alt="Service account" /></p>
+<p>Give name for the service account and select Service Account User role. Select JSON key type which also recommended by Google. After creation you will get a JSON file which contains private key for your client.</p>
+<p><img src="https://cdn.buttercms.com/ZDvkm6MTdOvJHbIwLIfg" alt="Service account" /></p>
+<p><img src="https://cdn.buttercms.com/JT9evoDHSfWszCGKzGVp" alt="Private key data" /></p>
+<p>Example about private key JSON:</p>
+<pre class="language-undefined"><code>{
+  "type": "service_account",
+  "project_id": "",
+  "private_key_id": "",
+  "private_key": "-----BEGIN PRIVATE END PRIVATE KEY-----\n",
+  "client_email": "",
+  "client_id": "",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": ""
+}</code></pre>
+<h2>Google Drive permissions</h2>
+<p>Service account which was created on the previous section has not permissions to the any files in Google Drive. In this section I will describe how you determine permissions for service account.&nbsp;Open Google Drive and find Spreadsheet file were Google Forms stores the data. Right click top of the file and select Share.</p>
+<p><img src="https://cdn.buttercms.com/Jv3rSpAMS1Og0eAAH1yg" alt="Share" /></p>
+<p>Find service account which was created on the previous phases. Give read permissions for the account.</p>
+<p><img src="https://cdn.buttercms.com/Z2AZJPnxQ4KsOZgcw9LJ" alt="Permission" /></p>
+<h2>Participant listing app (Azure hosted)</h2>
+<p>Registration data in Spreadsheet contains a lot of data about participants so we cannot use Spreadsheet file as it is. In this section I will describe shortly how small ASP.NET Core + React.js App is created to show only few columns of data from Spreadsheet. This app will be hosted in Azure as PaaS application. It's also possible to host ASP.NET Core application in the Google cloud as well. I will investigate Google cloud + .NET application possibilities later.</p>
+<p>Install Google.Apis.Sheets.v4 nuget package to your project.</p>
+<p><img src="https://cdn.buttercms.com/Mbo4OjQjSLWqeqzk1OeH" alt="Nuget-package" /></p>
+<h3>How to use Google Sheets API</h3>
+<h4>Back-end</h4>
+<p>First you have to initialize GoogleCredential object. You can use FromJson method were you can pass private key JSON content as a string. In the application side you can store JSON information ex. to the Key Vault in Azure.&nbsp;</p>
+<pre class="language-csharp"><code>string[] scopes = { SheetsService.Scope.SpreadsheetsReadonly };
+GoogleCredential credential = GoogleCredential.FromJson(jsonData).CreateScoped(scopes);         
+SheetsService service = new SheetsService(new BaseClientService.Initializer()
+{
+    HttpClientInitializer = credential,
+    ApplicationName = applicationName,
+});</code></pre>
+<p>Next create a Person object which describes the Registered person.</p>
+<pre class="language-csharp"><code>public class Person
+{
+    public string Name { get; set; }
+    public string Team { get; set; }
+    public string City { get; set; }
+    public string Country { get; set; }
+    public string Distance { get; set; }
+    public string Gender { get; set; }
+}</code></pre>
+<p>SpreadsheetFieldsEnum contains index numbers of the each column in the Spreadsheet.</p>
+<pre class="language-csharp"><code>public enum SpreadsheetFieldsEnum
+{
+    Name = 1,
+    Team = 4,
+    City = 7,
+    Country = 8,
+    Distance = 2,
+    Gender = 11
+}</code></pre>
+<p>Before fetching data from the spreadsheet via API id and name of the spreatsheet should be checked. Open Google Drive and open Spreadsheet file. Spreadsheet Id is shown in the URL. Spreadsheet name is shown in the bottom of the screen when the spreadsheet file is open.</p>
+<p><img src="https://cdn.buttercms.com/V2azT773T1KWtuQtYFtf" alt="Spreadsheet Id" /></p>
+<p>Fetching the data is very straightforward process. Make get request to the specified spreadsheet and call Execute method. Execute returns a response object where you can loop through data and create new Person objects.</p>
+<pre class="language-csharp"><code>SpreadsheetsResource.ValuesResource.GetRequest request = service.Spreadsheets.Values.Get(spreadsheetId, sheetName);
+
+ValueRange response = request.Execute();
+
+//skip first row because it contains header title information
+return response.Values.Skip(1).Select(row =&gt; new Person()
+{
+    Name = ProcessRow(row, (int)SpreadsheetFieldsEnum.Name),
+    Team = ProcessRow(row, (int)SpreadsheetFieldsEnum.Team),
+    City = ProcessRow(row, (int)SpreadsheetFieldsEnum.City),
+    Country = ProcessRow(row, (int)SpreadsheetFieldsEnum.Country),
+    Distance = ProcessRow(row, (int)SpreadsheetFieldsEnum.Distance),
+    Gender = ProcessRow(row, (int)SpreadsheetFieldsEnum.Gender)
+}).ToList();</code></pre>
+<p>API Controller has GetRegisteredPerson action which returns list of Person object to the front-end.</p>
+<pre class="language-csharp"><code>[HttpGet("[action]")]
+public List&lt;Person&gt; GetRegisteredPersons()
+{
+    List&lt;Person&gt; allRegistrations = new List&lt;Person&gt;();
+    string[] scopes = { SheetsService.Scope.SpreadsheetsReadonly };
+
+    var applicationName = _configuration[Constants.Constants.AppSettingKeys.APPLICATION_NAME];
+    var spreadSheedIdFi = _configuration[Constants.Constants.AppSettingKeys.REGISTRATION_FORM_FI_SPREADSHEETID];              
+    var spreadSheedNameFi = _configuration[Constants.Constants.AppSettingKeys.REGISTRATION_FORM_FI_SPREADSHEET_NAME];
+
+    if (string.IsNullOrEmpty(applicationName)){ return allRegistrations; }
+    if (string.IsNullOrEmpty(spreadSheedIdFi)) { return allRegistrations; }           
+    if (string.IsNullOrEmpty(spreadSheedNameFi)) { return allRegistrations; }               
+
+    allRegistrations = FetchSpreadsheetData(spreadSheedIdFi, spreadSheedNameFi);                
+    
+    return allRegistrations;
+}</code></pre>
+<h4>Front-end</h4>
+<p>I created a small React.js component which fetch data from the back-end controller and renders data to the table.</p>
+<pre class="language-javascript"><code>import * as React from 'react';
+import { RouteComponentProps } from 'react-router';
+import 'isomorphic-fetch';
+import LocalizedStrings from 'react-localization';
+import 'babel-polyfill';
+
+
+let strings = new LocalizedStrings({
+    en: {
+        name: "Nimi/Namn",
+        team: "Seura/Klubb",
+        city: "Kaupunki/Stad",
+        country: "Maa/Land",
+        loading: "Ladataan/...",
+        noRegistrations: "Ei ilmoittautuneita/Ej registrerad",
+        women22km: "Naiset/Damer 22 km",
+        men22km: "Miehet/M&auml;n 22 km",
+        women10km: "Naiset/Damer 10 km",
+        men10km: "Miehet/M&auml;n 10 km"      
+    }
+});
+
+const commonConstants = {
+    gender: {
+        female: 'Nainen / Kvinna',
+        male: 'Mies / Man'
+    }    
+}
+
+interface RegisteredState {
+    registeredPersons: Person[];
+    loading: boolean;
+}
+
+interface Person {
+    name: string;
+    team: string;
+    city: string;
+    country: string;
+    distance: string;
+    gender: string;
+}
+
+export class Registered extends React.Component&lt;RouteComponentProps&lt;{}&gt;, RegisteredState&gt; {
+    constructor() {
+        super();
+        this.state = { registeredPersons: [], loading: true };
+
+        fetch('api/Registration/GetRegisteredPersons')
+            .then(response =&gt; response.json() as Promise&lt;Person[]&gt;)
+            .then(data =&gt; {
+                this.setState({ registeredPersons: data, loading: false });
+            });
+    }
+
+    public render() {   
+        let contents = this.state.loading ? &lt;p&gt;&lt;em&gt;{strings.loading}&lt;/em&gt;&lt;/p&gt; : Registered.renderRegisteredPersonsTable(this.state.registeredPersons);
+        return &lt;div&gt;         
+            {contents}        
+        &lt;/div&gt;;
+    }   
+
+    private static renderRegisteredPersonsTable(registeredPersons: Person[]) {
+
+        var firstColumn = {
+            width: '150px'
+        };
+
+        var responsiveTable = {
+            "overflow-x":"auto"
+        };
+
+        return &lt;div style={responsiveTable}&gt;&lt;table className='table'&gt;
+            &lt;thead&gt;
+                &lt;tr&gt;
+                    &lt;th style={firstColumn}&gt;&lt;/th&gt;
+                    &lt;th&gt;{strings.name}&lt;/th&gt;
+                    &lt;th&gt;{strings.team}&lt;/th&gt;
+                    &lt;th&gt;{strings.city}&lt;/th&gt;
+                    &lt;th&gt;{strings.country}&lt;/th&gt;
+                &lt;/tr&gt;
+            &lt;/thead&gt;
+            &lt;tbody&gt;
+                &lt;tr className='active'&gt;&lt;td colSpan={6}&gt;&lt;strong&gt;{strings.women22km}&lt;/strong&gt;&lt;/td&gt;&lt;/tr&gt;
+                {Registered.renderRegisteredPersonRows(registeredPersons, "22 km", commonConstants.gender.female)}
+                &lt;tr className='active'&gt;&lt;td colSpan={6}&gt;&lt;strong&gt;{strings.men22km}&lt;/strong&gt;&lt;/td&gt;&lt;/tr&gt;
+                {Registered.renderRegisteredPersonRows(registeredPersons, "22 km", commonConstants.gender.male)}
+                &lt;tr className='active'&gt;&lt;td colSpan={6}&gt;&lt;strong&gt;{strings.women10km}&lt;/strong&gt;&lt;/td&gt;&lt;/tr&gt;
+                {Registered.renderRegisteredPersonRows(registeredPersons, "10 km", commonConstants.gender.female)}
+                &lt;tr className='active'&gt;&lt;td colSpan={6}&gt;&lt;strong&gt;{strings.men10km}&lt;/strong&gt;&lt;/td&gt;&lt;/tr&gt;
+                {Registered.renderRegisteredPersonRows(registeredPersons, "10 km", commonConstants.gender.male)}
+            &lt;/tbody&gt;
+        &lt;/table&gt;&lt;/div&gt;;
+    }
+
+    private static renderRegisteredPersonRows(registeredPersons: Person[], distance: string, gender: string) {
+
+        let filteredData;
+
+        filteredData = registeredPersons.filter((person) =&gt; (person.distance == distance &amp;&amp; person.gender == gender));   
+
+        if (filteredData.length === 0) {
+            return (&lt;tr&gt;
+                &lt;td colSpan={6}&gt;{strings.noRegistrations}&lt;/td&gt;
+            &lt;/tr&gt;)
+        }
+        return filteredData.map(function (registeredPerson, index) {
+            return (&lt;tr&gt;
+                &lt;td&gt;&lt;/td&gt;
+                &lt;td&gt;{registeredPerson.name}&lt;/td&gt;
+                &lt;td&gt;{registeredPerson.team}&lt;/td&gt;
+                &lt;td&gt;{registeredPerson.city}&lt;/td&gt;
+                &lt;td&gt;{registeredPerson.country}&lt;/td&gt;
+            &lt;/tr&gt;);
+        })
+    }
+}
+
+</code></pre>
+<p>Now solutions is ready:).</p></p>
+
+            <h2>Comments</h2>
+
+                <p><div id="disqus_thread"></div></p>
+
+                <div class="blog-content__pagenav">
+                    <div class="blog-content__nav">
+                            <div class="blog-content__prev">
+                                <a id="post-previous-hello-headless-blog" href="hello-headless-blog.html" rel="prev">
+                                    <span>Previous Post</span>
+                                    Hello Headless Blog
+                                </a>
+                            </div>
+                            <div class="blog-content__next">
+                                <a id="post-next-omakannan-omatietovaranto" href="omakannan-omatietovaranto.html" rel="next">
+                                    <span>Next Post</span>
+                                    Experiences about Finnish Personal Health Record data repository (part 1)
+                                </a>
+                            </div>
+                        </div>
+
+
+                    <div class="blog-content__all">
+                        <a href="../index.html" class="btn btn--primary">
+                            View All Post
+                        </a>
+                    </div>
+                </div>
+
+            </div><!-- end blog-content__main -->
+        </div> <!-- end blog-content -->
+
+    </article>
+
+
+
+    
+        
+
+<!-- footer
+    ================================================== -->
+<footer>
+    <div class="row">
+        <div class="col-full">
+
+            <div class="footer-logo">
+                <a class="footer-site-logo" href="#0"><img src="../images/name.png" alt="Homepage"></a>
+            </div>
+
+            <ul class="footer-social">
+                <li>
+                    <a href="https://www.twitter.com/">
+                        <i class="im im-twitter" aria-hidden="true"></i>
+                        <span>Twitter</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.linkedin.com/in/kallemarjokorpi">
+                        <i class="im im-linkedin" aria-hidden="true"></i>
+                        <span>Linkedin</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://github.com/kalleantero">
+                        <i class="im im-github" aria-hidden="true"></i>
+                        <span>Github</span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+    <div class="row footer-bottom">
+
+        <div class="col-twelve">
+            <div class="copyright">
+                <span>Copyright Kalle Marjokorpi 2021</span>
+                <span>Design by <a href="http://www.styleshout.com/">styleshout</a></span>
+                <span>Content management by <a href="http://www.buttercms.com/">Headless ButterCMS</a></span>
+
+            </div>
+
+        </div>
+
+    </div> <!-- end footer-bottom -->
+
+</footer> <!-- end footer -->
+    
+
+
+    <div id="preloader">
+        <div id="loader"></div>
+    </div>
+
+    <!-- Java Script
+     ================================================== -->
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/plugins.js"></script>
+    <script src="../js/main.min.js"></script>
+    
+
+    <script>
+        (function () { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = '../../blog-by-kalle-marjokorpi.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <script id="dsq-count-scr" src="../../blog-by-kalle-marjokorpi.disqus.com/count.js" async></script>
+
+    <!-- Cloudflare Web Analytics -->
+    <script defer src='../../static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cac9fd24c1c04b6d9984ea31685b0414"}'></script><!-- End Cloudflare Web Analytics -->
+
+</body>
+
+<!-- Mirrored from www.kallemarjokorpi.fi/blog/participant-registration-system by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 14 Apr 2021 13:57:21 GMT -->
+</html>

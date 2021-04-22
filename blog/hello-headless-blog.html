@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from www.kallemarjokorpi.fi/blog/hello-headless-blog by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 14 Apr 2021 13:57:21 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+
+    <!-- Google Tag Manager -->
+    <script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    '../../www.googletagmanager.com/gtm5445.html?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-MPLFPSF');</script>
+    <!-- End Google Tag Manager -->
+
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+
+    
+    <title>Hello Headless Blog - Blog by Kalle Marjokorpi</title>
+    <meta name="description" content="I decided to start a work related blog to share knowledge, solutions and experiences about different kind of technologies.&#xA0;I mostly work with Azure and MS technology in general so content of this blog will be concentrated to cloud and MS tech.">
+    <meta name="author" content="Kalle Marjokorpi">
+
+
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/vendor.css">
+    <link rel="stylesheet" href="../css/main.css">
+
+    <script src="../js/modernizr.js"></script>
+    <script src="../js/pace.min.js"></script>
+
+    <script type="text/javascript">!function(T,l,y){var S=T.location,u="script",k="instrumentationKey",D="ingestionendpoint",C="disableExceptionTracking",E="ai.device.",I="toLowerCase",b="crossOrigin",w="POST",e="appInsightsSDK",t=y.name||"appInsights";(y.name||T[e])&&(T[e]=t);var n=T[t]||function(d){var g=!1,f=!1,m={initialize:!0,queue:[],sv:"4",version:2,config:d};function v(e,t){var n={},a="Browser";return n[E+"id"]=a[I](),n[E+"type"]=a,n["ai.operation.name"]=S&&S.pathname||"_unknown_",n["ai.internal.sdkVersion"]="javascript:snippet_"+(m.sv||m.version),{time:function(){var e=new Date;function t(e){var t=""+e;return 1===t.length&&(t="0"+t),t}return e.getUTCFullYear()+"-"+t(1+e.getUTCMonth())+"-"+t(e.getUTCDate())+"T"+t(e.getUTCHours())+":"+t(e.getUTCMinutes())+":"+t(e.getUTCSeconds())+"."+((e.getUTCMilliseconds()/1e3).toFixed(3)+"").slice(2,5)+"Z"}(),iKey:e,name:"Microsoft.ApplicationInsights."+e.replace(/-/g,"")+"."+t,sampleRate:100,tags:n,data:{baseData:{ver:2}}}}var h=d.url||y.src;if(h){function a(e){var t,n,a,i,r,o,s,c,p,l,u;g=!0,m.queue=[],f||(f=!0,t=h,s=function(){var e={},t=d.connectionString;if(t)for(var n=t.split(";"),a=0;a<n.length;a++){var i=n[a].split("=");2===i.length&&(e[i[0][I]()]=i[1])}if(!e[D]){var r=e.endpointsuffix,o=r?e.location:null;e[D]="https://"+(o?o+".":"")+"dc."+(r||"services.visualstudio.com")}return e}(),c=s[k]||d[k]||"",p=s[D],l=p?p+"/v2/track":config.endpointUrl,(u=[]).push((n="SDK LOAD Failure: Failed to load Application Insights SDK script (See stack for details)",a=t,i=l,(o=(r=v(c,"Exception")).data).baseType="ExceptionData",o.baseData.exceptions=[{typeName:"SDKLoadFailed",message:n.replace(/\./g,"-"),hasFullStack:!1,stack:n+"\nSnippet failed to load ["+a+"] -- Telemetry is disabled\nHelp Link: https://go.microsoft.com/fwlink/?linkid=2128109\nHost: "+(S&&S.pathname||"_unknown_")+"\nEndpoint: "+i,parsedStack:[]}],r)),u.push(function(e,t,n,a){var i=v(c,"Message"),r=i.data;r.baseType="MessageData";var o=r.baseData;return o.message='AI (Internal): 99 message:"'+("SDK LOAD Failure: Failed to load Application Insights SDK script (See stack for details) ("+n+")").replace(/\"/g,"")+'"',o.properties={endpoint:a},i}(0,0,t,l)),function(e,t){if(JSON){var n=T.fetch;if(n&&!y.useXhr)n(t,{method:w,body:JSON.stringify(e),mode:"cors"});else if(XMLHttpRequest){var a=new XMLHttpRequest;a.open(w,t),a.setRequestHeader("Content-type","application/json"),a.send(JSON.stringify(e))}}}(u,l))}function i(e,t){f||setTimeout(function(){!t&&m.core||a()},500)}var e=function(){var n=l.createElement(u);n.src=h;var e=y[b];return!e&&""!==e||"undefined"==n[b]||(n[b]=e),n.onload=i,n.onerror=a,n.onreadystatechange=function(e,t){"loaded"!==n.readyState&&"complete"!==n.readyState||i(0,t)},n}();y.ld<0?l.getElementsByTagName("head")[0].appendChild(e):setTimeout(function(){l.getElementsByTagName(u)[0].parentNode.appendChild(e)},y.ld||0)}try{m.cookie=l.cookie}catch(p){}function t(e){for(;e.length;)!function(t){m[t]=function(){var e=arguments;g||m.queue.push(function(){m[t].apply(m,e)})}}(e.pop())}var n="track",r="TrackPage",o="TrackEvent";t([n+"Event",n+"PageView",n+"Exception",n+"Trace",n+"DependencyData",n+"Metric",n+"PageViewPerformance","start"+r,"stop"+r,"start"+o,"stop"+o,"addTelemetryInitializer","setAuthenticatedUserContext","clearAuthenticatedUserContext","flush"]),m.SeverityLevel={Verbose:0,Information:1,Warning:2,Error:3,Critical:4};var s=(d.extensionConfig||{}).ApplicationInsightsAnalytics||{};if(!0!==d[C]&&!0!==s[C]){method="onerror",t(["_"+method]);var c=T[method];T[method]=function(e,t,n,a,i){var r=c&&c(e,t,n,a,i);return!0!==r&&m["_"+method]({message:e,url:t,lineNumber:n,columnNumber:a,error:i}),r},d.autoExceptionInstrumented=!0}return m}(y.cfg);(T[t]=n).queue&&0===n.queue.length&&n.trackPageView({})}(window,document,{
+src: "../../az416426.vo.msecnd.net/scripts/b/ai.2.min.js",
+cfg: { 
+    connectionString: 'InstrumentationKey=64b5b58f-6682-4e4d-98f5-1dc1ae7b1f36'
+}});
+    </script>
+</head>
+<body id="top">
+
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MPLFPSF"
+                height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <!-- header
+    ================================================== -->
+
+    
+        <!-- header
+   ================================================== -->
+
+<header class="s-header">
+
+    <div class="header-logo">
+        <a class="site-logo" href="../index.html"><img src="../images/logo2.png" alt="Homepage"></a>
+    </div>
+
+    
+
+    <nav class="header-nav-wrap">
+
+        <ul class="header-nav">
+
+
+            <li class=""><a id="top-navigation-link-root" href="../index.html" title="">Home</a></li>
+
+                <li id="top-navigation-link-about" class="smoothscroll"><a href="../about.html" title="">About me</a></li>
+
+        </ul>
+    </nav> <!-- end main-nav-wrap -->
+
+
+
+
+    <a class="header-menu-toggle" href="#0"><span>Menu</span></a>
+
+</header> <!-- end s-header -->
+
+
+    
+
+    
+
+<!-- content
+   ================================================== -->
+
+
+    <article class="blog-single">
+
+        <!-- page header/blog hero
+    ================================================== -->
+
+        
+        <div class="page-header page-header--single page-hero" style=background-image:url(https://cdn.buttercms.com/xmEulXRxR2C6LcjHlXmq)>
+
+            <div class="row page-header__content narrow">
+                <article class="col-full">
+                    <div class="page-header__info">
+                        <div class="page-header__cat">
+                                <a id="post-category-headless-cms" href="category/headless-cms.html">Headless CMS</a>
+                        </div>
+                    </div>
+                    <h1 class="page-header__title">
+                        <a href="#0" title="">
+                            Hello Headless Blog
+                        </a>
+                    </h1>
+                    <ul class="page-header__meta">
+                        <li class="date">
+21.04.2018 09:22                        </li>
+                        <li class="author">
+                            By
+                            <span>Kalle Marjokorpi</span>
+                        </li>
+                    </ul>
+
+                </article>
+                
+            </div>
+
+        </div> <!-- end page-header -->
+
+        <div class="row blog-content">
+            <div class="col-full blog-content__main">
+
+                <p><h2>Hello World</h2>
+<p>I decided to start a work related blog to share knowledge, solutions and experiences about different kind of technologies. I mostly work with Azure and MS technology in general so content of this blog will be concentrated to cloud and MS tech. I will use this site as a place to test and pilot new technologies:). First I thought that I'll build this blog top of the WordPress. I have slightly experience about WordPress from a few projects and I liked it. WordPress is a good blog platform but I wanted something else. Headless Content Management system is a quite trendy term now so I decided to investigate this more. After googling a while I found ButterCMS which works almost every tech stack and it's free for personal use. Sounds promising.</p>
+<h2>What is a Headless CMS?</h2>
+<p>Headless Content Management means that content management is decoupled from the application itself. Content of the site is fetched through API interfaces and produced/stored elsewhere. This approach makes possible to the change solution platform quite easily.</p>
+<blockquote>
+<p><span>A headless content management system consists primarily of an API as well as the backend technology required to store and deliver content.&nbsp;Source: <a href="https://www.keycdn.com/blog/headless-cms/">Keycdn</a></span></p>
+</blockquote>
+<h2>A few words about tech behind the hood of this blog</h2>
+<p>This blog is a PaaS application which is hosted in Azure. The application is a normal ASP.NET Core web app created by MVC manner way. ButterCMS provides a Headless CMS solution for this blog. This Azure Web application just has a logic to fetch content data from the ButterCMS API interfaces. Source code of this blog application is available in <a href="https://github.com/kalleantero/headless-cms-blog" rel="follow">GitHub</a>.</p>
+<h2>Solution architecture and dependencies</h2>
+<p>The following picture describes how the architecture of this solution is created.</p>
+<p><img src="https://cdn.buttercms.com/3V7WJI0QaWR729mXywlQ" alt="undefined" /></p>
+<h2>How to start with ButterCMS?</h2>
+<p>Next I share some code snippets how ButterCMS is used in this site. Main focus is to show how ButterCMS API is used in the application. You can find good .NET code samples from <a href="../docs/api-client/dotnet.html#BloggingIntroduction">here</a>. Let's start. First create a ButterCMS Account in ButterCMS <a href="../index.html">homepage</a>.&nbsp;</p>
+<h3><strong>Install ButterCMS Nuget package to your Visual Studio-project</strong></h3>
+<pre class="language-csharp"><code>Install-Package ButterCMS
+</code></pre>
+<h3><strong>ButterCmsController</strong></h3>
+<p>Through IConfiguration you can fetch secret values (ex. ButterCMS Api key) from the AppSettings or App Configuration. MemoryCache is used to cache content data to prevent extra queries to the ButterCMS API. IStringLocalizer makes possible to get localized content from RESX-files.</p>
+<pre class="language-csharp"><code>public class ButterCmsController : Controller
+{
+    private ButterCMSClient _cmsClient;
+    private readonly AppSettings _appSettings;
+    private readonly IMemoryCache _cache;
+    private readonly IConfiguration _configuration;
+    private readonly IStringLocalizer&lt;SharedResources&gt; _localizer;
+
+    public ButterCmsController(IOptions&lt;AppSettings&gt; settings, IMemoryCache cache, IConfiguration configuration, IStringLocalizer&lt;SharedResources&gt; localizer)
+    {
+        _appSettings = settings.Value;
+        _cache = cache;
+        _configuration = configuration;
+        _localizer = localizer;
+
+        if (!string.IsNullOrEmpty(_configuration[CommonConstants.ButterCms.ButterCmsApiKey]))
+        {
+            _cmsClient = new ButterCMSClient(_configuration[CommonConstants.ButterCms.ButterCmsApiKey]);
+        }
+    }
+}</code></pre>
+<h3><strong></strong>Fetch all post items</h3>
+<p>ListPosts method parameters are documented <a href="../docs/api/indexa20d.html?csharp#blog-posts">here</a>.</p>
+<pre class="language-csharp"><code>public IActionResult Index()
+{            
+    ViewBag.BlogTitle = _localizer["HeaderBlogTitle"];
+    ViewBag.AboutTheSiteDescription = _localizer["AboutTheSiteContent"];
+
+    var cacheKey = CommonConstants.CacheKeys.AllPosts;
+    IEnumerable&lt;Post&gt; response = null;
+    var cachedData = _cache.Get&lt;IEnumerable&lt;Post&gt;&gt;(cacheKey);
+
+    if (cachedData != null &amp;&amp; _appSettings.CacheEnabled)
+    {
+        response = cachedData;
+    }
+    else
+    {
+        if (_cmsClient == null) return View();
+
+        var dataResponse = _cmsClient.ListPosts(int.MinValue, int.MaxValue, true, null, null, null);
+
+        if (dataResponse == null) return View();
+        if (dataResponse.Data == null) return View();
+        
+        response = dataResponse.Data;
+        _cache.Set&lt;IEnumerable&lt;Post&gt;&gt;(cacheKey, response, TimeSpan.FromMinutes(_appSettings.PostsCacheDurationInMinutes));
+        
+    }
+
+    return View(response.OrderByDescending(x =&gt; x.Published).ToList());
+}</code></pre>
+<h3><strong>View which shows all posts</strong></h3>
+<pre class="language-csharp"><code>@model List&lt;ButterCMS.Models.Post&gt;;
+
+@foreach (var post in Model)
+{
+    &lt;article class="brick entry format-standard animate-this"&gt;
+
+        @if (!string.IsNullOrEmpty(@post.FeaturedImage))
+        {
+            &lt;div class="entry-thumb"&gt;
+                &lt;a id="index-post-imagelink-@Uri.EscapeDataString(post.Slug)" href="@string.Concat(CommonConstants.Routes.Blog, Uri.EscapeDataString(post.Slug))" class="thumb-link"&gt;
+                    &lt;img src="@post.FeaturedImage" alt="building"&gt;
+                &lt;/a&gt;
+            &lt;/div&gt;
+        }
+
+        &lt;div class="entry-text"&gt;
+            &lt;div class="entry-header"&gt;
+                &lt;div class="entry-meta"&gt;
+                    &lt;span class="cat-links"&gt;
+                        @foreach (var category in post.Categories)
+                        {
+                            &lt;a id="post-category-@Uri.EscapeDataString(category.Slug)" href="@string.Concat(CommonConstants.Routes.Category, Uri.EscapeDataString(category.Slug))"&gt;@category.Name&lt;/a&gt;
+                        }
+                    &lt;/span&gt;
+                &lt;/div&gt;
+
+                &lt;h1 class="entry-title"&gt;&lt;a id="index-post-link-@Uri.EscapeDataString(post.Slug)" href="@string.Concat(CommonConstants.Routes.Blog, Uri.EscapeDataString(post.Slug))"&gt;@post.Title&lt;/a&gt;&lt;/h1&gt;
+
+            &lt;/div&gt;
+            &lt;div class="entry-excerpt"&gt;
+                @if (post.Published.HasValue)
+                {
+                    @post.Published.Value.ToString("dd.MM.yyyy HH:mm")
+                }
+                &lt;br /&gt;
+                @post.Summary
+            &lt;/div&gt;
+        &lt;/div&gt;
+
+    &lt;/article&gt; &lt;!-- end article --&gt;
+}</code></pre>
+<h3><strong>Show single blog post content</strong></h3>
+<p>Add new action to the ButterCmsController. This action fetches post data from API with a slug-parameter.</p>
+<pre class="language-csharp"><code>[Route("blog/{slug}")]
+public async Task&lt;ActionResult&gt; ShowPost(string slug)
+{
+    ViewBag.BlogTitle = _localizer["HeaderBlogTitle"];
+
+    if (string.IsNullOrEmpty(slug)) return View(CommonConstants.Views.Post);
+
+    var cacheKey = string.Concat(CommonConstants.CacheKeys.ShowPost,"_", slug);
+    PostResponse response = null;
+    var cachedData = _cache.Get&lt;PostResponse&gt;(cacheKey);
+    if(cachedData != null &amp;&amp; _appSettings.CacheEnabled)
+    {
+        response = cachedData;
+    }
+    else
+    {
+        if (_cmsClient == null)
+            return View(CommonConstants.Views.Post);
+        var postResponse = await _cmsClient.RetrievePostAsync(slug);
+        if(postResponse != null)
+        {
+            response = postResponse;
+            _cache.Set(cacheKey, response, TimeSpan.FromMinutes(_appSettings.PostCacheDurationInMinutes));                    
+        }
+    }
+    return View(CommonConstants.Views.Post, response);
+}</code></pre>
+<h3>Post View</h3>
+<pre class="language-csharp"><code>@model ButterCMS.Models.PostResponse;
+
+@section Metadata
+{
+    &lt;title&gt;@Model.Data.SeoTitle @ViewBag.BlogTitle&lt;/title&gt;
+    &lt;meta name="description" content="@Model.Data.MetaDescription"&gt;
+    &lt;meta name="author" content="@Model.Data.Author.FirstName @Model.Data.Author.LastName"&gt;
+}
+
+&lt;!-- content
+   ================================================== --&gt;
+&lt;section id="content-wrap" class="blog-single"&gt;
+    &lt;div class="row"&gt;
+        &lt;div class="col-twelve"&gt;
+
+            &lt;article class="format-standard"&gt;
+
+                @*@if (!string.IsNullOrEmpty(Model.Data.FeaturedImage))
+                {
+                    &lt;div class="content-media"&gt;
+                        &lt;div class="post-thumb"&gt;
+                            &lt;img src="@Model.Data.FeaturedImage"&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                }*@
+
+                &lt;div class="primary-content"&gt;
+
+                    &lt;h1 class="page-title"&gt;@Model.Data.Title&lt;/h1&gt;
+
+                    &lt;ul class="entry-meta"&gt;
+
+                        @if (Model.Data.Published.HasValue)
+                        {
+                            &lt;li class="date"&gt;@Model.Data.Published.Value.ToString("dd.MM.yyyy HH:mm")&lt;/li&gt;
+                        }
+
+                        &lt;li class="cat"&gt;
+                            @foreach (var category in Model.Data.Categories)
+                            {
+                                &lt;a id="post-category-@Uri.EscapeDataString(category.Slug)" href="@string.Concat(CommonConstants.Routes.Category, Uri.EscapeDataString(category.Slug))"&gt;@category.Name&lt;/a&gt;
+                            }
+                        &lt;/li&gt;
+                    &lt;/ul&gt;
+
+                    &lt;p&gt;@Html.Raw(Model.Data.Body)&lt;/p&gt;
+
+                &lt;/div&gt;
+
+                &lt;!-- end entry-primary --&gt;
+                &lt;div class="pagenav group"&gt;
+                    @{
+                        if (Model.Meta.PreviousPost != null)
+                        {
+                            &lt;div class="prev-nav"&gt;
+                                &lt;a id="post-previous-@Uri.EscapeDataString(Model.Meta.PreviousPost.Slug)" href="@string.Concat(CommonConstants.Routes.Blog, Uri.EscapeDataString(Model.Meta.PreviousPost.Slug))" rel="prev"&gt;
+                                    &lt;span&gt;Previous&lt;/span&gt;
+                                    @Model.Meta.PreviousPost.Title
+                                &lt;/a&gt;
+                            &lt;/div&gt;
+                        }
+                    }
+                    @if (Model.Meta.NextPost != null)
+                    {
+                        &lt;div class="next-nav"&gt;
+                            &lt;a id="post-next-@Uri.EscapeDataString(Model.Meta.NextPost.Slug)" href="@string.Concat(CommonConstants.Routes.Blog, Uri.EscapeDataString(Model.Meta.NextPost.Slug))" rel="next"&gt;
+                                &lt;span&gt;Next&lt;/span&gt;
+                                @Model.Meta.NextPost.Title
+                            &lt;/a&gt;
+                        &lt;/div&gt;
+                    }
+                &lt;/div&gt;
+
+            &lt;/article&gt;
+
+
+        &lt;/div&gt; &lt;!-- end col-twelve --&gt;
+    &lt;/div&gt; &lt;!-- end row --&gt;
+
+    &lt;div class="comments-wrap"&gt;
+        &lt;div id="comments" class="row"&gt;
+            &lt;div class="col-full"&gt;
+                &lt;!--Disqus--&gt;
+                &lt;div id="disqus_thread"&gt;&lt;/div&gt;
+                &lt;script&gt;
+                    (function () {
+                        var d = document, s = d.createElement('script');
+                        s.src = 'https://disqus.com/embed.js';
+                        s.setAttribute('data-timestamp', +new Date());
+                        (d.head || d.body).appendChild(s);
+                    })();
+                &lt;/script&gt;
+                &lt;noscript&gt;Please enable JavaScript to view the &lt;a href="https://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;&lt;/noscript&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+&lt;/section&gt; &lt;!-- end content --&gt;</code></pre>
+<h3>Blog search</h3>
+<p>Index view is used to show content of posts.</p>
+<pre class="language-csharp"><code>[Route("search/{s?}")]
+public IActionResult Search(string s)
+{
+    if(string.IsNullOrEmpty(s)) return View();
+
+    ViewBag.BlogTitle = _localizer["HeaderBlogTitle"];
+    ViewBag.AboutTheSiteDescription = _localizer["AboutTheSiteContent"];
+
+    var cacheKey = string.Concat(CommonConstants.CacheKeys.Search, "_", s);
+    IEnumerable&lt;Post&gt; response = null;
+    var cachedData = _cache.Get&lt;IEnumerable&lt;Post&gt;&gt;(cacheKey);
+
+    if (cachedData != null &amp;&amp; _appSettings.CacheEnabled)
+    {
+        response = cachedData;
+    }
+    else
+    {
+        if (_cmsClient == null)
+            return View();
+        var dataResponse = _cmsClient.SearchPosts(s, int.MinValue, int.MaxValue);
+
+        if (dataResponse == null) return View(CommonConstants.Views.Index);
+        if (dataResponse.Data == null) return View(CommonConstants.Views.Index);
+        
+        response = dataResponse.Data;
+        _cache.Set(cacheKey, response, TimeSpan.FromMinutes(_appSettings.PostsCacheDurationInMinutes));
+        
+    }
+
+    return View(CommonConstants.Views.Index, response.OrderByDescending(x =&gt; x.Published).ToList());
+}</code></pre>
+<h3>Show posts by category</h3>
+<p>Index view is used to show content of posts.</p>
+<pre class="language-csharp"><code>[Route("blog/category/{slug}")]
+public async Task&lt;ActionResult&gt; ShowPostsByCategory(string slug)
+{
+    ViewBag.BlogTitle = _localizer["HeaderBlogTitle"];
+    ViewBag.AboutTheSiteDescription = _localizer["AboutTheSiteContent"];
+
+    if (string.IsNullOrEmpty(slug)) return View(CommonConstants.Views.Index);
+
+    var cacheKey = string.Concat(CommonConstants.CacheKeys.ShowPostsByCategory, "_", slug);
+    IEnumerable&lt;Post&gt; response = null;
+    var cachedData = _cache.Get&lt;IEnumerable&lt;Post&gt;&gt;(cacheKey);
+
+    if (cachedData != null &amp;&amp; _appSettings.CacheEnabled)
+    {
+        response = cachedData;
+    }
+    else
+    {
+        if (_cmsClient == null)
+            return View();
+
+        var dataResponse = await _cmsClient.ListPostsAsync(int.MinValue, int.MaxValue, true, null, slug, null);
+
+        if (dataResponse == null) return View(CommonConstants.Views.Index);
+        if (dataResponse.Data == null) return View(CommonConstants.Views.Index);
+        
+        response = dataResponse.Data;
+        _cache.Set(cacheKey, response, TimeSpan.FromMinutes(_appSettings.PostsCacheDurationInMinutes));
+        
+    }
+    return View(CommonConstants.Views.Index, response.OrderByDescending(x =&gt; x.Published).ToList());
+}</code></pre>
+<p>I have also implemented top navigation element as a MVC ViewComponent. Basically component fetches pages from ButterCMS by using ListPagesAsync method.</p>
+<p>Blogs usually have also normal content pages (ex. about, contact etc.). Page contents are also fetched from the ButterCMS API. I will later blog how content page model is working in ButterCMS.</p>
+<h2>ButterCMS Admin interface</h2>
+<h3><strong>WYSIWYG editor</strong></h3>
+<p>Editor is totally&nbsp;sufficient for a normal use. You can easily change styles and add images, links and tables.</p>
+<p><img src="https://cdn.buttercms.com/gYl6QSriTC6AfQe0olXl" alt="" caption="false" /></p>
+<p>WYSIWYG-editor supports code formatting with the most common languages/markups.</p>
+<p><strong><img src="https://cdn.buttercms.com/JBKtzDNgTEmOZQrFtzPo" alt="" caption="false" /></strong></p>
+<h3><strong>Post metadata settings</strong></h3>
+<p>From the metadata section of the post you can change publishing date, categories, tags etc.</p>
+<p><img src="https://cdn.buttercms.com/6HjJMzcVQ5S0XDaNWFlz" alt="" caption="false" /></p>
+<h3><strong>Post SEO settings</strong></h3>
+<p>SEO settings allows you to change from URL of the post, title and meta description.</p>
+<p><img src="https://cdn.buttercms.com/RIqb7m5bSPGDFlEymwnj" alt="" caption="false" /></p>
+<h2>Summary</h2>
+<p>I implemented ButterCMS API queries to the default Visual Studio MVC project template and after hour basic functionalities of the blog are ready for use. API is very well documented and everything has worked very smoothly. I definitely recommend ButterCMS for your headless content management system.</p>
+<p>Thank you for reading. Later I will blog more about ButterCMS. This was a very short walk-through of the features.</p>
+<h3><strong>Links</strong></h3>
+<ul>
+<li><a href="../index.html">ButterCMS</a></li>
+<li><a href="https://github.com/buttercms">ButterCMS GitHub</a></li>
+<li><a href="../docs/api/indexa20d.html?csharp">ButterCMS API Reference</a></li>
+<li><a href="https://www.styleshout.com/">Styleshout (site design template)</a></li>
+</ul></p>
+
+            <h2>Comments</h2>
+
+                <p><div id="disqus_thread"></div></p>
+
+                <div class="blog-content__pagenav">
+                    <div class="blog-content__nav">
+                            <div class="blog-content__next">
+                                <a id="post-next-participant-registration-system" href="participant-registration-system.html" rel="next">
+                                    <span>Next Post</span>
+                                    Participant registration system for runners event
+                                </a>
+                            </div>
+                        </div>
+
+
+                    <div class="blog-content__all">
+                        <a href="../index.html" class="btn btn--primary">
+                            View All Post
+                        </a>
+                    </div>
+                </div>
+
+            </div><!-- end blog-content__main -->
+        </div> <!-- end blog-content -->
+
+    </article>
+
+
+
+    
+        
+
+<!-- footer
+    ================================================== -->
+<footer>
+    <div class="row">
+        <div class="col-full">
+
+            <div class="footer-logo">
+                <a class="footer-site-logo" href="#0"><img src="../images/name.png" alt="Homepage"></a>
+            </div>
+
+            <ul class="footer-social">
+                <li>
+                    <a href="https://www.twitter.com/">
+                        <i class="im im-twitter" aria-hidden="true"></i>
+                        <span>Twitter</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.linkedin.com/in/kallemarjokorpi">
+                        <i class="im im-linkedin" aria-hidden="true"></i>
+                        <span>Linkedin</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://github.com/kalleantero">
+                        <i class="im im-github" aria-hidden="true"></i>
+                        <span>Github</span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+    <div class="row footer-bottom">
+
+        <div class="col-twelve">
+            <div class="copyright">
+                <span>Copyright Kalle Marjokorpi 2021</span>
+                <span>Design by <a href="http://www.styleshout.com/">styleshout</a></span>
+                <span>Content management by <a href="http://www.buttercms.com/">Headless ButterCMS</a></span>
+
+            </div>
+
+        </div>
+
+    </div> <!-- end footer-bottom -->
+
+</footer> <!-- end footer -->
+    
+
+
+    <div id="preloader">
+        <div id="loader"></div>
+    </div>
+
+    <!-- Java Script
+     ================================================== -->
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/plugins.js"></script>
+    <script src="../js/main.min.js"></script>
+    
+
+    <script>
+        (function () { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = '../../blog-by-kalle-marjokorpi.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <script id="dsq-count-scr" src="../../blog-by-kalle-marjokorpi.disqus.com/count.js" async></script>
+
+    <!-- Cloudflare Web Analytics -->
+    <script defer src='../../static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cac9fd24c1c04b6d9984ea31685b0414"}'></script><!-- End Cloudflare Web Analytics -->
+
+</body>
+
+<!-- Mirrored from www.kallemarjokorpi.fi/blog/hello-headless-blog by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 14 Apr 2021 13:57:22 GMT -->
+</html>

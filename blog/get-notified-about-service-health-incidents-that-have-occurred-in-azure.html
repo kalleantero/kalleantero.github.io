@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/get-notified-about-service-health-incidents-that-have-occurred-in-azure by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 18 Oct 2021 16:42:26 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+
+    
+    <title>Get notified about service health incidents that have occurred in Azure - Blog by Kalle Marjokorpi</title>
+    <meta name="description" content="Wouldn&#x27;t be nice to receive notifications about any service health incidents that have occurred in Azure? This blog post covers how to subscribe service health alerts and route them to Teams channel.">
+    <meta name="author" content="Kalle Marjokorpi">
+
+
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/vendor.css">
+    <link rel="stylesheet" href="../css/main.css">
+
+    <script src="../js/modernizr.js"></script>
+    <script src="../js/pace.min.js"></script>
+
+    <script type="text/javascript">!function(T,l,y){var S=T.location,u="script",k="instrumentationKey",D="ingestionendpoint",C="disableExceptionTracking",E="ai.device.",I="toLowerCase",b="crossOrigin",w="POST",e="appInsightsSDK",t=y.name||"appInsights";(y.name||T[e])&&(T[e]=t);var n=T[t]||function(d){var g=!1,f=!1,m={initialize:!0,queue:[],sv:"4",version:2,config:d};function v(e,t){var n={},a="Browser";return n[E+"id"]=a[I](),n[E+"type"]=a,n["ai.operation.name"]=S&&S.pathname||"_unknown_",n["ai.internal.sdkVersion"]="javascript:snippet_"+(m.sv||m.version),{time:function(){var e=new Date;function t(e){var t=""+e;return 1===t.length&&(t="0"+t),t}return e.getUTCFullYear()+"-"+t(1+e.getUTCMonth())+"-"+t(e.getUTCDate())+"T"+t(e.getUTCHours())+":"+t(e.getUTCMinutes())+":"+t(e.getUTCSeconds())+"."+((e.getUTCMilliseconds()/1e3).toFixed(3)+"").slice(2,5)+"Z"}(),iKey:e,name:"Microsoft.ApplicationInsights."+e.replace(/-/g,"")+"."+t,sampleRate:100,tags:n,data:{baseData:{ver:2}}}}var h=d.url||y.src;if(h){function a(e){var t,n,a,i,r,o,s,c,p,l,u;g=!0,m.queue=[],f||(f=!0,t=h,s=function(){var e={},t=d.connectionString;if(t)for(var n=t.split(";"),a=0;a<n.length;a++){var i=n[a].split("=");2===i.length&&(e[i[0][I]()]=i[1])}if(!e[D]){var r=e.endpointsuffix,o=r?e.location:null;e[D]="https://"+(o?o+".":"")+"dc."+(r||"services.visualstudio.com")}return e}(),c=s[k]||d[k]||"",p=s[D],l=p?p+"/v2/track":config.endpointUrl,(u=[]).push((n="SDK LOAD Failure: Failed to load Application Insights SDK script (See stack for details)",a=t,i=l,(o=(r=v(c,"Exception")).data).baseType="ExceptionData",o.baseData.exceptions=[{typeName:"SDKLoadFailed",message:n.replace(/\./g,"-"),hasFullStack:!1,stack:n+"\nSnippet failed to load ["+a+"] -- Telemetry is disabled\nHelp Link: https://go.microsoft.com/fwlink/?linkid=2128109\nHost: "+(S&&S.pathname||"_unknown_")+"\nEndpoint: "+i,parsedStack:[]}],r)),u.push(function(e,t,n,a){var i=v(c,"Message"),r=i.data;r.baseType="MessageData";var o=r.baseData;return o.message='AI (Internal): 99 message:"'+("SDK LOAD Failure: Failed to load Application Insights SDK script (See stack for details) ("+n+")").replace(/\"/g,"")+'"',o.properties={endpoint:a},i}(0,0,t,l)),function(e,t){if(JSON){var n=T.fetch;if(n&&!y.useXhr)n(t,{method:w,body:JSON.stringify(e),mode:"cors"});else if(XMLHttpRequest){var a=new XMLHttpRequest;a.open(w,t),a.setRequestHeader("Content-type","application/json"),a.send(JSON.stringify(e))}}}(u,l))}function i(e,t){f||setTimeout(function(){!t&&m.core||a()},500)}var e=function(){var n=l.createElement(u);n.src=h;var e=y[b];return!e&&""!==e||"undefined"==n[b]||(n[b]=e),n.onload=i,n.onerror=a,n.onreadystatechange=function(e,t){"loaded"!==n.readyState&&"complete"!==n.readyState||i(0,t)},n}();y.ld<0?l.getElementsByTagName("head")[0].appendChild(e):setTimeout(function(){l.getElementsByTagName(u)[0].parentNode.appendChild(e)},y.ld||0)}try{m.cookie=l.cookie}catch(p){}function t(e){for(;e.length;)!function(t){m[t]=function(){var e=arguments;g||m.queue.push(function(){m[t].apply(m,e)})}}(e.pop())}var n="track",r="TrackPage",o="TrackEvent";t([n+"Event",n+"PageView",n+"Exception",n+"Trace",n+"DependencyData",n+"Metric",n+"PageViewPerformance","start"+r,"stop"+r,"start"+o,"stop"+o,"addTelemetryInitializer","setAuthenticatedUserContext","clearAuthenticatedUserContext","flush"]),m.SeverityLevel={Verbose:0,Information:1,Warning:2,Error:3,Critical:4};var s=(d.extensionConfig||{}).ApplicationInsightsAnalytics||{};if(!0!==d[C]&&!0!==s[C]){method="onerror",t(["_"+method]);var c=T[method];T[method]=function(e,t,n,a,i){var r=c&&c(e,t,n,a,i);return!0!==r&&m["_"+method]({message:e,url:t,lineNumber:n,columnNumber:a,error:i}),r},d.autoExceptionInstrumented=!0}return m}(y.cfg);(T[t]=n).queue&&0===n.queue.length&&n.trackPageView({})}(window,document,{
+src: "https://az416426.vo.msecnd.net/scripts/b/ai.2.min.js",
+cfg: { 
+    connectionString: 'InstrumentationKey=ebdfbae8-ec79-4f33-b5c3-ad05861ae331;IngestionEndpoint=https://westeurope-5.in.applicationinsights.azure.com/'
+}});
+    </script>
+</head>
+<body id="top">
+   
+    <!-- header
+    ================================================== -->
+
+    
+        <!-- header
+   ================================================== -->
+
+<header class="s-header">
+
+    <div class="header-logo">
+        <a class="site-logo" href="../index.html"><img src="../images/logo2.png" alt="Homepage"></a>
+    </div>
+
+    
+
+    <nav class="header-nav-wrap">
+
+        <ul class="header-nav">
+
+
+            <li class=""><a id="top-navigation-link-root" href="../index.html" title="">Home</a></li>
+
+                <li id="top-navigation-link-about" class="smoothscroll"><a href="../about.html" title="">About me</a></li>
+
+        </ul>
+    </nav> <!-- end main-nav-wrap -->
+
+
+
+
+    <a class="header-menu-toggle" href="#0"><span>Menu</span></a>
+
+</header> <!-- end s-header -->
+
+
+    
+
+    
+
+<!-- content
+   ================================================== -->
+
+
+    <article class="blog-single">
+
+        <!-- page header/blog hero
+    ================================================== -->
+
+        
+        <div class="page-header page-header--single page-hero" style=background-image:url(https://cdn.buttercms.com/9zrACqtoQHuWzYIFiosY)>
+
+            <div class="row page-header__content narrow">
+                <article class="col-full">
+                    <div class="page-header__info">
+                        <div class="page-header__cat">
+                                <a id="post-category-logic-apps" href="category/logic-apps.html">Logic Apps</a>
+                                <a id="post-category-monitoring" href="category/monitoring.html">Monitoring</a>
+                                <a id="post-category-service-health" href="category/service-health.html">Service Health</a>
+                                <a id="post-category-teams" href="category/teams.html">Teams</a>
+                        </div>
+                    </div>
+                    <h1 class="page-header__title">
+                        <a href="#0" title="">
+                            Get notified about service health incidents that have occurred in Azure
+                        </a>
+                    </h1>
+                    <ul class="page-header__meta">
+                        <li class="date">
+18.10.2021 09:56                        </li>
+                        <li class="author">
+                            By
+                            <span>Kalle Marjokorpi</span>
+                        </li>
+                    </ul>
+
+                </article>
+                
+            </div>
+
+        </div> <!-- end page-header -->
+
+        <div class="row blog-content">
+            <div class="col-full blog-content__main">
+
+                <p><p>Wouldn't be nice to receive notifications about any service health incidents that have occurred in Azure? Automated notification about platform issues could save your troubleshooting time.</p>
+<p>Status of the Azure service is publicly available in <a href="https://status.azure.com/en-us/status" rel="follow">here</a> but this site basically offers only traffic light view without detailed information about the issue. Detailed subscription level service health notification can be verified or subscribed from the Azure Service Health. These notifications are a sub-class of activity log events, and can also be found in the activity log. Service health notifications can be informational or actionable, depending on the class.</p>
+<p><strong>Notifications are determined to the following classes</strong></p>
+<table border="0">
+<tbody>
+<tr>
+<td>Action required</td>
+<td>Azure might notice something unusual happen on your account, and work with you to remedy this. Azure sends you a notification, either detailing the actions you need to take or how to contact Azure engineering or support.</td>
+</tr>
+<tr>
+<td>Incident</td>
+<td>An event that impacts service is currently affecting one or more of the resources in your subscription.</td>
+</tr>
+<tr>
+<td>Maintenance</td>
+<td>A planned maintenance activity that might impact one or more of the resources under your subscription.</td>
+</tr>
+<tr>
+<td>Information</td>
+<td>Potential optimizations that might help improve your resource use.</td>
+</tr>
+<tr>
+<td>Security</td>
+<td>Urgent security-related information regarding your solutions that run on Azure.</td>
+</tr>
+</tbody>
+</table>
+<p><a href="https://docs.microsoft.com/en-us/azure/service-health/service-health-notifications-properties" rel="follow">Source</a></p>
+<p>This blog post covers how to subscribe service health alerts and route them to Teams channel.</p>
+<h2>How to subscribe Azure Service Health notifications?</h2>
+<p>You can find Service Health from Azure portal by search. Service Health gives you an overview to service issues and planned maintenance actions. You can configure service health notification delivery by clicking "Add service health alert". In Add service health alert page you can determine event types (service issue, planned maintenance, health advisories, security advisory) you're interested and what delivery method (email/SMS/webhook) you want to use. In this sample we use Webhook endpoint provided by Logic App.</p>
+<p><img src="https://cdn.buttercms.com/oRUCNzKRP2UyNeSBxd0j" alt="undefined" /></p>
+<p>Note! You can also configure Health alert in resource level by selecting Resource health under Support + troubleshooting.</p>
+<p><img src="https://cdn.buttercms.com/9cV4KF17Ty8iI83BU8A3" alt="undefined" /></p>
+<h2>How to create a webhook endpoint provided by Logic App?</h2>
+<p>Logic App's role is to receive a service health alert and send it to MS Teams channel. This sample uses Adaptive Cards to visualize notification message in Teams. Azure also sends a new notification event when issue is resolved. We don't want to flood Teams notification channel by generating a new message everytime eventought only status is changed. This samples shows how to reply status update event to the original Teams message thread.</p>
+<p><strong>Final result in Teams channel looks like this</strong></p>
+<p><img src="https://cdn.buttercms.com/WDzUzgATSciXMgj981wh" alt="undefined" /></p>
+<h2>What are Adaptive cards in Teams?</h2>
+<p>Adaptive Cards are actionable snippets of content that you can add to a conversation through a bot or messaging extension. Using text, graphics, and buttons, these cards provide rich communication to your audience. <a href="https://docs.microsoft.com/en-us/microsoftteams/platform/task-modules-and-cards/cards/design-effective-cards?tabs=design" rel="follow">Source</a>.</p>
+<p><a href="https://adaptivecards.io/" rel="follow">AdaptiveCards.io</a> provides a good set of documentation about the topic. Adaptive card schema which is used in this sample is developed by a <a href="https://adaptivecards.io/" rel="follow">AdaptiveCards.io</a> designer tool.</p>
+<h2>Logic App implementation steps</h2>
+<p><strong>Logic App flow looks like this</strong></p>
+<p><img src="https://cdn.buttercms.com/seWQSKGSgC7QjLhXdF8l" alt="undefined" /></p>
+<p>Below table contains more details about each steps.</p>
+<table border="0">
+<tbody>
+<tr style="vertical-align: top;">
+<td><strong>Step</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr style="vertical-align: top;">
+<td>
+<p><span><img src="https://cdn.buttercms.com/MPKQm2K5SVBTqtor57jW" alt="undefined" /></span></p>
+<p><span>This action creates HTTP POST endpoint which receives service health notification.&nbsp;</span></p>
+</td>
+<td>
+<p><span><img src="https://cdn.buttercms.com/FVH8mfkESlmdYsxKLn9Z" alt="undefined" /></span></p>
+<p><span>Get example notification payload message from <a href="https://docs.microsoft.com/en-us/azure/azure-monitor/essentials/activity-log-schema#service-health-category" rel="follow">here </a>to generate schema.</span></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td>
+<p><img src="https://cdn.buttercms.com/DrV6wBGQQ6AHvFlejK1d" alt="undefined" /></p>
+<p><span>This action retrieves all messages from specific Teams channel. Message information is used later to identity existing messages where status update will be added as a reply message.</span></p>
+</td>
+<td>
+<p><span><img src="https://cdn.buttercms.com/BB79gKQ2TjyOqovLHX1l" alt="undefined" /></span></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td>
+<p><img src="https://cdn.buttercms.com/8g77MbcmS0iLE9g4qg3Q" alt="undefined" /></p>
+<p><span>Adaptive card content contains all information about the service health notification (ID, Service, Region, Communication etc.). This content is included to the attachment object in Teams message model. </span><span>This action filters out messages which don't have attachment.</span></p>
+</td>
+<td>
+<p><span><img src="https://cdn.buttercms.com/oxt5aQoQXrxnw3MgSIwI" alt="undefined" /></span></p>
+<p><span>Expression used: </span></p>
+<pre class="language-undefined"><code>@greater(length(item()?['attachments']), 0)</code></pre>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td>
+<p><img src="https://cdn.buttercms.com/2IdVljbSOW9JiSEJuexQ" alt="undefined" /></p>
+<p>This action filters Teams messages with tracking Id which is provided in the notification. Tracking Id is unique for the incident.&nbsp;</p>
+</td>
+<td>
+<p><img src="https://cdn.buttercms.com/Ll3UNcO6Qe6uezdRDdhA" alt="undefined" /></p>
+<p>Expression used:</p>
+<pre class="language-undefined"><code>item()?['attachments'][0]['content']</code></pre>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td>
+<p><img src="https://cdn.buttercms.com/tGPO9cGiQiiVGhCaQ2cS" alt="undefined" /></p>
+<p>Condition action is used to decide whether create a new Teams message or add status update to the existing message as a reply.</p>
+</td>
+<td>
+<p><img src="https://cdn.buttercms.com/hMKvJAmRLKdKreJ3haRa" alt="undefined" /></p>
+<p>Expression used</p>
+<pre class="language-undefined"><code>length(body('Filter_messages_with_trackingId'))</code></pre>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td>
+<p><img src="https://cdn.buttercms.com/Ea2CnVzrTLWm2sO2j8JN" alt="undefined" /></p>
+<p>True path handles cases where notification status is updated to the original Team message thread.</p>
+</td>
+<td>
+<p><img src="https://cdn.buttercms.com/iv3dXRzkTJyn1jmQHI43" alt="undefined" /></p>
+<p>Expression used</p>
+<pre class="language-undefined"><code>body('Filter_messages_with_trackingId')[0]</code></pre>
+<p><img src="https://cdn.buttercms.com/B9twBLH0RJuE9aWAygN9" alt="undefined" /></p>
+<p>Parse JSON action is used to enable strongly typing of Teams message.</p>
+<p><img src="https://cdn.buttercms.com/OSbxDUmVQV6JwHIvpO2g" alt="undefined" /></p>
+<p>Enabling also strongly typing for Status information.</p>
+<p><img src="https://cdn.buttercms.com/CqOObLLQ4qUv1vt6KT0A" alt="undefined" /></p>
+<p>Update status as a reply to the existing thread by Message Id.&nbsp;</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td>
+<p><img src="https://cdn.buttercms.com/UVscns03QE2nMv1e6tAu" alt="undefined" /></p>
+<p>False path adds a new notification message to the Team channel. Adaptive Card schema JSON is copy-pasted here and input values are modified to the schema.</p>
+</td>
+<td>
+<p><img src="https://cdn.buttercms.com/6KVrLweaTiONkxV3bvWZ" alt="undefined" /></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Now solution is ready and your team is notified when something is happening in Azure platform!</p>
+<p></p>
+<h2>Sample data schemas used in sample</h2>
+<h3>Example service health notification</h3>
+<p><span>This example notification payload message is from Microsoft <a href="https://docs.microsoft.com/en-us/azure/azure-monitor/essentials/activity-log-schema#service-health-category" rel="follow">documentation</a>.</span></p>
+<pre class="language-undefined"><code>{
+  "channels": "Admin",
+  "correlationId": "c550176b-8f52-4380-bdc5-36c1b59d3a44",
+  "description": "Active: Network Infrastructure - UK South",
+  "eventDataId": "c5bc4514-6642-2be3-453e-c6a67841b073",
+  "eventName": {
+      "value": null
+  },
+  "category": {
+      "value": "ServiceHealth",
+      "localizedValue": "Service Health"
+  },
+  "eventTimestamp": "2017-07-20T23:30:14.8022297Z",
+  "id": "/subscriptions/&lt;subscription ID&gt;/events/c5bc4514-6642-2be3-453e-c6a67841b073/ticks/636361902148022297",
+  "level": "Warning",
+  "operationName": {
+      "value": "Microsoft.ServiceHealth/incident/action",
+      "localizedValue": "Microsoft.ServiceHealth/incident/action"
+  },
+  "resourceProviderName": {
+      "value": null
+  },
+  "resourceType": {
+      "value": null,
+      "localizedValue": ""
+  },
+  "resourceId": "/subscriptions/&lt;subscription ID&gt;",
+  "status": {
+      "value": "Resolved",
+      "localizedValue": "Resolved"
+  },
+  "subStatus": {
+      "value": null
+  },
+  "submissionTimestamp": "2017-07-20T23:30:34.7431946Z",
+  "subscriptionId": "&lt;subscription ID&gt;",
+  "properties": {
+    "title": "Network Infrastructure - UK South",
+    "service": "Service Fabric",
+    "region": "UK South",
+    "communication": "Starting at approximately 21:41 UTC on 20 Jul 2017, a subset of customers in UK South may experience degraded performance, connectivity drops or timeouts when accessing their Azure resources hosted in this region. Engineers are investigating underlying Network Infrastructure issues in this region. Impacted services may include, but are not limited to App Services, Automation, Service Bus, Log Analytics, Key Vault, SQL Database, Service Fabric, Event Hubs, Stream Analytics, Azure Data Movement, API Management, and Azure Cognitive Search. Multiple engineering teams are engaged in multiple workflows to mitigate the impact. The next update will be provided in 60 minutes, or as events warrant.",
+    "incidentType": "Incident",
+    "trackingId": "1NA0F-BJGY2",
+    "impactStartTime": "2017-07-20T21:41:00.0000000Z",
+    "impactedServices": "[{\"ImpactedRegions\":[{\"RegionName\":\"UK South\"}],\"ServiceName\":\"Service Fabric\"}]",
+    "defaultLanguageTitle": "Network Infrastructure - UK South",
+    "defaultLanguageContent": "Starting at approximately 21:41 UTC on 20 Jul 2017, a subset of customers in UK South may experience degraded performance, connectivity drops or timeouts when accessing their Azure resources hosted in this region. Engineers are investigating underlying Network Infrastructure issues in this region. Impacted services may include, but are not limited to App Services, Automation, Service Bus, Log Analytics, Key Vault, SQL Database, Service Fabric, Event Hubs, Stream Analytics, Azure Data Movement, API Management, and Azure Cognitive Search. Multiple engineering teams are engaged in multiple workflows to mitigate the impact. The next update will be provided in 60 minutes, or as events warrant.",
+    "stage": "Active",
+    "communicationId": "636361902146035247",
+    "version": "0.1.1"
+  }
+}</code></pre>
+<h3>Example Teams message</h3>
+<p>This is an example Teams message which is retrieved via Logic App using Teams connector. Note! Adaptive card content is included in attachments (content-field).</p>
+<pre class="language-undefined"><code>[
+  {
+    "id": "123456789",
+    "replyToId": null,
+    "etag": "123456789",
+    "messageType": "message",
+    "createdDateTime": "2021-10-18T08:04:11.541Z",
+    "lastModifiedDateTime": "2021-10-18T08:04:11.541Z",
+    "lastEditedDateTime": null,
+    "deletedDateTime": null,
+    "subject": null,
+    "summary": null,
+    "chatId": null,
+    "importance": "normal",
+    "locale": "en-us",
+    "webUrl": "",
+    "policyViolation": null,
+    "eventDetail": null,
+    "from": {
+      "device": null,
+      "user": null,
+      "application": {
+        "id": "00000000-0000-0000-0000-000000000000",
+        "displayName": "Flow",
+        "applicationIdentityType": "bot"
+      }
+    },
+    "body": {
+      "contentType": "html",
+      "content": "&lt;attachment id=\"123456789\"&gt;&lt;/attachment&gt;"
+    },
+    "channelIdentity": {
+      "teamId": "00000000-0000-0000-0000-000000000000",
+      "channelId": ""
+    },
+    "attachments": [
+      {
+        "id": "123456789",
+        "contentType": "application/vnd.microsoft.card.adaptive",
+        "contentUrl": null,
+        "content": "[ADAPTIVE CARD CONTENT]",
+        "name": null,
+        "thumbnailUrl": null
+      }
+    ],
+    "mentions": [],
+    "reactions": []
+  }
+]</code></pre>
+<h3>Example Adaptive Card content</h3>
+<pre class="language-undefined"><code>{
+    "type": "AdaptiveCard",
+    "body": [
+        {
+            "items": [
+                {
+                    "columns": [
+                        {
+                            "width": "stretch",
+                            "items": [
+                                {
+                                    "size": "large",
+                                    "text": "**Service Health Alert**",
+                                    "weight": "bolder",
+                                    "type": "TextBlock"
+                                }
+                            ],
+                            "type": "Column"
+                        },
+                        {
+                            "width": "stretch",
+                            "items": [
+                                {
+                                    "color": "attention",
+                                    "horizontalAlignment": "right",
+                                    "size": "large",
+                                    "text": "Warning",
+                                    "weight": "bolder",
+                                    "wrap": true,
+                                    "spacing": "none",
+                                    "type": "TextBlock"
+                                }
+                            ],
+                            "type": "Column"
+                        }
+                    ],
+                    "type": "ColumnSet"
+                }
+            ],
+            "style": "emphasis",
+            "bleed": true,
+            "type": "Container"
+        },
+        {
+            "columns": [
+                {
+                    "width": "110px",
+                    "items": [
+                        {
+                            "text": "Id",
+                            "weight": "bolder",
+                            "wrap": true,
+                            "type": "TextBlock"
+                        },
+                        {
+                            "text": "Title",
+                            "weight": "bolder",
+                            "wrap": true,
+                            "type": "TextBlock"
+                        },
+                        {
+                            "text": "Service",
+                            "weight": "bolder",
+                            "wrap": true,
+                            "spacing": "small",
+                            "type": "TextBlock"
+                        },
+                        {
+                            "text": "Region",
+                            "weight": "bolder",
+                            "wrap": true,
+                            "spacing": "small",
+                            "type": "TextBlock"
+                        },
+                        {
+                            "text": "Communication",
+                            "weight": "bolder",
+                            "wrap": true,
+                            "spacing": "small",
+                            "type": "TextBlock"
+                        }
+                    ],
+                    "type": "Column"
+                },
+                {
+                    "width": "auto",
+                    "items": [
+                        {
+                            "text": "1NA0F-BJGY2",
+                            "wrap": true,
+                            "type": "TextBlock"
+                        },
+                        {
+                            "text": "Network Infrastructure - UK South",
+                            "wrap": true,
+                            "type": "TextBlock"
+                        },
+                        {
+                            "text": "Service Fabric",
+                            "wrap": true,
+                            "spacing": "small",
+                            "type": "TextBlock"
+                        },
+                        {
+                            "text": "UK South",
+                            "wrap": true,
+                            "spacing": "small",
+                            "type": "TextBlock"
+                        },
+                        {
+                            "text": "Starting at approximately 21:41 UTC on 20 Jul 2017, a subset of customers in UK South may experience degraded performance, connectivity drops or timeouts when accessing their Azure resources hosted in this region. Engineers are investigating underlying Network Infrastructure issues in this region. Impacted services may include, but are not limited to App Services, Automation, Service Bus, Log Analytics, Key Vault, SQL Database, Service Fabric, Event Hubs, Stream Analytics, Azure Data Movement, API Management, and Azure Cognitive Search. Multiple engineering teams are engaged in multiple workflows to mitigate the impact. The next update will be provided in 60 minutes, or as events warrant.",
+                            "wrap": true,
+                            "spacing": "small",
+                            "type": "TextBlock"
+                        }
+                    ],
+                    "type": "Column"
+                }
+            ],
+            "spacing": "medium",
+            "separator": true,
+            "type": "ColumnSet"
+        }
+    ],
+    "version": "1.2"
+}</code></pre></p>
+
+                <div class="blog-content__pagenav">
+                    <div class="blog-content__nav">
+                            <div class="blog-content__prev">
+                                <a id="post-previous-no-tokens-in-browser-with-duende-bff" href="no-tokens-in-browser-with-duende-bff.html" rel="prev">
+                                    <span>Previous Post</span>
+                                    No tokens in the browser implementation inspired by Duende BFF and .NET 6 RC1
+                                </a>
+                            </div>
+                        </div>
+
+
+                    <div class="blog-content__all">
+                        <a href="../index.html" class="btn btn--primary">
+                            View All Post
+                        </a>
+                    </div>
+                </div>
+
+            </div><!-- end blog-content__main -->
+        </div> <!-- end blog-content -->
+
+    </article>
+
+
+
+    
+        
+
+<!-- footer
+    ================================================== -->
+<footer>
+    <div class="row">
+        <div class="col-full">
+
+            <div class="footer-logo">
+                <a class="footer-site-logo" href="#0"><img src="../images/name.png" alt="Homepage"></a>
+            </div>
+
+            <ul class="footer-social">
+                <li>
+                    <a href="https://www.twitter.com/kmarjok">
+                        <i class="im im-twitter" aria-hidden="true"></i>
+                        <span>Twitter</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.linkedin.com/in/kallemarjokorpi">
+                        <i class="im im-linkedin" aria-hidden="true"></i>
+                        <span>Linkedin</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://github.com/kalleantero">
+                        <i class="im im-github" aria-hidden="true"></i>
+                        <span>Github</span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+    <div class="row footer-bottom">
+
+        <div class="col-twelve">
+            <div class="copyright">
+                <span>Copyright Kalle Marjokorpi 2021</span>
+                <span>Design by <a href="http://www.styleshout.com/">styleshout</a></span>
+                <span>Content management by <a href="http://www.buttercms.com/">Headless ButterCMS</a></span>
+
+            </div>
+
+        </div>
+
+    </div> <!-- end footer-bottom -->
+
+</footer> <!-- end footer -->
+    
+
+
+    <div id="preloader">
+        <div id="loader"></div>
+    </div>
+
+    <!-- Java Script
+     ================================================== -->
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/plugins.js"></script>
+    <script src="../js/main.min.js"></script>
+    
+    
+    <!-- Cloudflare Web Analytics -->
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cac9fd24c1c04b6d9984ea31685b0414"}'></script><!-- End Cloudflare Web Analytics -->
+
+</body>
+
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/get-notified-about-service-health-incidents-that-have-occurred-in-azure by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 18 Oct 2021 16:42:26 GMT -->
+</html>

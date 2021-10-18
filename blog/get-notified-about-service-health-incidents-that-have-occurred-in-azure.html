@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 
-<!-- Mirrored from kalle-blog.azurewebsites.net/blog/get-notified-about-service-health-incidents-that-have-occurred-in-azure by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 18 Oct 2021 17:09:12 GMT -->
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/get-notified-about-service-health-incidents-that-have-occurred-in-azure by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 18 Oct 2021 17:29:05 GMT -->
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
 <head>
 
@@ -57,7 +57,7 @@ cfg: {
         <ul class="header-nav">
 
 
-            <li class=""><a id="top-navigation-link-root" href="../index.html" title="">Home</a></li>
+            <li class="current"><a id="top-navigation-link-root" href="../index.html" title="">Home</a></li>
 
                 <li id="top-navigation-link-about" class="smoothscroll"><a href="../about.html" title="">About me</a></li>
 
@@ -165,77 +165,29 @@ cfg: {
 <h2>Logic App implementation steps</h2>
 <p>Logic App flow looks like this. Below more details about each steps.</p>
 <p><img src="https://cdn.buttercms.com/seWQSKGSgC7QjLhXdF8l" alt="undefined" /></p>
-<table border="0">
-<tbody>
-<tr style="vertical-align: top;">
-<td>
 <h3>Step 1: When a HTTP request is received</h3>
-</td>
-</tr>
-<tr style="vertical-align: top;">
-<td>
 <p><span>This action creates HTTP POST endpoint which receives service health notification.&nbsp;</span></p>
 <p><span><img src="https://cdn.buttercms.com/FVH8mfkESlmdYsxKLn9Z" alt="undefined" /></span></p>
 <p><span>Get example notification payload message from <a href="https://docs.microsoft.com/en-us/azure/azure-monitor/essentials/activity-log-schema#service-health-category" rel="follow">here </a>to generate schema.</span></p>
-</td>
-</tr>
-<tr>
-<td>
 <h3>Step 2: Get Teams messages</h3>
-</td>
-</tr>
-<tr style="vertical-align: top;">
-<td>
 <p><span>This action retrieves all messages from specific Teams channel. Message information is used later to identity existing messages where status update will be added as a reply message.</span></p>
 <p><span><img src="https://cdn.buttercms.com/BB79gKQ2TjyOqovLHX1l" alt="undefined" /></span></p>
-</td>
-</tr>
-<tr>
-<td>
 <h3>Step 3: Filter messages with attachments</h3>
-</td>
-</tr>
-<tr style="vertical-align: top;">
-<td>
 <p><span>Adaptive card content contains all information about the service health notification (ID, Service, Region, Communication etc.). This content is included to the attachment object in Teams message model. </span><span>This action filters out messages which don't have attachment.</span></p>
 <p><span><img src="https://cdn.buttercms.com/oxt5aQoQXrxnw3MgSIwI" alt="undefined" /></span></p>
 <p><span>Expression used: </span></p>
 <pre class="language-undefined"><code>@greater(length(item()?['attachments']), 0)</code></pre>
-</td>
-</tr>
-<tr>
-<td>
 <h3>Step 4: Filter messages with trackingId</h3>
-</td>
-</tr>
-<tr style="vertical-align: top;">
-<td>
 <p>This action filters Teams messages with tracking Id which is provided in the notification. Tracking Id is unique for the incident.&nbsp;</p>
 <p><img src="https://cdn.buttercms.com/Ll3UNcO6Qe6uezdRDdhA" alt="undefined" /></p>
 <p>Expression used:</p>
 <pre class="language-undefined"><code>item()?['attachments'][0]['content']</code></pre>
-</td>
-</tr>
-<tr>
-<td>
 <h3>Step 5: Condition</h3>
-</td>
-</tr>
-<tr style="vertical-align: top;">
-<td>
 <p>Condition action is used to decide whether create a new Teams message or add status update to the existing message as a reply.</p>
 <p><img src="https://cdn.buttercms.com/hMKvJAmRLKdKreJ3haRa" alt="undefined" /></p>
 <p>Expression used:</p>
 <pre class="language-undefined"><code>length(body('Filter_messages_with_trackingId'))</code></pre>
-</td>
-</tr>
-<tr>
-<td>
 <h3>Step 6: Condition - True-path</h3>
-</td>
-</tr>
-<tr style="vertical-align: top;">
-<td>
 <p>True-path handles cases where notification status is updated to the original Team message thread.</p>
 <p><img src="https://cdn.buttercms.com/iv3dXRzkTJyn1jmQHI43" alt="undefined" /></p>
 <p>Expression used:</p>
@@ -246,23 +198,10 @@ cfg: {
 <p>Enabling also strongly typing for Status information.</p>
 <p><img src="https://cdn.buttercms.com/CqOObLLQ4qUv1vt6KT0A" alt="undefined" /></p>
 <p>Update status as a reply to the existing thread by Message Id.&nbsp;</p>
-</td>
-</tr>
-<tr>
-<td>
 <h3>Step 6: Condition - False-path</h3>
-</td>
-</tr>
-<tr style="vertical-align: top;">
-<td>
 <p>False-path adds a new notification message to the Team channel. Adaptive Card schema JSON is copy-pasted here and input values are modified to the schema.</p>
 <p><img src="https://cdn.buttercms.com/6KVrLweaTiONkxV3bvWZ" alt="undefined" /></p>
-</td>
-</tr>
-</tbody>
-</table>
 <p>Now solution is ready and your team is notified when something is happening in Azure platform!</p>
-<p></p>
 <h2>Sample data schemas used in sample</h2>
 <h3>Example service health notification</h3>
 <p><span>This example notification payload message is from Microsoft <a href="https://docs.microsoft.com/en-us/azure/azure-monitor/essentials/activity-log-schema#service-health-category" rel="follow">documentation</a>.</span></p>
@@ -593,5 +532,5 @@ cfg: {
 
 </body>
 
-<!-- Mirrored from kalle-blog.azurewebsites.net/blog/get-notified-about-service-health-incidents-that-have-occurred-in-azure by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 18 Oct 2021 17:09:12 GMT -->
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/get-notified-about-service-health-incidents-that-have-occurred-in-azure by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 18 Oct 2021 17:29:05 GMT -->
 </html>

@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/deploy-azure-infrastructure-with-azure-bicep by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 30 Oct 2021 18:00:51 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+
+    
+    <title>Deploy Azure infrastructure with Azure Bicep - Blog by Kalle Marjokorpi</title>
+    <meta name="description" content="This week I worked with Azure Bicep and YAML to deploy Azure infrastructure. This blog post shows how to create basic Azure Bicep configurat">
+    <meta name="author" content="Kalle Marjokorpi">
+
+
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/vendor.css">
+    <link rel="stylesheet" href="../css/main.css">
+
+    <script src="../js/modernizr.js"></script>
+    <script src="../js/pace.min.js"></script>
+
+    <script type="text/javascript">!function(T,l,y){var S=T.location,u="script",k="instrumentationKey",D="ingestionendpoint",C="disableExceptionTracking",E="ai.device.",I="toLowerCase",b="crossOrigin",w="POST",e="appInsightsSDK",t=y.name||"appInsights";(y.name||T[e])&&(T[e]=t);var n=T[t]||function(d){var g=!1,f=!1,m={initialize:!0,queue:[],sv:"4",version:2,config:d};function v(e,t){var n={},a="Browser";return n[E+"id"]=a[I](),n[E+"type"]=a,n["ai.operation.name"]=S&&S.pathname||"_unknown_",n["ai.internal.sdkVersion"]="javascript:snippet_"+(m.sv||m.version),{time:function(){var e=new Date;function t(e){var t=""+e;return 1===t.length&&(t="0"+t),t}return e.getUTCFullYear()+"-"+t(1+e.getUTCMonth())+"-"+t(e.getUTCDate())+"T"+t(e.getUTCHours())+":"+t(e.getUTCMinutes())+":"+t(e.getUTCSeconds())+"."+((e.getUTCMilliseconds()/1e3).toFixed(3)+"").slice(2,5)+"Z"}(),iKey:e,name:"Microsoft.ApplicationInsights."+e.replace(/-/g,"")+"."+t,sampleRate:100,tags:n,data:{baseData:{ver:2}}}}var h=d.url||y.src;if(h){function a(e){var t,n,a,i,r,o,s,c,p,l,u;g=!0,m.queue=[],f||(f=!0,t=h,s=function(){var e={},t=d.connectionString;if(t)for(var n=t.split(";"),a=0;a<n.length;a++){var i=n[a].split("=");2===i.length&&(e[i[0][I]()]=i[1])}if(!e[D]){var r=e.endpointsuffix,o=r?e.location:null;e[D]="https://"+(o?o+".":"")+"dc."+(r||"services.visualstudio.com")}return e}(),c=s[k]||d[k]||"",p=s[D],l=p?p+"/v2/track":config.endpointUrl,(u=[]).push((n="SDK LOAD Failure: Failed to load Application Insights SDK script (See stack for details)",a=t,i=l,(o=(r=v(c,"Exception")).data).baseType="ExceptionData",o.baseData.exceptions=[{typeName:"SDKLoadFailed",message:n.replace(/\./g,"-"),hasFullStack:!1,stack:n+"\nSnippet failed to load ["+a+"] -- Telemetry is disabled\nHelp Link: https://go.microsoft.com/fwlink/?linkid=2128109\nHost: "+(S&&S.pathname||"_unknown_")+"\nEndpoint: "+i,parsedStack:[]}],r)),u.push(function(e,t,n,a){var i=v(c,"Message"),r=i.data;r.baseType="MessageData";var o=r.baseData;return o.message='AI (Internal): 99 message:"'+("SDK LOAD Failure: Failed to load Application Insights SDK script (See stack for details) ("+n+")").replace(/\"/g,"")+'"',o.properties={endpoint:a},i}(0,0,t,l)),function(e,t){if(JSON){var n=T.fetch;if(n&&!y.useXhr)n(t,{method:w,body:JSON.stringify(e),mode:"cors"});else if(XMLHttpRequest){var a=new XMLHttpRequest;a.open(w,t),a.setRequestHeader("Content-type","application/json"),a.send(JSON.stringify(e))}}}(u,l))}function i(e,t){f||setTimeout(function(){!t&&m.core||a()},500)}var e=function(){var n=l.createElement(u);n.src=h;var e=y[b];return!e&&""!==e||"undefined"==n[b]||(n[b]=e),n.onload=i,n.onerror=a,n.onreadystatechange=function(e,t){"loaded"!==n.readyState&&"complete"!==n.readyState||i(0,t)},n}();y.ld<0?l.getElementsByTagName("head")[0].appendChild(e):setTimeout(function(){l.getElementsByTagName(u)[0].parentNode.appendChild(e)},y.ld||0)}try{m.cookie=l.cookie}catch(p){}function t(e){for(;e.length;)!function(t){m[t]=function(){var e=arguments;g||m.queue.push(function(){m[t].apply(m,e)})}}(e.pop())}var n="track",r="TrackPage",o="TrackEvent";t([n+"Event",n+"PageView",n+"Exception",n+"Trace",n+"DependencyData",n+"Metric",n+"PageViewPerformance","start"+r,"stop"+r,"start"+o,"stop"+o,"addTelemetryInitializer","setAuthenticatedUserContext","clearAuthenticatedUserContext","flush"]),m.SeverityLevel={Verbose:0,Information:1,Warning:2,Error:3,Critical:4};var s=(d.extensionConfig||{}).ApplicationInsightsAnalytics||{};if(!0!==d[C]&&!0!==s[C]){method="onerror",t(["_"+method]);var c=T[method];T[method]=function(e,t,n,a,i){var r=c&&c(e,t,n,a,i);return!0!==r&&m["_"+method]({message:e,url:t,lineNumber:n,columnNumber:a,error:i}),r},d.autoExceptionInstrumented=!0}return m}(y.cfg);(T[t]=n).queue&&0===n.queue.length&&n.trackPageView({})}(window,document,{
+src: "https://az416426.vo.msecnd.net/scripts/b/ai.2.min.js",
+cfg: { 
+    connectionString: 'InstrumentationKey=ebdfbae8-ec79-4f33-b5c3-ad05861ae331;IngestionEndpoint=https://westeurope-5.in.applicationinsights.azure.com/'
+}});
+    </script>
+</head>
+<body id="top">
+   
+    <!-- header
+    ================================================== -->
+
+    
+        <!-- header
+   ================================================== -->
+
+<header class="s-header">
+
+    <div class="header-logo">
+        <a class="site-logo" href="../index.html"><img src="../images/logo2.png" alt="Homepage"></a>
+    </div>
+
+    
+
+    <nav class="header-nav-wrap">
+
+        <ul class="header-nav">
+
+
+            <li class=""><a id="top-navigation-link-root" href="../index.html" title="">Home</a></li>
+
+                <li id="top-navigation-link-about" class="smoothscroll"><a href="../about.html" title="">About me</a></li>
+
+        </ul>
+    </nav> <!-- end main-nav-wrap -->
+
+
+
+
+    <a class="header-menu-toggle" href="#0"><span>Menu</span></a>
+
+</header> <!-- end s-header -->
+
+
+    
+
+    
+
+<!-- content
+   ================================================== -->
+
+
+    <article class="blog-single">
+
+        <!-- page header/blog hero
+    ================================================== -->
+
+        
+        <div class="page-header page-header--single page-hero" style=background-image:url(https://cdn.buttercms.com/hr2LCbgMTF6DKqDYwR3h)>
+
+            <div class="row page-header__content narrow">
+                <article class="col-full">
+                    <div class="page-header__info">
+                        <div class="page-header__cat">
+                                <a id="post-category-bicep" href="category/bicep.html">bicep</a>
+                                <a id="post-category-infrastructure-as-a-code" href="category/infrastructure-as-a-code.html">infrastructure as a code</a>
+                                <a id="post-category-net6" href="category/net6.html">.NET6</a>
+                                <a id="post-category-yaml" href="category/yaml.html">yaml</a>
+                        </div>
+                    </div>
+                    <h1 class="page-header__title">
+                        <a href="#0" title="">
+                            Deploy .NET 6 application and infrastructure to Azure with Bicep and YAML
+                        </a>
+                    </h1>
+                    <ul class="page-header__meta">
+                        <li class="date">
+30.10.2021 09:14                        </li>
+                        <li class="author">
+                            By
+                            <span>Kalle Marjokorpi</span>
+                        </li>
+                    </ul>
+
+                </article>
+                
+            </div>
+
+        </div> <!-- end page-header -->
+
+        <div class="row blog-content">
+            <div class="col-full blog-content__main">
+
+                <p><p>This week I worked with Azure Bicep and YAML to deploy Azure infrastructure. This blog post shows how to utilize Azure Bicep and YAML ("build blocks") to deploy Weather Forecast application and infrastructure to the Azure. This sample utilizes Weather Forecast application which was created in the earlier <a href="https://www.kallemarjokorpi.fi/blog/no-tokens-in-browser-with-duende-bff.html" rel="follow">blog post</a>.</p>
+<h2>What is Azure Bicep?</h2>
+<p>Shortly Azure Bicep is a declarative domain-specific language (DSL) to deploy Azure resources. You can use Bicep instead of JSON to develop your Azure Resource Manager templates (ARM templates). Bicep is a transparent abstraction over ARM template JSON and doesn't lose any of the JSON template capabilities. During deployment, the Bicep CLI converts a Bicep file into ARM template JSON. Source: <a href="https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/overview" rel="follow">What is Bicep?</a></p>
+<p><img src="https://cdn.buttercms.com/N0lgQpykQqW7eqDe3BrN" alt="undefined" /></p>
+<p>Image source: <a href="https://www.plainconcepts.com/project-bicep-introduction/" rel="follow">Project Bicep introduction</a> <span>(Image originally extracted from &ldquo;Project Bicep Demo at Ignite 2020 by Mark Russinovich&rdquo;)</span></p>
+<p>More materials to check:</p>
+<p><a href="https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/install" rel="follow">Install Bicep Tools</a><br /><a href="https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/learn-bicep" rel="follow">Bicep on Microsoft Learn</a><br /><a href="https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/file" rel="follow">Understand the structure and syntax of Bicep files</a><a href="https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/data-types" rel="follow">Data type in Bicep</a><br /><a href="https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/parameters" rel="follow">Parameters in Bicep</a><br /><a href="https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/variables" rel="follow">Variables in Bicep</a><br /><a href="https://docs.microsoft.com/en-us/azure/templates/" rel="follow">Define resources with Bicep and ARM templates</a></p>
+<h2>Weather Forecast Azure infrastructure</h2>
+<p>Weather Forecast service has two App Services (UI and API) and Application Insights. This Azure infrastructure is deployed using Bicep.</p>
+<p><img src="https://cdn.buttercms.com/jgDihCCJT9e0XAHfEyO8" alt="undefined" /></p>
+<p></p>
+<h2>Before starting</h2>
+<p>Download and install Azure CLI tool from <a href="https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-windows?tabs=azure-cli" rel="follow">here</a>. After that install Azure Bicep CLI with the following command:</p>
+<pre class="language-undefined"><code>az bicep install</code></pre>
+<h2>Weather Forecast Bicep configuration</h2>
+<p><span>Final infrastructure configuration looks like this (created with </span><span>Visual Studio Code Bicep file visualizer)</span></p>
+<p><img src="https://cdn.buttercms.com/K32opFewT0aYvdr06pvl" alt="undefined" /></p>
+<p><span>This samples uses two Bicep modules: App Service Module and Application Insights Module.&nbsp;</span>Bicep modules are a powerful way to organize and encapsulate complex details to the multiple bicep files. A module is just a Bicep file that is deployed from another Bicep file.<span>&nbsp;</span>Source:<span>&nbsp;</span><a href="https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/modules" rel="follow">Bicep Modules</a></p>
+<p>Modules improves readability and reusability when you're building and designing especially complex infrastructure.<span>&nbsp;</span></p>
+<h3>Application Insights Bicep Module</h3>
+<p>This module creates Application Insights resource for logging purposes. Weather Forecast UI and API components have own application insight resources. Modules can return output values when resource is created. This module returns InstrumentationKey of the Application Insight which enables communication between App Service and Application Insights.</p>
+<pre class="language-undefined"><code>@description('Name of the Application Insights')
+param applicationInsightsName string
+@description('Application Insight Location.')
+param applicationInsightsLocation string = 'West Europe'
+@description('Tags.')
+param tags object
+resource appInsights 'Microsoft.Insights/components@2020-02-02-preview' = {
+  name: applicationInsightsName
+  location: applicationInsightsLocation
+  kind: 'web'
+  properties: {
+    Application_Type: 'web'
+    publicNetworkAccessForIngestion: 'Enabled'
+    publicNetworkAccessForQuery: 'Enabled'
+  }
+  tags:tags
+}
+output instrumentationKey string = appInsights.properties.InstrumentationKey</code></pre>
+<h3>App Service Bicep Module</h3>
+<p>This module is reusable App Service component which also creates an Application Insights and connects Application Insight and App Service together. Basically Application Insights Module is utilized inside this App Service Module. Application Insights Module returns InstrumentationKey as a output parameter and this value is set to the application settings of the App Service.&nbsp;</p>
+<blockquote>
+<p>Because Weather Forecast UI and API utilizes .NET 6 Framework remember to set 'netFrameworkVersion' to 6.</p>
+</blockquote>
+<pre class="language-undefined"><code>@description('Name of the App Service Plan')
+param appServiceName string
+@description('ID of App Service Plan.')
+param appServicePlanId string
+@description('Location.')
+param location string = 'West Europe'
+@description('Tags.')
+param tags object
+module appInsights './appinsights.bicep' = {
+  name: 'appinsights-${appServiceName}'
+  params: {
+    applicationInsightsName: 'appi-${appServiceName}'
+    applicationInsightsLocation: location
+    tags: tags
+  }
+}
+resource appService 'Microsoft.Web/sites@2021-02-01' = {
+  name: appServiceName
+  location: location
+  properties:{
+    serverFarmId: appServicePlanId
+    siteConfig:{
+      alwaysOn: true
+      ftpsState: 'Disabled'
+      netFrameworkVersion: 'v6.0'
+      appSettings: [
+        {
+          'name': 'APPINSIGHTS_INSTRUMENTATIONKEY'
+          'value': appInsights.outputs.instrumentationKey
+        }     
+      ]
+    }
+    httpsOnly: true    
+  }
+  tags:tags
+}
+output appServiceId string = appService.id</code></pre>
+<h3>Main Bicep File</h3>
+<p>Main Bicep file orchestrates the building of the Azure infrastructure. It first creates shared App Service Plan and then App Services for Weather Forecast UI and API. Parameters like names and App Service Plan SKU are retrieved from the separate parameter file.</p>
+<pre class="language-undefined"><code>@description('Name of the App Service Plan')
+param appServicePlanName string
+@description('The SKU of App Service Plan.')
+param appServicePlanSku string = 'S1'
+@allowed([
+  'Win'
+  'Linux'
+])
+@description('Select the OS type to deploy.')
+param appServicePlanPlatform string
+@description('Name of the UI App Service')
+param uiAppServiceName string
+@description('Name of the API App Service')
+param apiAppServiceName string
+var defaultTags = {
+  Team: 'DevTeam1'
+}
+resource appServicePlan 'Microsoft.Web/serverfarms@2021-02-01' = {
+  name: appServicePlanName
+  location: resourceGroup().location
+  sku: {
+    name: appServicePlanSku
+  }
+  kind: ((appServicePlanPlatform == 'Linux') ? 'linux' : 'windows')
+  tags:defaultTags
+}
+module uiAppService './webapp.bicep' = {
+  name: 'uiAppService'
+  params: {
+    appServiceName: uiAppServiceName
+    appServicePlanId: appServicePlan.id
+    location: resourceGroup().location
+    tags: defaultTags
+  }
+}
+module apiAppService './webapp.bicep' = {
+  name: 'apiAppService'
+  params: {
+    appServiceName: apiAppServiceName
+    appServicePlanId: appServicePlan.id
+    location: resourceGroup().location
+    tags: defaultTags
+  }
+}</code></pre>
+<h3>Parameters file</h3>
+<p>Parameter file contains all parameters which are needed for creating the Azure infrastructure.</p>
+<pre class="language-undefined"><code>{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "appServicePlanName": {
+      "value": "plan-weatherforecast"
+    },
+    "appServicePlanSku": {
+      "value": "S1"
+    },
+    "appServicePlanPlatform": {
+      "value": "Win"
+    },
+    "uiAppServiceName": {
+      "value": "app-weatherforecastui"
+    },
+    "apiAppServiceName": {
+      "value": "app-weatherforecastapi"
+    }     
+  }
+}
+</code></pre>
+<h2>Deploy infrastructure to Azure locally using Bicep CLI</h2>
+<p>Login first to Azure</p>
+<pre class="language-undefined"><code>az login --tenant 00000000-0000-0000-0000-000000000000</code></pre>
+<p>Select Azure subscription</p>
+<pre class="language-undefined"><code>az account set --subscription 00000000-0000-0000-0000-000000000000</code></pre>
+<p>Deploy infrastructure to Azure with Bicep</p>
+<pre class="language-undefined"><code>az deployment group create --resource-group rg-weather-forecast --template-file main.bicep --parameters parameters/dev.parameters.json
+</code></pre>
+<h3>Other Bicep CLI commands which you should know</h3>
+<p>Bicep to ARM:</p>
+<pre class="language-undefined"><code>az bicep decompile --file main.json</code></pre>
+<p>ARM to Bicep:</p>
+<pre class="language-undefined"><code>az bicep build --file main.bicep</code></pre>
+<h2>How to configure application &amp; infrastructure CI/CD pipeline as a code with YAML?</h2>
+<p>YAML enables you to configure pipelines as a code. I simplified pipeline presentation in this blog so below you find examples of most important tasks which are utilized in Infrastructure and .NET 6 API application pipelines.</p>
+<h3>Infrastructure YAML pipeline in Azure DevOps</h3>
+<p>Infrastructure pipeline deploys Weather Forecast Azure infrastructure.</p>
+<p>The following variables are used while deploying infrastructure</p>
+<pre class="language-undefined"><code>variables:
+  resourceGroupName: 'rg-weather-forecast'
+  location: 'westeurope'
+  azureSubscription: 'azure-service-connection'  </code></pre>
+<p><strong>Build stage contains the job with the following tasks:</strong></p>
+<p>1. Copy Files creates Azure infrastructure artifact</p>
+<p>Infrastructure artifact contains main.bicep and parameter files.</p>
+<pre class="language-undefined"><code>    - task: CopyFiles@2
+      displayName: 'Create infrastructure artifact'
+      inputs:
+        SourceFolder: 'infrastructure'
+        Contents: |
+          main.bicep
+          parameters/dev.parameters.json
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'</code></pre>
+<p>2. Publish Build Artifacts publishes infrastructure artifact to the own container</p>
+<pre class="language-undefined"><code>    - task: PublishBuildArtifacts@1
+      displayName: 'Publish infrastructure artifact'
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'infrastructure'
+        publishLocation: 'Container'</code></pre>
+<p><strong>Deploy stage contains the job with the following tasks:</strong></p>
+<p>1. Download infrastructure artifact</p>
+<pre class="language-undefined"><code> - task: DownloadBuildArtifacts@0
+      displayName: 'Download infrastructure artifact'
+      inputs:
+        buildType: 'current'
+        downloadType: 'single'
+        artifactName: 'infrastructure'
+        downloadPath: '$(System.ArtifactsDirectory)'  </code></pre>
+<p>2. Deploy infrastructure</p>
+<p>Azure CLI task enables you to call Bicep CLI commands so you can utilize the same commands which where tested earlier locally.</p>
+<pre class="language-undefined"><code>    - task: AzureCLI@2
+      displayName: 'Deploy infrastructure'
+      inputs:
+        azureSubscription: $(azureSubscription)
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+          az group create \
+            --name $(resourceGroupName) \
+            --location $(location)
+          az deployment group create \
+            --name $(Build.BuildNumber) \
+            --resource-group $(resourceGroupName) \
+            --template-file $(System.ArtifactsDirectory)/infrastructure/main.bicep \
+            --parameters @$(System.ArtifactsDirectory)/infrastructure/parameters/dev.parameters.json \</code></pre>
+<p>After these phases Infrastructure is deployed.</p>
+<h3>.NET 6 API application YAML pipeline in Azure DevOps</h3>
+<p>.NET 6 API application pipeline deploys Weather Forecast API application to Azure.</p>
+<p>The following variables are used while deploying .NET 6 API application</p>
+<pre class="language-undefined"><code>variables:
+  buildConfiguration: "Release"
+  dotNetVersion: '6.0.x'
+  resourceGroupName: 'rg-weather-forecast'
+  location: 'westeurope'
+  azureSubscription: 'azure-service-connection'  
+  dotNetFramework: 'net6.0'</code></pre>
+<p><strong>Build stage contains the job with the following tasks:</strong></p>
+<p>1. Install .NET 6 framework with Use Dot Net @ 2 task</p>
+<blockquote>
+<p>Remember to add this task to install .NET 6 version. If you're using preview version of .NET 6 set 'includePreviewVersions' to true.</p>
+</blockquote>
+<pre class="language-undefined"><code>    - task: UseDotNet@2
+      displayName: Install .NET Framework version
+      inputs:
+        packageType: 'sdk'
+        version: $(dotNetVersion)
+        includePreviewVersions: true
+        installationPath: $(Agent.ToolsDirectory)/dotnet </code></pre>
+<p>2. Build API application project</p>
+<pre class="language-undefined"><code>    - task: DotNetCoreCLI@2
+      displayName: Build API application
+      inputs:
+        command: 'build'
+        projects: '**/WeatherForecastApi.csproj'
+        arguments: --output $(System.DefaultWorkingDirectory)/publish_output --configuration $(buildConfiguration) </code></pre>
+<p>3. Create API application artifact</p>
+<pre class="language-undefined"><code>    - task: DotNetCoreCLI@2
+      displayName: Create API application artifact
+      inputs:
+        command: publish
+        publishWebProjects: True
+        arguments: '--configuration $(BuildConfiguration) --framework $(dotNetFramework) --output $(Build.ArtifactStagingDirectory)'
+        zipAfterPublish: True    </code></pre>
+<p>4. Publish API application artifact</p>
+<pre class="language-undefined"><code>   - task: PublishBuildArtifacts@1
+      displayName: Publish API application artifact
+      inputs:
+        PathtoPublish: "$(Build.ArtifactStagingDirectory)"
+        ArtifactName: "api"
+        publishLocation: Container   
+</code></pre>
+<p><strong>Deploy stage contains the job with the following tasks:</strong></p>
+<p>1. Download API application artifact</p>
+<pre class="language-undefined"><code>    - task: DownloadBuildArtifacts@0
+      displayName: Download API application artifact
+      inputs:
+        buildType: 'current'
+        downloadType: 'single'
+        artifactName: 'api'
+        downloadPath: '$(System.ArtifactsDirectory)'    </code></pre>
+<p>2. Deploy API application</p>
+<pre class="language-undefined"><code>   - task: AzureWebApp@1
+      displayName: Deploy API application
+      inputs:
+        appType: webApp
+        azureSubscription: $(azureSubscription)
+        appName: 'app-weatherforecastapi'
+        package: "$(System.ArtifactsDirectory)/api/*.zip"</code></pre>
+<p>You can check full samples of YAML pipelines from <a href="https://github.com/kalleantero/BFF-sample" rel="follow">here</a>.&nbsp;</p>
+<h2>Summary</h2>
+<p>This was my first touch with Bicep and YAML. I have earlier worked with ARM templates and graphical editor of Azure DevOps to build pipelines. I'm very impressed how easy it was to generate infrastructure templates with Bicep and utilize Bicep in YAML based pipelines.. I would say that Bicep syntax is very developer friendly. Bicep Modules are also a nice way to structure templates and increase reusability. I'm definitely using Bicep in the future.&nbsp;</p>
+<p></p></p>
+
+                <div class="blog-content__pagenav">
+                    <div class="blog-content__nav">
+                            <div class="blog-content__prev">
+                                <a id="post-previous-get-notified-about-service-health-incidents-that-have-occurred-in-azure" href="get-notified-about-service-health-incidents-that-have-occurred-in-azure.html" rel="prev">
+                                    <span>Previous Post</span>
+                                    Get notified about service health incidents that have occurred in Azure
+                                </a>
+                            </div>
+                        </div>
+
+
+                    <div class="blog-content__all">
+                        <a href="../index.html" class="btn btn--primary">
+                            View All Post
+                        </a>
+                    </div>
+                </div>
+
+            </div><!-- end blog-content__main -->
+        </div> <!-- end blog-content -->
+
+    </article>
+
+
+
+    
+        
+
+<!-- footer
+    ================================================== -->
+<footer>
+    <div class="row">
+        <div class="col-full">
+
+            <div class="footer-logo">
+                <a class="footer-site-logo" href="#0"><img src="../images/name.png" alt="Homepage"></a>
+            </div>
+
+            <ul class="footer-social">
+                <li>
+                    <a href="https://www.twitter.com/kmarjok">
+                        <i class="im im-twitter" aria-hidden="true"></i>
+                        <span>Twitter</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.linkedin.com/in/kallemarjokorpi">
+                        <i class="im im-linkedin" aria-hidden="true"></i>
+                        <span>Linkedin</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://github.com/kalleantero">
+                        <i class="im im-github" aria-hidden="true"></i>
+                        <span>Github</span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+    <div class="row footer-bottom">
+
+        <div class="col-twelve">
+            <div class="copyright">
+                <span>Copyright Kalle Marjokorpi 2021</span>
+                <span>Design by <a href="http://www.styleshout.com/">styleshout</a></span>
+                <span>Content management by <a href="http://www.buttercms.com/">Headless ButterCMS</a></span>
+
+            </div>
+
+        </div>
+
+    </div> <!-- end footer-bottom -->
+
+</footer> <!-- end footer -->
+    
+
+
+    <div id="preloader">
+        <div id="loader"></div>
+    </div>
+
+    <!-- Java Script
+     ================================================== -->
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/plugins.js"></script>
+    <script src="../js/main.min.js"></script>
+    
+    
+    <!-- Cloudflare Web Analytics -->
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cac9fd24c1c04b6d9984ea31685b0414"}'></script><!-- End Cloudflare Web Analytics -->
+
+</body>
+
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/deploy-azure-infrastructure-with-azure-bicep by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 30 Oct 2021 18:00:51 GMT -->
+</html>

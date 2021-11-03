@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 
-<!-- Mirrored from kalle-blog.azurewebsites.net/blog/how-to-minimize-blog-hosting-costs by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 03 Nov 2021 11:37:22 GMT -->
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/assigning-access-policies-to-keyvault-with-bicep by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 03 Nov 2021 11:37:05 GMT -->
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
 <head>
 
@@ -10,8 +10,8 @@
     <meta charset="utf-8">
 
     
-    <title>How to minimize blog hosting costs? - Blog by Kalle Marjokorpi</title>
-    <meta name="description" content="This blog posts shows how I minimized blog hosting costs.">
+    <title>Assigning Access Policies to KeyVault with Bicep - Blog by Kalle Marjokorpi</title>
+    <meta name="description" content="This blog post covers how to assign Access Policies to KeyVault with Bicep.">
     <meta name="author" content="Kalle Marjokorpi">
 
 
@@ -86,25 +86,26 @@ cfg: {
     ================================================== -->
 
         
-        <div class="page-header page-header--single page-hero" style=background-image:url(https://cdn.buttercms.com/KgbGm2h6ScamZLOvrFCV)>
+        <div class="page-header page-header--single page-hero" style=background-image:url(https://cdn.buttercms.com/wRY6suhRPyociJPuoo1F)>
 
             <div class="row page-header__content narrow">
                 <article class="col-full">
                     <div class="page-header__info">
                         <div class="page-header__cat">
-                                <a id="post-category-app-service" href="category/app-service.html">App Service</a>
-                                <a id="post-category-cost-efficiency" href="category/cost-efficiency.html">Cost efficiency</a>
-                                <a id="post-category-github-pages" href="category/github-pages.html">GitHub Pages</a>
+                                <a id="post-category-azure" href="category/azure.html">Azure</a>
+                                <a id="post-category-bicep" href="category/bicep.html">bicep</a>
+                                <a id="post-category-infrastructure-as-a-code" href="category/infrastructure-as-a-code.html">infrastructure as a code</a>
+                                <a id="post-category-keyvault" href="category/keyvault.html">KeyVault</a>
                         </div>
                     </div>
                     <h1 class="page-header__title">
                         <a href="#0" title="">
-                            Minimizing the blog hosting costs
+                            Lessons learned: Assigning Access Policies to KeyVault with Bicep
                         </a>
                     </h1>
                     <ul class="page-header__meta">
                         <li class="date">
-22.04.2021 04:24                        </li>
+03.11.2021 07:39                        </li>
                         <li class="author">
                             By
                             <span>Kalle Marjokorpi</span>
@@ -120,33 +121,223 @@ cfg: {
         <div class="row blog-content">
             <div class="col-full blog-content__main">
 
-                <p><p>I have hosted this blog in Azure App Service (B1 Tier) for a few years now. This App Service have been worked in my Azure Subscription (Visual Studio subscription). Visual Studio subscription provides monthly Azure credits which can be utilized for testing Azure services. Visual Studio Enterprise provides Azure credits ~150&euro;/month. This week I noticed that I forgot Azure API for FHIR up and running in my Azure Subscription which consumed all credits. After that my blog obviously stopped working and I had to invent something.</p>
-<p>If you're interested about technical details of this blog check <a href="https://www.kallemarjokorpi.fi/blog/hello-headless-blog" rel="follow">this post</a>.</p>
-<h2>What I did?</h2>
-<p>In simplicity the plan was to change App Service Plan to Free Tier, crawl static content of the Blog and upload it to GitHub Pages.</p>
-<p><img src="https://cdn.buttercms.com/9LtlkSKPTRmygNZYZn13" alt="undefined" /></p>
-<h3>1. App Service Plan change</h3>
-<p>The highest costs were produced by the App Service (B1) so I created a new App Service Plan with Free Tier. Free Tier enables compute time for 60 min/day which is enough especially when this App Service application is no longer the fa&ccedil;ade of the Blog. In this new model access to App Service will be also restricted.</p>
-<h3>2. Crawling the static content</h3>
-<p>I used application called <a href="https://www.httrack.com/" rel="follow">HTTrack </a>to crawl App Service (Free Tier) based site and copy static content (HTML, CSS, Images etc.) to my local computer disk.</p>
-<h3>3. Publish content to new hosting platform</h3>
-<p><a href="https://pages.github.com/" rel="follow">GitHub Pages</a> provides a free platform to host static files so this is a ideal home for my Blog. Solution is good because you can also use custom domain with GitHub Pages.&nbsp;</p>
-<h2>What Next?</h2>
-<p>The current solution requires some of manual work to publish content to new platform. Later I'll investigate how to automatize publishing process using Azure tools.</p>
-<p></p></p>
+                <p><h2>Example architecture</h2>
+<p>Chart below describes a quite typical architecture where Microservice resources and KeyVault have own resource groups. KeyVault is typically located in own resource group because it's often considered as an environment specific resource which is used by multiple resources/services. This blog post covers what I learned when deploying this kind of infrastructure as a code with Bicep when you have to interactive with multiple resource groups.&nbsp;</p>
+<h2><img src="https://cdn.buttercms.com/bYohPYsSPOpp9peuHbvU" alt="undefined" /></h2>
+<h2>Bicep implementation</h2>
+<h3>App Service module</h3>
+<p>This module creates App Service, enables Managed Identity and sets same preferred settings. Module returns principal Id of App Service when resource is created.</p>
+<pre class="language-undefined"><code>@description('Name of the App Service Plan')
+param appServicePlanName string
+
+@description('The SKU of App Service Plan.')
+param appServicePlanSku string = 'S1'
+
+@allowed([
+  'Win'
+  'Linux'
+])
+@description('Select the OS type to deploy.')
+param appServicePlanPlatform string
+
+@description('Name of the App Service')
+param appServiceName string
+param tags object
+param appSettings array
+
+resource appServicePlan 'Microsoft.Web/serverfarms@2021-02-01' = {
+  name: appServicePlanName
+  location: resourceGroup().location
+  sku: {
+    name: appServicePlanSku
+  }
+  kind: ((appServicePlanPlatform == 'Linux') ? 'linux' : 'windows')
+  tags:tags
+}
+
+resource appService 'Microsoft.Web/sites@2021-02-01' = {
+  name: appServiceName
+  location: resourceGroup().location
+  identity: {
+     type: 'SystemAssigned'
+  }
+  properties:{
+    serverFarmId: appServicePlan.id
+    siteConfig:{
+      alwaysOn: true
+      ftpsState: 'Disabled'
+      netFrameworkVersion: 'v6.0'
+      ipSecurityRestrictions:[
+        {
+            ipAddress: 'xxx.xxx.xxx.xxx/32'
+            action: 'Allow'
+            tag: 'Default'
+            priority: 100
+            name: 'Allow Access from my IP'
+        }
+        {
+          ipAddress: 'Any'
+          action: 'Deny'
+          priority: 2147483647
+          name: 'Deny all'
+          description: 'Deny all access'
+        }
+      ]
+      scmIpSecurityRestrictionsUseMain: true
+      appSettings: appSettings
+    }
+    httpsOnly: true    
+  }
+  tags:tags
+}
+
+output principalId string = appService.identity.principalId</code></pre>
+<h3>Main Bicep file</h3>
+<p>Main file orchestrates the creation of infrastructure.</p>
+<p><strong>Parameter declaration</strong></p>
+<pre class="language-undefined"><code>@description('Name of the App Service Plan')
+param appServicePlanName string
+
+@description('Name of the Application Insights')
+param applicationInsightsName string
+
+@description('The SKU of App Service Plan.')
+param appServicePlanSku string = 'S1'
+
+@allowed([
+  'Win'
+  'Linux'
+])
+@description('Select the OS type to deploy.')
+param appServicePlanPlatform string
+
+@description('Name of the App Service')
+param appServiceName string</code></pre>
+<p><strong>Utilize App Service Module to create App Service</strong></p>
+<pre class="language-undefined"><code>module appService './appservice.bicep' = {
+  name: 'appService'
+  params: {
+      appServiceName: appServiceName
+      appServicePlanName: appServicePlanName
+      appServicePlanPlatform: appServicePlanPlatform
+      appServicePlanSku: appServicePlanSku
+      tags:defaultTags
+      appSettings: appSettings
+  }
+}</code></pre>
+<p>Now Managed Identity enabled App Service is created. Next access policies to KeyVault should be created to enable App Service communication with KeyVault.</p>
+<h2>Failed tryouts</h2>
+<p><strong>1. Referencing existing KeyVault in Main Bicep file&nbsp;</strong></p>
+<p>I first created reference to existing KeyVault like this. With scope I explicitly specified the resource group of KeyVault.&nbsp;</p>
+<pre class="language-undefined"><code>resource keyVault 'Microsoft.KeyVault/vaults@2019-09-01' existing = {
+  name: keyVaultResourceName
+  scope: resourceGroup(subscription().subscriptionId, 'rg-keyvault') 
+}</code></pre>
+<p>KeyVault reference seems to be working fine. Access policies of KeyVault should be added next. I found several examples to assign access policies like this:</p>
+<pre class="language-undefined"><code>resource keyVaultPolicies 'Microsoft.KeyVault/vaults/accessPolicies@2021-06-01-preview' = {
+  dependsOn:[
+    keyVault
+  ]
+  name: '${keyVault.name}/add'
+  properties: {    
+    accessPolicies: [
+      {
+        objectId: appService.outputs.principalId
+        permissions: {
+          secrets: [ 
+            'get'
+          ]
+        }
+        tenantId: subscription().tenantId
+      }
+    ]
+  }
+}  </code></pre>
+<p>Everything looks good so let's deploy infrastructure with the following Azure CLI command</p>
+<blockquote>
+<p>NOTE: 'rg-bicep' is a Resource Group where App Service will be created. KeyVault is not located in that Resource Group!</p>
+</blockquote>
+<pre class="language-undefined"><code>az deployment group create --resource-group rg-bicep --template-file main.bicep --parameters parameters/dev.parameters.json</code></pre>
+<p>This didn't work because the following error occurred:</p>
+<pre class="language-undefined"><code>{
+    "status": "Failed",
+    "error": {
+        "code": "ParentResourceNotFound",
+        "message": "Can not perform requested operation on nested resource. Parent resource 'MYKEYVAULTRESOURCE' not found."
+    }
+}</code></pre>
+<p>Seems that KeyVault is not found. KeyVault is tried to find from the same Resource Group where App Service is located.&nbsp;</p>
+<blockquote>
+<p>NOTE: This is working if KeyVault is located to the same Resource Group</p>
+</blockquote>
+<p><strong>2. Changed scope of Access Policy resource declaration in Main Bicep file&nbsp;</strong></p>
+<p>Next I tried to add scope to the Access Policy resource declaration similar way like in KeyVault resource declaration. Visual Studio Code showed immediately warning that this is not allowed: "The root resource scope must match that of the Bicep file. To deploy a resource to a different root scope, use a module".</p>
+<p><img src="https://cdn.buttercms.com/ZQ3iY8M1Rk2HGGLUT62m" alt="undefined" /></p>
+<p>That warning was a really good because it revealed that this is not the right way to handle this kind of scenario.</p>
+<h2>Refactored solution</h2>
+<h3>KeyVault policy Module</h3>
+<p>Handling of KeyVault Access Policy is now separated to the own Bicep Module (keyvaultpolicy.bicep)</p>
+<pre class="language-undefined"><code>@description('Name of the KeyVault resource ex. kv-myservice.')
+param keyVaultResourceName string
+@description('Principal Id of the Azure resource (Managed Identity).')
+param principalId string
+@description('Assigned permissions for Principal Id (Managed Identity)')
+param keyVaultPermissions object
+@allowed([
+  'add'
+  'remove'
+  'replace'
+])
+@description('Policy action.')
+param policyAction string
+
+resource keyVault 'Microsoft.KeyVault/vaults@2019-09-01' existing = {
+  name: keyVaultResourceName
+  resource keyVaultPolicies 'accessPolicies' = {
+    dependsOn:[
+      keyVault
+    ]  
+    name: policyAction
+    properties: {    
+      accessPolicies: [
+        {
+          objectId: principalId
+          permissions: keyVaultPermissions
+          tenantId: subscription().tenantId
+        }
+      ]
+    }
+  }  
+}</code></pre>
+<h3>Main Bicep file</h3>
+<p>Scope configuration of the Module enables that we can configure different resource group for module than which is used in the main Bicep file context.</p>
+<pre class="language-undefined"><code>var keyVaultPermissions = {
+  secrets: [ 
+    'get'
+  ]
+}
+
+module keyVault './keyvaultpolicy.bicep' = {
+  dependsOn: [
+    appService
+  ]
+  scope: resourceGroup('rg-keyvault')
+  name: 'keyVault'
+  params: {
+      keyVaultResourceName: keyVaultResourceName
+      principalId: appService.outputs.principalId
+      keyVaultPermissions: keyVaultPermissions
+      policyAction: 'add'
+  }
+}</code></pre>
+<p>This solved the problem!</p></p>
 
                 <div class="blog-content__pagenav">
                     <div class="blog-content__nav">
                             <div class="blog-content__prev">
-                                <a id="post-previous-azure-b2c-custom-mfa-implementation" href="azure-b2c-custom-mfa-implementation.html" rel="prev">
+                                <a id="post-previous-deploy-azure-infrastructure-with-azure-bicep" href="deploy-azure-infrastructure-with-azure-bicep.html" rel="prev">
                                     <span>Previous Post</span>
-                                    Azure B2C custom MFA implementation
-                                </a>
-                            </div>
-                            <div class="blog-content__next">
-                                <a id="post-next-no-tokens-in-browser-with-duende-bff" href="no-tokens-in-browser-with-duende-bff.html" rel="next">
-                                    <span>Next Post</span>
-                                    No tokens in the browser implementation inspired by Duende BFF and .NET 6 RC1
+                                    Deploy .NET 6 application and infrastructure to Azure with Bicep and YAML
                                 </a>
                             </div>
                         </div>
@@ -237,5 +428,5 @@ cfg: {
 
 </body>
 
-<!-- Mirrored from kalle-blog.azurewebsites.net/blog/how-to-minimize-blog-hosting-costs by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 03 Nov 2021 11:37:22 GMT -->
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/assigning-access-policies-to-keyvault-with-bicep by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 03 Nov 2021 11:37:05 GMT -->
 </html>

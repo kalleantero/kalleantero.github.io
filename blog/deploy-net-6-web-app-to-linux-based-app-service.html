@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/deploy-net-6-web-app-to-linux-based-app-service by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 11 Nov 2021 15:47:53 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+
+    
+    <title>Deploy .NET 6 web app to Linux based App Service - Blog by Kalle Marjokorpi</title>
+    <meta name="description" content="This blog post describes what you should know when deploying .NET 6 application to Linux based App Service in Azure.">
+    <meta name="author" content="Kalle Marjokorpi">
+
+
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/vendor.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <script src="../js/modernizr.js"></script>
+    <script src="../js/pace.min.js"></script>
+
+</head>
+<body id="top">
+   
+    <!-- header
+    ================================================== -->
+
+    
+        <!-- header
+   ================================================== -->
+
+<header class="s-header">
+
+    <div class="header-logo">
+        <a class="site-logo" href="../index.html"><img src="../images/logo2.png" alt="Homepage"></a>
+    </div>
+
+    
+
+    <nav class="header-nav-wrap">
+
+        <ul class="header-nav">
+
+
+            <li class="current"><a id="top-navigation-link-root" href="../index.html" title="">Home</a></li>
+
+                <li id="top-navigation-link-about" class="smoothscroll"><a href="../about.html" title="">About me</a></li>
+
+        </ul>
+    </nav> <!-- end main-nav-wrap -->
+
+
+
+
+    <a class="header-menu-toggle" href="#0"><span>Menu</span></a>
+
+</header> <!-- end s-header -->
+
+
+    
+
+    
+
+<!-- content
+   ================================================== -->
+
+
+    <article class="blog-single">
+
+        <!-- page header/blog hero
+    ================================================== -->
+
+        
+        <div class="page-header page-header--single page-hero" style=background-image:url(https://cdn.buttercms.com/PJxU2492RU6QQdRzuGAg)>
+
+            <div class="row page-header__content narrow">
+                <article class="col-full">
+                    <div class="page-header__info">
+                        <div class="page-header__cat">
+                                <a id="post-category-app-service" href="category/app-service.html">App Service</a>
+                                <a id="post-category-azure" href="category/azure.html">Azure</a>
+                                <a id="post-category-bicep" href="category/bicep.html">bicep</a>
+                                <a id="post-category-infrastructure-as-a-code" href="category/infrastructure-as-a-code.html">infrastructure as a code</a>
+                                <a id="post-category-linux" href="category/linux.html">Linux</a>
+                                <a id="post-category-net6" href="category/net6.html">.NET6</a>
+                                <a id="post-category-yaml" href="category/yaml.html">yaml</a>
+                        </div>
+                    </div>
+                    <h1 class="page-header__title">
+                        <a href="#0" title="">
+                            What you should know when deploying .NET 6 application to Linux based App Service?
+                        </a>
+                    </h1>
+                    <ul class="page-header__meta">
+                        <li class="date">
+05.11.2021 05:48                        </li>
+                        <li class="author">
+                            By
+                            <span>Kalle Marjokorpi</span>
+                        </li>
+                    </ul>
+
+                </article>
+                
+            </div>
+
+        </div> <!-- end page-header -->
+
+        <div class="row blog-content">
+            <div class="col-full blog-content__main">
+
+                <p><p>I recently worked with .NET 6 application and from cost efficiency reasons I decided to deploy application to Linux based App Service. Everything didn't happen without problems so this blog post describes what you should know when deploying .NET 6 application to Linux based App Service in Azure.</p>
+<h2>Why to use Linux based App Service?</h2>
+<p>Nowadays Linux based App Service have pretty much same features like Windows but pricing is more attempting. Linux based App Service is 50% cheaper than Windows counterpart. Pricing at 11.11.2021:</p>
+<p><strong>Windows based App Service (Premium v3 Service Plan)&nbsp;</strong></p>
+<p><img src="https://cdn.buttercms.com/ylMNSt2DTW2ZnWxRBfIT" alt="undefined" /></p>
+<p><strong>Linux based App Service (Premium v3 Service Plan)</strong></p>
+<p><img src="https://cdn.buttercms.com/gpciLy7kR0uicYpjtIwH" alt="undefined" /></p>
+<h2>Notes about building Azure Infrastructure with Bicep</h2>
+<h3>App Service Plan creation</h3>
+<p>I struggled some time with multiple provisioning errors after I noticed this blog <a href="https://azure.github.io/AppService/2021/08/31/Kind-property-overview.html" rel="follow">post</a> by Azure App Service team. You should determine <strong>reserved </strong>property to <strong>true </strong>to use Linux.</p>
+<p><span class="VIiyi" jsaction="mouseup:BR6jm" jsname="jqKxS" lang="en"><span jsaction="agoMJf:PFBcW;usxOmf:aWLT7;jhKsnd:P7O7bd,F8DmGf;Q4AGo:Gm7gYd,qAKMYb;uFUCPb:pvnm0e,pfE8Hb,PFBcW;f56efd:dJXsye;EnoYf:KNzws,ZJsZZ,JgVSJc;zdMJQc:cCQNKb,ZJsZZ,zchEXc;Ytrrj:JJDvdc;tNR8yc:GeFvjb;oFN6Ye:hij5Wb;bmeZHc:iURhpf;Oxj3Xe:qAKMYb,yaf12d" jsname="txFAF" class="JLqJ4b ChMk0b" data-language-for-alternatives="en" data-language-to-translate-into="fi" data-phrase-index="0" data-number-of-phrases="1" jscontroller="Zl5N8" jsdata="uqLsIf;_;$191" jsmodel="SsMkhd"><span jsaction="click:qtZ4nf,GFf3ac,tMZCfe; contextmenu:Nqw7Te,QP7LD; mouseout:Nqw7Te; mouseover:qtZ4nf,c2aHje" jsname="W297wb">Quotation</span></span></span><span> </span>from App Service team blog:</p>
+<blockquote>
+<p>Note that the kind property also shows up in App Service Plans (ASP). At this time, the value of this property for the ASP is meaningless and has no impact on your resource. For example, you can set kind to &ldquo;Linux&rdquo; for the ASP, but that won&rsquo;t make your ASP a Linux ASP; the reserved property is what makes this distinction (if reserved= true, it&rsquo;s a Linux ASP, otherwise it&rsquo;s a Windows ASP).</p>
+</blockquote>
+<p></p>
+<p><strong>Used Bicep code:</strong></p>
+<pre class="language-undefined"><code>resource appServicePlan 'Microsoft.Web/serverfarms@2021-02-01' = {
+  name: 'plan-myapplication'
+  location: resourceGroup().location
+  sku: {
+    name: 'S1'
+  }
+  properties:{
+    reserved: true
+  }
+  kind: ((appServicePlanPlatform == 'Linux') ? 'app,linux' : 'windows')
+  tags:tags
+}</code></pre>
+<h3>App Service creation</h3>
+<p>When you're using Windows based App Service&nbsp;<strong>netFrameworkVersion&nbsp;</strong>property of site config determines the runtime version like this:</p>
+<p><strong></strong><img src="https://cdn.buttercms.com/iPOvKqjQtGFvhTPzxKwQ" alt="undefined" /></p>
+<p>Unfortunately same property don't work with Linux. Instead of <strong>netFrameworkVersion&nbsp;</strong>you have to use <strong>linuxFxVersion&nbsp;</strong>property.&nbsp;</p>
+<p><strong>Used Bicep code:</strong></p>
+<pre class="language-undefined"><code>resource appService 'Microsoft.Web/sites@2021-02-01' = {
+  name: 'app-myapplication'
+  location: resourceGroup().location
+  identity: {
+     type: 'SystemAssigned'
+  }
+  properties:{
+    serverFarmId: appServicePlan.id
+    reserved: true
+    siteConfig:{
+      alwaysOn: true
+      ftpsState: 'Disabled'
+      appSettings: appSettings
+      linuxFxVersion: 'DOTNETCORE|6.0'
+      http20Enabled: true
+    }
+    httpsOnly: true   
+  }
+  tags:tags
+}</code></pre>
+<p>There are a few things what you should know about <strong>linuxFxVersion</strong> property values. List of available built-in runtime values for web app can be retrieved with the following command:</p>
+<pre class="language-undefined"><code>az webapp list-runtimes --linux</code></pre>
+<p>Currently (11/2021) command returned the following values:</p>
+<pre class="language-undefined"><code>[
+  "DOTNETCORE|2.1",
+  "DOTNETCORE|3.1",
+  "DOTNET|5.0",
+  "DOTNET|6.0",
+  "NODE|14-lts",
+  "NODE|12-lts",
+  "NODE|10-lts",
+  "NODE|10.1",
+  "NODE|10.6",
+  "NODE|10.14",
+  "JAVA|8-jre8",
+  "JAVA|11-java11",
+  "TOMCAT|8.5-jre8",
+  "TOMCAT|9.0-jre8",
+  "TOMCAT|8.5-java11",
+  "TOMCAT|9.0-java11",
+  "JBOSSEAP|7-java8",
+  "JBOSSEAP|7.3-java8",
+  "JBOSSEAP|7-java11",
+  "JBOSSEAP|7.3-java11",
+  "PHP|7.3",
+  "PHP|7.4",
+  "PYTHON|3.8",
+  "PYTHON|3.7",
+  "PYTHON|3.6",
+  "RUBY|2.5",
+  "RUBY|2.6"
+]</code></pre>
+<p>But value <strong>DOTNET|6.0</strong> is not working and after deployment Stack selection is empty.</p>
+<p><img src="https://cdn.buttercms.com/mBQFGWdKTLil8mB0S04D" alt="undefined" /></p>
+<p>Instead of <strong>DOTNET|6.0 </strong>if you use value <strong>DOTNETCORE|6.0</strong> everything works (!?).</p>
+<p><img src="https://cdn.buttercms.com/0daZ85mvRUu5fPhsgAcR" alt="undefined" /></p>
+<h2>Notes about deploying application (YAML)</h2>
+<p>Set runtime argument value to <strong>linux-x64&nbsp;</strong>in artifact publish task:<strong></strong></p>
+<pre class="language-undefined"><code>    - task: DotNetCoreCLI@2
+      displayName: Create application artifact
+      inputs:
+        command: publish
+        projects:  '**/*.csproj'      
+        arguments: '--configuration 'Release' --framework 'net6.0' -r 'linux-x64' --self-contained false --output $(Build.ArtifactStagingDirectory)'
+        modifyOutputPath: false
+        publishWebProjects: false
+        zipAfterPublish: True  </code></pre>
+<h2>YAML Deploy pipeline</h2>
+<p>Application is executed in Container so you have to manually set Startup Command to get application running. It took some time to figure this out.</p>
+<p><img src="https://cdn.buttercms.com/wWbp2fgeRweXubczBYwq" alt="undefined" /></p>
+<p></p>
+<p>You can use <strong>startUpCommand </strong>property to configure application start up in application deployment task.</p>
+<pre class="language-undefined"><code>         - task: AzureWebApp@1
+            displayName: Deploy application
+            inputs:
+              appType: 'webAppLinux'
+              azureSubscription: 'azure-dev'
+              appName: 'app-myapplication'
+              package: "$(System.ArtifactsDirectory)/application/*.zip"
+              deploymentMethod: 'zipDeploy'
+              startUpCommand: 'dotnet MyApplication.dll'</code></pre>
+<h2>Application settings</h2>
+<p>When using Linux you have to change app setting key separator from colon (:) which is commonly used in Windows platform to double underscore (__). Note! underscore separator should also work in Windows.</p>
+<pre class="language-undefined"><code>[
+  {
+    "name": "Idp__Authority",
+    "value": "https://auth.server.fi",
+    "slotSetting": false
+  },
+  {
+    "name": "KeyVault__Uri",
+    "value": "https://kv-myapplication.vault.azure.net/",
+    "slotSetting": false
+  } 
+]</code></pre></p>
+
+                <h2>Comments</h2>
+                                    
+                <div id="cusdis_thread"
+                  data-host="https://cusdis.com"
+                  data-app-id="86620953-7757-4f01-94f2-bfb88caff8a4"
+                  data-page-id="deploy-net-6-web-app-to-linux-based-app-service"
+                  data-page-url="https://kalle-blog.azurewebsites.net/blog/deploy-net-6-web-app-to-linux-based-app-service"
+                  data-page-title="What you should know when deploying .NET 6 application to Linux based App Service?">
+                <script src="https://cusdis.com/js/cusdis.es.js"></script>
+
+                <div class="blog-content__pagenav">
+                    <div class="blog-content__nav">
+                            <div class="blog-content__prev">
+                                <a id="post-previous-assigning-access-policies-to-keyvault-with-bicep" href="assigning-access-policies-to-keyvault-with-bicep.html" rel="prev">
+                                    <span>Previous Post</span>
+                                    Lessons learned: Assigning Access Policies to KeyVault with Bicep
+                                </a>
+                            </div>
+                        </div>
+
+
+                    <div class="blog-content__all">
+                        <a href="../index.html" class="btn btn--primary">
+                            View All Post
+                        </a>
+                    </div>
+                </div>
+
+            </div><!-- end blog-content__main -->
+        </div> <!-- end blog-content -->
+
+    </article>
+
+
+
+    
+        
+
+<!-- footer
+    ================================================== -->
+<footer>
+    <div class="row">
+        <div class="col-full">
+
+            <div class="footer-logo">
+                <a class="footer-site-logo" href="#0"><img src="../images/name.png" alt="Homepage"></a>
+            </div>
+
+            <ul class="footer-social">
+                <li>
+                    <a href="https://www.twitter.com/kmarjok">
+                        <i class="im im-twitter" aria-hidden="true"></i>
+                        <span>Twitter</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.linkedin.com/in/kallemarjokorpi">
+                        <i class="im im-linkedin" aria-hidden="true"></i>
+                        <span>Linkedin</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://github.com/kalleantero">
+                        <i class="im im-github" aria-hidden="true"></i>
+                        <span>Github</span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+    <div class="row footer-bottom">
+
+        <div class="col-twelve">
+            <div class="copyright">
+                <span>Copyright Kalle Marjokorpi 2021</span>
+                <span>Design by <a href="http://www.styleshout.com/">styleshout</a></span>
+                <span>Content management by <a href="http://www.buttercms.com/">Headless ButterCMS</a></span>
+
+            </div>
+
+        </div>
+
+    </div> <!-- end footer-bottom -->
+
+</footer> <!-- end footer -->
+    
+
+
+    <div id="preloader">
+        <div id="loader"></div>
+    </div>
+
+    <!-- Java Script
+     ================================================== -->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/plugins.js"></script>
+    <script src="../js/main.min.js"></script>
+    
+    
+    <!-- Cloudflare Web Analytics -->
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cac9fd24c1c04b6d9984ea31685b0414"}'></script><!-- End Cloudflare Web Analytics -->
+
+    
+
+</body>
+
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/deploy-net-6-web-app-to-linux-based-app-service by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 11 Nov 2021 15:47:53 GMT -->
+</html>

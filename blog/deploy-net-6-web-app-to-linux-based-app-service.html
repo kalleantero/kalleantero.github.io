@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 
-<!-- Mirrored from kalle-blog.azurewebsites.net/blog/deploy-net-6-web-app-to-linux-based-app-service by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 11 Nov 2021 15:47:53 GMT -->
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/deploy-net-6-web-app-to-linux-based-app-service by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 12 Nov 2021 05:46:10 GMT -->
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
 <head>
 
@@ -132,7 +132,7 @@
 <p>Note that the kind property also shows up in App Service Plans (ASP). At this time, the value of this property for the ASP is meaningless and has no impact on your resource. For example, you can set kind to &ldquo;Linux&rdquo; for the ASP, but that won&rsquo;t make your ASP a Linux ASP; the reserved property is what makes this distinction (if reserved= true, it&rsquo;s a Linux ASP, otherwise it&rsquo;s a Windows ASP).</p>
 </blockquote>
 <p></p>
-<p><strong>Used Bicep code:</strong></p>
+<p><strong>Used Bicep code to create App Service Plan:</strong></p>
 <pre class="language-undefined"><code>resource appServicePlan 'Microsoft.Web/serverfarms@2021-02-01' = {
   name: 'plan-myapplication'
   location: resourceGroup().location
@@ -146,10 +146,10 @@
   tags:tags
 }</code></pre>
 <h3>App Service creation</h3>
-<p>When you're using Windows based App Service&nbsp;<strong>netFrameworkVersion&nbsp;</strong>property of site config determines the runtime version like this:</p>
+<p>When you're using Windows based App Service&nbsp;<strong>netFrameworkVersion&nbsp;</strong>property (Site configs) determines the runtime version like this:</p>
 <p><strong></strong><img src="https://cdn.buttercms.com/iPOvKqjQtGFvhTPzxKwQ" alt="undefined" /></p>
 <p>Unfortunately same property don't work with Linux. Instead of <strong>netFrameworkVersion&nbsp;</strong>you have to use <strong>linuxFxVersion&nbsp;</strong>property.&nbsp;</p>
-<p><strong>Used Bicep code:</strong></p>
+<p><strong>Used Bicep code to create App Service Plan:</strong></p>
 <pre class="language-undefined"><code>resource appService 'Microsoft.Web/sites@2021-02-01' = {
   name: 'app-myapplication'
   location: resourceGroup().location
@@ -170,7 +170,7 @@
   }
   tags:tags
 }</code></pre>
-<p>There are a few things what you should know about <strong>linuxFxVersion</strong> property values. List of available built-in runtime values for web app can be retrieved with the following command:</p>
+<p>There are a few things what you should know about <strong>linuxFxVersion</strong> property values. List of available built-in runtime values for web app (Linux) can be retrieved with the following Azure CLI command:</p>
 <pre class="language-undefined"><code>az webapp list-runtimes --linux</code></pre>
 <p>Currently (11/2021) command returned the following values:</p>
 <pre class="language-undefined"><code>[
@@ -204,10 +204,10 @@
 ]</code></pre>
 <p>But value <strong>DOTNET|6.0</strong> is not working and after deployment Stack selection is empty.</p>
 <p><img src="https://cdn.buttercms.com/mBQFGWdKTLil8mB0S04D" alt="undefined" /></p>
-<p>Instead of <strong>DOTNET|6.0 </strong>if you use value <strong>DOTNETCORE|6.0</strong> everything works (!?).</p>
+<p>Instead of <strong>DOTNET|6.0 </strong>you have to use <strong>DOTNETCORE|6.0</strong> to get this working.</p>
 <p><img src="https://cdn.buttercms.com/0daZ85mvRUu5fPhsgAcR" alt="undefined" /></p>
 <h2>Notes about deploying application (YAML)</h2>
-<p>Set runtime argument value to <strong>linux-x64&nbsp;</strong>in artifact publish task:<strong></strong></p>
+<p>Set runtime argument value to <strong>linux-x64&nbsp;</strong>in publish task like this:<strong></strong></p>
 <pre class="language-undefined"><code>    - task: DotNetCoreCLI@2
       displayName: Create application artifact
       inputs:
@@ -220,8 +220,7 @@
 <h2>YAML Deploy pipeline</h2>
 <p>Application is executed in Container so you have to manually set Startup Command to get application running. It took some time to figure this out.</p>
 <p><img src="https://cdn.buttercms.com/wWbp2fgeRweXubczBYwq" alt="undefined" /></p>
-<p></p>
-<p>You can use <strong>startUpCommand </strong>property to configure application start up in application deployment task.</p>
+<p>You can use <strong>startUpCommand </strong>property to configure application start up in application deployment task:</p>
 <pre class="language-undefined"><code>         - task: AzureWebApp@1
             displayName: Deploy application
             inputs:
@@ -232,7 +231,7 @@
               deploymentMethod: 'zipDeploy'
               startUpCommand: 'dotnet MyApplication.dll'</code></pre>
 <h2>Application settings</h2>
-<p>When using Linux you have to change app setting key separator from colon (:) which is commonly used in Windows platform to double underscore (__). Note! underscore separator should also work in Windows.</p>
+<p>When using Linux you have to change app setting key separator from colon (:) which is typically used in Windows platform to double underscore (__). Note! underscore separator should also work in Windows.</p>
 <pre class="language-undefined"><code>[
   {
     "name": "Idp__Authority",
@@ -355,5 +354,5 @@
 
 </body>
 
-<!-- Mirrored from kalle-blog.azurewebsites.net/blog/deploy-net-6-web-app-to-linux-based-app-service by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 11 Nov 2021 15:47:53 GMT -->
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/deploy-net-6-web-app-to-linux-based-app-service by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 12 Nov 2021 05:46:10 GMT -->
 </html>

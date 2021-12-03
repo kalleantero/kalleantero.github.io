@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/application-settings-comparison-app-service by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 03 Dec 2021 13:12:23 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+
+    
+    <title>What kind of application setting configuration capabilities exists in the Azure for App Service - Blog by Kalle Marjokorpi</title>
+    <meta name="description" content="This blog post presents a comparison about typical ways to handle application settings in Azure App Service.">
+    <meta name="author" content="Kalle Marjokorpi">
+
+
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/vendor.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <script src="../js/modernizr.js"></script>
+    <script src="../js/pace.min.js"></script>
+
+</head>
+<body id="top">
+   
+    <!-- header
+    ================================================== -->
+
+    
+        <!-- header
+   ================================================== -->
+
+<header class="s-header">
+
+    <div class="header-logo">
+        <a class="site-logo" href="../index.html"><img src="../images/logo2.png" alt="Homepage"></a>
+    </div>
+
+    
+
+    <nav class="header-nav-wrap">
+
+        <ul class="header-nav">
+
+
+            <li class=""><a id="top-navigation-link-root" href="../index.html" title="">Home</a></li>
+
+                <li id="top-navigation-link-about" class="smoothscroll"><a href="../about.html" title="">About me</a></li>
+
+        </ul>
+    </nav> <!-- end main-nav-wrap -->
+
+
+
+
+    <a class="header-menu-toggle" href="#0"><span>Menu</span></a>
+
+</header> <!-- end s-header -->
+
+
+    
+
+    
+
+<!-- content
+   ================================================== -->
+
+
+    <article class="blog-single">
+
+        <!-- page header/blog hero
+    ================================================== -->
+
+        
+        <div class="page-header page-header--single page-hero" style=background-image:url(https://cdn.buttercms.com/IM72xsHTR8OoDWjKewwj)>
+
+            <div class="row page-header__content narrow">
+                <article class="col-full">
+                    <div class="page-header__info">
+                        <div class="page-header__cat">
+                                <a id="post-category-app-service" href="category/app-service.html">App Service</a>
+                                <a id="post-category-azure" href="category/azure.html">Azure</a>
+                                <a id="post-category-azure-devops" href="category/azure-devops.html">Azure DevOps</a>
+                                <a id="post-category-key-vault" href="category/key-vault.html">Key Vault</a>
+                                <a id="post-category-paas" href="category/paas.html">PaaS</a>
+                        </div>
+                    </div>
+                    <h1 class="page-header__title">
+                        <a href="#0" title="">
+                            What kind of application setting configuration capabilities exists in the Azure for App Service
+                        </a>
+                    </h1>
+                    <ul class="page-header__meta">
+                        <li class="date">
+05.11.2021 05:47                        </li>
+                        <li class="author">
+                            By
+                            <span>Kalle Marjokorpi</span>
+                        </li>
+                    </ul>
+
+                </article>
+                
+            </div>
+
+        </div> <!-- end page-header -->
+
+        <div class="row blog-content">
+            <div class="col-full blog-content__main">
+
+                <p><p>There are multiple ways to handle application related settings when using Azure App Service. Typically application needs ex. database connection string and authentication related parameters which should be able to change without deploying application again. This blog post presents a comparison about typical ways to handle application settings in Azure App Service.</p>
+<h2>1. App Service Configuration (App Settings)</h2>
+<p>In this setup all application settings are handled via Azure Portal (App Service &gt; Configuration &gt; App Settings).</p>
+<p></p>
+<p><img src="https://cdn.buttercms.com/nT1bjqipQ3a7i3WiKFhL" alt="undefined" /></p>
+<p><strong>Pros</strong></p>
+<ul>
+<li>App settings can be easily changed in Azure Portal and changes are applied quickly. Note! saving changes causes application pool recycle.</li>
+<li>Allows to use complex configuration types like arrays</li>
+<li>You can use <a href="https://docs.microsoft.com/en-us/azure/app-service/app-service-key-vault-references" rel="follow">Key Vault Reference</a> to reference Key Vault secrets directly from App Settings without adding Key Vault SDK to application.</li>
+</ul>
+<p><strong>Cons</strong></p>
+<ul>
+<li>No good version control. Changed values can be retrieved from Activity log but it requires some digging. Note! Default retention for Activity log is 90 days.</li>
+<li>If Key Vault Reference is used be aware that secrets are exposed in Kudu portal for users who has Contributor privileges to App Service even tough they don't have direct permissions to Key Vault.</li>
+<li>In disaster recovery situation it's difficult to revert settings back if you haven't backed up App Service or settings.</li>
+<li>Be aware that if specific setting is missing from App Service configuration (Azure Portal) fallback mechanism tries to find this same setting from appsettings.json file from file system. This could cause dangerous situations if appsettings.json with values is deployed to Azure.</li>
+</ul>
+<h2>2. Azure DevOps variables</h2>
+<p>In this setup all application settings are handled via Azure DevOps variables. Azure DevOps is the master data source for application settings.</p>
+<p><img src="https://cdn.buttercms.com/KJTd3R1TNCq0oMpRgldP" alt="undefined" /></p>
+<p><strong>Pros</strong></p>
+<ul>
+<li>Azure DevOps provides a quite good UI for handling variables which can be used to handle settings and different kind of configuration values.</li>
+<li>You can separated variables easily to different environments / stages with Variable Groups.</li>
+<li>Variable Groups can be shared in multiple pipelines in the same project.</li>
+<li>Sensitive variable values can be also fetched directly from Key Vault.</li>
+<li>Possibility to use SecureString instead of Key Vault to hide secret configuration values.</li>
+<li>You can easily check which application settings were related to which release.</li>
+<li>Azure DevOps CLI enables to backup configuration values if necessary to another storage / location.</li>
+</ul>
+<p><strong>Cons</strong></p>
+<ul>
+<li>Handling variables via Classic Pipelines could be deprecated at some point.</li>
+<li>Assigning variable values to App Service App Settings requires some extra work in Pipeline side (applies to both Classic or YAML Pipeline).</li>
+<li>If variable value is configured to fetch from Key Vault this value is not visible in Azure DevOps logs but it's visible in plain text in App Settings section of App Service.</li>
+<li><span class="VIiyi" jsaction="mouseup:BR6jm" jsname="jqKxS" lang="en"><span jsaction="agoMJf:PFBcW;usxOmf:aWLT7;jhKsnd:P7O7bd,F8DmGf;Q4AGo:Gm7gYd,qAKMYb;uFUCPb:pvnm0e,pfE8Hb,PFBcW;f56efd:dJXsye;EnoYf:KNzws,ZJsZZ,JgVSJc;zdMJQc:cCQNKb,ZJsZZ,zchEXc;Ytrrj:JJDvdc;tNR8yc:GeFvjb;oFN6Ye:hij5Wb;bmeZHc:iURhpf;Oxj3Xe:qAKMYb,yaf12d" jsname="txFAF" class="JLqJ4b ChMk0b" data-language-for-alternatives="en" data-language-to-translate-into="fi" data-phrase-index="0" data-number-of-phrases="1" jscontroller="Zl5N8" jsdata="uqLsIf;_;$100" jsmodel="SsMkhd"><span jsaction="click:qtZ4nf,GFf3ac,tMZCfe; contextmenu:Nqw7Te,QP7LD; mouseout:Nqw7Te; mouseover:qtZ4nf,c2aHje" jsname="W297wb">You need to have a separate setting file (appsetting.development.json) for local development.</span></span></span></li>
+</ul>
+<h2>3. ARM parameter files</h2>
+<p>In this setup all application settings are handled in ARM parameter files which are stored to the source control.</p>
+<p></p>
+<p><img src="https://cdn.buttercms.com/SxbkVsncRmSAOONN8cC2" alt="undefined" /></p>
+<p><strong>Pros</strong></p>
+<ul>
+<li>All settings are in source control. You can easily check which application settings were related to which release.</li>
+<li>Simple and straightforward implementation.</li>
+<li>Good solution from disaster recovery point of view.</li>
+<li>Additional backup solution for settings is not required (assumes that source control backups exists).</li>
+</ul>
+<p><strong>Cons</strong></p>
+<ul>
+<li><span class="VIiyi" jsaction="mouseup:BR6jm" jsname="jqKxS" lang="en"><span jsaction="agoMJf:PFBcW;usxOmf:aWLT7;jhKsnd:P7O7bd,F8DmGf;Q4AGo:Gm7gYd,qAKMYb;uFUCPb:pvnm0e,pfE8Hb,PFBcW;f56efd:dJXsye;EnoYf:KNzws,ZJsZZ,JgVSJc;zdMJQc:cCQNKb,ZJsZZ,zchEXc;Ytrrj:JJDvdc;tNR8yc:GeFvjb;oFN6Ye:hij5Wb;bmeZHc:iURhpf;Oxj3Xe:qAKMYb,yaf12d" jsname="txFAF" class="JLqJ4b ChMk0b" data-language-for-alternatives="en" data-language-to-translate-into="fi" data-phrase-index="0" data-number-of-phrases="1" jscontroller="Zl5N8" jsdata="uqLsIf;_;$100" jsmodel="SsMkhd"><span jsaction="click:qtZ4nf,GFf3ac,tMZCfe; contextmenu:Nqw7Te,QP7LD; mouseout:Nqw7Te; mouseover:qtZ4nf,c2aHje" jsname="W297wb">A small threshold to make mistake and commit secrets to source control. When Key Vault SDK is used in the application, you should only store secret key names to the parameter file.</span></span></span><span></span></li>
+<li><span class="VIiyi" jsaction="mouseup:BR6jm" jsname="jqKxS" lang="en"><span jsaction="agoMJf:PFBcW;usxOmf:aWLT7;jhKsnd:P7O7bd,F8DmGf;Q4AGo:Gm7gYd,qAKMYb;uFUCPb:pvnm0e,pfE8Hb,PFBcW;f56efd:dJXsye;EnoYf:KNzws,ZJsZZ,JgVSJc;zdMJQc:cCQNKb,ZJsZZ,zchEXc;Ytrrj:JJDvdc;tNR8yc:GeFvjb;oFN6Ye:hij5Wb;bmeZHc:iURhpf;Oxj3Xe:qAKMYb,yaf12d" jsname="txFAF" class="JLqJ4b ChMk0b" data-language-for-alternatives="en" data-language-to-translate-into="fi" data-phrase-index="0" data-number-of-phrases="1" jscontroller="Zl5N8" jsdata="uqLsIf;_;$100" jsmodel="SsMkhd"><span jsaction="click:qtZ4nf,GFf3ac,tMZCfe; contextmenu:Nqw7Te,QP7LD; mouseout:Nqw7Te; mouseover:qtZ4nf,c2aHje" jsname="W297wb">Adding new settings requires modifications also to Bicep files or maybe you could loop parameters dynamically.</span></span></span></li>
+<li><span class="VIiyi" jsaction="mouseup:BR6jm" jsname="jqKxS" lang="en"><span jsaction="agoMJf:PFBcW;usxOmf:aWLT7;jhKsnd:P7O7bd,F8DmGf;Q4AGo:Gm7gYd,qAKMYb;uFUCPb:pvnm0e,pfE8Hb,PFBcW;f56efd:dJXsye;EnoYf:KNzws,ZJsZZ,JgVSJc;zdMJQc:cCQNKb,ZJsZZ,zchEXc;Ytrrj:JJDvdc;tNR8yc:GeFvjb;oFN6Ye:hij5Wb;bmeZHc:iURhpf;Oxj3Xe:qAKMYb,yaf12d" jsname="txFAF" class="JLqJ4b ChMk0b" data-language-for-alternatives="en" data-language-to-translate-into="fi" data-phrase-index="0" data-number-of-phrases="1" jscontroller="Zl5N8" jsdata="uqLsIf;_;$100" jsmodel="SsMkhd"><span jsaction="click:qtZ4nf,GFf3ac,tMZCfe; contextmenu:Nqw7Te,QP7LD; mouseout:Nqw7Te; mouseover:qtZ4nf,c2aHje" jsname="W297wb">You need to have a separate setting file (appsetting.development.json) for local development.</span></span></span></li>
+</ul>
+<h2>4. Azure App Configuration</h2>
+<p>In this setup master of configuration / setting data is in external Azure App Configuration service.</p>
+<p><img src="https://cdn.buttercms.com/TjYLEQ6PR5qMQPIYeY3u" alt="undefined" /></p>
+<p><strong>Pros</strong></p>
+<ul>
+<li>You can export / import settings between other App Configuration instances.</li>
+<li>Managed Identity is supported.</li>
+<li>Labeling allows you to group settings. You can ex. create a label called "Shared" which settings are shared between multiple applications.</li>
+<li>Built-in feature toggle functionality. You don't necessary need to use external Feature Toggle service like Launch Darkly.</li>
+<li>Revision history for 30 days (Standard pricing tier only).</li>
+<li>Direct integration with KeyVault (Managed Identity).</li>
+<li>Private Endpoint support.</li>
+<li>Encryption with customer-managed keys.</li>
+<li>One free App Configuration available per Azure subscription.</li>
+<li>No necessary need for local setting file (appsetting.development.json) for local development.</li>
+</ul>
+<p><strong>Cons</strong></p>
+<ul>
+<li><span class="VIiyi" jsaction="mouseup:BR6jm" jsname="jqKxS" lang="en"><span jsaction="agoMJf:PFBcW;usxOmf:aWLT7;jhKsnd:P7O7bd,F8DmGf;Q4AGo:Gm7gYd,qAKMYb;uFUCPb:pvnm0e,pfE8Hb,PFBcW;f56efd:dJXsye;EnoYf:KNzws,ZJsZZ,JgVSJc;zdMJQc:cCQNKb,ZJsZZ,zchEXc;Ytrrj:JJDvdc;tNR8yc:GeFvjb;oFN6Ye:hij5Wb;bmeZHc:iURhpf;Oxj3Xe:qAKMYb,yaf12d" jsname="txFAF" class="JLqJ4b ChMk0b" data-language-for-alternatives="en" data-language-to-translate-into="fi" data-phrase-index="0" data-number-of-phrases="1" jscontroller="Zl5N8" jsdata="uqLsIf;_;$100" jsmodel="SsMkhd"><span jsaction="click:qtZ4nf,GFf3ac,tMZCfe; contextmenu:Nqw7Te,QP7LD; mouseout:Nqw7Te; mouseover:qtZ4nf,c2aHje" jsname="W297wb">Requires minor code changes in application side.</span></span></span></li>
+<li><span class="VIiyi" jsaction="mouseup:BR6jm" jsname="jqKxS" lang="en"><span jsaction="agoMJf:PFBcW;usxOmf:aWLT7;jhKsnd:P7O7bd,F8DmGf;Q4AGo:Gm7gYd,qAKMYb;uFUCPb:pvnm0e,pfE8Hb,PFBcW;f56efd:dJXsye;EnoYf:KNzws,ZJsZZ,JgVSJc;zdMJQc:cCQNKb,ZJsZZ,zchEXc;Ytrrj:JJDvdc;tNR8yc:GeFvjb;oFN6Ye:hij5Wb;bmeZHc:iURhpf;Oxj3Xe:qAKMYb,yaf12d" jsname="txFAF" class="JLqJ4b ChMk0b" data-language-for-alternatives="en" data-language-to-translate-into="fi" data-phrase-index="0" data-number-of-phrases="1" jscontroller="Zl5N8" jsdata="uqLsIf;_;$100" jsmodel="SsMkhd"><span jsaction="click:qtZ4nf,GFf3ac,tMZCfe; contextmenu:Nqw7Te,QP7LD; mouseout:Nqw7Te; mouseover:qtZ4nf,c2aHje" jsname="W297wb">Increases <a href="https://azure.microsoft.com/en-us/pricing/details/app-configuration/" rel="follow">Azure costs</a>. The first 200,000 requests are included in the daily charge. Additional requests will be billed as overage (&euro;1.035 per resource per day, plus an overage charge at &euro;0.052 per 10,000 requests.)<br /></span></span></span></li>
+<li><span class="VIiyi" jsaction="mouseup:BR6jm" jsname="jqKxS" lang="en"><span jsaction="agoMJf:PFBcW;usxOmf:aWLT7;jhKsnd:P7O7bd,F8DmGf;Q4AGo:Gm7gYd,qAKMYb;uFUCPb:pvnm0e,pfE8Hb,PFBcW;f56efd:dJXsye;EnoYf:KNzws,ZJsZZ,JgVSJc;zdMJQc:cCQNKb,ZJsZZ,zchEXc;Ytrrj:JJDvdc;tNR8yc:GeFvjb;oFN6Ye:hij5Wb;bmeZHc:iURhpf;Oxj3Xe:qAKMYb,yaf12d" jsname="txFAF" class="JLqJ4b ChMk0b" data-language-for-alternatives="en" data-language-to-translate-into="fi" data-phrase-index="0" data-number-of-phrases="1" jscontroller="Zl5N8" jsdata="uqLsIf;_;$100" jsmodel="SsMkhd"><span jsaction="click:qtZ4nf,GFf3ac,tMZCfe; contextmenu:Nqw7Te,QP7LD; mouseout:Nqw7Te; mouseover:qtZ4nf,c2aHje" jsname="W297wb">Application side might need caching because App Configuration service has request quota (30,000 requests per hour).</span></span></span></li>
+</ul>
+<h2>What I prefer?</h2>
+<p>I have used all of these solutions during past years. Currently I prefer solutions where settings are stored in ARM-parameter files or App Configuration service. All secrets and credentials should be always stored in Key Vault! It depends about the case which one of these is better. App Configuration is very handy especially if need to share settings between multiple application.</p>
+<p></p></p>
+
+                <h2>Comments</h2>
+                                    
+                <div id="cusdis_thread"
+                  data-host="https://cusdis.com"
+                  data-app-id="86620953-7757-4f01-94f2-bfb88caff8a4"
+                  data-page-id="application-settings-comparison-app-service"
+                  data-page-url="https://kalle-blog.azurewebsites.net/blog/application-settings-comparison-app-service"
+                  data-page-title="What kind of application setting configuration capabilities exists in the Azure for App Service">
+                <script src="https://cusdis.com/js/cusdis.es.js"></script>
+
+                <div class="blog-content__pagenav">
+                    <div class="blog-content__nav">
+                            <div class="blog-content__prev">
+                                <a id="post-previous-assigning-access-policies-to-keyvault-with-bicep" href="assigning-access-policies-to-keyvault-with-bicep.html" rel="prev">
+                                    <span>Previous Post</span>
+                                    Lessons learned: Assigning Access Policies to KeyVault with Bicep
+                                </a>
+                            </div>
+                            <div class="blog-content__next">
+                                <a id="post-next-deploy-net-6-web-app-to-linux-based-app-service" href="deploy-net-6-web-app-to-linux-based-app-service.html" rel="next">
+                                    <span>Next Post</span>
+                                    What you should know when deploying .NET 6 application to Linux based App Service?
+                                </a>
+                            </div>
+                        </div>
+
+
+                    <div class="blog-content__all">
+                        <a href="../index.html" class="btn btn--primary">
+                            View All Post
+                        </a>
+                    </div>
+                </div>
+
+            </div><!-- end blog-content__main -->
+        </div> <!-- end blog-content -->
+
+    </article>
+
+
+
+    
+        
+
+<!-- footer
+    ================================================== -->
+<footer>
+    <div class="row">
+        <div class="col-full">
+
+            <div class="footer-logo">
+                <a class="footer-site-logo" href="#0"><img src="../images/name.png" alt="Homepage"></a>
+            </div>
+
+            <ul class="footer-social">
+                <li>
+                    <a href="https://www.twitter.com/kmarjok">
+                        <i class="im im-twitter" aria-hidden="true"></i>
+                        <span>Twitter</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.linkedin.com/in/kallemarjokorpi">
+                        <i class="im im-linkedin" aria-hidden="true"></i>
+                        <span>Linkedin</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://github.com/kalleantero">
+                        <i class="im im-github" aria-hidden="true"></i>
+                        <span>Github</span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+    <div class="row footer-bottom">
+
+        <div class="col-twelve">
+            <div class="copyright">
+                <span>Copyright Kalle Marjokorpi 2021</span>
+                <span>Design by <a href="http://www.styleshout.com/">styleshout</a></span>
+                <span>Content management by <a href="http://www.buttercms.com/">Headless ButterCMS</a></span>
+
+            </div>
+
+        </div>
+
+    </div> <!-- end footer-bottom -->
+
+</footer> <!-- end footer -->
+    
+
+
+    <div id="preloader">
+        <div id="loader"></div>
+    </div>
+
+    <!-- Java Script
+     ================================================== -->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/plugins.js"></script>
+    <script src="../js/main.min.js"></script>
+    
+    
+    <!-- Cloudflare Web Analytics -->
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cac9fd24c1c04b6d9984ea31685b0414"}'></script><!-- End Cloudflare Web Analytics -->
+
+    
+
+</body>
+
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/application-settings-comparison-app-service by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 03 Dec 2021 13:12:23 GMT -->
+</html>

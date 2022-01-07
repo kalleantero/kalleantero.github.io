@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/request-routing-in-bff by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 07 Jan 2022 12:57:29 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+
+    
+    <title>How to implement request routing for BFF with YARP - Blog by Kalle Marjokorpi</title>
+    <meta name="description" content="This blog post concentrates to reverse proxy side how to re-route requests to destination API endpoint via BFF.">
+    <meta name="author" content="Kalle Marjokorpi">
+
+
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-MPLFPSF');</script>
+    <!-- End Google Tag Manager -->
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/vendor.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <script src="../js/modernizr.js"></script>
+    <script src="../js/pace.min.js"></script>
+
+</head>
+<body id="top">
+
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MPLFPSF"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+   
+    <!-- header
+    ================================================== -->
+
+    
+        <!-- header
+   ================================================== -->
+
+<header class="s-header">
+
+    <div class="header-logo">
+        <a class="site-logo" href="../index.html"><img src="../images/logo2.png" alt="Homepage"></a>
+    </div>
+
+    
+
+    <nav class="header-nav-wrap">
+
+        <ul class="header-nav">
+
+
+            <li class="current"><a id="top-navigation-link-root" href="../index.html" title="">Home</a></li>
+
+                <li id="top-navigation-link-about" class="smoothscroll"><a href="../about.html" title="">About me</a></li>
+
+        </ul>
+    </nav> <!-- end main-nav-wrap -->
+
+
+
+
+    <a class="header-menu-toggle" href="#0"><span>Menu</span></a>
+
+</header> <!-- end s-header -->
+
+
+    
+
+    
+
+<!-- content
+   ================================================== -->
+
+
+    <article class="blog-single">
+
+        <!-- page header/blog hero
+    ================================================== -->
+
+        
+        <div class="page-header page-header--single page-hero" style=background-image:url(https://cdn.buttercms.com/PSALsvKTRzSbZTCUsXXb)>
+
+            <div class="row page-header__content narrow">
+                <article class="col-full">
+                    <div class="page-header__info">
+                        <div class="page-header__cat">
+                                <a id="post-category-authentication" href="category/authentication.html">Authentication</a>
+                                <a id="post-category-azure" href="category/azure.html">Azure</a>
+                                <a id="post-category-net6" href="category/net6.html">.NET6</a>
+                                <a id="post-category-reverse-proxy" href="category/reverse-proxy.html">Reverse Proxy</a>
+                                <a id="post-category-yarp" href="category/yarp.html">YARP</a>
+                        </div>
+                    </div>
+                    <h1 class="page-header__title">
+                        <a href="#0" title="">
+                            How to implement request routing for BFF with YARP
+                        </a>
+                    </h1>
+                    <ul class="page-header__meta">
+                        <li class="date">
+04.01.2022 06:25                        </li>
+                        <li class="author">
+                            By
+                            <span>Kalle Marjokorpi</span>
+                        </li>
+                    </ul>
+
+                </article>
+                
+            </div>
+
+        </div> <!-- end page-header -->
+
+        <div class="row blog-content">
+            <div class="col-full blog-content__main">
+
+                <p><p>A few months ago I wrote a blog <a href="http://www.kallemarjokorpi.fi/blog/no-tokens-in-browser-with-duende-bff.html" rel="follow">post</a> which illustrated usage of Duende BFF component. Duende BFF handles all Backend for Frontend responsibilities behind the scenes automatically. In this blog post I'm concentrating more to <strong>reverse proxy side</strong> how to re-route requests to destination API endpoint via BFF.</p>
+<p>Microsoft has created and open-sourced project called YARP (Yet-Another-Reverse-Proxy) which is highly customizable reverse proxy and more than suitable for BFF request routing purposes.</p>
+<h2>Request routing in Backend for Frontend scenarios</h2>
+<p>Reverse proxy is used to re-route requests from frontend application via BFF to destination API endpoint. BFF layer is protected with cookie based authentication so "No tokens in browser" can be applied. Basically reverse proxy functionality of BFF layer extracts access token from the cookie and passes it further to destination API endpoint.</p>
+<h4>Reverse proxy in the BFF layer</h4>
+<p><img src="https://cdn.buttercms.com/JoPMRMY9TNGZAQGiajsR" alt="undefined" /></p>
+<p>From the BFF's request routing point of view the most important questions are related to the following topics:</p>
+<p>1) How to re-route request to destination API?</p>
+<p>2) How to protect proxy endpoint with authorization?</p>
+<p>3) How to extract access token from the cookie and pass it further to destination API?</p>
+<h4>YARP middleware in the ASP.NET middleware pipeline</h4>
+<p>YARP is added to the ASP.NET pipeline for handling incoming requests. It's just a one new middleware in the pipeline.</p>
+<h2><img src="https://cdn.buttercms.com/7WrHQisT9ifsEGL2KbfJ" alt="undefined" /></h2>
+<h2>YARP features</h2>
+<p>A short summary about YARP features:</p>
+<ul>
+<li>Routing rules (source and destination) can be configured easily in the configuration file (appsettings.json). You can do this also programmatically if you like.</li>
+<li>Simple transformations ex. adding new headers can be determined directly into configuration file so code changes are not necessary required.</li>
+<li>Complex transformation logic can be created in code.&nbsp;</li>
+<li>YARP utilizes ASP.NET authorization policies. Usage of authorization policy can be configured directly to the configuration file.</li>
+<li>YARP ships with built-in load-balancing algorithms, but also offers extensibility for any custom load balancing approach.</li>
+<li>You can inject custom middlewares to the proxy pipeline.</li>
+<li>Health Check support</li>
+</ul>
+<p>Check complete list of YARP features from <a href="https://microsoft.github.io/reverse-proxy/articles/index.html" rel="follow">here</a>.</p>
+<h2>How to use YARP in the BFF layer?</h2>
+<p>These steps have answers to the questions which was stated earlier.</p>
+<h4>1. Install Yarp.ReverseProxy nuget packet to your project</h4>
+<pre class="language-undefined"><code>Install-Package Yarp.ReverseProxy -ProjectName WeatherForecastApp</code></pre>
+<h4>2. Configure re-routing rules</h4>
+<p>Reverse proxy rules can be easily configured in the appsettings file or programmatically. Configuration has two main elements: Routes and Clusters. More detailed information about configuration can be found from <a href="https://microsoft.github.io/reverse-proxy/articles/config-files.html" rel="follow">here</a>.</p>
+<p>This configuration re-routes all requests from /weatherforecast to https://localhost:7291</p>
+<pre class="language-undefined"><code>"ReverseProxy": {
+    "Routes": {
+      "route1": {
+        "ClusterId": "weatherForecastApi",
+        "AuthorizationPolicy": "RequireAuthenticatedUserPolicy",
+        "Match": {
+          "Path": "/weatherforecast/{**catch-all}"
+        },
+        "AllowAnonymous": false
+      }
+    },
+    "Clusters": {
+      "weatherForecastApi": {
+        "Destinations": {
+          "weatherForecastApi/destination1": {
+            "Address": "https://localhost:7291"
+          }
+        }
+      }
+    }
+  }</code></pre>
+<table border="0">
+<tbody>
+<tr>
+<td><strong>Term</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr>
+<td valign="top">Routes</td>
+<td valign="top">
+<p>The routes section is an ordered list of route matches and their associated configuration.&nbsp;</p>
+<p>Match contains either a Hosts array or a Path pattern string. Path is an ASP.NET route template. In this case rule catches all requests from path /weatherforecast.</p>
+<p>AuthorizationPolicy determines which ASP.NET authorization policy is required to fulfill.</p>
+</td>
+</tr>
+<tr>
+<td valign="top">Clusters</td>
+<td valign="top"><span style="background-color: #ffffff;">The clusters section is an unord</span>ered collection of named clusters. A cluster primarily contains a collection of named destinations and their addresses, any of which is considered capable of handling requests for a given route.</td>
+</tr>
+</tbody>
+</table>
+<h4>3. Add YARP to ASP.NET middleware pipeline</h4>
+<p>This service collection extension configures the proxy.</p>
+<pre class="language-csharp"><code>public static void AddProxy(this IServiceCollection services, ConfigurationManager configuration)
+        {
+            var reverseProxyConfig = configuration.GetSection("ReverseProxy") ?? throw new ArgumentException("ReverseProxy section is missing!");
+
+            services.AddReverseProxy()
+                .LoadFromConfig(reverseProxyConfig)
+                .AddTransforms(builderContext =&gt;
+                {
+                    builderContext.AddRequestTransform(async transformContext =&gt;
+                    {
+                        var accessToken = await transformContext.HttpContext.GetTokenAsync("access_token");
+                        if(accessToken != null)
+                        {
+                            transformContext.ProxyRequest.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+                        }                            
+                    });
+                });
+        }</code></pre>
+<table border="0">
+<tbody>
+<tr>
+<td><strong>Method</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr>
+<td valign="top">LoadFromConfig</td>
+<td valign="top">Loads routing rules from the appsettings file which was shown above.</td>
+</tr>
+<tr>
+<td valign="top">AddTransforms</td>
+<td valign="top">
+<p>Enables that request can modified before it's forwarded to the destination. Responses can be also modified. More information about transformation capabilities can be found from <a href="https://microsoft.github.io/reverse-proxy/articles/transforms.html" rel="follow">here</a>.</p>
+<p>In this BFF case request transformation is used to extract access token (=bearer) from the cookie and attached it to proxyed request.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h4>4. Add authentication&nbsp;</h4>
+<p>This service collection extension configures cookie based authentication (OIDC). OpenId Connect settings are dynamically binded from the appsettings file.</p>
+<pre class="language-csharp"><code>public static void AddAuthentication(this IServiceCollection services, ConfigurationManager configuration, OpenIdConnectEvents events = null)
+        {
+            var authenticationConfig = configuration.GetSection("Authentication") ?? throw new ArgumentException("Authentication section is missing!");
+
+            services.AddAuthentication(options =&gt;
+            {
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+                options.DefaultSignOutScheme = OpenIdConnectDefaults.AuthenticationScheme;
+            })
+            .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =&gt;
+            {
+                options.Cookie.Name = authenticationConfig["CookieName"] ?? "__BFF";
+                options.Cookie.SameSite = SameSiteMode.Strict;
+                options.Cookie.HttpOnly = false;
+                options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+            })
+            .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =&gt;
+            {
+                // Bind OIDC authentication configuration
+                configuration.GetSection("Authentication").Bind(options);
+
+                options.Events = events;
+
+                // Add dynamically scope values from configuration
+                var scopes = configuration.GetSection("Authentication")["Scope"].Split(" ").ToList();
+                options.Scope.Clear();
+                scopes.ForEach(scope =&gt; options.Scope.Add(scope));
+
+                options.TokenValidationParameters = new()
+                {
+                    NameClaimType = "name",
+                    RoleClaimType = "role"
+                };
+            });
+       
+        }</code></pre>
+<p>Authentication settings are dynamically binded from the following app setting section:</p>
+<pre class="language-undefined"><code>"Authentication": {
+    "Authority": "https://demo.duendesoftware.com",
+    "CookieName": "__BFF",
+    "ClientId": "interactive.confidential",
+    "ClientSecret": "secret",
+    "ResponseType": "code",
+    "ResponseMode": "query",
+    "GetClaimsFromUserInfoEndpoint": true,
+    "MapInboundClaims": false,
+    "SaveTokens": true,
+    "Scope": "openid profile api offline_access"
+  }</code></pre>
+<h4>5. Add authorization</h4>
+<p>This service collection extension adds an authorization policy which is referred in the reverse proxy configuration.</p>
+<pre class="language-undefined"><code> public static void AddAuthorizationPolicies(this IServiceCollection services)
+        {
+            services.AddAuthorization(options =&gt;
+            {
+                // This is a default authorization policy which requires authentication
+                options.AddPolicy("RequireAuthenticatedUserPolicy", policy =&gt;
+                {
+                    policy.RequireAuthenticatedUser();
+                });
+            });
+        }</code></pre>
+<h3>Full configuration</h3>
+<p>This follows above chart which shows middleware execution in the pipeline.</p>
+<pre class="language-csharp"><code>var builder = WebApplication.CreateBuilder(args);
+
+// 1. Add reverse proxy configuration (YARP)
+builder.Services.AddReverseProxy(builder.Configuration);
+
+// 2. Add authentication configuration
+builder.Services.AddAuthentication(builder.Configuration);
+
+// 3. Add authorization configuration
+builder.Services.AddAuthorizationPolicies();
+
+var app = builder.Build();
+
+// 4. Enable exception handler middleware in pipeline
+app.UseExceptionHandler("/?error");
+
+// 5. Enable HSTS middleware in pipeline
+if (!app.Environment.IsDevelopment())
+{
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseHsts();
+}
+// 6. Enable https redirection middleware in pipeline
+app.UseHttpsRedirection();
+
+// 7. Enable routing middleware in pipeline
+app.UseRouting();
+
+// 8. Enable authentication middleware in pipeline
+app.UseAuthentication();
+
+// 9. Enable routing middleware in pipeline
+app.UseAuthorization();
+
+app.UseEndpoints(endpoints =&gt;
+{
+    // 10. Enable YARP reverse proxy middleware in pipeline
+    endpoints.MapReverseProxy();
+    // 11. Enable BFF login, logout and userinfo endpoints
+    endpoints.AddBffEndpoints();
+});
+
+//app.MapReverseProxy();
+
+app.MapFallbackToFile("index.html"); ;
+
+app.Run();
+</code></pre>
+<h2></h2>
+<p></p>
+<p></p>
+<p></p></p>
+
+                <h2>Comments</h2>
+                                    
+                <div id="cusdis_thread"
+                  data-host="https://cusdis.com/"
+                  data-app-id="86620953-7757-4f01-94f2-bfb88caff8a4"
+                  data-page-id="request-routing-in-bff"
+                  data-page-url="request-routing-in-bff.html"
+                  data-page-title="How to implement request routing for BFF with YARP">
+                <script src="https://cusdis.com/js/cusdis.es.js"></script>
+
+                <div class="blog-content__pagenav">
+                    <div class="blog-content__nav">
+                            <div class="blog-content__prev">
+                                <a id="post-previous-application-settings-comparison-app-service" href="application-settings-comparison-app-service.html" rel="prev">
+                                    <span>Previous Post</span>
+                                    How to handle application specific settings in Azure App Service platform?
+                                </a>
+                            </div>
+                        </div>
+
+
+                    <div class="blog-content__all">
+                        <a href="../index.html" class="btn btn--primary">
+                            View All Post
+                        </a>
+                    </div>
+                </div>
+
+            </div><!-- end blog-content__main -->
+        </div> <!-- end blog-content -->
+
+    </article>
+
+
+
+    
+        
+
+<!-- footer
+    ================================================== -->
+<footer>
+    <div class="row">
+        <div class="col-full">
+
+            <div class="footer-logo">
+                <a class="footer-site-logo" href="#0"><img src="../images/name.png" alt="Homepage"></a>
+            </div>
+
+            <ul class="footer-social">
+                <li>
+                    <a href="https://www.twitter.com/kmarjok">
+                        <i class="im im-twitter" aria-hidden="true"></i>
+                        <span>Twitter</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.linkedin.com/in/kallemarjokorpi">
+                        <i class="im im-linkedin" aria-hidden="true"></i>
+                        <span>Linkedin</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://github.com/kalleantero">
+                        <i class="im im-github" aria-hidden="true"></i>
+                        <span>Github</span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+    <div class="row footer-bottom">
+
+        <div class="col-twelve">
+            <div class="copyright">
+                <span>Copyright Kalle Marjokorpi 2022</span>
+                <span>Design by <a href="http://www.styleshout.com/">styleshout</a></span>
+                <span>Content management by <a href="http://www.buttercms.com/">Headless ButterCMS</a></span>
+
+            </div>
+
+        </div>
+
+    </div> <!-- end footer-bottom -->
+
+</footer> <!-- end footer -->
+    
+
+
+    <div id="preloader">
+        <div id="loader"></div>
+    </div>
+
+    <!-- Java Script
+     ================================================== -->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/plugins.js"></script>
+    <script src="../js/main.min.js"></script>
+    
+    
+    <!-- Cloudflare Web Analytics -->
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cac9fd24c1c04b6d9984ea31685b0414"}'></script><!-- End Cloudflare Web Analytics -->
+
+    
+
+</body>
+
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/request-routing-in-bff by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 07 Jan 2022 12:57:29 GMT -->
+</html>

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/changed-my-note-taking-tool by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 13 Jan 2022 19:02:54 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+
+    
+    <title>Changed my note-taking tool - Blog by Kalle Marjokorpi</title>
+    <meta name="description" content="How you could use Visual Studio Code as a note-taking tool.">
+    <meta name="author" content="Kalle Marjokorpi">
+
+
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-MPLFPSF');</script>
+    <!-- End Google Tag Manager -->
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/vendor.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <script src="../js/modernizr.js"></script>
+    <script src="../js/pace.min.js"></script>
+
+</head>
+<body id="top">
+
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MPLFPSF"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+   
+    <!-- header
+    ================================================== -->
+
+    
+        <!-- header
+   ================================================== -->
+
+<header class="s-header">
+
+    <div class="header-logo">
+        <a class="site-logo" href="../index.html"><img src="../images/logo2.png" alt="Homepage"></a>
+    </div>
+
+    
+
+    <nav class="header-nav-wrap">
+
+        <ul class="header-nav">
+
+
+            <li class=""><a id="top-navigation-link-root" href="../index.html" title="">Home</a></li>
+
+                <li id="top-navigation-link-about" class="smoothscroll"><a href="../about.html" title="">About me</a></li>
+
+        </ul>
+    </nav> <!-- end main-nav-wrap -->
+
+
+
+
+    <a class="header-menu-toggle" href="#0"><span>Menu</span></a>
+
+</header> <!-- end s-header -->
+
+
+    
+
+    
+
+<!-- content
+   ================================================== -->
+
+
+    <article class="blog-single">
+
+        <!-- page header/blog hero
+    ================================================== -->
+
+        
+        <div class="page-header page-header--single page-hero" style=background-image:url(https://cdn.buttercms.com/gLJZKORCQxm8xJLh9cO4)>
+
+            <div class="row page-header__content narrow">
+                <article class="col-full">
+                    <div class="page-header__info">
+                        <div class="page-header__cat">
+                                <a id="post-category-notes" href="category/notes.html">Notes</a>
+                                <a id="post-category-onenote" href="category/onenote.html">OneNote</a>
+                                <a id="post-category-visual-studio-code" href="category/visual-studio-code.html">Visual Studio Code</a>
+                        </div>
+                    </div>
+                    <h1 class="page-header__title">
+                        <a href="#0" title="">
+                            Changed my note-taking tool
+                        </a>
+                    </h1>
+                    <ul class="page-header__meta">
+                        <li class="date">
+13.01.2022 16:22                        </li>
+                        <li class="author">
+                            By
+                            <span>Kalle Marjokorpi</span>
+                        </li>
+                    </ul>
+
+                </article>
+                
+            </div>
+
+        </div> <!-- end page-header -->
+
+        <div class="row blog-content">
+            <div class="col-full blog-content__main">
+
+                <p><p>I have been using Microsoft OneNote tool about ten years and I have several Notebooks (personal and work related). Mostly I use note-taking tool for documenting stuff for myself (code samples, architecture patterns, memos, tips and tricks and random notes). I like to write notes and I have a lot of them:). OneNote has been a good tool for note-taking but now I wanted to test something else.</p>
+<h2>OneNote pros and cons</h2>
+<p>I listed below a few highlights and pain points from my point of view when using OneNote.</p>
+<table border="0">
+<tbody>
+<tr>
+<td><strong>Pros</strong></td>
+<td><strong>Cons</strong></td>
+</tr>
+<tr>
+<td valign="top">
+<ul>
+<li>You can easily copy web page content to OneNote with Web Clipper<br /><br /></li>
+<li>Screen clipping functionality<br /><br /></li>
+<li>Image and attachment content can be indexed (when it works)<br /><br /></li>
+<li>Versioning<br /><br /></li>
+<li>Good options to create folder/section hierarchy<br /><br /></li>
+<li>Easily shareable with others<br /><br /></li>
+<li>Good mobile app</li>
+</ul>
+</td>
+<td valign="top">
+<ul>
+<li>I don't need handwriting features and "free/open" notebook canvas has been too <span>permissive to me<br /><br /></span></li>
+<li>Lot of features what I'm not using (ex. drawing, embedding videos, forms or attachments)<br /><br /></li>
+<li>Attachments are bundled to the OneNote files<br /><br /></li>
+<li>No support for formatting code<br /><br /></li>
+<li>No Markdown support<br /><br /></li>
+<li>Backups?<br /><br /></li>
+<li>End-to-End encryption is only supported in section level<br /><br /></li>
+<li>If you use OneNote for Windows 10 you're not able to stored notes to local storage<br /><br /></li>
+<li>Limited extensibility.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<h2>What I expect from the new note-taking tool?</h2>
+<h3>1. No vendor lock</h3>
+<p>Notes should be easily moved to the another note-taking tool without doing scripting and complex migration.</p>
+<h3>2. Markdown support</h3>
+<p>I have been using markdown syntax for a while in work projects to document different kind of technical things like configuration steps, readme notes and diagrams as well. I really like simplicity of markdown and how it forces your notes to the strict controlled format. Actual markdown syntax is really fast to learn and you're well qualified markdown note-writer when you have learned basic things like headings, <span>block quotes, lists, links, image references and adding code snippets. You can read more about syntax from <a href="https://www.markdownguide.org/cheat-sheet/" rel="follow">here</a> (Markdown Cheat Sheet).</span></p>
+<h3><span>3. Hierarchy and searchability</span></h3>
+<p><span>Notes must be possible to organize hierarchically and hierarchy must be deep enough. Tagging or categorization of the notes is also must have feature to increase searchability.</span></p>
+<h3>4. Simplicity and extensibility</h3>
+<p>Note-taking tool should be fairly simple &amp; light and user experience can be even <span>ascetic. Functionalities should be extended necessary with add-ons or extensions</span>.&nbsp;</p>
+<h3>5. Privacy</h3>
+<p>Notes data <span>may not be used</span> for any commercial or advertisement purposes and end-to-end encryption should be also supported.</p>
+<h2>Which tool fulfilled my expectations?</h2>
+<p>I investigated multiple markdown supported note-taking tools but <strong>Visual Studio Code</strong> felt best for my purpose. It clearly fulfills all my requirements. Of course it's important to remember that this is not ready out-of-box solution. You have spend time to configure and install required extensions and even use third party applications to implement additional features like end-to-end encryption.&nbsp;</p>
+<h3>Markdown files and VS Code</h3>
+<p>VS Code supports markdown files out of the box and markdown files are stored to hard drive as a plain text. You can easily change folder hierarchy in the VS Code and changes are reflected immediately to hard disk. This approach enables that folders and markdown files are easy to backup and maybe later migrate to another note-taking application (preventing vendor locks).&nbsp;</p>
+<p><img src="https://cdn.buttercms.com/d0WgFZ4ySkyvhW8wh8zQ" alt="undefined" /></p>
+<h3>Extensions</h3>
+<p>Visual Studio Code has a livid community which has produced huge number of different kind of extensions. I installed the following extension to improve note-taking experience.</p>
+<table border="0">
+<tbody>
+<tr>
+<td><strong>Extension</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr>
+<td valign="top">Hashtags in Markdown notes for VSCode</td>
+<td valign="top">Extension provides, what is stands for: #tag functionality in markdown files.&nbsp;</td>
+</tr>
+<tr>
+<td valign="top">Markdownlint</td>
+<td valign="top">Markdownlint is a Visual Studio Code extension that includes a library of rules to encourage standards and consistency for Markdown files.</td>
+</tr>
+<tr>
+<td valign="top">Paste Image</td>
+<td valign="top">Paste image directly from clipboard to markdown file. Pasted image is created automatically to hard disk.</td>
+</tr>
+<tr>
+<td valign="top">Draw.io VS Code Integration</td>
+<td valign="top">Enables editing Draw.io files directly from VS Code.</td>
+</tr>
+<tr>
+<td valign="top">Markdown Preview Mermaid Support</td>
+<td valign="top">Adds Mermaid diagram and flowchart support to VS Code's builtin markdown preview.</td>
+</tr>
+</tbody>
+</table>
+<p>Mermaid extension adds support to embed Mermaid diagrams to markdown files. This is very useful extension to create quickly diagrams and flowcharts if you don't want to use Draw.io.</p>
+<p><img src="https://cdn.buttercms.com/rgOhhwj7Soqs3zuPW2AA" alt="undefined" /></p>
+<h3>Privacy</h3>
+<p>You can use tools like Cryptomator to create Vault where notes files are stored. Cryptomator Vault content is encrypted with a key selected by you.&nbsp;After that you can sync Cryptomator Vault to the cloud service like OneDrive.</p>
+<p><img src="https://cdn.buttercms.com/d04DVi7cQROuowl1LgUd" alt="undefined" /></p>
+<h3>Workspaces</h3>
+<p>A Visual Studio Code "workspace" is the collection of one or more folders that are opened in a VS Code window (instance). This concept enables to apply different kind of predefined settings to folders. Read more about workspaces from <a href="https://code.visualstudio.com/docs/editor/workspaces" rel="follow">here</a>. I have used the following workspace settings to hide png-images from the VS Code's Explorer view. This keeps VS Code's Explorer more cleaner because it basically shows only folders or markdown files.</p>
+<pre class="language-undefined"><code>{
+	"settings": {
+		"files.exclude": {
+			"**/*.png": true
+		}
+	}
+}</code></pre>
+<p></p>
+<h2>Beginning of the journey</h2>
+<p>Now new note-taking journey has started and let's see how it goes:).</p>
+<p></p></p>
+
+                <h2>Comments</h2>
+                                    
+                <div id="cusdis_thread"
+                  data-host="https://cusdis.com"
+                  data-app-id="86620953-7757-4f01-94f2-bfb88caff8a4"
+                  data-page-id="changed-my-note-taking-tool"
+                  data-page-url="https://kalle-blog.azurewebsites.net/blog/changed-my-note-taking-tool"
+                  data-page-title="Changed my note-taking tool">
+                <script src="https://cusdis.com/js/cusdis.es.js"></script>
+
+                <div class="blog-content__pagenav">
+                    <div class="blog-content__nav">
+                            <div class="blog-content__prev">
+                                <a id="post-previous-request-routing-in-bff" href="request-routing-in-bff.html" rel="prev">
+                                    <span>Previous Post</span>
+                                    How to implement request routing for BFF with YARP
+                                </a>
+                            </div>
+                        </div>
+
+
+                    <div class="blog-content__all">
+                        <a href="../index.html" class="btn btn--primary">
+                            View All Post
+                        </a>
+                    </div>
+                </div>
+
+            </div><!-- end blog-content__main -->
+        </div> <!-- end blog-content -->
+
+    </article>
+
+
+
+    
+        
+
+<!-- footer
+    ================================================== -->
+<footer>
+    <div class="row">
+        <div class="col-full">
+
+            <div class="footer-logo">
+                <a class="footer-site-logo" href="#0"><img src="../images/name.png" alt="Homepage"></a>
+            </div>
+
+            <ul class="footer-social">
+                <li>
+                    <a href="https://www.twitter.com/kmarjok">
+                        <i class="im im-twitter" aria-hidden="true"></i>
+                        <span>Twitter</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.linkedin.com/in/kallemarjokorpi">
+                        <i class="im im-linkedin" aria-hidden="true"></i>
+                        <span>Linkedin</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://github.com/kalleantero">
+                        <i class="im im-github" aria-hidden="true"></i>
+                        <span>Github</span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+    <div class="row footer-bottom">
+
+        <div class="col-twelve">
+            <div class="copyright">
+                <span>Copyright Kalle Marjokorpi 2022</span>
+                <span>Design by <a href="http://www.styleshout.com/">styleshout</a></span>
+                <span>Content management by <a href="http://www.buttercms.com/">Headless ButterCMS</a></span>
+
+            </div>
+
+        </div>
+
+    </div> <!-- end footer-bottom -->
+
+</footer> <!-- end footer -->
+    
+
+
+    <div id="preloader">
+        <div id="loader"></div>
+    </div>
+
+    <!-- Java Script
+     ================================================== -->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/plugins.js"></script>
+    <script src="../js/main.min.js"></script>
+    
+    
+    <!-- Cloudflare Web Analytics -->
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cac9fd24c1c04b6d9984ea31685b0414"}'></script><!-- End Cloudflare Web Analytics -->
+
+    
+
+</body>
+
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/changed-my-note-taking-tool by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 13 Jan 2022 19:02:54 GMT -->
+</html>

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/how-to-build-micro-frontend-architecture-and-bff by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 24 Jan 2022 14:03:04 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+
+    
+    <title>How to build Micro-Frontend Architecture with Web Components and BFF (part 1/2)? - Blog by Kalle Marjokorpi</title>
+    <meta name="description" content="Blog post handles Micro-Fronted Architecture and how to utilize Web Components via Backed for Frontend.">
+    <meta name="author" content="Kalle Marjokorpi">
+
+
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="../css/base5089.css?dt=637786297600316851">
+    <link rel="stylesheet" href="../css/vendor5089.css?dt=637786297600316851">
+    <link rel="stylesheet" href="../css/main5089.css?dt=637786297600316851">
+    <script src="../js/modernizr.js"></script>
+
+</head>
+<body id="top">
+   
+    <!-- header
+    ================================================== -->
+
+    <!-- header
+   ================================================== -->
+
+<header class="s-header">
+
+    <div class="header-logo">
+        <a class="site-logo" href="../index.html"><img src="../images/logo2.png" alt="Homepage"></a>
+    </div>
+
+    
+
+    <nav class="header-nav-wrap">
+
+        <ul class="header-nav">
+
+
+            <li class=""><a id="top-navigation-link-root" href="../index.html" title="">Home</a></li>
+
+                <li id="top-navigation-link-about" class="smoothscroll"><a href="../about.html" title="">About me</a></li>
+
+        </ul>
+    </nav> <!-- end main-nav-wrap -->
+
+
+
+
+    <a class="header-menu-toggle" href="#0"><span>Menu</span></a>
+
+</header> <!-- end s-header -->
+
+
+
+    
+
+<!-- content
+   ================================================== -->
+
+
+    <article class="blog-single">
+
+        <!-- page header/blog hero
+    ================================================== -->
+
+        
+        <div class="page-header page-header--single page-hero" style=background-image:url(https://cdn.buttercms.com/8NloTf2uQqKHI2QH98CL)>
+
+            <div class="row page-header__content narrow">
+                <article class="col-full">
+                    <div class="page-header__info">
+                        <div class="page-header__cat">
+                                <a id="post-category-bff" href="category/bff.html">BFF</a>
+                                <a id="post-category-micro-frontend-architecture" href="category/micro-frontend-architecture.html">Micro-Frontend Architecture</a>
+                                <a id="post-category-teams" href="category/teams.html">Teams</a>
+                                <a id="post-category-web-component" href="category/web-component.html">Web Component</a>
+                        </div>
+                    </div>
+                    <h1 class="page-header__title">
+                        <a href="#0" title="">
+                            How to build Micro-Frontend Architecture with Web Components and BFF (part 1/2)?
+                        </a>
+                    </h1>
+                    <ul class="page-header__meta">
+                        <li class="date">
+24.01.2022 08:56                        </li>
+                        <li class="author">
+                            By
+                            <span>Kalle Marjokorpi</span>
+                        </li>
+                    </ul>
+
+                </article>
+                
+            </div>
+
+        </div> <!-- end page-header -->
+
+        <div class="row blog-content">
+            <div class="col-full blog-content__main">
+
+                <p><p>This is blog post handles Micro-Fronted Architecture and how to utilize Web Components via Backed for Frontend.</p>
+<h2>What is Micro-Frontend Architecture?</h2>
+<blockquote>
+<p>Micro-frontend architecture is a design approach in which a front-end app is decomposed into individual, semi-independent &ldquo;microapps&rdquo; working loosely together. The micro-frontend concept is vaguely inspired by, and named after, microservices. - Bob Myers (<a href="https://www.toptal.com/front-end/micro-frontends-strengths-benefits">Building a Micro-frontend Framework | Toptal</a>)</p>
+</blockquote>
+<p>Teams are usually responsible for their own specific domain area like products, invoices, orders, customer data etc. in large enterprises. Each team has the best knowledge about their own domain and they have full ownership of that domain. Traditionally in Microservice architecture team owns API endpoints and Database which contains domain specific data. Micro-Frontend Architecture enables that domain team can also delivery domain specific User interfaces "microapps" for the consumers. Typically in web environment these "microapps" are delivered as a Web Component.</p>
+<p>Basically Web Component is a generic Javascript/HTML based component/library which is embedded to the consumer application. Web Component producer team has full ownership and control to all functionalities inside Web Component.&nbsp;</p>
+<p><img src="https://cdn.buttercms.com/XtV5Cv5Rj6i0l7xRbfit" alt="undefined" /></p>
+<h2>Web Component consuming options</h2>
+<p>I introduce here two options how to consume Web Component delivered by other teams.</p>
+<p><img src="https://cdn.buttercms.com/F0VTiothRwmzylpgC81A" alt="undefined" /></p>
+<h3>1. Consuming Web Component directly from producer</h3>
+<p>In this case Web Component javascript file is fetched from the another server via Backed for Frontend proxy. BFF enables that Web Component javascript file is treated as same-origin and then same-site cookie will work. API requests with same-site cookie from Web Component User interface will be re-routed via BFF. BFF extracts bearer token from the cookie and passes it further to the destination API. Note! Authorization Scope of Web Component API is needed to request during Authorization flow.</p>
+<p></p>
+<p><img src="https://cdn.buttercms.com/V4pXKuXzQFeXlaD0qvzN" alt="undefined" /></p>
+<p></p>
+<h3>2. Consuming Web Component via ex. NPM</h3>
+<p>Web Component (javascript) is bundled to NPM package which is added to consumer application. In this scenario Web Component's javascript/html files are part of the consumer application so there are no problems with same-site cookie. API requests will be re-routed via BFF also in this scenario.</p>
+<h2>Summary</h2>
+<h3>What are pros &amp; cons of Micro-Frontend Architecture?</h3>
+<table border="0" style="width: 97.9502%;">
+<tbody>
+<tr>
+<td style="width: 43.8579%;"><strong>Pros</strong></td>
+<td style="width: 53.8252%;"><strong>Cons</strong></td>
+</tr>
+<tr>
+<td valign="top" style="width: 43.8579%;">
+<ul>
+<li>Clear responsibilities between teams.<br /><br /></li>
+<li>Team has End-to-End ownership from UI to API and Database.<br /><br /></li>
+<li>Scalability.<br /><br /></li>
+<li>Components are decentralized.<br /><br /></li>
+<li>Web Component team can independently update it's own component when consumer application consumes Web Component directly (not apply to NPM scenario).<br /><br /></li>
+<li>Easy integrability.<br /><br /></li>
+<li>Role of Design System increases.</li>
+</ul>
+<ul></ul>
+</td>
+<td valign="top" style="width: 53.8252%;">
+<ul>
+<li>Needs some extra work to get authentication and authorization working. Won't work without BFF when "no tokens in browser" is applied.<br /><br /></li>
+<li>Web Component consumer application has full trust to external Web Component and it's security. If Web Component hosting server is compromised then your application is also affected because of tight integration. This issues should be carefully evaluated especially if you're consuming external Web Component provided by third party.<br /><br /></li>
+<li>Web Component poor performance could affect your application overall user experience.<br /><br /></li>
+<li>Tracking of user behavior from Analytics point of view requires some extra work and collaboration.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Next blog post shows code samples how to consume Web Components directly from producer via BFF.</p></p>
+
+                <h2>Comments</h2>
+                                    
+                <div id="cusdis_thread"
+                  data-host="https://cusdis.com/"
+                  data-app-id="86620953-7757-4f01-94f2-bfb88caff8a4"
+                  data-page-id="how-to-build-micro-frontend-architecture-and-bff"
+                  data-page-url="how-to-build-micro-frontend-architecture-and-bff.html"
+                  data-page-title="How to build Micro-Frontend Architecture with Web Components and BFF (part 1/2)?">
+                <script src="https://cusdis.com/js/cusdis.es.js"></script>
+
+                <div class="blog-content__pagenav">
+                    <div class="blog-content__nav">
+                            <div class="blog-content__prev">
+                                <a id="post-previous-azure-bicep-insert-resource-feature-in-vs-code" href="azure-bicep-insert-resource-feature-in-vs-code.html" rel="prev">
+                                    <span>Previous Post</span>
+                                    Azure Bicep - Insert Resource feature in VS Code
+                                </a>
+                            </div>
+                        </div>
+
+
+                    <div class="blog-content__all">
+                        <a href="../index.html" class="btn btn--primary">
+                            View All Post
+                        </a>
+                    </div>
+                </div>
+
+            </div><!-- end blog-content__main -->
+        </div> <!-- end blog-content -->
+
+    </article>
+
+
+
+    
+
+<!-- footer
+    ================================================== -->
+<footer>
+    <div class="row">
+        <div class="col-full">
+
+            <div class="footer-logo">
+                <a class="footer-site-logo" href="#0"><img src="../images/name.png" alt="Homepage"></a>
+            </div>
+
+            <ul class="footer-social">
+                <li>
+                    <a href="https://www.twitter.com/kmarjok">
+                        <i class="im im-twitter" aria-hidden="true"></i>
+                        <span>Twitter</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.linkedin.com/in/kallemarjokorpi">
+                        <i class="im im-linkedin" aria-hidden="true"></i>
+                        <span>Linkedin</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://github.com/kalleantero">
+                        <i class="im im-github" aria-hidden="true"></i>
+                        <span>Github</span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+    <div class="row footer-bottom">
+
+        <div class="col-twelve">
+            <div class="copyright">
+                <span>Copyright Kalle Marjokorpi 2022</span>
+                <span>Design by <a href="http://www.styleshout.com/">styleshout</a></span>
+                <span>Content management by <a href="http://www.buttercms.com/">Headless ButterCMS</a></span>
+
+            </div>
+
+        </div>
+
+    </div> <!-- end footer-bottom -->
+
+</footer> <!-- end footer -->
+   
+    <!-- Java Script
+     ================================================== -->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/plugins.js"></script>
+    <script src="../js/main.min.js"></script>
+    
+    
+    <!-- Cloudflare Web Analytics -->
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cac9fd24c1c04b6d9984ea31685b0414"}'></script><!-- End Cloudflare Web Analytics -->       
+
+</body>
+
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/how-to-build-micro-frontend-architecture-and-bff by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 24 Jan 2022 14:03:05 GMT -->
+</html>

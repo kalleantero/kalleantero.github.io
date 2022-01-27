@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/how-to-build-micro-frontend-architecture-with-web-components-and-bff-part-22 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 27 Jan 2022 10:00:14 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+
+    
+    <title>How to consume Web Components via BFF? - Blog by Kalle Marjokorpi</title>
+    <meta name="description" content="Blog post shows samples how to consume Web Components via Backed for Frontend.">
+    <meta name="author" content="Kalle Marjokorpi">
+
+
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="../css/base054d.css?dt=637788743754357892">
+    <link rel="stylesheet" href="../css/vendor054d.css?dt=637788743754357892">
+    <link rel="stylesheet" href="../css/main054d.css?dt=637788743754357892">
+    <script src="../js/modernizr.js"></script>
+
+</head>
+<body id="top">
+   
+    <!-- header
+    ================================================== -->
+
+    <!-- header
+   ================================================== -->
+
+<header class="s-header">
+
+    <div class="header-logo">
+        <a class="site-logo" href="../index.html"><img src="../images/logo2.png" alt="Homepage"></a>
+    </div>
+
+    
+
+    <nav class="header-nav-wrap">
+
+        <ul class="header-nav">
+
+
+            <li class=""><a id="top-navigation-link-root" href="../index.html" title="">Home</a></li>
+
+                <li id="top-navigation-link-about" class="smoothscroll"><a href="../about.html" title="">About me</a></li>
+
+        </ul>
+    </nav> <!-- end main-nav-wrap -->
+
+
+
+
+    <a class="header-menu-toggle" href="#0"><span>Menu</span></a>
+
+</header> <!-- end s-header -->
+
+
+
+    
+
+<!-- content
+   ================================================== -->
+
+
+    <article class="blog-single">
+
+        <!-- page header/blog hero
+    ================================================== -->
+
+        
+        <div class="page-header page-header--single page-hero" style=background-image:url(https://cdn.buttercms.com/8NloTf2uQqKHI2QH98CL)>
+
+            <div class="row page-header__content narrow">
+                <article class="col-full">
+                    <div class="page-header__info">
+                        <div class="page-header__cat">
+                                <a id="post-category-bff" href="category/bff.html">BFF</a>
+                                <a id="post-category-micro-frontend-architecture" href="category/micro-frontend-architecture.html">Micro-Frontend Architecture</a>
+                                <a id="post-category-minimal-api" href="category/minimal-api.html">Minimal API</a>
+                                <a id="post-category-net6" href="category/net6.html">.NET6</a>
+                                <a id="post-category-reverse-proxy" href="category/reverse-proxy.html">Reverse Proxy</a>
+                                <a id="post-category-web-component" href="category/web-component.html">Web Component</a>
+                                <a id="post-category-yarp" href="category/yarp.html">YARP</a>
+                        </div>
+                    </div>
+                    <h1 class="page-header__title">
+                        <a href="#0" title="">
+                            How to build Micro-Frontend Architecture with Web Components and BFF (part 2/2)?
+                        </a>
+                    </h1>
+                    <ul class="page-header__meta">
+                        <li class="date">
+27.01.2022 08:00                        </li>
+                        <li class="author">
+                            By
+                            <span>Kalle Marjokorpi</span>
+                        </li>
+                    </ul>
+
+                </article>
+                
+            </div>
+
+        </div> <!-- end page-header -->
+
+        <div class="row blog-content">
+            <div class="col-full blog-content__main">
+
+                <p><p>This is an extension to the previous <a href="https://www.kallemarjokorpi.fi/blog/how-to-build-micro-frontend-architecture-and-bff.html" rel="follow">post</a>&nbsp;about "How to build Micro-Frontend Architecture with Web Components and BFF (part 1/2)" with code samples. Read previous post to get more information in general about Micro-Frontend architecture and it's pros &amp; cons.</p>
+<h2>Consuming Web Components via Backend for Frontend</h2>
+<p>Example solution has four main components:</p>
+<p>1) Web Component consumer</p>
+<p>2) BFF for Web Component consumer</p>
+<p>3) Identity Provider (OIDC)</p>
+<p>4) Web Component</p>
+<p><img src="https://cdn.buttercms.com/s6VnTc3eTWyf7cVQvEBq" alt="undefined" /></p>
+<h2>Technical implementation</h2>
+<p>Let's first go through sample Web Component implementation and after that how to embed this component to another application.</p>
+<h3>Web Component</h3>
+<p>Product Listing web component is independently developed and maintained by team which owns Product domain area. Web Component javascript file and API are hosted in another server.</p>
+<p><img src="https://cdn.buttercms.com/lnhHQ1qUSJmE6QwjulGB" alt="undefined" /></p>
+<h4>Product Listing Web Component</h4>
+<p>This Web Component is created to list products. Product Listing UI fetches products from the API endpoint and renders product listing as a JSON.</p>
+<pre class="language-javascript"><code>class ProductListing extends HTMLElement {
+    async connectedCallback() {
+        const products = await this.getProducts();
+        console.log("Filter was",this.getAttribute("filter"));
+        this.renderProducts(products);
+    }
+
+    async getProducts() {
+        console.log("Fetching products...");
+        const res = await fetch("/products")
+        const products = await res.json();
+        console.log("Products found", products);
+        return products;
+    }
+
+    async renderProducts(products) {
+        this.innerHTML = '&lt;strong&gt;Products Web component&lt;/strong&gt;';
+        var pre = document.createElement('pre');
+        pre.textContent = JSON.stringify(products, 0, 2);
+        this.appendChild(pre);
+    }
+}
+
+customElements.define('product-listing', ProductListing);</code></pre>
+<h4>Products API</h4>
+<p>Products API is owned by Products team. This API is .NET 6 powered Minimal API which requires specific authorization scope and returns list of products.</p>
+<pre class="language-csharp"><code>app.MapGet("/products", [Authorize](IHttpContextAccessor httpContextAccessor) =&gt; new[]{ 
+    new 
+    { 
+        Name = "Product 1", 
+        Id = 1, 
+        Price = 100,
+        CreatedBy = httpContextAccessor.HttpContext?.User?.Identity?.Name,
+        CreatedAtUtc = DateTime.UtcNow,
+        Categories = new[]{ "Category 1" }
+    },
+    new 
+    { 
+        Name = "Product 2",
+        Id = 2, 
+        Price = 200,
+        CreatedBy = httpContextAccessor.HttpContext?.User?.Identity?.Name,
+        CreatedAtUtc = DateTime.UtcNow,
+        Categories = new[]{ "Category 1", "Category 2" }
+    }
+}).RequireAuthorization("ProductsPolicy");</code></pre>
+<p>Authentication extension configures Bearer token based authentication scheme.</p>
+<pre class="language-csharp"><code>public static void AddAuthenticationForApi(this IServiceCollection services, IConfiguration configuration, OpenIdConnectEvents events = null)
+        { 
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =&gt;
+                {
+                    configuration.GetSection("Authentication").Bind(options);
+                    options.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidateAudience = false,
+                        ValidTypes = new[] { "at+jwt" },
+                        NameClaimType = "name",
+                        RoleClaimType = "role"
+                    };
+                });
+        }</code></pre>
+<p>Authentication settings.</p>
+<pre class="language-undefined"><code> "Authentication": {
+    "Authority": "https://demo.duendesoftware.com",
+    "MapInboundClaims": false
+  }</code></pre>
+<p>Authorization policies for Web Component API.</p>
+<pre class="language-csharp"><code>builder.Services.AddAuthorization(o =&gt; o.AddPolicy("ProductsPolicy",
+                                  b =&gt; b.RequireClaim("scope", "api")));</code></pre>
+<h2>Web Component consumer</h2>
+<h3>Enable cookie based authentication</h3>
+<p>Cookie based authentication is required to apply "No tokens in browser" policy.&nbsp;</p>
+<p><img src="https://cdn.buttercms.com/wOTVKx3wQ5aBUSY37scU" alt="undefined" /></p>
+<h3>Authentication and authorization</h3>
+<p>This service collection extension configures cookie based authentication (OIDC). OpenId Connect settings are dynamically binded from the appsettings file.</p>
+<pre class="language-csharp"><code>  public static class ServiceCollectionExtensions
+    {
+        public static void AddAuthentication(this IServiceCollection services, IConfiguration configuration, OpenIdConnectEvents events = null)
+        {
+            var authenticationConfig = configuration.GetSection("Authentication") ?? throw new ArgumentException("Authentication section is missing!");
+
+            services.AddAuthentication(options =&gt;
+            {
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+                options.DefaultSignOutScheme = OpenIdConnectDefaults.AuthenticationScheme;
+            })
+            .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =&gt;
+            {
+                options.Cookie.Name = authenticationConfig["CookieName"] ?? "__BFF";
+                options.Cookie.SameSite = SameSiteMode.Strict;
+                options.Cookie.HttpOnly = false;
+                options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+            })
+            .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =&gt;
+            {
+                // Bind OIDC authentication configuration
+                configuration.GetSection("Authentication").Bind(options);
+
+                options.Events = events;
+
+                // Add dynamically scope values from configuration
+                var scopes = configuration.GetSection("Authentication")["Scope"].Split(" ").ToList();
+                options.Scope.Clear();
+                scopes.ForEach(scope =&gt; options.Scope.Add(scope));
+
+                options.TokenValidationParameters = new()
+                {
+                    NameClaimType = "name",
+                    RoleClaimType = "role"
+                };
+            });       
+        }
+    }</code></pre>
+<p>Authentication settings are dynamically binded from the following app setting section. <span>Note! Authorization Scope of Web Component API is needed to request during Authorization flow. In this case we use scope "api" for that purpose.</span></p>
+<pre class="language-undefined"><code>"Authentication": {
+    "Authority": "https://demo.duendesoftware.com",
+    "CookieName": "__BFF",
+    "ClientId": "interactive.confidential",
+    "ClientSecret": "secret",
+    "ResponseType": "code",
+    "ResponseMode": "query",
+    "GetClaimsFromUserInfoEndpoint": true,
+    "MapInboundClaims": false,
+    "SaveTokens": true,
+    "Scope": "openid profile api offline_access"
+  }</code></pre>
+<h3>Enabling reverse proxy</h3>
+<p>YARP based reverse proxy enables to re-route Web Component requests to the actual API (Product API in this case). YARP request transformation extracts access token (=bearer) from the cookie and attached it to proxyed request.</p>
+<pre class="language-csharp"><code> public static class ServiceCollectionExtensions
+    {
+
+        public static void AddReverseProxy(this IServiceCollection services, ConfigurationManager configuration)
+        {
+            var reverseProxyConfig = configuration.GetSection("ReverseProxy") ?? throw new ArgumentException("ReverseProxy section is missing!");
+
+            services.AddReverseProxy()
+                .LoadFromConfig(reverseProxyConfig)
+                .AddTransforms(builderContext =&gt;
+                {
+                    builderContext.AddRequestTransform(async transformContext =&gt;
+                    {
+                        var accessToken = await transformContext.HttpContext.GetTokenAsync("access_token");
+                        if (accessToken != null)
+                        {
+                            transformContext.ProxyRequest.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+                        }                      
+                    });
+                });
+        }
+        
+    }</code></pre>
+<p>This proxy configuration enables to re-route requests from /products to https://localhost:7158/products.</p>
+<pre class="language-undefined"><code>"ReverseProxy": {
+    "Routes": {
+      "route1": {
+        "ClusterId": "productsApi",
+        "AuthorizationPolicy": "RequireAuthenticatedUserPolicy",
+        "Match": {
+          "Path": "/products/{**catch-all}"
+        },
+        "AllowAnonymous": false
+      }
+    },
+    "Clusters": {
+      "productsApi": {
+        "Destinations": {
+          "productsApi/destination1": {
+            "Address": "https://localhost:7158"
+          }
+        }
+      }
+    }
+  }</code></pre>
+<h3>BFF endpoints</h3>
+<p>Endpoint Route Builder extension creates endpoints for handling login and logout in backend. Login endpoint starts authentication process (=browser redirection) against Authorize endpoint of OIDC Provider.</p>
+<pre class="language-csharp"><code>public static class EndpointRouteBuilderExtensions
+    {
+        public static void AddBffEndpoints(this IEndpointRouteBuilder endpoints, IConfiguration configuration)
+        {
+            endpoints.MapGet("/login", async (HttpContext httpContext, string redirectUri) =&gt;
+            {
+                await httpContext.ChallengeAsync(OpenIdConnectDefaults.AuthenticationScheme, new AuthenticationProperties { RedirectUri = redirectUri });
+            });
+            endpoints.MapGet("/logout", async (HttpContext httpContext, string redirectUri) =&gt;
+            {
+                await httpContext.SignOutAsync(OpenIdConnectDefaults.AuthenticationScheme);
+                var props = new AuthenticationProperties
+                {
+                    RedirectUri = redirectUri ?? "/"
+                };
+                await httpContext.SignOutAsync(props);
+            });       
+        }
+    }</code></pre>
+<h3>Embed Web Component</h3>
+<p>In this sample Web Component is consumed directly from the producer (=another server). Like stated in the previous <a href="https://www.kallemarjokorpi.fi/blog/how-to-build-micro-frontend-architecture-and-bff.html" rel="follow">blog post</a> javascript file (Web Component) must be fetched via proxy that javascript is treated as same-origin.&nbsp;</p>
+<p><img src="https://cdn.buttercms.com/ub26Nm2SiSPkappaszXq" alt="undefined" /></p>
+<h3>Web Component container</h3>
+<p>This React component is basically a container which renders script tag of Web Component. Note! Web Component javascript file must be fetched via proxy (/product-listing-webcomponent-proxy) to enable that javascript is treated as same-origin.&nbsp;</p>
+<pre class="language-javascript"><code>import React, { Component } from 'react';
+
+export class ProductListingWebComponent extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = { loading: true };
+    }
+
+    componentDidMount() {
+        var webComponentScript = document.getElementById("webcomponent")
+
+        if (webComponentScript === null) {
+            const script = document.createElement("script");
+            script.id = "webcomponent";
+            script.src = "/product-listing-webcomponent-proxy";
+            script.async = true;
+            script.onload = () =&gt; this.scriptLoaded();
+            document.body.appendChild(script);
+        }
+
+        this.setState({ loading: false });
+    }
+
+    scriptLoaded() {
+        console.log("External web component script loaded.");
+    }
+
+    renderExternalWebComponent() {
+        return (
+            &lt;div&gt;
+                &lt;product-listing id="product-listing" /&gt;
+            &lt;/div&gt;
+        );
+    }
+
+    render() {
+
+        let contents = this.state.loading
+            ? &lt;p&gt;&lt;em&gt;Loading...&lt;/em&gt;&lt;/p&gt;
+            : this.renderExternalWebComponent();
+
+        return (
+            &lt;div&gt;
+                &lt;p&gt;This component demonstrates rendering external web component.&lt;/p&gt;
+                {contents}
+            &lt;/div&gt;
+        );
+  }
+}
+</code></pre>
+<h3>Proxy endpoint to fetch Web Component's javascript file</h3>
+<p>Endpoint Route Builder extension is extended with a logic to create dynamically Web Component script loading endpoints. This endpoint ensures that javascript is treated as a same-origin.</p>
+<pre class="language-csharp"><code>public static class EndpointRouteBuilderExtensions
+    {
+        public static void AddBffEndpoints(this IEndpointRouteBuilder endpoints, IConfiguration configuration)
+        {
+            var webComponentScripts = configuration.GetSection("WebcomponentScripts").Get&lt;List&lt;WebComponentScript&gt;&gt;();
+
+            if (webComponentScripts != null)
+            {
+                foreach (var webComponentScript in webComponentScripts)
+                {
+                    endpoints.MapGet(webComponentScript.EndpointName, async ([FromServices] IHttpClientFactory httpClientFactory) =&gt;
+                    {
+                        var client = httpClientFactory.CreateClient();
+                        var response = await client.GetAsync(webComponentScript.ScriptUrl);
+                        var responseStream = await response.Content.ReadAsStreamAsync();
+                        var reader = new StreamReader(responseStream);
+                        return reader.ReadToEnd();
+                    });
+                }
+            }         
+        }
+    }</code></pre>
+<p>App Settings contains array of Web Component scripts.&nbsp;</p>
+<pre class="language-undefined"><code>"WebcomponentScripts": [
+    {
+      "EndpointName": "js-proxy-productlisting",
+      "ScriptUrl": "https://localhost:7158/js/product-listing.js"
+    }
+  ]</code></pre>
+<h2>Summary</h2>
+<p>It's fairly straightforward to embed Web Component via BFF Proxy and also apply "No tokens in browser" policy.</p>
+<p>One possible problem where you should be aware of is <strong>overlapping API routes</strong> in Web Component consumer application. It's possible that Web Component consumer already consumes another API endpoint with route /products and then this causes overlapping.</p></p>
+
+                <h2>Comments</h2>
+                                    
+                <div id="cusdis_thread"
+                  data-host="https://cusdis.com"
+                  data-app-id="86620953-7757-4f01-94f2-bfb88caff8a4"
+                  data-page-id="how-to-build-micro-frontend-architecture-with-web-components-and-bff-part-22"
+                  data-page-url="https://kalle-blog.azurewebsites.net/blog/how-to-build-micro-frontend-architecture-with-web-components-and-bff-part-22"
+                  data-page-title="How to build Micro-Frontend Architecture with Web Components and BFF (part 2/2)?">
+                <script src="https://cusdis.com/js/cusdis.es.js"></script>
+
+                <div class="blog-content__pagenav">
+                    <div class="blog-content__nav">
+                            <div class="blog-content__prev">
+                                <a id="post-previous-how-to-build-micro-frontend-architecture-and-bff" href="how-to-build-micro-frontend-architecture-and-bff.html" rel="prev">
+                                    <span>Previous Post</span>
+                                    How to build Micro-Frontend Architecture with Web Components and BFF (part 1/2)?
+                                </a>
+                            </div>
+                        </div>
+
+
+                    <div class="blog-content__all">
+                        <a href="../index.html" class="btn btn--primary">
+                            View All Post
+                        </a>
+                    </div>
+                </div>
+
+            </div><!-- end blog-content__main -->
+        </div> <!-- end blog-content -->
+
+    </article>
+
+
+
+    
+
+<!-- footer
+    ================================================== -->
+<footer>
+    <div class="row">
+        <div class="col-full">
+
+            <div class="footer-logo">
+                <a class="footer-site-logo" href="#0"><img src="../images/name.png" alt="Homepage"></a>
+            </div>
+
+            <ul class="footer-social">
+                <li>
+                    <a href="https://www.twitter.com/kmarjok">
+                        <i class="im im-twitter" aria-hidden="true"></i>
+                        <span>Twitter</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.linkedin.com/in/kallemarjokorpi">
+                        <i class="im im-linkedin" aria-hidden="true"></i>
+                        <span>Linkedin</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://github.com/kalleantero">
+                        <i class="im im-github" aria-hidden="true"></i>
+                        <span>Github</span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+    <div class="row footer-bottom">
+
+        <div class="col-twelve">
+            <div class="copyright">
+                <span>Copyright Kalle Marjokorpi 2022</span>
+                <span>Design by <a href="http://www.styleshout.com/">styleshout</a></span>
+                <span>Content management by <a href="http://www.buttercms.com/">Headless ButterCMS</a></span>
+
+            </div>
+
+        </div>
+
+    </div> <!-- end footer-bottom -->
+
+</footer> <!-- end footer -->
+   
+    <!-- Java Script
+     ================================================== -->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/plugins.js"></script>
+    <script src="../js/main.min.js"></script>
+    
+    
+    <!-- Cloudflare Web Analytics -->
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cac9fd24c1c04b6d9984ea31685b0414"}'></script><!-- End Cloudflare Web Analytics -->       
+
+</body>
+
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/how-to-build-micro-frontend-architecture-with-web-components-and-bff-part-22 by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 27 Jan 2022 10:00:15 GMT -->
+</html>

@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/how-to-automate-api-testing-with-azure-devops-and-postman by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 04 Feb 2022 14:21:38 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+
+    
+    <title>How to automate API testing with Azure Devops and Postman? - Blog by Kalle Marjokorpi</title>
+    <meta name="description" content="This blog post covers how to automate API testing with Azure Devops and Postman.">
+    <meta name="author" content="Kalle Marjokorpi">
+
+
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="../css/base2522.css?dt=637795812441703243">
+    <link rel="stylesheet" href="../css/vendor2522.css?dt=637795812441703243">
+    <link rel="stylesheet" href="../css/main2522.css?dt=637795812441703243">
+    <script src="../js/modernizr.js"></script>
+
+</head>
+<body id="top">
+   
+    <!-- header
+    ================================================== -->
+
+    <!-- header
+   ================================================== -->
+
+<header class="s-header">
+
+    <div class="header-logo">
+        <a class="site-logo" href="../index.html"><img src="../images/logo2.png" alt="Homepage"></a>
+    </div>
+
+    
+
+    <nav class="header-nav-wrap">
+
+        <ul class="header-nav">
+
+
+            <li class=""><a id="top-navigation-link-root" href="../index.html" title="">Home</a></li>
+
+                <li id="top-navigation-link-about" class="smoothscroll"><a href="../about.html" title="">About me</a></li>
+
+        </ul>
+    </nav> <!-- end main-nav-wrap -->
+
+
+
+
+    <a class="header-menu-toggle" href="#0"><span>Menu</span></a>
+
+</header> <!-- end s-header -->
+
+
+
+    
+
+<!-- content
+   ================================================== -->
+
+
+    <article class="blog-single">
+
+        <!-- page header/blog hero
+    ================================================== -->
+
+        
+        <div class="page-header page-header--single page-hero" style=background-image:url(https://cdn.buttercms.com/FCFyJBDRqOCpVIRV0dZS)>
+
+            <div class="row page-header__content narrow">
+                <article class="col-full">
+                    <div class="page-header__info">
+                        <div class="page-header__cat">
+                                <a id="post-category-api-testing" href="category/api-testing.html">API testing</a>
+                                <a id="post-category-azure-devops" href="category/azure-devops.html">Azure DevOps</a>
+                                <a id="post-category-minimal-api" href="category/minimal-api.html">Minimal API</a>
+                                <a id="post-category-postman" href="category/postman.html">Postman</a>
+                                <a id="post-category-yaml" href="category/yaml.html">yaml</a>
+                        </div>
+                    </div>
+                    <h1 class="page-header__title">
+                        <a href="#0" title="">
+                            How to automate API testing with Azure Devops and Postman?
+                        </a>
+                    </h1>
+                    <ul class="page-header__meta">
+                        <li class="date">
+04.02.2022 11:23                        </li>
+                        <li class="author">
+                            By
+                            <span>Kalle Marjokorpi</span>
+                        </li>
+                    </ul>
+
+                </article>
+                
+            </div>
+
+        </div> <!-- end page-header -->
+
+        <div class="row blog-content">
+            <div class="col-full blog-content__main">
+
+                <p><h2>What is Postman?</h2>
+<blockquote>
+<div class="ResponsiveContainer__StyledResponsiveContainerRow-zfeeh0-1 jUPrjK twelve-wide-column postman-info__subheading" type="row" overflow="auto">
+<div class="ResponsiveContainer__StyledResponsiveContainerColumn-zfeeh0-0 gGZyxz six-wide-column tablet-eight-wide-column mobile-twelve-wide-column" overflow="auto">
+<p class="Paragraph__StyledParagraph-ydq79l-0 jNWHcQ" type="lead" color="content-color-secondary">Postman is an API platform for building and using APIs. Postman simplifies each step of the API lifecycle and streamlines collaboration so you can create better APIs&mdash;faster. Source: <a href="https://www.postman.com/">Postman API Platform</a></p>
+</div>
+</div>
+</blockquote>
+<div class="ResponsiveContainer__StyledResponsiveContainerRow-zfeeh0-1 jUPrjK twelve-wide-column postman-info__section" type="row" overflow="auto">
+<div class="ResponsiveContainer__StyledResponsiveContainerColumn-zfeeh0-0 gGZyxz twelve-wide-column computer-three-wide-column tablet-six-wide-column mobile-six-wide-column sc-pkIrX eeSLaj homepage-postman-section" overflow="auto">I have been using Postman for a long time to test API requests from my local machine. I started to investigate during one project what kind of automated integration test possibilities could Postman offer. Actually it offered very nice features what I haven't used before. Best finding was possibility to integrate everything very easily to Azure DevOps pipelines.</div>
+<div class="ResponsiveContainer__StyledResponsiveContainerColumn-zfeeh0-0 gGZyxz twelve-wide-column computer-three-wide-column tablet-six-wide-column mobile-six-wide-column sc-pkIrX eeSLaj homepage-postman-section" overflow="auto"></div>
+<h3 class="ResponsiveContainer__StyledResponsiveContainerColumn-zfeeh0-0 gGZyxz twelve-wide-column computer-three-wide-column tablet-six-wide-column mobile-six-wide-column sc-pkIrX eeSLaj homepage-postman-section" overflow="auto">Useful articles</h3>
+<div class="ResponsiveContainer__StyledResponsiveContainerColumn-zfeeh0-0 gGZyxz twelve-wide-column computer-three-wide-column tablet-six-wide-column mobile-six-wide-column sc-pkIrX eeSLaj homepage-postman-section" overflow="auto"><a href="https://www.postman.com/use-cases/api-testing-automation/" rel="follow">Automate Your API Tests with Postman</a></div>
+<div class="ResponsiveContainer__StyledResponsiveContainerColumn-zfeeh0-0 gGZyxz twelve-wide-column computer-three-wide-column tablet-six-wide-column mobile-six-wide-column sc-pkIrX eeSLaj homepage-postman-section" overflow="auto"><a href="https://learning.postman.com/docs/running-collections/using-newman-cli/command-line-integration-with-newman/" rel="follow">Running collections on the command line with Newman</a></div>
+<div class="ResponsiveContainer__StyledResponsiveContainerColumn-zfeeh0-0 gGZyxz twelve-wide-column computer-three-wide-column tablet-six-wide-column mobile-six-wide-column sc-pkIrX eeSLaj homepage-postman-section" overflow="auto"><a href="https://www.postman.com/postman/workspace/postman-answers/overview" rel="follow">Collections and code samples for the most frequently asked questions on the Postman Community forum</a></div>
+<div class="ResponsiveContainer__StyledResponsiveContainerColumn-zfeeh0-0 gGZyxz twelve-wide-column computer-three-wide-column tablet-six-wide-column mobile-six-wide-column sc-pkIrX eeSLaj homepage-postman-section" overflow="auto"><a href="https://learning.postman.com/docs/writing-scripts/test-scripts/" rel="follow">Writing tests</a></div>
+<div class="ResponsiveContainer__StyledResponsiveContainerColumn-zfeeh0-0 gGZyxz twelve-wide-column computer-three-wide-column tablet-six-wide-column mobile-six-wide-column sc-pkIrX eeSLaj homepage-postman-section" overflow="auto"></div>
+</div>
+<h2>How to configure Postman API requests?</h2>
+<h3>Prerequisites</h3>
+<p>Presented test requests in this blog post are written against this kind of Product API. This Minimal API provides REST endpoints to interactive with products.</p>
+<pre class="language-csharp"><code>  public static class EndpointRouteBuilderExtensions
+    {
+        public static void AddProductApiEndpoints(this IEndpointRouteBuilder endpoints)
+        {
+            endpoints.MapPost("/products", async ([FromBody] Product product, [FromServices] ProductRepository productRepository) =&gt;
+            {
+                await productRepository.SaveAsync(product);
+                return Results.Created($"/products/{product.Id}", product);
+            })
+            .RequireAuthorization("ProductsPolicy");
+
+            endpoints.MapGet("/products", async ([FromServices] ProductRepository productRepository) =&gt;
+            {
+                var products = await productRepository.ListAsync();
+                return products?.Count &gt; 0 ? Results.Ok(products) : Results.NoContent();
+            })
+            .RequireAuthorization("ProductsPolicy");
+
+            endpoints.MapPut("/products/{productId}", async ([FromUri] int productId, [FromBody] Product product, [FromServices] ProductRepository productRepository) =&gt;
+            {
+                await productRepository.UpdateAsync(productId, product);
+                return Results.Ok();
+            })
+            .RequireAuthorization("ProductsPolicy");
+
+            endpoints.MapGet("/products/{productId}", async ([FromUri] int productId, [FromServices] ProductRepository productRepository) =&gt;
+            {
+                var product = await productRepository.GetAsync(productId);
+                return product == null ? Results.NoContent() : Results.Ok(product);
+            })
+            .RequireAuthorization("ProductsPolicy");
+
+            endpoints.MapDelete("/products", async ([FromServices] ProductRepository productRepository) =&gt;
+            {
+                await productRepository.DeleteAllAsync();
+            })
+            .RequireAuthorization("ProductsPolicy");
+        }
+    }</code></pre>
+<p>Let's get started. Open Postman client:)</p>
+<h3>1. Set Postman environment variables</h3>
+<p>These environment variables contains all required information to fetch bearer token from the OIDC token endpoint. In this sample I will use Duende demo server as a OIDC provider.</p>
+<p><img src="https://cdn.buttercms.com/3sl6hb9yQsmsxw2K97e8" alt="undefined" /></p>
+<p>Get more information about variable scopes from <a href="https://learning.postman.com/docs/sending-requests/variables/#variable-scopes" rel="follow">here</a>.</p>
+<h3>2. Create a collection for your requests</h3>
+<p>Separate collection makes easier to maintain and configure requests because collection level enables to use shared pre-request scripts which are executed before every request inside the collection.</p>
+<p><img src="https://cdn.buttercms.com/zp06CYKwSAAJ8dReVujd" alt="undefined" /></p>
+<h3>3. Shared pre-request scripts in collection level</h3>
+<p>You can configure pre-request scripts when you have selected the collection.</p>
+<p><img src="https://cdn.buttercms.com/FPLZathiSey1U5ysNOBg" alt="undefined" /></p>
+<p>Because API requires authentication/authorization we need to get bearer token before reaching the API. The purpose of this pre-request script is to fetch bearer token from OIDC token endpoint. All configuration values like ClientId and Secret are fetched from the environment variables.</p>
+<pre class="language-javascript"><code>var Header = require('postman-collection').Header;
+
+pm.sendRequest({
+    url: pm.environment.get("TokenEndpointUrl"),
+    method: 'POST',
+    header: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body: {
+        mode: 'urlencoded',
+        urlencoded: [{
+                key: "grant_type",
+                value: 'client_credentials',
+                enabled: true
+            },
+            {
+                key: "client_id",
+                value: pm.environment.get("ClientId"),
+                enabled: true
+            },
+            {
+                key: "client_secret",
+                value: pm.environment.get("ClientSecret"),
+                enabled: true
+            },
+            {
+                key: "scope",
+                value: pm.environment.get("ClientScopes"),
+                enabled: true
+            }
+        ]
+    }
+}, function(err, res) {
+    pm.request.headers.append(Header.create('Bearer ' + res.json().access_token, 'Authorization'));
+});
+</code></pre>
+<p>Now bearer token is fetched every time before actual request is executed. You could also store fetched bearer token to the variable to minimize token fetches.</p>
+<h3>4. Test requests</h3>
+<p>Let's start to write actual request tests. Each request has Tests tab where Tests can be written.</p>
+<p><img src="https://cdn.buttercms.com/jmjkf17dSTGxNwsb6Lva" alt="undefined" /></p>
+<h4>Example test plan</h4>
+<p>The following tests are created to test product creation, update, delete and get operations. Next I'll present sample CURL command and actual Postman test written with Javascript.</p>
+<h4>Add new product</h4>
+<pre class="language-undefined"><code>curl --location --request POST '/products' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+  "name":"Product 1",
+  "price": 0.2
+}'</code></pre>
+<p>This test verifies that product is successfully created. Status code must be 201 (Created) and header must contain path to product 1.</p>
+<pre class="language-javascript"><code>pm.test("Status code is 201", function () {
+    pm.response.to.have.status(201);
+});
+
+pm.test("Location header is /products/1", function () {
+    pm.expect(pm.response.headers.get("location")).to.eql("/products/1")
+});</code></pre>
+<h4>List all products</h4>
+<pre class="language-undefined"><code>curl --location --request GET '/products'</code></pre>
+<p>This test verifies that newly created product exists. Status code must be 200 (OK) and length of the product arrays must be 1. Test also verifies that existing product is Product 1.</p>
+<pre class="language-javascript"><code>pm.test("Status code is 200", () =&gt; {
+    pm.response.to.have.status(200);
+});
+
+pm.test("One product found", () =&gt; {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.length).to.eql(1);
+});
+
+pm.test("Right product found", () =&gt; {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson[0].name).to.eql("Product 1");
+    pm.expect(responseJson[0].price).to.eql(0.2);
+});</code></pre>
+<h4>Update product</h4>
+<pre class="language-undefined"><code>curl --location --request PUT '/products/1' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+  "id": 1,
+  "name": "Product 1 (fixed name)",
+  "price": 0.3
+}'</code></pre>
+<p>This test verifies that product is successfully updated. Status code must be 200 (OK).</p>
+<pre class="language-javascript"><code>pm.test("Status code is 200", function () {
+    pm.response.to.have.status(200);
+});</code></pre>
+<h4>Get Product</h4>
+<pre class="language-undefined"><code>curl --location --request GET '/products/1'</code></pre>
+<p>This test verifies that updated Product 1 exists. Status code must be 200 (OK).</p>
+<pre class="language-javascript"><code>pm.test("Status code is 200", function () {
+    pm.response.to.have.status(200);
+});
+
+pm.test("Product 1 found", () =&gt; {
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.id).to.eql(1)
+    pm.expect(responseJson.name).to.eql("Product 1 (fixed name)");
+    pm.expect(responseJson.price).to.eql(0.3);
+});</code></pre>
+<h4>Delete all products</h4>
+<pre class="language-undefined"><code>curl --location --request DELETE '/products'</code></pre>
+<p>This test deletes all products. Status code must be 200 (OK).</p>
+<pre class="language-javascript"><code>pm.test("Status code is 200", function () {
+    pm.response.to.have.status(200);
+});</code></pre>
+<h4>Verify that products are deleted</h4>
+<pre class="language-undefined"><code>curl --location --request GET '/products' </code></pre>
+<p>This test verifies that all products are deleted. Status code must be 204 (No Content).</p>
+<pre class="language-javascript"><code>pm.test("Status code is 204", function () {
+    pm.response.to.have.status(204);
+});</code></pre>
+<h2>Configure tests to be executed in Azure DevOps</h2>
+<h3>1.&nbsp;Export test requests and environment variables</h3>
+<p>Postman provides Export functionality which creates a JSON file from your collection requests and environment variables.</p>
+<h3>2.&nbsp;Remove Client Secret from environment JSON configuration</h3>
+<p>Current setup has sensitive information (ClientId and ClientSecret) stored in environment variables so these must be removed from Environment.json file before commiting it ex. to source control.</p>
+<h3>3. Create YAML template</h3>
+<p>Client Id and Client Secret are fetched from the Pipeline variables where those are configured to be kept as a secret value.</p>
+<p><img src="https://cdn.buttercms.com/Fxy2xy7RV6rtp5RTKm0l" alt="undefined" /></p>
+<p>Pipeline variable values are then passed to the integration tests pipeline template.</p>
+<pre class="language-undefined"><code>- template: pipelines/integration-tests-pipeline.yml
+  parameters:
+    clientId: $(ApiClientId)
+    clientSecret: $(ApiClientSecret)
+</code></pre>
+<p>Integration tests pipeline template fetches integration tests artifact and installs CLI tool called "Newman" which is used to execute Postman tests in Azure DevOps.</p>
+<pre class="language-undefined"><code>parameters:
+    clientId: string
+    clientSecret: string
+
+stages:
+- stage: IntegrationTests
+  displayName: Integration Tests
+  jobs:
+
+  - job: IntegrationTests
+    displayName: Execute integration tests
+    steps:
+    
+    - task: DownloadBuildArtifacts@0
+      displayName: 'Download integration tests artifact'
+      inputs:
+        buildType: 'current'
+        downloadType: 'single'
+        artifactName: 'tests'
+        downloadPath: '$(System.ArtifactsDirectory)'  
+
+    - task: Npm@1
+      displayName: Install newman CLI
+      inputs:
+        command: custom
+        verbose: false
+        customCommand: install -g newman
+
+    - task: CmdLine@2
+      displayName: Execute integration tests (API Client 1)
+      inputs:
+        script: newman run $(System.ArtifactsDirectory)/tests/IntegrationTests.json -e $(System.ArtifactsDirectory)/tests/Environment.json --env-var ClientId=${{parameters.clientId}} --env-var ClientSecret=${{parameters.clientSecret}}</code></pre>
+<p>Newman has --env-var parameter which enables to pass sensitive configuration values from ex. Azure DevOps pipeline variables.&nbsp;</p>
+<h2>Summary</h2>
+<p>Postman provides an easy and powerful way to create automated integration tests which can be executed ex. in Azure DevOps. I was really nice that you could write Postman test scripts with javascript. Test object model is easy to learn and there are lot of good documentation available. At least for a simple integration cases this is a very good tool. Sharing test scripts between tests is difficult and one reason why you should consider other frameworks in very complex test cases.</p>
+<p></p></p>
+
+                <h2>Comments</h2>
+                                    
+                <div id="cusdis_thread"
+                  data-host="https://cusdis.com"
+                  data-app-id="86620953-7757-4f01-94f2-bfb88caff8a4"
+                  data-page-id="how-to-automate-api-testing-with-azure-devops-and-postman"
+                  data-page-url="https://kalle-blog.azurewebsites.net/blog/how-to-automate-api-testing-with-azure-devops-and-postman"
+                  data-page-title="How to automate API testing with Azure Devops and Postman?">
+                <script src="https://cusdis.com/js/cusdis.es.js"></script>
+
+                <div class="blog-content__pagenav">
+                    <div class="blog-content__nav">
+                            <div class="blog-content__prev">
+                                <a id="post-previous-how-to-build-micro-frontend-architecture-with-web-components-and-bff-part-22" href="how-to-build-micro-frontend-architecture-with-web-components-and-bff-part-22.html" rel="prev">
+                                    <span>Previous Post</span>
+                                    How to build Micro-Frontend Architecture with Web Components and BFF (part 2/2)?
+                                </a>
+                            </div>
+                        </div>
+
+
+                    <div class="blog-content__all">
+                        <a href="../index.html" class="btn btn--primary">
+                            View All Post
+                        </a>
+                    </div>
+                </div>
+
+            </div><!-- end blog-content__main -->
+        </div> <!-- end blog-content -->
+
+    </article>
+
+
+
+    
+
+<!-- footer
+    ================================================== -->
+<footer>
+    <div class="row">
+        <div class="col-full">
+
+            <div class="footer-logo">
+                <a class="footer-site-logo" href="#0"><img src="../images/name.png" alt="Homepage"></a>
+            </div>
+
+            <ul class="footer-social">
+                <li>
+                    <a href="https://www.twitter.com/kmarjok">
+                        <i class="im im-twitter" aria-hidden="true"></i>
+                        <span>Twitter</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.linkedin.com/in/kallemarjokorpi">
+                        <i class="im im-linkedin" aria-hidden="true"></i>
+                        <span>Linkedin</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://github.com/kalleantero">
+                        <i class="im im-github" aria-hidden="true"></i>
+                        <span>Github</span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+    <div class="row footer-bottom">
+
+        <div class="col-twelve">
+            <div class="copyright">
+                <span>Copyright Kalle Marjokorpi 2022</span>
+                <span>Design by <a href="http://www.styleshout.com/">styleshout</a></span>
+                <span>Content management by <a href="http://www.buttercms.com/">Headless ButterCMS</a></span>
+
+            </div>
+
+        </div>
+
+    </div> <!-- end footer-bottom -->
+
+</footer> <!-- end footer -->
+   
+    <!-- Java Script
+     ================================================== -->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/plugins.js"></script>
+    <script src="../js/main.min.js"></script>
+    
+    
+    <!-- Cloudflare Web Analytics -->
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cac9fd24c1c04b6d9984ea31685b0414"}'></script><!-- End Cloudflare Web Analytics -->       
+
+</body>
+
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/how-to-automate-api-testing-with-azure-devops-and-postman by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 04 Feb 2022 14:21:39 GMT -->
+</html>

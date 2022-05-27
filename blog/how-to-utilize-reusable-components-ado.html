@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/how-to-utilize-reusable-components-ado by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 27 May 2022 11:57:04 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+
+    
+    <title>How to utilize reusable components in Azure DevOps? - Blog by Kalle Marjokorpi</title>
+    <meta name="description" content="This blog post covers a few techniques what can be used to create reusable components (YAML and Bicep) between Azure DevOps pipelines">
+    <meta name="author" content="Kalle Marjokorpi">
+
+
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="../css/basedcf9.css?dt=637892493849070940">
+    <link rel="stylesheet" href="../css/vendordcf9.css?dt=637892493849070940">
+    <link rel="stylesheet" href="../css/maindcf9.css?dt=637892493849070940">
+    <script src="../js/modernizr.js"></script>
+
+</head>
+<body id="top">
+   
+    <!-- header
+    ================================================== -->
+
+    <!-- header
+   ================================================== -->
+
+<header class="s-header">
+
+    <div class="header-logo">
+        <a class="site-logo" href="../index.html"><img src="../images/logo2.png" alt="Homepage"></a>
+    </div>
+
+    
+
+    <nav class="header-nav-wrap">
+
+        <ul class="header-nav">
+
+
+            <li class=""><a id="top-navigation-link-root" href="../index.html" title="">Home</a></li>
+
+                <li id="top-navigation-link-about" class="smoothscroll"><a href="../about.html" title="">About me</a></li>
+
+        </ul>
+    </nav> <!-- end main-nav-wrap -->
+
+
+
+
+    <a class="header-menu-toggle" href="#0"><span>Menu</span></a>
+
+</header> <!-- end s-header -->
+
+
+
+    
+
+<!-- content
+   ================================================== -->
+
+
+    <article class="blog-single">
+
+        <!-- page header/blog hero
+    ================================================== -->
+
+        
+        <div class="page-header page-header--single page-hero" style=background-image:url(https://cdn.buttercms.com/RPlWH3xyQ8mr7hPXnTgg)>
+
+            <div class="row page-header__content narrow">
+                <article class="col-full">
+                    <div class="page-header__info">
+                        <div class="page-header__cat">
+                                <a id="post-category-azure-devops" href="category/azure-devops.html">Azure DevOps</a>
+                                <a id="post-category-bicep" href="category/bicep.html">bicep</a>
+                                <a id="post-category-yaml" href="category/yaml.html">yaml</a>
+                        </div>
+                    </div>
+                    <h1 class="page-header__title">
+                        <a href="#0" title="">
+                            How to utilize reusable components in Azure DevOps pipelines?
+                        </a>
+                    </h1>
+                    <ul class="page-header__meta">
+                        <li class="date">
+13.05.2022 11:47                        </li>
+                        <li class="author">
+                            By
+                            <span>Kalle Marjokorpi</span>
+                        </li>
+                    </ul>
+
+                </article>
+                
+            </div>
+
+        </div> <!-- end page-header -->
+
+        <div class="row blog-content">
+            <div class="col-full blog-content__main">
+
+                <p><p>I worked recently in a project where most of Build and Release pipelines were refactored to utilize YAML and Bicep instead of using classic Azure pipelines and ARM templates. Refactoring was needed because some of components used in the Azure pipelines weren't anymore supported by Azure DevOps.</p>
+<p>This blog post covers a few techniques what can be used to create reusable components (YAML and Bicep) between multiple Azure DevOps pipelines. Blog post assumes that you have a basic knowledge about YAML and Bicep.</p>
+<h2>Environment overview</h2>
+<p>Environment followed typical micro service architecture approach with multiple API endpoints and a few UI applications.&nbsp;Micro services were coherently built and chosen technology stack was identical. Starting point was really good to start thinking reusability of DevOps components.</p>
+<p><img src="https://cdn.buttercms.com/uAKTgEgRpuxSOn9LZpzw" alt="undefined" /></p>
+<h2>Reusable YAML-templates&nbsp;</h2>
+<p>YAML based pipelines are used to orchestrate Build and Release process in Azure DevOps.</p>
+<p>YAML-templates enables that you can separate Build and Release related functionalities to another file which can be reused to prevent "code" duplication. Operations which are consumed multiple times inside main "the orchestrator" pipeline should be templated.&nbsp;</p>
+<h3>Locally shared YAML-templates</h3>
+<p>Locally shared YAML-template means in this context that template is shared only inside specific Azure DevOps repository.</p>
+<p>Application deployment job is an one good example of operation which must be repeated for many environments ("deploy-pipeline.yml" in the sample below). Template can be consumed in each environment with different parameters and this effectively prevents duplication.</p>
+<p>This approach assumes that YAML-templates are located in the same repository where main pipeline "the orchestrator" exists. This is not optimal way because deploy-pipeline.yml template is wanted to use also from another Azure pipelines.</p>
+<pre class="language-undefined"><code>stages:
+- template: pipelines/deploy-pipeline.yml
+  parameters:
+    stageTechnicalName: 'Test'
+    azureSubscription: $(azureSubscriptionTest)
+    deploymentResourceGroupName: 'rg-test-application'
+    appserviceResourceName: 'app-test-my-application'
+    location: $(location)
+- template: pipelines/deploy-pipeline.yml
+  parameters:
+    stageTechnicalName: 'QA'
+    azureSubscription: $(azureSubscriptionQa)
+    deploymentResourceGroupName: 'rg-qa-application'
+    appserviceResourceName: 'app-qa-my-application'
+    location: $(location)
+- template: pipelines/deploy-pipeline.yml
+  parameters:
+    stageTechnicalName: 'Prod'
+    azureSubscription: $(azureSubscriptionProd)
+    deploymentResourceGroupName: 'rg-prod-application'
+    appserviceResourceName: 'app-prod-my-application'
+    location: $(location)</code></pre>
+<h3>Globally shared YAML-templates</h3>
+<p>Globally shared YAML-template enables that template is located to centralized Azure DevOps repository where application specific Azure pipelines can consume templates. Diagram below illustrates that pipelines for Application X and Y are consuming globally shared templates from separate YAML-repository.</p>
+<p><img src="https://cdn.buttercms.com/KKikNlalR59fA8Rw9ueX" alt="undefined" /></p>
+<p><strong>Consumption of globally shared YAML templates is easy to configure:</strong></p>
+<p>1) Create a new Azure DevOps repository for globally shared YAML-templates. I have used repository name called "Yaml.Templates" in the sample below.</p>
+<p>2) Commit YAML templates to this new repository</p>
+<p>3) Open application specific main pipeline and add Resources (multi-repository configuration)</p>
+<p>4) Add multi-repository name to the template reference ('pipelines/deploy-pipeline.yml<strong>@GloballySharedYamlTemplates</strong>')</p>
+<pre class="language-undefined"><code>resources:
+  repositories:
+  - repository: GloballySharedYamlTemplates
+    type: git
+    name: AdoProject/Yaml.Templates
+    ref: main
+
+stages:
+- template: 'pipelines/deploy-pipeline.yml@GloballySharedYamlTemplates'
+  parameters:
+    stageTechnicalName: 'Test'
+    azureSubscription: $(azureSubscriptionTest)
+    deploymentResourceGroupName: 'rg-test-application'
+    appserviceResourceName: 'app-test-my-application'
+    location: $(location)
+- template: 'pipelines/deploy-pipeline.yml@GloballySharedYamlTemplates'
+  parameters:
+    stageTechnicalName: 'QA'
+    azureSubscription: $(azureSubscriptionQa)
+    deploymentResourceGroupName: 'rg-qa-application'
+    appserviceResourceName: 'app-qa-my-application'
+    location: $(location)
+- template: 'pipelines/deploy-pipeline.yml@GloballySharedYamlTemplates'
+  parameters:
+    stageTechnicalName: 'Prod'
+    azureSubscription: $(azureSubscriptionProd)
+    deploymentResourceGroupName: 'rg-prod-application'
+    appserviceResourceName: 'app-prod-my-application'
+    location: $(location)</code></pre>
+<h2>Reusable Bicep-modules</h2>
+<p>Bicep is used to configure/determine Azure infrastructure which is provisioned during deployment. Bicep-module is a similar concept like YAML-templates which enable <span>encapsulate details to another files.</span></p>
+<blockquote>
+<p><span>Bicep enables you to organize deployments into modules. A module is a Bicep file (or an ARM JSON template) that is deployed from another Bicep file. With modules, you improve the readability of your Bicep files by encapsulating complex details of your deployment. You can also easily reuse modules for different deployments. <a href="https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/modules" rel="follow">Source</a></span></p>
+</blockquote>
+<h3>Locally shared Bicep-modules</h3>
+<p>Locally shared Bicep-modules are files inside specific Azure DevOps repository. This is a sample how local App Service related Bicep-module is consumed from main file. This App Service module is used to createa Azure App Service resource with preferred network settings.&nbsp;</p>
+<pre class="language-undefined"><code>module appServiceModule './appservice.bicep' = {
+  name: 'appServiceModule'
+  params: {
+      appServiceName: appServiceName
+      appServicePlanName: appServicePlanName
+      appServicePlanPlatform: appServicePlanPlatform
+      appServicePlanSku: appServicePlanSku
+      tags:defaultTags
+      appSettings: appSettings
+      alwaysOnEnabled: alwaysOnEnabled
+      linuxFxVersion: 'DOTNETCORE|6.0'
+      httpsRedirectionEnabled: false
+  }
+}</code></pre>
+<p>We want to consume this same App Service Bicep-module from all Azure pipelines so we need to make it globally shared.</p>
+<h3>Globally shared Bicep-modules</h3>
+<p>Bicep supports that global Bicep-modules can be shared via Azure Container Registry which acts as a centralized repository. You can find detailed information about how to configure Azure Container Registry from <a href="https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/private-module-registry?tabs=azure-cli" rel="follow">here</a>.</p>
+<h2><img src="https://cdn.buttercms.com/N7xW4O4TR5KWNjfH2eSc" alt="undefined" /></h2>
+<p>Bicep-modules can be published to Azure Container Registry with the following command.&nbsp;</p>
+<pre class="language-undefined"><code>az bicep publish --file appservice.bicep --target br:mycontainerreqistry.azurecr.io/bicep/modules/appservice:v1</code></pre>
+<p>After publish Bicep-modules from Azure Container Registry can be consumed like this</p>
+<pre class="language-undefined"><code>module appServiceModule 'br:mycontainerreqistry.azurecr.io/bicep/modules/appservice:v1' = {
+  name: 'appServiceModule'
+  params: {
+      appServiceName: appServiceName
+      appServicePlanName: appServicePlanName
+      appServicePlanPlatform: appServicePlanPlatform
+      appServicePlanSku: appServicePlanSku
+      tags:defaultTags
+      appSettings: appSettings
+      alwaysOnEnabled: alwaysOnEnabled
+      linuxFxVersion: 'DOTNETCORE|6.0'
+      httpsRedirectionEnabled: false
+  }
+}</code></pre>
+<p>To publish modules to a registry, you must have permission to <strong>push </strong>an image. To deploy a module from a registry, you must have permission to <strong>pull </strong>the image. For more information about the roles that grant adequate access, see <a href="https://docs.microsoft.com/en-us/azure/container-registry/container-registry-roles?tabs=azure-cli" rel="follow">Azure Container Registry roles and permissions</a>.</p>
+<h2>Summary</h2>
+<p>Globally shared YAML-templates and Bicep-modules enable a powerful way to optimize and improve maintenance of Azure pipeline (YAML) and Infrastructure of code files (Bicep). Especially if environment is coherent and similar technology stack is widely used then consumption of global component creates lot of value.</p>
+<p><img src="https://cdn.buttercms.com/cPlEKKoRl6WkYbGpe5xw" alt="undefined" /></p>
+<p>During this project the following functionalities were created global.</p>
+<p><strong>YAML-templates:</strong></p>
+<p>- Build template for .NET Framework based applications</p>
+<p>- Deploy template for Azure App Service application</p>
+<p>- Deploy template for Azure Infrastructure</p>
+<p>- Database migration template</p>
+<p>- Unit tests execution template</p>
+<p><strong>Bicep-modules:</strong></p>
+<p>- Create App Service with preferred network settings</p>
+<p>- Key Vault policy module which assigns access policies</p>
+<p></p>
+<p></p>
+<p></p></p>
+
+                <h2>Comments</h2>
+                                    
+                <div id="cusdis_thread"
+                  data-host="https://cusdis.com"
+                  data-app-id="86620953-7757-4f01-94f2-bfb88caff8a4"
+                  data-page-id="how-to-utilize-reusable-components-ado"
+                  data-page-url="https://kalle-blog.azurewebsites.net/blog/how-to-utilize-reusable-components-ado"
+                  data-page-title="How to utilize reusable components in Azure DevOps pipelines?">
+                <script src="https://cusdis.com/js/cusdis.es.js"></script>
+
+                <div class="blog-content__pagenav">
+                    <div class="blog-content__nav">
+                            <div class="blog-content__prev">
+                                <a id="post-previous-how-to-use-fluent-migrator-in-azure-devops-pipelines" href="how-to-use-fluent-migrator-in-azure-devops-pipelines.html" rel="prev">
+                                    <span>Previous Post</span>
+                                    How to automate database migrations with Fluent Migrator in Azure DevOps?
+                                </a>
+                            </div>
+                        </div>
+
+
+                    <div class="blog-content__all">
+                        <a href="../index.html" class="btn btn--primary">
+                            View All Post
+                        </a>
+                    </div>
+                </div>
+
+            </div><!-- end blog-content__main -->
+        </div> <!-- end blog-content -->
+
+    </article>
+
+
+
+    
+
+<!-- footer
+    ================================================== -->
+<footer>
+    <div class="row">
+        <div class="col-full">
+
+            <div class="footer-logo">
+                <a class="footer-site-logo" href="#0"><img src="../images/name.png" alt="Homepage"></a>
+            </div>
+
+            <ul class="footer-social">
+                <li>
+                    <a href="https://www.twitter.com/kmarjok">
+                        <i class="im im-twitter" aria-hidden="true"></i>
+                        <span>Twitter</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.linkedin.com/in/kallemarjokorpi">
+                        <i class="im im-linkedin" aria-hidden="true"></i>
+                        <span>Linkedin</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://github.com/kalleantero">
+                        <i class="im im-github" aria-hidden="true"></i>
+                        <span>Github</span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+    <div class="row footer-bottom">
+
+        <div class="col-twelve">
+            <div class="copyright">
+                <span>Copyright Kalle Marjokorpi 2022</span>
+                <span>Design by <a href="http://www.styleshout.com/">styleshout</a></span>
+                <span>Content management by <a href="http://www.buttercms.com/">Headless ButterCMS</a></span>
+
+            </div>
+
+        </div>
+
+    </div> <!-- end footer-bottom -->
+
+</footer> <!-- end footer -->
+   
+    <!-- Java Script
+     ================================================== -->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/plugins.js"></script>
+    <script src="../js/main.min.js"></script>
+    
+    
+    <!-- Cloudflare Web Analytics -->
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cac9fd24c1c04b6d9984ea31685b0414"}'></script><!-- End Cloudflare Web Analytics -->       
+
+</body>
+
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/how-to-utilize-reusable-components-ado by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 27 May 2022 11:57:07 GMT -->
+</html>

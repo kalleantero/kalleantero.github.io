@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/how-to-use-postman-collection-in-api-testing by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 29 Aug 2022 12:34:05 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+
+    
+    <title>How to use Postman Workspace API tests in Azure Devops? - Blog by Kalle Marjokorpi</title>
+    <meta name="description" content="This blog post shows how you can use Postman Workspace to maintain your API tests in cloud and share access for the team.">
+    <meta name="author" content="Kalle Marjokorpi">
+
+
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="../css/base4e66.css?dt=637973732141899636">
+    <link rel="stylesheet" href="../css/vendor4e66.css?dt=637973732141899636">
+    <link rel="stylesheet" href="../css/main4e66.css?dt=637973732141899636">
+    <script src="../js/modernizr.js"></script>
+
+</head>
+<body id="top">
+   
+    <!-- header
+    ================================================== -->
+
+    <!-- header
+   ================================================== -->
+
+<header class="s-header">
+
+    <div class="header-logo">
+        <a class="site-logo" href="../index.html"><img src="../images/logo2.png" alt="Homepage"></a>
+    </div>
+
+    
+
+    <nav class="header-nav-wrap">
+
+        <ul class="header-nav">
+
+
+            <li class=""><a id="top-navigation-link-root" href="../index.html" title="">Home</a></li>
+
+                <li id="top-navigation-link-about" class="smoothscroll"><a href="../about.html" title="">About me</a></li>
+
+        </ul>
+    </nav> <!-- end main-nav-wrap -->
+
+
+
+
+    <a class="header-menu-toggle" href="#0"><span>Menu</span></a>
+
+</header> <!-- end s-header -->
+
+
+
+    
+
+<!-- content
+   ================================================== -->
+
+
+    <article class="blog-single">
+
+        <!-- page header/blog hero
+    ================================================== -->
+
+        
+        <div class="page-header page-header--single page-hero" style=background-image:url(https://cdn.buttercms.com/1GIFLVOQlCGxSSzzoaVQ)>
+
+            <div class="row page-header__content narrow">
+                <article class="col-full">
+                    <div class="page-header__info">
+                        <div class="page-header__cat">
+                                <a id="post-category-api-testing" href="category/api-testing.html">API testing</a>
+                                <a id="post-category-azure-devops" href="category/azure-devops.html">Azure DevOps</a>
+                                <a id="post-category-postman" href="category/postman.html">Postman</a>
+                                <a id="post-category-yaml" href="category/yaml.html">yaml</a>
+                        </div>
+                    </div>
+                    <h1 class="page-header__title">
+                        <a href="#0" title="">
+                            How to integrate API tests hosted in Postman&#x27;s Team Workspace to Azure DevOps?
+                        </a>
+                    </h1>
+                    <ul class="page-header__meta">
+                        <li class="date">
+29.08.2022 05:59                        </li>
+                        <li class="author">
+                            By
+                            <span>Kalle Marjokorpi</span>
+                        </li>
+                    </ul>
+
+                </article>
+                
+            </div>
+
+        </div> <!-- end page-header -->
+
+        <div class="row blog-content">
+            <div class="col-full blog-content__main">
+
+                <p><p>My previous <a href="https://www.kallemarjokorpi.fi/blog/how-to-automate-api-testing-with-azure-devops-and-postman.html" rel="follow">blog post</a> covered how to use Postman in API testing and integrate API test execution to Azure DevOps pipeline. Described solution assumed that API tests where exported to JSON-file which was added to the source control. Handling and maintaining API test JSON files in source control is not the most straightforward solution. This blog post shows how you can use Postman Workspace to maintain your API tests in cloud and share access for the team.</p>
+<h2>What is Postman's Team Workspace?</h2>
+<p>Postman's Team Workspace is a collaboration space for the team in the cloud. With team workspace, you can invite team members to collaborate on your API work within a workspace. Depends on the Postman plan you can invite multiple team members to the Workspace. Currently Postman Free plan enables to invite up to three members. To use team workspace for more than three members, you'll need the Postman Team, Business, or Enterprise plan.</p>
+<p>Workspace members can comment on elements, use and change elements, or even fork from existing elements. Versioned history of all your changes is also available so anyone you invite to your team workspace can collaborate safely and effectively. <a href="https://www.postman.com/product/workspaces/" rel="follow">Source</a></p>
+<p>Especially from API test point of view notice that Postman Plans has different limitations for how many calls to Postman API is allowed per monthly. If you have a Basic Plan you can call Postman API 10000 times per month.</p>
+<p><img src="https://cdn.buttercms.com/XEkAUf6vQ2OeOlOCyqwC" alt="undefined" width="828" height="673" /></p>
+<p>Source: <a href="https://www.postman.com/pricing/" rel="follow">Postman API Platform - Plans and Pricing</a></p>
+<h2>How to create Team Workspace?</h2>
+<p>Team Workspace can be created directly from the native Postman client or from the web interface. You can decide visibility level of the workspace between the following choices: <strong>Personal</strong>, <strong>Private</strong>, <strong>Team </strong>or <strong>Public</strong>.</p>
+<p><img src="https://cdn.buttercms.com/bqXB3cZQhCC3oFud5iG8" alt="undefined" width="367" height="347" /></p>
+<p>When workspace is created you can start creating Collections and API tests.</p>
+<p><img src="https://cdn.buttercms.com/zfTiGRpDRgqC9mYemNYQ" alt="undefined" width="270" height="328" /></p>
+<h2>How to integrate API tests from Team Workspace to YAML based pipeline in Azure DevOps?</h2>
+<h3>Integration overview</h3>
+<p>YAML based CI/CD pipeline orchestrates build, deployment and execution of the API tests which are hosted in the Postman Team Workspace. API-tests requires system-to-system authentication (client credential flow) in this case.&nbsp;</p>
+<p><img src="https://cdn.buttercms.com/6QyCsoOT4icpIbB5m1YQ" alt="undefined" /></p>
+<h2>Integration between Postman and Azure DevOps</h2>
+<p>Newman CLI tool supports directly Postman's Team workspace so you can just easily point configuration to workspace instead of JSON based API test files.</p>
+<h3>Before starting</h3>
+<p>You need to have <strong>Postman Collection Id</strong> and <strong>API key</strong> to able to use Postman API endpoint when executing API Tests.</p>
+<p><strong>Postman API key</strong></p>
+<p>Postman API key enables you to communicate with Postman API endpoint. API key can be generated from Team workspace settings page <strong>https://[my-workspace].postman.co/settings/me/api-keys</strong>. After API key is generated persist key to Azure Keyvault.&nbsp;</p>
+<p>Note that API key will be invalidated after 60 days of inactivity by default.</p>
+<p><img src="https://cdn.buttercms.com/Kehrt2jRE6nNxjfGrk9R" alt="undefined" /></p>
+<p><strong>Postman Collection Id</strong></p>
+<p>Postman Collection Id is a unique identifier for API test collection. Typically I have structured Postman Collections so that each API has an own collection. You can get collection Id from the Postman client or executing the following GET-operation</p>
+<pre class="language-undefined"><code>GET https://api.getpostman.com/collections?apikey={{postman_api_key} </code></pre>
+<h3>Integration steps</h3>
+<p>Configure the following tasks to your YAML-pipeline / template.</p>
+<p><strong>1. Install Newman CLI tool</strong></p>
+<p>Newman is a command-line Collection Runner for Postman. It enables you to run and test a Postman Collection directly from the command line. It's built with extensibility in mind so that you can integrate it with your continuous integration servers and build systems. <a href="https://learning.postman.com/docs/running-collections/using-newman-cli/command-line-integration-with-newman/" rel="follow">Source</a></p>
+<pre class="language-undefined"><code>- task: Npm@1
+  displayName: Install newman CLI
+  inputs:
+    command: custom
+    verbose: false
+    customCommand: install -g newman</code></pre>
+<p><strong>2. Get Postman API key from Azure Keyvault</strong></p>
+<p>Later you can get Postman API key from the variable called $(postman-api-key)&nbsp;</p>
+<pre class="language-undefined"><code>- task: AzureKeyVault@2
+  displayName: 'Get Postman API key value'
+  inputs:
+      azureSubscription: ${{parameters.azureDevOpsServicePrincipalName}}
+      KeyVaultName: ${{parameters.keyVaultResourceName}}
+      SecretsFilter: 'postman-api-key'</code></pre>
+<p><strong>3. Execute API tests</strong></p>
+<p>First parameter of Newman is Postman API address with API key and Collection Id. This sample command reads Postman environment variables from the file and appends some sensitive variables.</p>
+<pre class="language-undefined"><code>- task: CmdLine@2
+  displayName: Execute integration tests
+  inputs:
+    script: newman run https://api.getpostman.com/collections/${{parameters.postmanCollectionId}}?apikey=$(postman-api-key) 
+-e $(Build.SourcesDirectory)/${{parameters.environmentFilePath}} 
+--env-var clientId=${{parameters.idpClientId}} 
+--env-var clientSecret=$(${{parameters.idpClientSecretKeyName}}) </code></pre>
+<h2>Summary</h2>
+<p>If you want to use Postman based API tests then integration to Team workspace is really nice possibility. Basically you can maintain your API tests directly in Postman and latest version is always available when API tests are executed in Azure DevOps.&nbsp;</p></p>
+
+                <h2>Comments</h2>
+                                    
+                <div id="cusdis_thread"
+                  data-host="https://cusdis.com"
+                  data-app-id="86620953-7757-4f01-94f2-bfb88caff8a4"
+                  data-page-id="how-to-use-postman-collection-in-api-testing"
+                  data-page-url="https://kalle-blog.azurewebsites.net/blog/how-to-use-postman-collection-in-api-testing"
+                  data-page-title="How to integrate API tests hosted in Postman&#x27;s Team Workspace to Azure DevOps?">
+                <script src="https://cusdis.com/js/cusdis.es.js"></script>
+
+                <div class="blog-content__pagenav">
+                    <div class="blog-content__nav">
+                            <div class="blog-content__prev">
+                                <a id="post-previous-how-to-utilize-reusable-components-ado" href="how-to-utilize-reusable-components-ado.html" rel="prev">
+                                    <span>Previous Post</span>
+                                    How to utilize reusable components in Azure DevOps pipelines?
+                                </a>
+                            </div>
+                        </div>
+
+
+                    <div class="blog-content__all">
+                        <a href="../index.html" class="btn btn--primary">
+                            View All Post
+                        </a>
+                    </div>
+                </div>
+
+            </div><!-- end blog-content__main -->
+        </div> <!-- end blog-content -->
+
+    </article>
+
+
+
+    
+
+<!-- footer
+    ================================================== -->
+<footer>
+    <div class="row">
+        <div class="col-full">
+
+            <div class="footer-logo">
+                <a class="footer-site-logo" href="#0"><img src="../images/name.png" alt="Homepage"></a>
+            </div>
+
+            <ul class="footer-social">
+                <li>
+                    <a href="https://www.twitter.com/kmarjok">
+                        <i class="im im-twitter" aria-hidden="true"></i>
+                        <span>Twitter</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.linkedin.com/in/kallemarjokorpi">
+                        <i class="im im-linkedin" aria-hidden="true"></i>
+                        <span>Linkedin</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://github.com/kalleantero">
+                        <i class="im im-github" aria-hidden="true"></i>
+                        <span>Github</span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+    <div class="row footer-bottom">
+
+        <div class="col-twelve">
+            <div class="copyright">
+                <span>Copyright Kalle Marjokorpi 2022</span>
+                <span>Design by <a href="http://www.styleshout.com/">styleshout</a></span>
+                <span>Content management by <a href="http://www.buttercms.com/">Headless ButterCMS</a></span>
+
+            </div>
+
+        </div>
+
+    </div> <!-- end footer-bottom -->
+
+</footer> <!-- end footer -->
+   
+    <!-- Java Script
+     ================================================== -->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/plugins.js"></script>
+    <script src="../js/main.min.js"></script>
+    
+    
+    <!-- Cloudflare Web Analytics -->
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cac9fd24c1c04b6d9984ea31685b0414"}'></script><!-- End Cloudflare Web Analytics -->       
+
+</body>
+
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/how-to-use-postman-collection-in-api-testing by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 29 Aug 2022 12:34:11 GMT -->
+</html>

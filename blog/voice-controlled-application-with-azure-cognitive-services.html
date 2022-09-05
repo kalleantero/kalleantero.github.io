@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/voice-controlled-application-with-azure-cognitive-services by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 05 Sep 2022 07:28:02 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+
+    
+    <title>Voice controlled application with Cognitive Services - Blog by Kalle Marjokorpi</title>
+    <meta name="description" content="This blog post introduce you briefly to Azure Cognitive Service and shows how to create a voice controlled sample application.">
+    <meta name="author" content="Kalle Marjokorpi">
+
+
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="../css/base8caa.css?dt=637979596438239646">
+    <link rel="stylesheet" href="../css/vendor8caa.css?dt=637979596438239646">
+    <link rel="stylesheet" href="../css/main8caa.css?dt=637979596438239646">
+    <script src="../js/modernizr.js"></script>
+
+</head>
+<body id="top">
+   
+    <!-- header
+    ================================================== -->
+
+    <!-- header
+   ================================================== -->
+
+<header class="s-header">
+
+    <div class="header-logo">
+        <a class="site-logo" href="../index.html"><img src="../images/logo2.png" alt="Homepage"></a>
+    </div>
+
+    
+
+    <nav class="header-nav-wrap">
+
+        <ul class="header-nav">
+
+
+            <li class=""><a id="top-navigation-link-root" href="../index.html" title="">Home</a></li>
+
+                <li id="top-navigation-link-about" class="smoothscroll"><a href="../about.html" title="">About me</a></li>
+
+        </ul>
+    </nav> <!-- end main-nav-wrap -->
+
+
+
+
+    <a class="header-menu-toggle" href="#0"><span>Menu</span></a>
+
+</header> <!-- end s-header -->
+
+
+
+    
+
+<!-- content
+   ================================================== -->
+
+
+    <article class="blog-single">
+
+        <!-- page header/blog hero
+    ================================================== -->
+
+        
+        <div class="page-header page-header--single page-hero" style=background-image:url(https://cdn.buttercms.com/qg0dc5LT4u19ln2Yvbd4)>
+
+            <div class="row page-header__content narrow">
+                <article class="col-full">
+                    <div class="page-header__info">
+                        <div class="page-header__cat">
+                                <a id="post-category-ai" href="category/ai.html">AI</a>
+                                <a id="post-category-azure" href="category/azure.html">Azure</a>
+                                <a id="post-category-azure-cognitive-services" href="category/azure-cognitive-services.html">Azure Cognitive Services</a>
+                        </div>
+                    </div>
+                    <h1 class="page-header__title">
+                        <a href="#0" title="">
+                            Voice controlled Knowledge base application with Azure Cognitive Services
+                        </a>
+                    </h1>
+                    <ul class="page-header__meta">
+                        <li class="date">
+05.09.2022 06:48                        </li>
+                        <li class="author">
+                            By
+                            <span>Kalle Marjokorpi</span>
+                        </li>
+                    </ul>
+
+                </article>
+                
+            </div>
+
+        </div> <!-- end page-header -->
+
+        <div class="row blog-content">
+            <div class="col-full blog-content__main">
+
+                <p><p>Did you know that Azure provides comprehensive amount of AI services which enables you to create ex. voice controlled applications? More information about Azure AI Platform can be found from <a href="https://azure.microsoft.com/en-us/solutions/ai/#overview" rel="follow">here</a>.&nbsp;</p>
+<p>This blog post introduce you briefly to Azure Cognitive Service &amp; Azure Question Answering Service and shows how to create a voice controlled sample Knowledge base application which listens user's speech (question) and based on that try to find answer from knowledge base sources.&nbsp;</p>
+<h2>Azure AI Platform</h2>
+<p>Before starting first a few words about Azure AI Platform services which are covered in this blog post.</p>
+<h3>What are Azure Cognitive Services and especially Speech SDK?</h3>
+<p>Azure Cognitive Services enable you to build cognitive solutions that can see, hear, speak, understand, and even make decisions.</p>
+<blockquote>
+<p>Azure Cognitive Services are cloud-based artificial intelligence (AI) services that help you build cognitive intelligence into your applications. They are available as REST APIs, client library SDKs, and user interfaces. You can add cognitive features to your applications without having AI or data science skills. <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/what-are-cognitive-services" rel="follow">Source</a></p>
+<p>The Speech SDK (software development kit) exposes many of the<span>&nbsp;</span>Speech service capabilities, so you can develop speech-enabled applications. The Speech SDK is available<span>&nbsp;</span>in many programming languages<span>&nbsp;</span>and across platforms. The Speech SDK is ideal for both real-time and non-real-time scenarios, by using local devices, files, Azure Blob Storage, and input and output streams. <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/speech-sdk" rel="follow">Source</a></p>
+</blockquote>
+<p>Currently language support in Speech Service is pretty <span>comprehensive. You can check what languages are supported from <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/speech-service/language-support" rel="follow">here</a>.</span></p>
+<h3>What is Azure Question Answering Service?</h3>
+<p>Microsoft has specified Azure Question Answering Service like this:</p>
+<blockquote>
+<p>Question answering provides cloud-based Natural Language Processing (NLP) that allows you to create a natural conversational layer over your data. It is used to find the most appropriate answer for any input from your custom knowledge base (KB) of information.</p>
+<p>Question answering is commonly used to build conversational client applications, which include social media applications, chat bots, and speech-enabled desktop applications. Several new features have been added including enhanced relevance using a deep learning ranker, precise answers, and end-to-end region support. <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/language-service/question-answering/overview" rel="follow">Source</a></p>
+</blockquote>
+<p>Azure Question Answering Service has replaced previous QnA Maker service which provided almost identical services. If you're still using QnA Maker you can follow <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/language-service/question-answering/how-to/migrate-qnamaker-to-question-answering" rel="follow">these steps</a> to migrate this new Question Answering Service.</p>
+<h2>Overview of voice controlled Knowledge base application&nbsp;</h2>
+<p>Basically this sample application provides an interface which listens first a question from user and after that converts speech to text. Next answer is searched from the Knowledge Base by question text. Lastly when answer is found from the Knowledge Base answer will be read loud for the user.</p>
+<p>Speech to Text and Text to Speech functionalities are handled with Azure Cognitive Services and Knowledge Base functionalities are covered with Azure Question Answering.&nbsp;</p>
+<p><img src="https://cdn.buttercms.com/dFr8NdOXRruBCGmFSkgP" alt="undefined" /></p>
+<h2>Let's start</h2>
+<h3>Configure related Azure AI Platform services</h3>
+<p>Azure Cognitive Service is a heart of this solution and it provides Speech and Question Answering services.</p>
+<h4>1.&nbsp;Create Cognitive Service via Azure Portal or CLI</h4>
+<h4>2. Create Language Service</h4>
+<p>Azure Cognitive Service for Language provides Knowledge Base functionalities (Question and Answering Service) for this sample. You can create Language Service under Cognitive Service / Language Service</p>
+<p><img src="https://cdn.buttercms.com/SjAPueG0Sp6yhifqoobI" alt="undefined" /></p>
+<h4>3. Open Language Studio</h4>
+<p>Language Studio is a set of UI-based tools that lets you explore, build, and integrate features from Azure Cognitive Service for Language into your applications. Language Studio is available in <a href="https://language.cognitive.azure.com/" rel="follow">https://language.cognitive.azure.com/</a></p>
+<h4>4. Select Language Service in Language Studio</h4>
+<p>Before creating a new project you need to select just created Language Service resource. You can find link to this dialog from Profile menu (top right corner)&nbsp;&nbsp;</p>
+<p><img src="https://cdn.buttercms.com/5KzJx0HuSMqvaKP385jr" alt="undefined" /></p>
+<h4>5. Create a new project</h4>
+<p>From the Language Studion frontpage select Create new and Custom question answering</p>
+<p><img src="https://cdn.buttercms.com/jQSmdEdSjxLrWNDOWklQ" alt="undefined" /></p>
+<h4>6. Open Manage sources</h4>
+<p>Under Manage sources data sources can be added to your Knowledge Base. You can add ex. URL resources or Files.</p>
+<p><img src="https://cdn.buttercms.com/A90hoSQoC4hcGN29Re0Q" alt="undefined" /></p>
+<p>In this sample I'll add some Microsoft Docs articles.</p>
+<p><img src="https://cdn.buttercms.com/dazbgGaNRvWTj77Xswm5" alt="undefined" /></p>
+<h4>7. Select Deploy knowledge base</h4>
+<p>You need to deploy knowledge base before it's available to use.</p>
+<p><img src="https://cdn.buttercms.com/bzu8MrZTlmPbG7SEP7rg" alt="undefined" /></p>
+<h2>Console application</h2>
+<p>Console application orchestrates interaction between user and Azure AI services.</p>
+<p>The following Nuget packages are required to enable Speech &amp; Question Answering services from Azure:</p>
+<pre class="language-undefined"><code>Install-Package Microsoft.CognitiveServices.Speech
+Install-Package Azure.AI.Language.QuestionAnswering</code></pre>
+<h4>Configuration and Azure credentials</h4>
+<p>Azure Cognitive and Question Answering Service requires the following credentials which are stored in the appsettings.json file of the application.</p>
+<pre class="language-undefined"><code>{
+  "AzureCognitiveServices": {
+    "SubscriptionKey": "", // This is a Cognitive Service key which can be found from Keys and Endpoint under Cognitive Service resource
+    "Region": "northeurope", // This is a region where Cognitive Service resource is located
+    "VoiceName": "en-US-AriaNeural" // Full list of voices available from https://aka.ms/speech/voices/neural
+  },
+  "QuestionAnswering": {
+    "EndPoint": "https://[YOUR-COGNITIVE-SERVICE].cognitiveservices.azure.com/", // This is a full URL to your Cognitive Service
+    "Credential": "", // This is a Language Service key which can be found from Keys and Endpoint under Language Service resource
+    "ProjectName": "AzureCognitiveServices",
+    "DeploymentName": "production"
+  }
+}</code></pre>
+<h4>Main application</h4>
+<p>Main application orchestrates communication with Speech SDK and Question Answering Service.</p>
+<pre class="language-csharp"><code>using KnowledgeBase.Console.Services;
+using Microsoft.Extensions.Configuration;
+
+var configuration = new ConfigurationBuilder()
+        .SetBasePath(Directory.GetCurrentDirectory())
+        .AddJsonFile("appsettings.json")
+        .Build();
+
+Console.WriteLine("Hello, KnowledgeBase app is running!");
+
+var speechService = new SpeechService(configuration);
+var knowledgeBaseService = new KnowledgeBaseService(configuration);
+
+Console.WriteLine("Ask a question...");
+
+var question = await speechService.ListenSpeechAsync();
+
+Console.WriteLine($"Your question was: {question.InterpretedText}");
+
+var answer = await knowledgeBaseService.FindAnswerAsync(question.InterpretedText);
+
+Console.WriteLine($"Text answer: {question.InterpretedText}");
+
+var result = await speechService.ReadSpeechLoudAsync(answer[0].Text);</code></pre>
+<h4>SpeechService</h4>
+<p>SpeechService is wrapper class which encapsulates Speech SDK and provides methods to listen speech and produce speech.</p>
+<pre class="language-csharp"><code>using KnowledgeBase.Console.Domain;
+using KnowledgeBase.Console.Interfaces;
+using Microsoft.CognitiveServices.Speech;
+using Microsoft.Extensions.Configuration;
+
+namespace KnowledgeBase.Console.Services
+{
+    public class SpeechService : ISpeechService
+    {
+        private SpeechSynthesizer _speechSynthesizer;
+        private SpeechRecognizer _speechRecognizer;
+        public SpeechService(IConfiguration configuration)
+        {
+            var subscriptionKey = configuration["AzureCognitiveServices:SubscriptionKey"] ?? throw new ArgumentNullException("AzureCognitiveServices:SubscriptionKey is missing");
+            var region = configuration["AzureCognitiveServices:Region"] ?? throw new ArgumentNullException("AzureCognitiveServices:Region is missing");
+            // Set the voice name, refer to https://aka.ms/speech/voices/neural for full list.
+            var voiceName = configuration["AzureCognitiveServices:VoiceName"] ?? throw new ArgumentNullException("AzureCognitiveServices:VoiceName is missing");
+
+            var config = SpeechConfig.FromSubscription(subscriptionKey, region);
+            config.SpeechSynthesisVoiceName = voiceName;
+
+            _speechSynthesizer = new SpeechSynthesizer(config);
+            _speechRecognizer = new SpeechRecognizer(config);
+        }
+
+        /// &lt;summary&gt;
+        /// List speech and return speech as a text
+        /// &lt;/summary&gt;
+        /// &lt;returns&gt;&lt;/returns&gt;
+        public async Task&lt;Text&gt; ListenSpeechAsync()
+        {
+            var text = Text.Create(await _speechRecognizer.RecognizeOnceAsync());
+            _speechRecognizer.Dispose();
+            return text;
+        }
+
+        /// &lt;summary&gt;
+        /// Receives plain text and reads it loud
+        /// &lt;/summary&gt;
+        /// &lt;param name="text"&gt;&lt;/param&gt;
+        /// &lt;returns&gt;&lt;/returns&gt;
+        public async Task&lt;Speech&gt; ReadSpeechLoudAsync(string text)
+        {
+            var speech = Speech.Create(await _speechSynthesizer.SpeakTextAsync(text));
+            _speechSynthesizer.Dispose();
+            return speech;
+        }     
+       
+    }
+}
+</code></pre>
+<h4>KnowledgeBaseService</h4>
+<p>KnowsledgeBaseService is responsible for finding answer by text from Question and Anwering Azure Service.&nbsp;</p>
+<pre class="language-csharp"><code>using Azure;
+using Azure.AI.Language.QuestionAnswering;
+using KnowledgeBase.Console.Domain;
+using KnowledgeBase.Console.Interfaces;
+using Microsoft.Extensions.Configuration;
+
+namespace KnowledgeBase.Console.Services
+{
+    public class KnowledgeBaseService : IKnowledgeBaseService
+    {
+        private QuestionAnsweringClient _questionAnsweringClient;
+        private QuestionAnsweringProject _questionAnsweringProject;
+        public KnowledgeBaseService(IConfiguration configuration)
+        {
+            var endpoint = configuration["QuestionAnswering:EndPoint"] ?? throw new ArgumentNullException("QuestionAnswering:EndPoint is missing");
+            var credential = configuration["QuestionAnswering:Credential"] ?? throw new ArgumentNullException("QuestionAnswering:Credential is missing");
+            var projectName = configuration["QuestionAnswering:ProjectName"] ?? throw new ArgumentNullException("QuestionAnswering:ProjectName is missing");
+            var deploymentName = configuration["QuestionAnswering:DeploymentName"] ?? throw new ArgumentNullException("QuestionAnswering:DeploymentName is missing");
+
+            var knowledgeBaseConfig = new KnowledgeBaseConfig()
+            {
+                Endpoint = new Uri(endpoint),
+                Credential = new AzureKeyCredential(credential),
+                ProjectName = projectName,
+                DeploymentName = deploymentName
+            };
+
+            _questionAnsweringClient = new QuestionAnsweringClient(knowledgeBaseConfig.Endpoint, knowledgeBaseConfig.Credential);
+            _questionAnsweringProject = new QuestionAnsweringProject(knowledgeBaseConfig.ProjectName, knowledgeBaseConfig.DeploymentName);
+        }
+
+        /// &lt;summary&gt;
+        /// Find answer from Knowledge base by plain text
+        /// &lt;/summary&gt;
+        /// &lt;param name="text"&gt;&lt;/param&gt;
+        /// &lt;returns&gt;&lt;/returns&gt;
+        public async Task&lt;List&lt;Answer&gt;&gt; FindAnswerAsync(string text)
+        {
+            return Answer.Create(await _questionAnsweringClient.GetAnswersAsync(text, _questionAnsweringProject));
+        }
+    }
+}
+</code></pre>
+<h4>Testing</h4>
+<p>When console application is running you can ask a question like "What are Azure Cognitive Services?" with your voice and application finds anwer to this from Microsoft Docs documentation and reads it loud.</p>
+<h3>Summary</h3>
+<p>This was a very funny and insightful small exercise. In overall Speech SDK is very intuitive to use and utilize. Nowadays it's very easy to add voice controlled functionalities to your applications and the language support is already pretty comprehensive. I covered a very small part of what is possible to do with Azure Cognitive Service so I'll handle this topic also later.</p>
+<p>Full source code of this sample application can be found from <a href="https://github.com/kalleantero/KnowledgeBase.Console" rel="follow">GitHub</a>.</p></p>
+
+                <h2>Comments</h2>
+                                    
+                <div id="cusdis_thread"
+                  data-host="https://cusdis.com"
+                  data-app-id="86620953-7757-4f01-94f2-bfb88caff8a4"
+                  data-page-id="voice-controlled-application-with-azure-cognitive-services"
+                  data-page-url="https://kalle-blog.azurewebsites.net/blog/voice-controlled-application-with-azure-cognitive-services"
+                  data-page-title="Voice controlled Knowledge base application with Azure Cognitive Services">
+                <script src="https://cusdis.com/js/cusdis.es.js"></script>
+
+                <div class="blog-content__pagenav">
+                    <div class="blog-content__nav">
+                            <div class="blog-content__prev">
+                                <a id="post-previous-how-to-use-postman-collection-in-api-testing" href="how-to-use-postman-collection-in-api-testing.html" rel="prev">
+                                    <span>Previous Post</span>
+                                    How to integrate API tests hosted in Postman&#x27;s Team Workspace to Azure DevOps?
+                                </a>
+                            </div>
+                        </div>
+
+
+                    <div class="blog-content__all">
+                        <a href="../index.html" class="btn btn--primary">
+                            View All Post
+                        </a>
+                    </div>
+                </div>
+
+            </div><!-- end blog-content__main -->
+        </div> <!-- end blog-content -->
+
+    </article>
+
+
+
+    
+
+<!-- footer
+    ================================================== -->
+<footer>
+    <div class="row">
+        <div class="col-full">
+
+            <div class="footer-logo">
+                <a class="footer-site-logo" href="#0"><img src="../images/name.png" alt="Homepage"></a>
+            </div>
+
+            <ul class="footer-social">
+                <li>
+                    <a href="https://www.twitter.com/kmarjok">
+                        <i class="im im-twitter" aria-hidden="true"></i>
+                        <span>Twitter</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.linkedin.com/in/kallemarjokorpi">
+                        <i class="im im-linkedin" aria-hidden="true"></i>
+                        <span>Linkedin</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://github.com/kalleantero">
+                        <i class="im im-github" aria-hidden="true"></i>
+                        <span>Github</span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+    <div class="row footer-bottom">
+
+        <div class="col-twelve">
+            <div class="copyright">
+                <span>Copyright Kalle Marjokorpi 2022</span>
+                <span>Design by <a href="http://www.styleshout.com/">styleshout</a></span>
+                <span>Content management by <a href="http://www.buttercms.com/">Headless ButterCMS</a></span>
+
+            </div>
+
+        </div>
+
+    </div> <!-- end footer-bottom -->
+
+</footer> <!-- end footer -->
+   
+    <!-- Java Script
+     ================================================== -->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/plugins.js"></script>
+    <script src="../js/main.min.js"></script>
+    
+    
+    <!-- Cloudflare Web Analytics -->
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cac9fd24c1c04b6d9984ea31685b0414"}'></script><!-- End Cloudflare Web Analytics -->       
+
+</body>
+
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/voice-controlled-application-with-azure-cognitive-services by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 05 Sep 2022 07:28:05 GMT -->
+</html>

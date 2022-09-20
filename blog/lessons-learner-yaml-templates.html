@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/lessons-learner-yaml-templates by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 20 Sep 2022 16:12:53 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+
+    
+    <title>Lessons learned when creating reusable YAML-templates - Blog by Kalle Marjokorpi</title>
+    <meta name="description" content="This blog post concentrates more how you should formulate YAML-templates to make them reusable as possible.">
+    <meta name="author" content="Kalle Marjokorpi">
+
+
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="../css/basef38e.css?dt=637992871247661613">
+    <link rel="stylesheet" href="../css/vendorf38e.css?dt=637992871247661613">
+    <link rel="stylesheet" href="../css/mainf38e.css?dt=637992871247661613">
+    <script src="../js/modernizr.js"></script>
+
+</head>
+<body id="top">
+   
+    <!-- header
+    ================================================== -->
+
+    <!-- header
+   ================================================== -->
+
+<header class="s-header">
+
+    <div class="header-logo">
+        <a class="site-logo" href="../index.html"><img src="../images/logo2.png" alt="Homepage"></a>
+    </div>
+
+    
+
+    <nav class="header-nav-wrap">
+
+        <ul class="header-nav">
+
+
+            <li class=""><a id="top-navigation-link-root" href="../index.html" title="">Home</a></li>
+
+                <li id="top-navigation-link-about" class="smoothscroll"><a href="../about.html" title="">About me</a></li>
+
+        </ul>
+    </nav> <!-- end main-nav-wrap -->
+
+
+
+
+    <a class="header-menu-toggle" href="#0"><span>Menu</span></a>
+
+</header> <!-- end s-header -->
+
+
+
+    
+
+<!-- content
+   ================================================== -->
+
+
+    <article class="blog-single">
+
+        <!-- page header/blog hero
+    ================================================== -->
+
+        
+        <div class="page-header page-header--single page-hero" style=background-image:url(https://cdn.buttercms.com/6MqJILkfTmieD8hffIzb)>
+
+            <div class="row page-header__content narrow">
+                <article class="col-full">
+                    <div class="page-header__info">
+                        <div class="page-header__cat">
+                                <a id="post-category-azure-devops" href="category/azure-devops.html">Azure DevOps</a>
+                                <a id="post-category-yaml" href="category/yaml.html">yaml</a>
+                        </div>
+                    </div>
+                    <h1 class="page-header__title">
+                        <a href="#0" title="">
+                            Lessons learned when creating reusable YAML-templates
+                        </a>
+                    </h1>
+                    <ul class="page-header__meta">
+                        <li class="date">
+20.09.2022 09:37                        </li>
+                        <li class="author">
+                            By
+                            <span>Kalle Marjokorpi</span>
+                        </li>
+                    </ul>
+
+                </article>
+                
+            </div>
+
+        </div> <!-- end page-header -->
+
+        <div class="row blog-content">
+            <div class="col-full blog-content__main">
+
+                <p><p>I recently <a href="https://www.kallemarjokorpi.fi/blog/how-to-utilize-reusable-components-ado.html" rel="follow">wrote</a> about how to utilize reusable YAML-templates in Azure DevOps. Shared source control repository for YAML templates gives a great value from re-usability point of view. This blog post concentrates more how you should formulate YAML-templates to make them reusable as possible.&nbsp;</p>
+<h2>Template hierarchy</h2>
+<p>First a few words about template hierarchy and how I have typically structured templates.</p>
+<p>Orchestrator is an application specific YAML based CI/CD pipeline which main responsibility is to orchestrate and control build and deployment process. Basically orchestrator template contains Stages which can be different application environments where application will be deployed. Orchestrator consumes reusable templates to execute generic operations like building, deploying, executing integration tests or database migrations.</p>
+<p><img src="https://cdn.buttercms.com/sVnB7goRUCT5hM4DQwk0" alt="undefined" /></p>
+<h2>Consider these tips when creating reusable YAML-templates</h2>
+<p>These tips are created based on my previous experience when I have created and refactored existing YAML based pipelines.</p>
+<h3>1. Remember single responsibility principal</h3>
+<p>Create templates which <span>have responsibility over a single part. For example you should have database migration template which only executes database migration nothing else. It's much easier to maintain templates when they have clear responsible and overall templates are also smaller.</span><span></span></p>
+<h3>2. Use aggregate templates</h3>
+<p>Purpose of the aggregate template is to hide logic behind one template so consumption of the template is straightforward and easy for consumer. Diagram below illustrates an aggregate template called "deploy.yaml" which deploys infrastructure and application at once. Deploy.yaml template itself consumes separate "deploy-infra.yaml" and "deploy-app.yaml" templates according to single responsibility principal.</p>
+<p><img src="https://cdn.buttercms.com/1VRIDROSkKf5KoNqIcfw" alt="undefined" /></p>
+<h3>3. Use parameters to make template reusable</h3>
+<p>Add all configuration related things to parameters. Do not hard code any Build Agent path etc. inside templates.</p>
+<h3>4. Pass JobName and DependsOn to template as a parameter</h3>
+<p>When JobName and DependsOn parameters are passed to the template you can easily control from the orchestrator template which is the execution order of the templates inside the stage. JobName is a technical name of the job and can be used with DependsOn to control dependency. When DependsOn parameter is determined as an object type you can then use multiple values.</p>
+<p><strong>Template:</strong></p>
+<pre class="language-undefined"><code>parameters: 
+    - name: jobName
+      type: string
+    - name: jobDisplayName
+      type: string
+    - name: dependsOn
+      type: object
+
+jobs:
+    - job: ${{parameters.jobName}}
+      displayName: ${{parameters.jobDisplayName}}
+      dependsOn: ${{parameters.dependsOn}}</code></pre>
+<p><strong>Orchestrator:</strong></p>
+<p>When template supports JobName and DependsOn parameters you can control execution order in orchestrator like this.</p>
+<pre class="language-undefined"><code>stages:
+    - stage: DeploymentTest
+      displayName: Deploy infra, application and database migrations to test
+      jobs:
+          - template: "Deploy/deploy.yaml@SharedYamlTemplates"
+            parameters:
+                jobName: 'DeployApplicationToTest'
+                JobDisplayName: 'Deploy application to test'
+                enviromentName: 'TEST'
+                serviceConnection: ${{variables.test_serviceConnection}}
+                appServiceName: 'app-service-test'
+                infraParameterFile: 'test-parameters.json'
+                azureSubscriptionId: ${{variables.test_azureSubscriptionId}}
+                azureRG: ${{variables.test_azureResourceGroup}}
+                dependsOn: 
+
+          - template: "DatabaseMigrations/database-migration.yaml@SharedYamlTemplates"
+            parameters:
+                jobName: 'DatabaseMigrationToTest'
+                JobDisplayName: 'Execute database migration to test'
+                enviromentName: 'TEST'
+                databaseServerName: 'databaseservertest'
+                databaseName: 'testdatabase'
+                projectName: 'Database.Migrations'
+                serviceConnection: ${{variables.test_serviceConnection}}
+                dependsOn: 
+                    - DeployApplicationToTest # Database migration will be executed after DeployApplicationToTest
+
+          - template: "Tests/integration-test.yaml@SharedYamlTemplates"
+            parameters:
+                jobName: 'IntegrationTestsToTest'
+                jobDisplayName: 'Execute integration test to test'
+                dependsOn:
+                    - DeployApplicationToTest # Integration tests will be executed after DeployApplicationToTest and DatabaseMigrationToTest
+                    - DatabaseMigrationToTest </code></pre>
+<h3>5. Add IsEnabled parameter</h3>
+<p>When template has IsEnabled parameter you can easily control from the orchestrator whether this template should be executed or not. Sometimes you might need to execute template only when code is commited ex. to specific branch.</p>
+<pre class="language-undefined"><code>parameters: 
+    - name: jobName
+      type: string
+    - name: jobDisplayName
+      type: string
+    - name: dependsOn
+      type: object
+    - name: isEnabled
+      type: string 
+
+jobs:
+    - job: ${{parameters.jobName}}
+      displayName: ${{parameters.jobDisplayName}}
+      dependsOn: ${{parameters.dependsOn}}
+      condition: eq(${{parameters.isEnabled}}, true)</code></pre>
+<p></p>
+<div></div>
+<p></p></p>
+
+                <h2>Comments</h2>
+                                    
+                <div id="cusdis_thread"
+                  data-host="https://cusdis.com"
+                  data-app-id="86620953-7757-4f01-94f2-bfb88caff8a4"
+                  data-page-id="lessons-learner-yaml-templates"
+                  data-page-url="https://kalle-blog.azurewebsites.net/blog/lessons-learner-yaml-templates"
+                  data-page-title="Lessons learned when creating reusable YAML-templates">
+                <script src="https://cusdis.com/js/cusdis.es.js"></script>
+
+                <div class="blog-content__pagenav">
+                    <div class="blog-content__nav">
+                            <div class="blog-content__prev">
+                                <a id="post-previous-how-to-use-azure-anomaly-detector-to-find-anomalies-from-electricity-consumption" href="how-to-use-azure-anomaly-detector-to-find-anomalies-from-electricity-consumption.html" rel="prev">
+                                    <span>Previous Post</span>
+                                    How to use Azure Anomaly Detector to find anomalies from electricity consumption?
+                                </a>
+                            </div>
+                        </div>
+
+
+                    <div class="blog-content__all">
+                        <a href="../index.html" class="btn btn--primary">
+                            View All Post
+                        </a>
+                    </div>
+                </div>
+
+            </div><!-- end blog-content__main -->
+        </div> <!-- end blog-content -->
+
+    </article>
+
+
+
+    
+
+<!-- footer
+    ================================================== -->
+<footer>
+    <div class="row">
+        <div class="col-full">
+
+            <div class="footer-logo">
+                <a class="footer-site-logo" href="#0"><img src="../images/name.png" alt="Homepage"></a>
+            </div>
+
+            <ul class="footer-social">
+                <li>
+                    <a href="https://www.twitter.com/kmarjok">
+                        <i class="im im-twitter" aria-hidden="true"></i>
+                        <span>Twitter</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.linkedin.com/in/kallemarjokorpi">
+                        <i class="im im-linkedin" aria-hidden="true"></i>
+                        <span>Linkedin</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://github.com/kalleantero">
+                        <i class="im im-github" aria-hidden="true"></i>
+                        <span>Github</span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+    <div class="row footer-bottom">
+
+        <div class="col-twelve">
+            <div class="copyright">
+                <span>Copyright Kalle Marjokorpi 2022</span>
+                <span>Design by <a href="http://www.styleshout.com/">styleshout</a></span>
+                <span>Content management by <a href="http://www.buttercms.com/">Headless ButterCMS</a></span>
+
+            </div>
+
+        </div>
+
+    </div> <!-- end footer-bottom -->
+
+</footer> <!-- end footer -->
+   
+    <!-- Java Script
+     ================================================== -->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/plugins.js"></script>
+    <script src="../js/main.min.js"></script>
+    
+    
+    <!-- Cloudflare Web Analytics -->
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cac9fd24c1c04b6d9984ea31685b0414"}'></script><!-- End Cloudflare Web Analytics -->       
+
+</body>
+
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/lessons-learner-yaml-templates by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 20 Sep 2022 16:12:55 GMT -->
+</html>

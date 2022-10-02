@@ -1,0 +1,6 @@
+# HTTrack Website Copier Cookie File
+# This file format is compatible with Netscape cookies
+kalle-blog.azurewebsites.net	TRUE	/	FALSE	1999999999	ARRAffinity	22a7daa836b64a8ce56c907737553d08297ff2e76cd06a1f52c29956b9a85c17
+kalle-blog.azurewebsites.net	TRUE	/	FALSE	1999999999	ARRAffinitySameSite	22a7daa836b64a8ce56c907737553d08297ff2e76cd06a1f52c29956b9a85c17
+kalle-blog.azurewebsites.net	TRUE	/	FALSE	1999999999	SameSite	None
+

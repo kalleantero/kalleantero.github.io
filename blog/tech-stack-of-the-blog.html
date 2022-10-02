@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/tech-stack-of-the-blog by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 02 Oct 2022 07:14:51 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+
+    
+    <title>How has the tech stack of this blog evolved? - Blog by Kalle Marjokorpi</title>
+    <meta name="description" content="Summary about how the tech stack of this blog has evolved and how I finalized automation of blog post publishing.">
+    <meta name="author" content="Kalle Marjokorpi">
+
+
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="../css/base7b79.css?dt=638002915734194795">
+    <link rel="stylesheet" href="../css/vendor7b79.css?dt=638002915734194795">
+    <link rel="stylesheet" href="../css/main7b79.css?dt=638002915734194795">
+    <script src="../js/modernizr.js"></script>
+
+</head>
+<body id="top">
+   
+    <!-- header
+    ================================================== -->
+
+    <!-- header
+   ================================================== -->
+
+<header class="s-header">
+
+    <div class="header-logo">
+        <a class="site-logo" href="../index-2.html"><img src="../images/logo2.png" alt="Homepage"></a>
+    </div>
+
+    
+
+    <nav class="header-nav-wrap">
+
+        <ul class="header-nav">
+
+
+            <li class=""><a id="top-navigation-link-root" href="../index-2.html" title="">Home</a></li>
+
+                <li id="top-navigation-link-about" class="smoothscroll"><a href="../about.html" title="">About me</a></li>
+
+        </ul>
+    </nav> <!-- end main-nav-wrap -->
+
+
+
+
+    <a class="header-menu-toggle" href="#0"><span>Menu</span></a>
+
+</header> <!-- end s-header -->
+
+
+
+    
+
+<!-- content
+   ================================================== -->
+
+
+    <article class="blog-single">
+
+        <!-- page header/blog hero
+    ================================================== -->
+
+        
+        <div class="page-header page-header--single page-hero" style=background-image:url(https://cdn.buttercms.com/IusWtarhRR2MVc5nklTr)>
+
+            <div class="row page-header__content narrow">
+                <article class="col-full">
+                    <div class="page-header__info">
+                        <div class="page-header__cat">
+                                <a id="post-category-automation" href="category/automation.html">Automation</a>
+                                <a id="post-category-azure" href="category/azure.html">Azure</a>
+                                <a id="post-category-azure-devops" href="category/azure-devops.html">Azure DevOps</a>
+                                <a id="post-category-azure-function" href="category/azure-function.html">Azure Function</a>
+                                <a id="post-category-yaml" href="category/yaml.html">yaml</a>
+                        </div>
+                    </div>
+                    <h1 class="page-header__title">
+                        <a href="#0" title="">
+                            How has the tech stack of this blog evolved?
+                        </a>
+                    </h1>
+                    <ul class="page-header__meta">
+                        <li class="date">
+02.10.2022 04:10                        </li>
+                        <li class="author">
+                            By
+                            <span>Kalle Marjokorpi</span>
+                        </li>
+                    </ul>
+
+                </article>
+                
+            </div>
+
+        </div> <!-- end page-header -->
+
+        <div class="row blog-content">
+            <div class="col-full blog-content__main">
+
+                <p><h2>Iterations during the years</h2>
+<h3>First iteration (2018): Headless CMS + Azure App Service</h3>
+<p>I started blogging over four years ago and then I decided to use Headless CMS solution for content creation and create the frontend layer by myself. Basically, setup contained an ASP.NET Core application which was deeply integrated to Headless CMS system via API, and everything was hosted in Azure App Service (B1 standard).</p>
+<p>If you are more interested about the technical details, check the first "Hello Headless Blog" blog post from <a href="https://www.kallemarjokorpi.fi/blog/hello-headless-blog.html" rel="follow">here</a>.</p>
+<h3>Second iteration (2021): Minimizing hosting costs + manual publishing to GitHub Pages</h3>
+<p>During this iteration the main theme was to minimize hosting costs. I decided to start using static web site (GitHub Pages) instead of using Azure App Service directly. GitHub Pages provided a free service to host static web site with custom domain support, so this was an easy choice. Azure Static Web site was another alternative, but I decided to try GitHub Pages because I haven't used that before.</p>
+<p>Azure App Service still hosted ASP.NET Core based blog application but it only provided dynamic content for web site crawler application (HTTrack). HTTrack application's role was to crawl through the blog site and produce static files which were published to GitHub Pages. Visitors of the blog were redirected to GitHub Pages which hosted static files of this blog. Because visitors were no longer using the Azure App Service site directly, I switched App Service Plan to F1 (free tier). Free tier provided limited time of CPU minutes (60) per day but it's more than enough for enable that site is up and running during the crawling.&nbsp;</p>
+<p>The pain point of this implementation was that blog crawling with HTTrack and publishing files to GitHub Pages weren't automated. It took 10-15 min extra time every time when you published a blog post. You can read more details about this iteration from my <a href="https://www.kallemarjokorpi.fi/blog/how-to-minimize-blog-hosting-costs.html" rel="follow">blog post</a>.</p>
+<h3>Third iteration (2022): Automated publishing to GitHub Pages</h3>
+<p>Like said second iteration wasn't perfect because I had to execute site crawling and publish changes to GitHub manually. During this latest iteration I automated those things, and you can read more about this iteration from this post.</p>
+<h2>How to automate site crawling and publishing to GitHub Pages?</h2>
+<p>Fully automated publishing looks like this.</p>
+<p><img src="https://cdn.buttercms.com/BLhOaAL4RW1wDmBPgDgr" alt="undefined" /></p>
+<p>Short explanation of each step:</p>
+<h3>1. Event-driven communication (Webhooks)</h3>
+<p>Headless CMS system (ButterCMS) used in this blog supports Webhooks which allows lightweight event-driven communication between two applications. Webhooks are the key component to enable different kind of automation. In this case I subscribed events from ButterCMS each time when blog post was published, updated or deleted. These WebHook events are used to enable automatic blog site crawling and publishing to GitHub Pages.</p>
+<h3>2. Event processing (Azure Function)</h3>
+<p>Webhooks requires an HTTP endpoint which receives and processes Webhook events. For that purpose, I created HTTP trigger-based Azure Function in Consumption Tier. Consumption plan pricing includes a monthly free grant of 1 million requests so I can easily use this for free.</p>
+<p>Azure Function is responsible for identify right Webhook events (published, updated, deleted) and start DevOps Pipeline via Azure DevOps REST API.</p>
+<p>If you're interested how the Azure Function is implemented, you can find codes from <a href="https://github.com/kalleantero/ButterCms.Webhook.Functions" rel="follow">this </a>repository (GitHub).</p>
+<h3>3. Azure DevOps Pipeline</h3>
+<p>Azure DevOps Pipeline orchestrates the process how ASP.NET Core based Blog site is crawled and how static files are published to GitHub Pages.</p>
+<p><strong>Pipeline has the following steps:</strong></p>
+<h4>Step 1: Install httrack CLI tool</h4>
+<p>HTTrack CLI tool is the main component which handles the crawling and producing static files from the ASP.NET Core based Blog site.</p>
+<pre class="language-undefined"><code>- script: |
+    sudo apt-get update
+    sudo apt install httrack webhttrack
+  displayName: 'Install httrack'</code></pre>
+<h4>Step 2: Create folder to file system for static files</h4>
+<pre class="language-undefined"><code>- script: |
+    mkdir /tmp/data
+  displayName: 'Create folder for static data'</code></pre>
+<h4>Step 3: Clone GitHub Pages repository</h4>
+<p>$(GitHubPersonalAccessToken) is a Pipeline variable.</p>
+<pre class="language-undefined"><code>- script: |
+    cd /tmp/data
+    git clone https://$(GitHubPersonalAccessToken)@github.com/[GIT_USERNAME]/[REPOSITORY].git . 
+  displayName: 'Clone repo'  </code></pre>
+<h4>Step 4: Add Azure DevOps IP address to access restriction</h4>
+<p>Public access to ASP.NET Core based Blog application is allowed only from my home IP address by default. This YAML-pipeline task uses Azure CLI to temporarily allow Azure DevOps IP address to the Azure App Service application (network restriction).&nbsp;</p>
+<pre class="language-undefined"><code>- task: AzureCLI@2
+  displayName: 'Allow DevOps IP to App Service'
+  inputs:
+    azureSubscription: ${{variables.azureServiceConnection}}
+    scriptType: 'pscore'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      $devOpsIp = Invoke-RestMethod http://ipinfo.io/json | Select -exp ip
+      az webapp config access-restriction add `
+        -g ${{variables.deploymentResourceGroupName}} `
+        -n ${{variables.appserviceResourceName}} `
+        --rule-name AzureDevOps `
+        --action Allow `
+        --ip-address $devOpsIp `
+        --priority 200  </code></pre>
+<h4>Step 5: Start crawling</h4>
+<p>This task executes HTTrack and persists static files to a folder which was created earlier. Parameter -N100 enables that HTTrack doesn't create a root folder with domain name.</p>
+<pre class="language-undefined"><code>- script: |
+    httrack "https://[NAME_OF_THE_BLOG].azurewebsites.net" -O "/tmp/data" -v -N100
+  displayName: 'Copy static data from the Blog'</code></pre>
+<h4>Step 6: Commit changes to GitHub Pages repository</h4>
+<pre class="language-undefined"><code>- script: |
+    cd /tmp/data
+    git config --global user.email "my@email.com"
+    git config --global user.name "Azure DevOps"
+    git add -A 
+    git commit -m "Blog update"
+    git push --set-upstream https://$(GitHubPersonalAccessToken)@github.com/[GIT_USERNAME]/[REPOSITORY] main
+  displayName: 'Commit changes to GitHub'</code></pre>
+<h4>Step 7:&nbsp;Remove Azure DevOps IP address to access restriction</h4>
+<pre class="language-undefined"><code>- task: AzureCLI@2
+  displayName: 'Remove DevOps IP to App Service'
+  inputs:
+      azureSubscription: ${{variables.azureServiceConnection}}
+      scriptType: 'bash'
+      scriptLocation: 'inlineScript'
+      inlineScript: |
+        az webapp config access-restriction remove \
+          -g ${{variables.deploymentResourceGroupName}} \
+          -n ${{variables.appserviceResourceName}} \
+          --rule-name AzureDevOps </code></pre>
+<p>It was really nice to get this finally automatized:)</p>
+<p></p>
+<p></p>
+<p></p></p>
+
+                <h2>Comments</h2>
+                                    
+                <div id="cusdis_thread"
+                  data-host="https://cusdis.com"
+                  data-app-id="86620953-7757-4f01-94f2-bfb88caff8a4"
+                  data-page-id="tech-stack-of-the-blog"
+                  data-page-url="https://kalle-blog.azurewebsites.net/blog/tech-stack-of-the-blog"
+                  data-page-title="How has the tech stack of this blog evolved?">
+                <script src="https://cusdis.com/js/cusdis.es.js"></script>
+
+                <div class="blog-content__pagenav">
+                    <div class="blog-content__nav">
+                            <div class="blog-content__prev">
+                                <a id="post-previous-lessons-learner-yaml-templates" href="lessons-learner-yaml-templates.html" rel="prev">
+                                    <span>Previous Post</span>
+                                    Lessons learned when creating reusable YAML-templates
+                                </a>
+                            </div>
+                        </div>
+
+
+                    <div class="blog-content__all">
+                        <a href="../index-2.html" class="btn btn--primary">
+                            View All Post
+                        </a>
+                    </div>
+                </div>
+
+            </div><!-- end blog-content__main -->
+        </div> <!-- end blog-content -->
+
+    </article>
+
+
+
+    
+
+<!-- footer
+    ================================================== -->
+<footer>
+    <div class="row">
+        <div class="col-full">
+
+            <div class="footer-logo">
+                <a class="footer-site-logo" href="#0"><img src="../images/name.png" alt="Homepage"></a>
+            </div>
+
+            <ul class="footer-social">
+                <li>
+                    <a href="https://www.twitter.com/kmarjok">
+                        <i class="im im-twitter" aria-hidden="true"></i>
+                        <span>Twitter</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.linkedin.com/in/kallemarjokorpi">
+                        <i class="im im-linkedin" aria-hidden="true"></i>
+                        <span>Linkedin</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://github.com/kalleantero">
+                        <i class="im im-github" aria-hidden="true"></i>
+                        <span>Github</span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+    <div class="row footer-bottom">
+
+        <div class="col-twelve">
+            <div class="copyright">
+                <span>Copyright Kalle Marjokorpi 2022</span>
+                <span>Design by <a href="http://www.styleshout.com/">styleshout</a></span>
+                <span>Content management by <a href="http://www.buttercms.com/">Headless ButterCMS</a></span>
+
+            </div>
+
+        </div>
+
+    </div> <!-- end footer-bottom -->
+
+</footer> <!-- end footer -->
+   
+    <!-- Java Script
+     ================================================== -->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/plugins.js"></script>
+    <script src="../js/main.min.js"></script>
+    
+    
+    <!-- Cloudflare Web Analytics -->
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cac9fd24c1c04b6d9984ea31685b0414"}'></script><!-- End Cloudflare Web Analytics -->       
+
+</body>
+
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/tech-stack-of-the-blog by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 02 Oct 2022 07:14:54 GMT -->
+</html>

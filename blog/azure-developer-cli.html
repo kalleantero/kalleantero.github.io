@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/azure-developer-cli by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 26 Oct 2022 06:46:32 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+
+    
+    <title>How to boost developer workflow activities with AZD - Blog by Kalle Marjokorpi</title>
+    <meta name="description" content="This blog post is an overview to Azure Developer CLI tool and how it helps to boost developer workflow activities.">
+    <meta name="author" content="Kalle Marjokorpi">
+
+
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="../css/basef184.css?dt=638023634764759674">
+    <link rel="stylesheet" href="../css/vendorf184.css?dt=638023634764759674">
+    <link rel="stylesheet" href="../css/mainf184.css?dt=638023634764759674">
+    <script src="../js/modernizr.js"></script>
+
+</head>
+<body id="top">
+   
+    <!-- header
+    ================================================== -->
+
+    <!-- header
+   ================================================== -->
+
+<header class="s-header">
+
+    <div class="header-logo">
+        <a class="site-logo" href="../index.html"><img src="../images/logo2.png" alt="Homepage"></a>
+    </div>
+
+    
+
+    <nav class="header-nav-wrap">
+
+        <ul class="header-nav">
+
+
+            <li class=""><a id="top-navigation-link-root" href="../index.html" title="">Home</a></li>
+
+                <li id="top-navigation-link-about" class="smoothscroll"><a href="../about.html" title="">About me</a></li>
+
+        </ul>
+    </nav> <!-- end main-nav-wrap -->
+
+
+
+
+    <a class="header-menu-toggle" href="#0"><span>Menu</span></a>
+
+</header> <!-- end s-header -->
+
+
+
+    
+
+<!-- content
+   ================================================== -->
+
+
+    <article class="blog-single">
+
+        <!-- page header/blog hero
+    ================================================== -->
+
+        
+        <div class="page-header page-header--single page-hero" style=background-image:url(https://cdn.buttercms.com/GDe6Zl0RQSG2ayPQxs45)>
+
+            <div class="row page-header__content narrow">
+                <article class="col-full">
+                    <div class="page-header__info">
+                        <div class="page-header__cat">
+                                <a id="post-category-azure" href="category/azure.html">Azure</a>
+                                <a id="post-category-bicep" href="category/bicep.html">bicep</a>
+                                <a id="post-category-developer-tools" href="category/developer-tools.html">developer tools</a>
+                        </div>
+                    </div>
+                    <h1 class="page-header__title">
+                        <a href="#0" title="">
+                            How to boost developer workflow activities with Azure Developer CLI?
+                        </a>
+                    </h1>
+                    <ul class="page-header__meta">
+                        <li class="date">
+26.10.2022 03:09                        </li>
+                        <li class="author">
+                            By
+                            <span>Kalle Marjokorpi</span>
+                        </li>
+                    </ul>
+
+                </article>
+                
+            </div>
+
+        </div> <!-- end page-header -->
+
+        <div class="row blog-content">
+            <div class="col-full blog-content__main">
+
+                <p><p><!--StartFragment --></p>
+<p>This blog post is an overview to Azure Developer CLI tool and how it helps to boost developer workflow activities. Microsoft has created a lot of great <a href="https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/overview" rel="follow">documentation</a> about Azure Developer CLI. This blog post concentrates only main points and especially how to create a Web API project (App Service based + .NET 6) which is compatible with Azure Developer CLI.</p>
+<h2>What is the Azure Developer CLI?</h2>
+<p>Microsoft<span> announced the public preview of the&nbsp;</span>Azure Developer CLI<span> </span><span>in July 2022.&nbsp;</span>Azure Developer CLI (azd) is an open-source tool that accelerates the process of building cloud apps on Azure. The CLI provides best practice, developer-friendly commands that map to key stages in your workflow (ex. build, deployment, monitoring etc.), whether you&rsquo;re working in the terminal, your editor or integrated development environment (IDE), or DevOps.</p>
+<p>You can use the azd with extensible azd templates that include everything you need to get an application up and running in Azure. These templates include application code, and reusable infrastructure as code assets. Community developed templates can be found from <a href="https://azure.github.io/awesome-azd/" rel="follow">here (Awesome azd templates)</a> and <a href="https://github.com/topics/azd-templates" rel="follow">here (GitHub)</a>.</p>
+<p>Currently on October 2022 Azure Developer CLI supports the following Azure compute services: <strong>Azure App Service</strong>, <strong>Function</strong>, <strong>Azure Container Apps</strong>,&nbsp;<strong>Azure Static Web Apps</strong> and the following programming languages: <strong>Node.js</strong>, <strong>Python</strong>, <strong>.NET</strong>.</p>
+<p>Sources:</p>
+<p><a href="https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/overview#supported-azure-compute-services-host" rel="follow">Supported compute services and programming languages | Microsoft Learn</a><br /><a href="https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/overview">What is the Azure Developer CLI (preview)? | Microsoft Learn</a><br /><a href="https://devblogs.microsoft.com/azure-sdk/introducing-the-azure-developer-cli-a-faster-way-to-build-apps-for-the-cloud/">Introducing the Azure Developer CLI (azd): A faster way to build apps for the cloud - Azure SDK Blog (microsoft.com)</a></p>
+<h2>Understand the architecture</h2>
+<p>Below <a href="https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/make-azd-compatible?pivots=azd-create" rel="follow">diagram</a> created by MS describes nicely the architecture of AZD. This blog post follows these main architecture points presented in this diagram.</p>
+<p><img src="https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/media/make-azd-compatible/workflow.png" alt="Diagram of Azure Developer CLI template workflow." style="font-weight: 600; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;" /></p>
+<h2><span>Let's get started</span></h2>
+<h3><span>Prerequisites</span></h3>
+<p><span>Before starting you need to install the following command line tools.</span></p>
+<p><!--EndFragment --></p>
+<p><strong>1. Install latest version of <a href="https://learn.microsoft.com/en-us/cli/azure/update-azure-cli" rel="follow">Azure CLI</a></strong></p>
+<pre class="language-undefined"><code>az upgrade</code></pre>
+<p><strong>2. Install <a href="https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/install-azd?tabs=baremetal%2Cwindows" rel="follow">Azure Developer CLI</a></strong></p>
+<pre class="language-undefined"><code>powershell -ex AllSigned -c "Invoke-RestMethod 'https://aka.ms/install-azd.ps1' | Invoke-Expression"
+</code></pre>
+<p><strong>3. Install Bicep CLI</strong></p>
+<pre class="language-undefined"><code>az bicep upgrade</code></pre>
+<h3>Create a project template</h3>
+<p>These steps create a sample Web Api Visual Studio project which is used to deploy to Azure later.</p>
+<p><strong>1. Create a solution</strong></p>
+<p>Execute this command in root folder.</p>
+<pre class="language-undefined"><code>dotnet new sln --name "Api.Template"</code></pre>
+<p><strong>2. Create a new Dotnet Web API project</strong></p>
+<p>Execute this command in root folder.</p>
+<pre class="language-undefined"><code>dotnet new webapi -o src/Api.Template</code></pre>
+<p><strong>3. Add Git ignore file</strong></p>
+<pre class="language-undefined"><code>dotnet new gitignore</code></pre>
+<p><strong>4. Add project to the solution</strong></p>
+<pre class="language-undefined"><code>dotnet sln add src/Api.Template/Api.Template.csproj</code></pre>
+<p>Now you should have this kind of folder structure:</p>
+<pre class="language-undefined"><code>├── Api.Template.sln     [ Solution file ]
+├── .gitignore           [ Git ignore file ]
+├── src                  [ Source code folder ]
+│   ├── Api.Template     [ Folder for Visual Studio WebAPI project ]</code></pre>
+<h3>Initialize a project</h3>
+<p>When Visual Studio project is created then project is ready to be initialized with Azure Developer CLI (AZD). Azure Developer CLI creates some configuration files during the initializing.</p>
+<p><strong>1. Login to Azure subscription</strong></p>
+<p>I recommend login to Azure subscription before starting environment initializing because otherwise you might need to submit subscription details manually.&nbsp;</p>
+<pre class="language-undefined"><code>az login</code></pre>
+<p><strong>2. Initialize a new environment with Azure Developer CLI</strong></p>
+<p>Azure Developer CLI uses an environment name to set the AZURE_ENV_NAME environment variable that's used by Azure Developer CLI templates. Environment name is stored to environment configuration file. After environment initializing configurations can be found from <strong>.azure </strong>folder. It's also important to understand that environment name is also used as a prefix in the Azure Resource Group name. You can find more information about azd environments from <a href="https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/faq#what-is-an-environment-name" rel="follow">here</a>.</p>
+<p>This command prompts which template to use. Select "Empty template". I didn't find how to set empty template as a parameter. Execute this command in the root folder where solution file is located.</p>
+<pre class="language-undefined"><code>azd init --location westeurope --subscription 00000000-0000-0000-0000-000000000000 --environment dev</code></pre>
+<p>After initializing you have this kind of folder structure:</p>
+<pre class="language-undefined"><code>├── Api.Template.sln      [ Solution file ]
+├── .gitignore            [ Git ignore file ]
+├── azure.yaml            [ Describes the app and type of Azure resources]
+├── src                   [ Source code folder ]
+│   ├── Api.Template      [ Folder for Visual Studio WebAPI project ]
+├── .azure                [ Creates and configures Azure resources ]
+│   ├── dev               [ Environment folder ]
+│   │    ├── .env         [ Environment configuration file]
+│   └── config.json       [ AZD Azure configuration file  ]
+</code></pre>
+<h3>Create the infrastructure files</h3>
+<p>Azure infrastructure must be described with Bicep and files must be created to a directory called <strong>infra</strong>.</p>
+<p><strong>1. Create folder for infra</strong></p>
+<p>Infra folder should be created to the root folder.</p>
+<p><strong>2. Create infrastructure (Bicep) files</strong></p>
+<p>I prefer this kind of folder structure for infrastructure files:</p>
+<pre class="language-undefined"><code>├── main.bicep                            [ Main bicep file ]
+├── main.parameters.json                  [ Parameter file]
+├── assets                                [ Assets folder ]
+│   ├── abbreviations.json                [ JSON file which contains Azure resource abbreviations ]
+├── modules                               [ Bicep modules folder ]
+│   ├── applicationinsights.bicep         [ Application Insights bicep module ]
+│   ├── appService.bicep                  [ App Service bicep module ]
+│   ├── appServicePlan.bicep              [ App Service Plan bicep module ]
+│   ├── logAnalyticsWorkspace.bicep       [ Log Analytics Workspace bicep module ]
+│   └── resources.bicep                   [ Resource bicep file which orchestrates resource creation  ]
+</code></pre>
+<p>Note! You can create parameter file also with a Bicep CLI:</p>
+<pre class="language-undefined"><code>az bicep generate-params --file main.bicep</code></pre>
+<p>Add these parameter values to parameter file.</p>
+<pre class="language-undefined"><code>{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "name": {
+        "value": "${AZURE_ENV_NAME}"
+        },
+        "location": {
+        "value": "${AZURE_LOCATION}"
+        },
+        "principalId": {
+        "value": "${AZURE_PRINCIPAL_ID}"
+        }
+    }
+}</code></pre>
+<h3><span>Update Azure.yaml file</span></h3>
+<p><span>Azure Developer CLI (AZD) needs to know details of your application to enable deployment of infrastructure and application to Azure. Basically, azure.yaml describes the app and type of Azure resources. Main configuration points are under services root element. </span></p>
+<pre class="language-undefined"><code>name: Api.Template
+metadata:
+  template: webapi-template-azd@0.0.1-beta
+services:
+  appService:
+    project: src/Api.Template
+    language: csharp
+    host: appservice
+    resourceName: app-microservice-westeurope-001</code></pre>
+<table border="0">
+<tbody>
+<tr>
+<td>
+<p><strong>Element</strong></p>
+</td>
+<td>
+<p><strong>Description</strong></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><span>AppService </span></p>
+</td>
+<td>
+<p><span>Name of the service</span></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><span>Project </span></p>
+</td>
+<td>
+<p><span>Path to the source folder</span></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><span>Host </span></p>
+</td>
+<td>
+<p><span>Type of Azure resource used for service implementation</span></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><span>Language </span></p>
+</td>
+<td>
+<p><span>Service implementation language</span></p>
+</td>
+</tr>
+<tr>
+<td>
+<p><span>ResourceName</span></p>
+</td>
+<td>
+<p><span>Name of the Azure resource that implements the service. If ResourceName is not used, then resource tag called "azd-service-name" is used to find a resource where application will be deployed.</span><span></span></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p><span>More information about updating azure.yaml can be found from <a href="https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/make-azd-compatible?source=recommendations&amp;pivots=azd-create#update-azureyaml" rel="follow">here</a>. Schema of azure.yaml is available in <a href="https://github.com/Azure/azure-dev/blob/main/schemas/v1.0/azure.yaml.json/" rel="follow">here</a>.</span></p>
+<h3><span>Provision &amp; Deploy</span></h3>
+<p><span>Azure Developer CLI provides different commands whether if you just want to deploy only application or infrastructure or both.</span><span></span></p>
+<p><span></span><strong>Deploy infrastructure and application to Azure</strong></p>
+<pre class="language-undefined"><code>azd up</code></pre>
+<p><strong>Deploy only application to Azure</strong></p>
+<pre class="language-undefined"><code>azd deploy</code></pre>
+<p><strong>Deploy only infrastructure to Azure</strong></p>
+<pre class="language-undefined"><code>azd provision</code></pre>
+<p><strong>Lastly if you want to remove created resource from Azure you can use the following command:</strong></p>
+<pre class="language-undefined"><code>azd down</code></pre>
+<h2><span>Templating</span></h2>
+<p>Azure Developer CLI enables to use project templates published to GitHub. You can use community driven templates or use own template.</p>
+<p><strong>Initialize project using custom template</strong></p>
+<p>Template is available from GitHub.</p>
+<div>
+<pre class="language-undefined"><code>azd init --template kalleantero/Api.Template</code></pre>
+</div>
+<p><strong>Deploy infrastructure and application to Azure</strong></p>
+<pre class="language-undefined"><code>azd up</code></pre>
+<p><span>Super easy, just two commands and working environment is up and running in Azure.</span></p>
+<h2><span>Summary</span></h2>
+<p><span>Azure Developer CLI widely supports different software development workflow activities like build, deployment and also monitoring &amp; setting up CI/CD which weren't handled in this blog post.&nbsp;</span><span></span><span>Command interface of Azure Developer CLI is very intuitive, and commands wraps different Azure and Bicep CLI commands together behind the scenes. Of course, you can do almost all same things just using different Azure CLI and Bicep CLI commands separately but using Azure Developer CLI makes things more straightforward.&nbsp;</span></p>
+<p><span>I see that this tool is very useful especially if you need to quickly set up new developer environment and maybe test something. Using own templates is also very interesting option. Azure Developer CLI is currently still in preview and there are some limitations,&nbsp;but I believe that interesting features are coming in the future to this tool.</span><span></span><span></span></p>
+<p><span>Source code of this sample project is available in <a href="https://github.com/kalleantero/Api.Template" rel="follow">GitHub</a>.</span></p>
+<p><!--EndFragment --></p></p>
+
+                <h2>Comments</h2>
+                                    
+                <div id="cusdis_thread"
+                  data-host="https://cusdis.com/"
+                  data-app-id="86620953-7757-4f01-94f2-bfb88caff8a4"
+                  data-page-id="azure-developer-cli"
+                  data-page-url="azure-developer-cli.html"
+                  data-page-title="How to boost developer workflow activities with Azure Developer CLI?">
+                <script src="https://cusdis.com/js/cusdis.es.js"></script>
+
+                <div class="blog-content__pagenav">
+                    <div class="blog-content__nav">
+                            <div class="blog-content__prev">
+                                <a id="post-previous-tech-stack-of-the-blog" href="tech-stack-of-the-blog.html" rel="prev">
+                                    <span>Previous Post</span>
+                                    How has the tech stack of this blog evolved?
+                                </a>
+                            </div>
+                        </div>
+
+
+                    <div class="blog-content__all">
+                        <a href="../index.html" class="btn btn--primary">
+                            View All Post
+                        </a>
+                    </div>
+                </div>
+
+            </div><!-- end blog-content__main -->
+        </div> <!-- end blog-content -->
+
+    </article>
+
+
+
+    
+
+<!-- footer
+    ================================================== -->
+<footer>
+    <div class="row">
+        <div class="col-full">
+
+            <div class="footer-logo">
+                <a class="footer-site-logo" href="#0"><img src="../images/name.png" alt="Homepage"></a>
+            </div>
+
+            <ul class="footer-social">
+                <li>
+                    <a href="https://www.twitter.com/kmarjok">
+                        <i class="im im-twitter" aria-hidden="true"></i>
+                        <span>Twitter</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.linkedin.com/in/kallemarjokorpi">
+                        <i class="im im-linkedin" aria-hidden="true"></i>
+                        <span>Linkedin</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://github.com/kalleantero">
+                        <i class="im im-github" aria-hidden="true"></i>
+                        <span>Github</span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+    <div class="row footer-bottom">
+
+        <div class="col-twelve">
+            <div class="copyright">
+                <span>Copyright Kalle Marjokorpi 2022</span>
+                <span>Design by <a href="http://www.styleshout.com/">styleshout</a></span>
+                <span>Content management by <a href="http://www.buttercms.com/">Headless ButterCMS</a></span>
+
+            </div>
+
+        </div>
+
+    </div> <!-- end footer-bottom -->
+
+</footer> <!-- end footer -->
+   
+    <!-- Java Script
+     ================================================== -->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/plugins.js"></script>
+    <script src="../js/main.min.js"></script>
+    
+    
+    <!-- Cloudflare Web Analytics -->
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cac9fd24c1c04b6d9984ea31685b0414"}'></script><!-- End Cloudflare Web Analytics -->       
+
+</body>
+
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/azure-developer-cli by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 26 Oct 2022 06:46:35 GMT -->
+</html>

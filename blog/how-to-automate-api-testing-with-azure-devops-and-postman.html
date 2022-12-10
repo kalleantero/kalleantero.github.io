@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 
-<!-- Mirrored from kalle-blog.azurewebsites.net/blog/how-to-automate-api-testing-with-azure-devops-and-postman by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 06 Dec 2022 14:07:48 GMT -->
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/how-to-automate-api-testing-with-azure-devops-and-postman by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 10 Dec 2022 19:09:42 GMT -->
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
 <head>
 
@@ -22,9 +22,9 @@
 
     <!-- CSS
     ================================================== -->
-    <link rel="stylesheet" href="../css/basec378.css?dt=638059322973126081">
-    <link rel="stylesheet" href="../css/vendorc378.css?dt=638059322973126081">
-    <link rel="stylesheet" href="../css/mainc378.css?dt=638059322973126081">
+    <link rel="stylesheet" href="../css/base3c09.css?dt=638062959944756004">
+    <link rel="stylesheet" href="../css/vendor3c09.css?dt=638062959944756004">
+    <link rel="stylesheet" href="../css/main3c09.css?dt=638062959944756004">
     <script src="../js/modernizr.js"></script>
 
     <script type="text/javascript">
@@ -190,14 +190,14 @@
 <p>Let's get started. Open Postman client:)</p>
 <h3>1. Set Postman environment variables</h3>
 <p>These environment variables contains all required information to fetch bearer token from the OIDC token endpoint. In this sample I will use Duende demo server as a OIDC provider.</p>
-<p><img src="https://cdn.buttercms.com/3sl6hb9yQsmsxw2K97e8" alt="undefined" /></p>
+<p><a href="https://cdn.buttercms.com/3sl6hb9yQsmsxw2K97e8" rel="follow"><img src="https://cdn.buttercms.com/3sl6hb9yQsmsxw2K97e8" alt="undefined" /></a></p>
 <p>Get more information about variable scopes from <a href="https://learning.postman.com/docs/sending-requests/variables/#variable-scopes" rel="follow">here</a>.</p>
 <h3>2. Create a collection for your requests</h3>
 <p>Separate collection makes easier to maintain and configure requests because collection level enables to use shared pre-request scripts which are executed before every request inside the collection.</p>
-<p><img src="https://cdn.buttercms.com/zp06CYKwSAAJ8dReVujd" alt="undefined" /></p>
+<p><a href="https://cdn.buttercms.com/zp06CYKwSAAJ8dReVujd" rel="follow"><img src="https://cdn.buttercms.com/zp06CYKwSAAJ8dReVujd" alt="undefined" /></a></p>
 <h3>3. Shared pre-request scripts in collection level</h3>
 <p>You can configure pre-request scripts when you have selected the collection.</p>
-<p><img src="https://cdn.buttercms.com/FPLZathiSey1U5ysNOBg" alt="undefined" /></p>
+<p><a href="https://cdn.buttercms.com/FPLZathiSey1U5ysNOBg" rel="follow"><img src="https://cdn.buttercms.com/FPLZathiSey1U5ysNOBg" alt="undefined" /></a></p>
 <p>Because API requires authentication/authorization we need to get bearer token before reaching the API. The purpose of this pre-request script is to fetch bearer token from OIDC token endpoint. All configuration values like ClientId and Secret are fetched from the environment variables.</p>
 <pre class="language-javascript"><code>var Header = require('postman-collection').Header;
 
@@ -238,7 +238,7 @@ pm.sendRequest({
 <p>Now bearer token is fetched every time before actual request is executed. You could also store fetched bearer token to the variable to minimize token fetches.</p>
 <h3>4. Test requests</h3>
 <p>Let's start to write actual request tests. Each request has Tests tab where Tests can be written.</p>
-<p><img src="https://cdn.buttercms.com/jmjkf17dSTGxNwsb6Lva" alt="undefined" /></p>
+<p><a href="https://cdn.buttercms.com/jmjkf17dSTGxNwsb6Lva" rel="follow"><img src="https://cdn.buttercms.com/jmjkf17dSTGxNwsb6Lva" alt="undefined" /></a></p>
 <h4>Example test plan</h4>
 <p>The following tests are created to test product creation, update, delete and get operations. Next I'll present sample CURL command and actual Postman test written with Javascript.</p>
 <h4>Add new product</h4>
@@ -317,7 +317,7 @@ pm.test("Product 1 found", () =&gt; {
 <p>Current setup has sensitive information (ClientId and ClientSecret) stored in environment variables so these must be removed from Environment.json file before commiting it ex. to source control.</p>
 <h3>3. Create YAML template</h3>
 <p>Client Id and Client Secret are fetched from the Pipeline variables where those are configured to be kept as a secret value.</p>
-<p><img src="https://cdn.buttercms.com/Fxy2xy7RV6rtp5RTKm0l" alt="undefined" /></p>
+<p><a href="https://cdn.buttercms.com/Fxy2xy7RV6rtp5RTKm0l" rel="follow"><img src="https://cdn.buttercms.com/Fxy2xy7RV6rtp5RTKm0l" alt="undefined" /></a></p>
 <p>Pipeline variable values are then passed to the integration tests pipeline template.</p>
 <pre class="language-undefined"><code>- template: pipelines/integration-tests-pipeline.yml
   parameters:
@@ -468,5 +468,5 @@ stages:
 
 </body>
 
-<!-- Mirrored from kalle-blog.azurewebsites.net/blog/how-to-automate-api-testing-with-azure-devops-and-postman by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 06 Dec 2022 14:07:51 GMT -->
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/how-to-automate-api-testing-with-azure-devops-and-postman by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 10 Dec 2022 19:09:45 GMT -->
 </html>

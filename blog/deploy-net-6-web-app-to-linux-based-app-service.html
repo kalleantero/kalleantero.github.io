@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 
-<!-- Mirrored from kalle-blog.azurewebsites.net/blog/deploy-net-6-web-app-to-linux-based-app-service by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 06 Dec 2022 14:08:54 GMT -->
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/deploy-net-6-web-app-to-linux-based-app-service by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 10 Dec 2022 19:10:48 GMT -->
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
 <head>
 
@@ -22,9 +22,9 @@
 
     <!-- CSS
     ================================================== -->
-    <link rel="stylesheet" href="../css/base356b.css?dt=638059323194676819">
-    <link rel="stylesheet" href="../css/vendor356b.css?dt=638059323194676819">
-    <link rel="stylesheet" href="../css/main356b.css?dt=638059323194676819">
+    <link rel="stylesheet" href="../css/base2f45.css?dt=638062960164008406">
+    <link rel="stylesheet" href="../css/vendor2f45.css?dt=638062960164008406">
+    <link rel="stylesheet" href="../css/main2f45.css?dt=638062960164008406">
     <script src="../js/modernizr.js"></script>
 
     <script type="text/javascript">
@@ -133,9 +133,9 @@
 <h2>Why to use Linux based App Service?</h2>
 <p>Nowadays Linux based App Service have pretty much same features like Windows but pricing is more attempting. Linux based App Service is 50% cheaper than Windows counterpart. Pricing at 11.11.2021:</p>
 <p><strong>Windows based App Service (Premium v3 Service Plan)&nbsp;</strong></p>
-<p><img src="https://cdn.buttercms.com/ylMNSt2DTW2ZnWxRBfIT" alt="undefined" /></p>
+<p><a href="https://cdn.buttercms.com/ylMNSt2DTW2ZnWxRBfIT" rel="follow"><img src="https://cdn.buttercms.com/ylMNSt2DTW2ZnWxRBfIT" alt="undefined" /></a></p>
 <p><strong>Linux based App Service (Premium v3 Service Plan)</strong></p>
-<p><img src="https://cdn.buttercms.com/gpciLy7kR0uicYpjtIwH" alt="undefined" /></p>
+<p><a href="https://cdn.buttercms.com/gpciLy7kR0uicYpjtIwH" rel="follow"><img src="https://cdn.buttercms.com/gpciLy7kR0uicYpjtIwH" alt="undefined" /></a></p>
 <h2>Notes about building Azure Infrastructure with Bicep</h2>
 <h3>App Service Plan creation</h3>
 <p>I struggled some time with multiple provisioning errors after I noticed this blog <a href="https://azure.github.io/AppService/2021/08/31/Kind-property-overview.html" rel="follow">post</a> by Azure App Service team. You should determine <strong>reserved </strong>property to <strong>true </strong>to use Linux.</p>
@@ -159,7 +159,7 @@
 }</code></pre>
 <h3>App Service creation</h3>
 <p>When you're using Windows based App Service&nbsp;<strong>netFrameworkVersion&nbsp;</strong>property (Site configs) determines the runtime version like this:</p>
-<p><strong></strong><img src="https://cdn.buttercms.com/iPOvKqjQtGFvhTPzxKwQ" alt="undefined" /></p>
+<p><strong></strong><a href="https://cdn.buttercms.com/iPOvKqjQtGFvhTPzxKwQ" rel="follow"><img src="https://cdn.buttercms.com/iPOvKqjQtGFvhTPzxKwQ" alt="undefined" /></a></p>
 <p>Unfortunately same property don't work with Linux. Instead of <strong>netFrameworkVersion&nbsp;</strong>you have to use <strong>linuxFxVersion&nbsp;</strong>property.&nbsp;</p>
 <p><strong>Used Bicep code to create App Service Plan:</strong></p>
 <pre class="language-undefined"><code>resource appService 'Microsoft.Web/sites@2021-02-01' = {
@@ -215,9 +215,9 @@
   "RUBY|2.6"
 ]</code></pre>
 <p>But value <strong>DOTNET|6.0</strong> is not working and after deployment Stack selection is empty.</p>
-<p><img src="https://cdn.buttercms.com/mBQFGWdKTLil8mB0S04D" alt="undefined" /></p>
+<p><a href="https://cdn.buttercms.com/mBQFGWdKTLil8mB0S04D" rel="follow"><img src="https://cdn.buttercms.com/mBQFGWdKTLil8mB0S04D" alt="undefined" /></a></p>
 <p>Instead of <strong>DOTNET|6.0 </strong>you have to use <strong>DOTNETCORE|6.0</strong> to get this working.</p>
-<p><img src="https://cdn.buttercms.com/0daZ85mvRUu5fPhsgAcR" alt="undefined" /></p>
+<p><a href="https://cdn.buttercms.com/0daZ85mvRUu5fPhsgAcR" rel="follow"><img src="https://cdn.buttercms.com/0daZ85mvRUu5fPhsgAcR" alt="undefined" /></a></p>
 <h2>Notes about deploying application (YAML)</h2>
 <p>Set runtime argument value to <strong>linux-x64&nbsp;</strong>in publish task like this:<strong></strong></p>
 <pre class="language-undefined"><code>    - task: DotNetCoreCLI@2
@@ -231,7 +231,7 @@
         zipAfterPublish: True  </code></pre>
 <h2>YAML Deploy pipeline</h2>
 <p>Application is executed in Container so you have to manually set Startup Command to get application running. It took some time to figure this out.</p>
-<p><img src="https://cdn.buttercms.com/wWbp2fgeRweXubczBYwq" alt="undefined" /></p>
+<p><a href="https://cdn.buttercms.com/wWbp2fgeRweXubczBYwq" rel="follow"><img src="https://cdn.buttercms.com/wWbp2fgeRweXubczBYwq" alt="undefined" /></a></p>
 <p>You can use <strong>startUpCommand </strong>property to configure application start up in application deployment task:</p>
 <pre class="language-undefined"><code>         - task: AzureWebApp@1
             displayName: Deploy application
@@ -363,5 +363,5 @@
 
 </body>
 
-<!-- Mirrored from kalle-blog.azurewebsites.net/blog/deploy-net-6-web-app-to-linux-based-app-service by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 06 Dec 2022 14:08:57 GMT -->
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/deploy-net-6-web-app-to-linux-based-app-service by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 10 Dec 2022 19:10:51 GMT -->
 </html>

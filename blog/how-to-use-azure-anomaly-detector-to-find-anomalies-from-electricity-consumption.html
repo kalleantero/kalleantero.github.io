@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 
-<!-- Mirrored from kalle-blog.azurewebsites.net/blog/how-to-use-azure-anomaly-detector-to-find-anomalies-from-electricity-consumption by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 06 Dec 2022 14:07:00 GMT -->
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/how-to-use-azure-anomaly-detector-to-find-anomalies-from-electricity-consumption by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 10 Dec 2022 19:08:54 GMT -->
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
 <head>
 
@@ -22,9 +22,9 @@
 
     <!-- CSS
     ================================================== -->
-    <link rel="stylesheet" href="../css/basea460.css?dt=638059322814941530">
-    <link rel="stylesheet" href="../css/vendora460.css?dt=638059322814941530">
-    <link rel="stylesheet" href="../css/maina460.css?dt=638059322814941530">
+    <link rel="stylesheet" href="../css/basea815.css?dt=638062959784420747">
+    <link rel="stylesheet" href="../css/vendora815.css?dt=638062959784420747">
+    <link rel="stylesheet" href="../css/maina815.css?dt=638062959784420747">
     <script src="../js/modernizr.js"></script>
 
     <script type="text/javascript">
@@ -140,7 +140,7 @@
 <h3 id="streaming-detection" class="heading-anchor"></h3>
 <h2>Overview of the sample application</h2>
 <p>Console application takes CSV data (electricity consumption) in and processes data via Azure Anomaly Detector API. Application utilizes Univariate Anomaly Detector to detect <span>anomalies from one variable which is in this case electricity consumption. Lastly results of Anomaly detection will be written to another CSV file which can later used for visualization purposes.</span></p>
-<p><img src="https://cdn.buttercms.com/ivqZ29UaR2ezerCYi6Zj" alt="undefined" /></p>
+<p><a href="https://cdn.buttercms.com/ivqZ29UaR2ezerCYi6Zj" rel="follow"><img src="https://cdn.buttercms.com/ivqZ29UaR2ezerCYi6Zj" alt="undefined" /></a></p>
 <h3>Console application</h3>
 <h4>Required Nuget packages</h4>
 <p>The following Nuget package is required to enable Anomaly Detector service from Azure:</p>
@@ -314,11 +314,11 @@ namespace ElectricityConsumptionAnalyzer.Console
 <h2>Data In and Out</h2>
 <h3>Data In: Hourly electricity consumption from one year period</h3>
 <p>My electricity company provides manual data export functionality from their own portal. Data can be exported as a CSV format. I'll use hourly electricity consumption from one year in this sample. Data which is feed to console application looks like this (timestamp + electricity consumption):</p>
-<p><img src="https://cdn.buttercms.com/zm7rhbkNTa6v1bHmo6h3" alt="undefined" /></p>
+<p><a href="https://cdn.buttercms.com/zm7rhbkNTa6v1bHmo6h3" rel="follow"><img src="https://cdn.buttercms.com/zm7rhbkNTa6v1bHmo6h3" alt="undefined" /></a></p>
 <p>Note! The minimum time series points are 12 points, and the maximum is 8640 points. I needed to remove couple weeks data from the December to get this fit to 8640 points.</p>
 <h3>Data Out: Enriched data with anomaly results</h3>
 <p>Console application enriches anomaly detection results provided by Azure Anomaly Detection to the CSV file. After enrichment file looks like this:</p>
-<p><img src="https://cdn.buttercms.com/1IfT73ryRx68se96xPsx" alt="undefined" /></p>
+<p><a href="https://cdn.buttercms.com/1IfT73ryRx68se96xPsx" rel="follow"><img src="https://cdn.buttercms.com/1IfT73ryRx68se96xPsx" alt="undefined" /></a></p>
 <h4>What does these fields mean?</h4>
 <p>Second field in the dataset (IsAnomaly) indicates whether the point is positive or negative anomaly. Dataset also have different fields for indicating negative or positive anomaly. Positive anomaly means that analyzed value is higher than the expected value and negative another way around.</p>
 <p>According to <a href="https://docs.microsoft.com/en-us/azure/cognitive-services/anomaly-detector/how-to/identify-anomalies" rel="follow">documentation</a>: By default, the upper margin and lower margin boundaries for anomaly detection are calculated using ExpectedValue, UpperMargin, and LowerMargin. If you require different boundaries, we recommend applying a MarginScale to UpperMargin or LowerMargin. The boundaries would be calculated as follows:</p>
@@ -330,7 +330,7 @@ namespace ElectricityConsumptionAnalyzer.Console
 <h2>Did Anomaly Detector find any anomalies from the data?</h2>
 <p>Time serie which was used in this sample contained 8640 data points. Below chart illustrates electricity consumption of one day (1.1.2021) in hour level. Consumption values greater than 0 with blue dot are identified as an anomaly. Azure Anomaly Detector has identified consumption peaks nicely! This is a short snapshot from the data but overall this seems accurate. I will analyze consumption pattern more later and it would be also interesting to test Multivariate Anomaly Detection with multiple variables like electricity consumption and temperature.</p>
 <p>Overall Azure Anomaly Detector is very interesting service especially when you don't need to know machine learning and algorithms.</p>
-<p><img src="https://cdn.buttercms.com/hgLDSiDRVC6xocl8XBNX" alt="undefined" /></p>
+<p><a href="https://cdn.buttercms.com/hgLDSiDRVC6xocl8XBNX" rel="follow"><img src="https://cdn.buttercms.com/hgLDSiDRVC6xocl8XBNX" alt="undefined" /></a></p>
 <p>Full source code of this sample application can be found from<span>&nbsp;</span><a href="https://github.com/kalleantero/ElectricityConsumptionAnalyzer.Console" rel="follow">GitHub</a>.</p>
 <p></p></p>
 
@@ -440,5 +440,5 @@ namespace ElectricityConsumptionAnalyzer.Console
 
 </body>
 
-<!-- Mirrored from kalle-blog.azurewebsites.net/blog/how-to-use-azure-anomaly-detector-to-find-anomalies-from-electricity-consumption by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 06 Dec 2022 14:07:03 GMT -->
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/how-to-use-azure-anomaly-detector-to-find-anomalies-from-electricity-consumption by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 10 Dec 2022 19:08:57 GMT -->
 </html>

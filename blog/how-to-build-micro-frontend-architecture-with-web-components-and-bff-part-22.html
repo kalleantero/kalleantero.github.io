@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 
-<!-- Mirrored from kalle-blog.azurewebsites.net/blog/how-to-build-micro-frontend-architecture-with-web-components-and-bff-part-22 by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 06 Dec 2022 14:07:54 GMT -->
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/how-to-build-micro-frontend-architecture-with-web-components-and-bff-part-22 by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 10 Dec 2022 19:09:48 GMT -->
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
 <head>
 
@@ -22,9 +22,9 @@
 
     <!-- CSS
     ================================================== -->
-    <link rel="stylesheet" href="../css/basea48a.css?dt=638059322994411986">
-    <link rel="stylesheet" href="../css/vendora48a.css?dt=638059322994411986">
-    <link rel="stylesheet" href="../css/maina48a.css?dt=638059322994411986">
+    <link rel="stylesheet" href="../css/base53b7.css?dt=638062959964680888">
+    <link rel="stylesheet" href="../css/vendor53b7.css?dt=638062959964680888">
+    <link rel="stylesheet" href="../css/main53b7.css?dt=638062959964680888">
     <script src="../js/modernizr.js"></script>
 
     <script type="text/javascript">
@@ -136,12 +136,12 @@
 <p>2) BFF for Web Component consumer</p>
 <p>3) Identity Provider (OIDC)</p>
 <p>4) Web Component</p>
-<p><img src="https://cdn.buttercms.com/s6VnTc3eTWyf7cVQvEBq" alt="undefined" /></p>
+<p><a href="https://cdn.buttercms.com/s6VnTc3eTWyf7cVQvEBq" rel="follow"><img src="https://cdn.buttercms.com/s6VnTc3eTWyf7cVQvEBq" alt="undefined" /></a></p>
 <h2>Technical implementation</h2>
 <p>Let's first go through sample Web Component implementation and after that how to embed this component to another application.</p>
 <h3>Web Component</h3>
 <p>Product Listing web component is independently developed and maintained by team which owns Product domain area. Web Component javascript file and API are hosted in another server.</p>
-<p><img src="https://cdn.buttercms.com/lnhHQ1qUSJmE6QwjulGB" alt="undefined" /></p>
+<p><a href="https://cdn.buttercms.com/lnhHQ1qUSJmE6QwjulGB" rel="follow"><img src="https://cdn.buttercms.com/lnhHQ1qUSJmE6QwjulGB" alt="undefined" /></a></p>
 <h4>Product Listing Web Component</h4>
 <p>This Web Component is created to list products. Product Listing UI fetches products from the API endpoint and renders product listing as a JSON.</p>
 <pre class="language-javascript"><code>class ProductListing extends HTMLElement {
@@ -217,7 +217,7 @@ customElements.define('product-listing', ProductListing);</code></pre>
 <h2>Web Component consumer</h2>
 <h3>Enable cookie based authentication</h3>
 <p>Cookie based authentication is required to apply "No tokens in browser" policy.&nbsp;</p>
-<p><img src="https://cdn.buttercms.com/wOTVKx3wQ5aBUSY37scU" alt="undefined" /></p>
+<p><a href="https://cdn.buttercms.com/wOTVKx3wQ5aBUSY37scU" rel="follow"><img src="https://cdn.buttercms.com/wOTVKx3wQ5aBUSY37scU" alt="undefined" /></a></p>
 <h3>Authentication and authorization</h3>
 <p>This service collection extension configures cookie based authentication (OIDC). OpenId Connect settings are dynamically binded from the appsettings file.</p>
 <pre class="language-csharp"><code>  public static class ServiceCollectionExtensions
@@ -342,7 +342,7 @@ customElements.define('product-listing', ProductListing);</code></pre>
     }</code></pre>
 <h3>Embed Web Component</h3>
 <p>In this sample Web Component is consumed directly from the producer (=another server). Like stated in the previous <a href="https://www.kallemarjokorpi.fi/blog/how-to-build-micro-frontend-architecture-and-bff.html" rel="follow">blog post</a> javascript file (Web Component) must be fetched via proxy that javascript is treated as same-origin.&nbsp;</p>
-<p><img src="https://cdn.buttercms.com/ub26Nm2SiSPkappaszXq" alt="undefined" /></p>
+<p><a href="https://cdn.buttercms.com/ub26Nm2SiSPkappaszXq" rel="follow"><img src="https://cdn.buttercms.com/ub26Nm2SiSPkappaszXq" alt="undefined" /></a></p>
 <h3>Web Component container</h3>
 <p>This React component is basically a container which renders script tag of Web Component. Note! Web Component javascript file must be fetched via proxy (/product-listing-webcomponent-proxy) to enable that javascript is treated as same-origin.&nbsp;</p>
 <pre class="language-javascript"><code>import React, { Component } from 'react';
@@ -537,5 +537,5 @@ export class ProductListingWebComponent extends Component {
 
 </body>
 
-<!-- Mirrored from kalle-blog.azurewebsites.net/blog/how-to-build-micro-frontend-architecture-with-web-components-and-bff-part-22 by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 06 Dec 2022 14:07:57 GMT -->
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/how-to-build-micro-frontend-architecture-with-web-components-and-bff-part-22 by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 10 Dec 2022 19:09:51 GMT -->
 </html>

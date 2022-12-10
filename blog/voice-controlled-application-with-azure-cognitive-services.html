@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 
-<!-- Mirrored from kalle-blog.azurewebsites.net/blog/voice-controlled-application-with-azure-cognitive-services by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 06 Dec 2022 14:07:09 GMT -->
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/voice-controlled-application-with-azure-cognitive-services by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 10 Dec 2022 19:09:03 GMT -->
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
 <head>
 
@@ -22,9 +22,9 @@
 
     <!-- CSS
     ================================================== -->
-    <link rel="stylesheet" href="../css/base124d.css?dt=638059322844859477">
-    <link rel="stylesheet" href="../css/vendor124d.css?dt=638059322844859477">
-    <link rel="stylesheet" href="../css/main124d.css?dt=638059322844859477">
+    <link rel="stylesheet" href="../css/base4fb4.css?dt=638062959814276705">
+    <link rel="stylesheet" href="../css/vendor4fb4.css?dt=638062959814276705">
+    <link rel="stylesheet" href="../css/main4fb4.css?dt=638062959814276705">
     <script src="../js/modernizr.js"></script>
 
     <script type="text/javascript">
@@ -146,30 +146,30 @@
 <h2>Overview of voice controlled Knowledge base application&nbsp;</h2>
 <p>Basically this sample application provides an interface which listens first a question from user and after that converts speech to text. Next answer is searched from the Knowledge Base by question text. Lastly when answer is found from the Knowledge Base answer will be read loud for the user.</p>
 <p>Speech to Text and Text to Speech functionalities are handled with Azure Cognitive Services and Knowledge Base functionalities are covered with Azure Question Answering.&nbsp;</p>
-<p><img src="https://cdn.buttercms.com/dFr8NdOXRruBCGmFSkgP" alt="undefined" /></p>
+<p><a href="https://cdn.buttercms.com/dFr8NdOXRruBCGmFSkgP" rel="follow"><img src="https://cdn.buttercms.com/dFr8NdOXRruBCGmFSkgP" alt="undefined" /></a></p>
 <h2>Let's start</h2>
 <h3>Configure related Azure AI Platform services</h3>
 <p>Azure Cognitive Service is a heart of this solution and it provides Speech and Question Answering services.</p>
 <h4>1.&nbsp;Create Cognitive Service via Azure Portal or CLI</h4>
 <h4>2. Create Language Service</h4>
 <p>Azure Cognitive Service for Language provides Knowledge Base functionalities (Question and Answering Service) for this sample. You can create Language Service under Cognitive Service / Language Service</p>
-<p><img src="https://cdn.buttercms.com/SjAPueG0Sp6yhifqoobI" alt="undefined" /></p>
+<p><a href="https://cdn.buttercms.com/SjAPueG0Sp6yhifqoobI" rel="follow"><img src="https://cdn.buttercms.com/SjAPueG0Sp6yhifqoobI" alt="undefined" /></a></p>
 <h4>3. Open Language Studio</h4>
 <p>Language Studio is a set of UI-based tools that lets you explore, build, and integrate features from Azure Cognitive Service for Language into your applications. Language Studio is available in <a href="https://language.cognitive.azure.com/" rel="follow">https://language.cognitive.azure.com/</a></p>
 <h4>4. Select Language Service in Language Studio</h4>
 <p>Before creating a new project you need to select just created Language Service resource. You can find link to this dialog from Profile menu (top right corner)&nbsp;&nbsp;</p>
-<p><img src="https://cdn.buttercms.com/5KzJx0HuSMqvaKP385jr" alt="undefined" /></p>
+<p><a href="https://cdn.buttercms.com/5KzJx0HuSMqvaKP385jr" rel="follow"><img src="https://cdn.buttercms.com/5KzJx0HuSMqvaKP385jr" alt="undefined" /></a></p>
 <h4>5. Create a new project</h4>
 <p>From the Language Studion frontpage select Create new and Custom question answering</p>
-<p><img src="https://cdn.buttercms.com/jQSmdEdSjxLrWNDOWklQ" alt="undefined" /></p>
+<p><a href="https://cdn.buttercms.com/jQSmdEdSjxLrWNDOWklQ" rel="follow"><img src="https://cdn.buttercms.com/jQSmdEdSjxLrWNDOWklQ" alt="undefined" /></a></p>
 <h4>6. Open Manage sources</h4>
 <p>Under Manage sources data sources can be added to your Knowledge Base. You can add ex. URL resources or Files.</p>
-<p><img src="https://cdn.buttercms.com/A90hoSQoC4hcGN29Re0Q" alt="undefined" /></p>
+<p><a href="https://cdn.buttercms.com/A90hoSQoC4hcGN29Re0Q" rel="follow"><img src="https://cdn.buttercms.com/A90hoSQoC4hcGN29Re0Q" alt="undefined" /></a></p>
 <p>In this sample I'll add some Microsoft Docs articles.</p>
-<p><img src="https://cdn.buttercms.com/dazbgGaNRvWTj77Xswm5" alt="undefined" /></p>
+<p><a href="https://cdn.buttercms.com/dazbgGaNRvWTj77Xswm5" rel="follow"><img src="https://cdn.buttercms.com/dazbgGaNRvWTj77Xswm5" alt="undefined" /></a></p>
 <h4>7. Select Deploy knowledge base</h4>
 <p>You need to deploy knowledge base before it's available to use.</p>
-<p><img src="https://cdn.buttercms.com/bzu8MrZTlmPbG7SEP7rg" alt="undefined" /></p>
+<p><a href="https://cdn.buttercms.com/bzu8MrZTlmPbG7SEP7rg" rel="follow"><img src="https://cdn.buttercms.com/bzu8MrZTlmPbG7SEP7rg" alt="undefined" /></a></p>
 <h2>Console application</h2>
 <p>Console application orchestrates interaction between user and Azure AI services.</p>
 <p>The following Nuget packages are required to enable Speech &amp; Question Answering services from Azure:</p>
@@ -426,5 +426,5 @@ namespace KnowledgeBase.Console.Services
 
 </body>
 
-<!-- Mirrored from kalle-blog.azurewebsites.net/blog/voice-controlled-application-with-azure-cognitive-services by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 06 Dec 2022 14:07:12 GMT -->
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/voice-controlled-application-with-azure-cognitive-services by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 10 Dec 2022 19:09:06 GMT -->
 </html>

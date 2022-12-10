@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 
-<!-- Mirrored from kalle-blog.azurewebsites.net/blog/how-to-use-fluent-migrator-in-azure-devops-pipelines by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 06 Dec 2022 14:07:27 GMT -->
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/how-to-use-fluent-migrator-in-azure-devops-pipelines by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 10 Dec 2022 19:09:21 GMT -->
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
 <head>
 
@@ -22,9 +22,9 @@
 
     <!-- CSS
     ================================================== -->
-    <link rel="stylesheet" href="../css/base794e.css?dt=638059322904407254">
-    <link rel="stylesheet" href="../css/vendor794e.css?dt=638059322904407254">
-    <link rel="stylesheet" href="../css/main794e.css?dt=638059322904407254">
+    <link rel="stylesheet" href="../css/base0226.css?dt=638062959874951215">
+    <link rel="stylesheet" href="../css/vendor0226.css?dt=638062959874951215">
+    <link rel="stylesheet" href="../css/main0226.css?dt=638062959874951215">
     <script src="../js/modernizr.js"></script>
 
     <script type="text/javascript">
@@ -198,11 +198,11 @@ namespace Migrations
 <p>Execute migrations to Local DB</p>
 <pre class="language-undefined"><code>dotnet fm migrate -p sqlserver -c "Data Source=(LocalDb)\MSSQLLocalDB;Initial Catalog=Products;Connect Timeout=30;Integrated Security=SSPI;" -a "Migrations.dll"</code></pre>
 <p>After execution you should see applied migrations in the VersionInfo table.</p>
-<h2><img src="https://cdn.buttercms.com/O32fuDKlT7qED68AENL7" alt="undefined" /></h2>
+<h2><a href="https://cdn.buttercms.com/O32fuDKlT7qED68AENL7" rel="follow"><img src="https://cdn.buttercms.com/O32fuDKlT7qED68AENL7" alt="undefined" /></a></h2>
 <h2>How to execute database migrations automatically in Azure DevOps?</h2>
 <h3>Overview to flow</h3>
 <p>In this sample ADO Pipeline and Database migration are executed with different service principals. Basically ADO Pipeline's service principal has access to KeyVault but it doesn't have Database permissions.</p>
-<p><img src="https://cdn.buttercms.com/ze49YNUKSCWzqBYnlta8" alt="undefined" /></p>
+<p><a href="https://cdn.buttercms.com/ze49YNUKSCWzqBYnlta8" rel="follow"><img src="https://cdn.buttercms.com/ze49YNUKSCWzqBYnlta8" alt="undefined" /></a></p>
 <h3>Database migrations YAML-template</h3>
 <p>This template is responsible for building Visual Studio project which contains C# based database migrations and publish Migrations.dll artifact to Artifact store. Template also installs Fluent Migrator .NET CLI tool and applies pending migrations to the specific Azure SQL database.</p>
 <p>Database connection is opened with Azure service principal (ClientId + Client Secret). When you want to open database connection with Service principal you should configure that Authentication parameter is "Active Directory Service Principal" and determine "User Id" and "Password" fields in the connection string. User Id stands for Client Id of Service principal (app registration) and Password is secret of Service principal.</p>
@@ -414,5 +414,5 @@ jobs:
 
 </body>
 
-<!-- Mirrored from kalle-blog.azurewebsites.net/blog/how-to-use-fluent-migrator-in-azure-devops-pipelines by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 06 Dec 2022 14:07:30 GMT -->
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/how-to-use-fluent-migrator-in-azure-devops-pipelines by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 10 Dec 2022 19:09:24 GMT -->
 </html>

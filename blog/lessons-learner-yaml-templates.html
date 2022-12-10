@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 
-<!-- Mirrored from kalle-blog.azurewebsites.net/blog/lessons-learner-yaml-templates by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 06 Dec 2022 14:06:57 GMT -->
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/lessons-learner-yaml-templates by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 10 Dec 2022 19:08:51 GMT -->
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
 <head>
 
@@ -22,9 +22,9 @@
 
     <!-- CSS
     ================================================== -->
-    <link rel="stylesheet" href="../css/base8dd2.css?dt=638059322804335274">
-    <link rel="stylesheet" href="../css/vendor8dd2.css?dt=638059322804335274">
-    <link rel="stylesheet" href="../css/main8dd2.css?dt=638059322804335274">
+    <link rel="stylesheet" href="../css/base30d8.css?dt=638062959779118009">
+    <link rel="stylesheet" href="../css/vendor30d8.css?dt=638062959779118009">
+    <link rel="stylesheet" href="../css/main30d8.css?dt=638062959779118009">
     <script src="../js/modernizr.js"></script>
 
     <script type="text/javascript">
@@ -128,14 +128,14 @@
 <h2>Template hierarchy</h2>
 <p>First a few words about template hierarchy and how I have typically structured templates.</p>
 <p>Orchestrator is an application specific YAML based CI/CD pipeline which main responsibility is to orchestrate and control build and deployment process. Basically orchestrator template contains Stages which can be different application environments where application will be deployed. Orchestrator consumes reusable templates to execute generic operations like building, deploying, executing integration tests or database migrations.</p>
-<p><img src="https://cdn.buttercms.com/sVnB7goRUCT5hM4DQwk0" alt="undefined" /></p>
+<p><a href="https://cdn.buttercms.com/sVnB7goRUCT5hM4DQwk0" rel="follow"><img src="https://cdn.buttercms.com/sVnB7goRUCT5hM4DQwk0" alt="undefined" /></a></p>
 <h2>Consider these tips when creating reusable YAML-templates</h2>
 <p>These tips are created based on my previous experience when I have created and refactored existing YAML based pipelines.</p>
 <h3>1. Remember single responsibility principal</h3>
 <p>Create templates which <span>have responsibility over a single part. For example you should have database migration template which only executes database migration nothing else. It's much easier to maintain templates when they have clear responsible and overall templates are also smaller.</span><span></span></p>
 <h3>2. Use aggregate templates</h3>
 <p>Purpose of the aggregate template is to hide logic behind one template so consumption of the template is straightforward and easy for consumer. Diagram below illustrates an aggregate template called "deploy.yaml" which deploys infrastructure and application at once. Deploy.yaml template itself consumes separate "deploy-infra.yaml" and "deploy-app.yaml" templates according to single responsibility principal.</p>
-<p><img src="https://cdn.buttercms.com/1VRIDROSkKf5KoNqIcfw" alt="undefined" /></p>
+<p><a href="https://cdn.buttercms.com/1VRIDROSkKf5KoNqIcfw" rel="follow"><img src="https://cdn.buttercms.com/1VRIDROSkKf5KoNqIcfw" alt="undefined" /></a></p>
 <h3>3. Use parameters to make template reusable</h3>
 <p>Add all configuration related things to parameters. Do not hard code any Build Agent path etc. inside templates.</p>
 <h3>4. Pass JobName and DependsOn to template as a parameter</h3>
@@ -317,5 +317,5 @@ jobs:
 
 </body>
 
-<!-- Mirrored from kalle-blog.azurewebsites.net/blog/lessons-learner-yaml-templates by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 06 Dec 2022 14:07:00 GMT -->
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/lessons-learner-yaml-templates by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 10 Dec 2022 19:08:54 GMT -->
 </html>

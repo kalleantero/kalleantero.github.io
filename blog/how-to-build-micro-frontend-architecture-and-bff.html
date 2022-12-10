@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 
-<!-- Mirrored from kalle-blog.azurewebsites.net/blog/how-to-build-micro-frontend-architecture-and-bff by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 06 Dec 2022 14:08:15 GMT -->
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/how-to-build-micro-frontend-architecture-and-bff by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 10 Dec 2022 19:10:09 GMT -->
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
 <head>
 
@@ -22,9 +22,9 @@
 
     <!-- CSS
     ================================================== -->
-    <link rel="stylesheet" href="../css/basecf44.css?dt=638059323064379871">
-    <link rel="stylesheet" href="../css/vendorcf44.css?dt=638059323064379871">
-    <link rel="stylesheet" href="../css/maincf44.css?dt=638059323064379871">
+    <link rel="stylesheet" href="../css/base44ed.css?dt=638062960034500460">
+    <link rel="stylesheet" href="../css/vendor44ed.css?dt=638062960034500460">
+    <link rel="stylesheet" href="../css/main44ed.css?dt=638062960034500460">
     <script src="../js/modernizr.js"></script>
 
     <script type="text/javascript">
@@ -133,14 +133,14 @@
 </blockquote>
 <p>Teams are usually responsible for their own specific domain area like products, invoices, orders, customer data etc. in large enterprises. Each team has the best knowledge about their own domain and they have full ownership of that domain. Traditionally in Microservice architecture team owns API endpoints and Database which contains domain specific data. Micro-Frontend Architecture enables that domain team can also delivery domain specific User interfaces "microapps" for the consumers. Typically in web environment these "microapps" are delivered as a Web Component.</p>
 <p>Basically Web Component is a generic Javascript/HTML based component/library which is embedded to the consumer application. Web Component producer team has full ownership and control to all functionalities inside Web Component.&nbsp;</p>
-<p><img src="https://cdn.buttercms.com/XtV5Cv5Rj6i0l7xRbfit" alt="undefined" /></p>
+<p><a href="https://cdn.buttercms.com/XtV5Cv5Rj6i0l7xRbfit" rel="follow"><img src="https://cdn.buttercms.com/XtV5Cv5Rj6i0l7xRbfit" alt="undefined" /></a></p>
 <h2>Web Component consuming options</h2>
 <p>I introduce here two options how to consume Web Component delivered by other teams.</p>
-<p><img src="https://cdn.buttercms.com/F0VTiothRwmzylpgC81A" alt="undefined" /></p>
+<p><a href="https://cdn.buttercms.com/F0VTiothRwmzylpgC81A" rel="follow"><img src="https://cdn.buttercms.com/F0VTiothRwmzylpgC81A" alt="undefined" /></a></p>
 <h3>1. Consuming Web Component directly from producer</h3>
 <p>In this case Web Component javascript file is fetched from the another server via Backed for Frontend proxy. BFF enables that Web Component javascript file is treated as same-origin and then same-site cookie will work. API requests with same-site cookie from Web Component User interface will be re-routed via BFF. BFF extracts bearer token from the cookie and passes it further to the destination API. Note! Authorization Scope of Web Component API is needed to request during Authorization flow.</p>
 <p></p>
-<p><img src="https://cdn.buttercms.com/V4pXKuXzQFeXlaD0qvzN" alt="undefined" /></p>
+<p><a href="https://cdn.buttercms.com/V4pXKuXzQFeXlaD0qvzN" rel="follow"><img src="https://cdn.buttercms.com/V4pXKuXzQFeXlaD0qvzN" alt="undefined" /></a></p>
 <p></p>
 <h3>2. Consuming Web Component via ex. NPM</h3>
 <p>Web Component (javascript) is bundled to NPM package which is added to consumer application. In this scenario Web Component's javascript/html files are part of the consumer application so there are no problems with same-site cookie. API requests will be re-routed via BFF also in this scenario.</p>
@@ -284,5 +284,5 @@
 
 </body>
 
-<!-- Mirrored from kalle-blog.azurewebsites.net/blog/how-to-build-micro-frontend-architecture-and-bff by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 06 Dec 2022 14:08:18 GMT -->
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/how-to-build-micro-frontend-architecture-and-bff by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 10 Dec 2022 19:10:12 GMT -->
 </html>

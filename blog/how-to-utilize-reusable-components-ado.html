@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 
-<!-- Mirrored from kalle-blog.azurewebsites.net/blog/how-to-utilize-reusable-components-ado by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 06 Dec 2022 14:07:24 GMT -->
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/how-to-utilize-reusable-components-ado by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 10 Dec 2022 19:09:18 GMT -->
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
 <head>
 
@@ -22,9 +22,9 @@
 
     <!-- CSS
     ================================================== -->
-    <link rel="stylesheet" href="../css/base7180.css?dt=638059322894787829">
-    <link rel="stylesheet" href="../css/vendor7180.css?dt=638059322894787829">
-    <link rel="stylesheet" href="../css/main7180.css?dt=638059322894787829">
+    <link rel="stylesheet" href="../css/base659b.css?dt=638062959862787637">
+    <link rel="stylesheet" href="../css/vendor659b.css?dt=638062959862787637">
+    <link rel="stylesheet" href="../css/main659b.css?dt=638062959862787637">
     <script src="../js/modernizr.js"></script>
 
     <script type="text/javascript">
@@ -129,7 +129,7 @@
 <p>This blog post covers a few techniques what can be used to create reusable components (YAML and Bicep) between multiple Azure DevOps pipelines. Blog post assumes that you have a basic knowledge about YAML and Bicep.</p>
 <h2>Environment overview</h2>
 <p>Environment followed typical micro service architecture approach with multiple API endpoints and a few UI applications.&nbsp;Micro services were coherently built and chosen technology stack was identical. Starting point was really good to start thinking reusability of DevOps components.</p>
-<p><img src="https://cdn.buttercms.com/uAKTgEgRpuxSOn9LZpzw" alt="undefined" /></p>
+<p><a href="https://cdn.buttercms.com/uAKTgEgRpuxSOn9LZpzw" rel="follow"><img src="https://cdn.buttercms.com/uAKTgEgRpuxSOn9LZpzw" alt="undefined" /></a></p>
 <h2>Reusable YAML-templates&nbsp;</h2>
 <p>YAML based pipelines are used to orchestrate Build and Release process in Azure DevOps.</p>
 <p>YAML-templates enables that you can separate Build and Release related functionalities to another file which can be reused to prevent "code" duplication. Operations which are consumed multiple times inside main "the orchestrator" pipeline should be templated.&nbsp;</p>
@@ -161,7 +161,7 @@
     location: $(location)</code></pre>
 <h3>Globally shared YAML-templates</h3>
 <p>Globally shared YAML-template enables that template is located to centralized Azure DevOps repository where application specific Azure pipelines can consume templates. Diagram below illustrates that pipelines for Application X and Y are consuming globally shared templates from separate YAML-repository.</p>
-<p><img src="https://cdn.buttercms.com/KKikNlalR59fA8Rw9ueX" alt="undefined" /></p>
+<p><a href="https://cdn.buttercms.com/KKikNlalR59fA8Rw9ueX" rel="follow"><img src="https://cdn.buttercms.com/KKikNlalR59fA8Rw9ueX" alt="undefined" /></a></p>
 <p><strong>Consumption of globally shared YAML templates is easy to configure:</strong></p>
 <p>1) Create a new Azure DevOps repository for globally shared YAML-templates. I have used repository name called "Yaml.Templates" in the sample below.</p>
 <p>2) Commit YAML templates to this new repository</p>
@@ -220,7 +220,7 @@ stages:
 <p>We want to consume this same App Service Bicep-module from all Azure pipelines so we need to make it globally shared.</p>
 <h3>Globally shared Bicep-modules</h3>
 <p>Bicep supports that global Bicep-modules can be shared via Azure Container Registry which acts as a centralized repository. You can find detailed information about how to configure Azure Container Registry from <a href="https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/private-module-registry?tabs=azure-cli" rel="follow">here</a>.</p>
-<h2><img src="https://cdn.buttercms.com/N7xW4O4TR5KWNjfH2eSc" alt="undefined" /></h2>
+<h2><a href="https://cdn.buttercms.com/N7xW4O4TR5KWNjfH2eSc" rel="follow"><img src="https://cdn.buttercms.com/N7xW4O4TR5KWNjfH2eSc" alt="undefined" /></a></h2>
 <p>Bicep-modules can be published to Azure Container Registry with the following command.&nbsp;</p>
 <pre class="language-undefined"><code>az bicep publish --file appservice.bicep --target br:mycontainerreqistry.azurecr.io/bicep/modules/appservice:v1</code></pre>
 <p>After publish Bicep-modules from Azure Container Registry can be consumed like this</p>
@@ -241,7 +241,7 @@ stages:
 <p>To publish modules to a registry, you must have permission to <strong>push </strong>an image. To deploy a module from a registry, you must have permission to <strong>pull </strong>the image. For more information about the roles that grant adequate access, see <a href="https://docs.microsoft.com/en-us/azure/container-registry/container-registry-roles?tabs=azure-cli" rel="follow">Azure Container Registry roles and permissions</a>.</p>
 <h2>Summary</h2>
 <p>Globally shared YAML-templates and Bicep-modules enable a powerful way to optimize and improve maintenance of Azure pipeline (YAML) and Infrastructure of code files (Bicep). Especially if environment is coherent and similar technology stack is widely used then consumption of global component creates lot of value.</p>
-<p><img src="https://cdn.buttercms.com/cPlEKKoRl6WkYbGpe5xw" alt="undefined" /></p>
+<p><a href="https://cdn.buttercms.com/cPlEKKoRl6WkYbGpe5xw" rel="follow"><img src="https://cdn.buttercms.com/cPlEKKoRl6WkYbGpe5xw" alt="undefined" /></a></p>
 <p>During this project the following functionalities were created global.</p>
 <p><strong>YAML-templates:</strong></p>
 <p>- Build template for .NET Framework based applications</p>
@@ -362,5 +362,5 @@ stages:
 
 </body>
 
-<!-- Mirrored from kalle-blog.azurewebsites.net/blog/how-to-utilize-reusable-components-ado by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 06 Dec 2022 14:07:27 GMT -->
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/how-to-utilize-reusable-components-ado by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 10 Dec 2022 19:09:21 GMT -->
 </html>

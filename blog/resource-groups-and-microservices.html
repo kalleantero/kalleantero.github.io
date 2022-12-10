@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 
-<!-- Mirrored from kalle-blog.azurewebsites.net/blog/tech-stack-of-the-blog by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 10 Dec 2022 19:08:36 GMT -->
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/resource-groups-and-microservices by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 10 Dec 2022 19:08:15 GMT -->
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
 <head>
 
@@ -10,8 +10,8 @@
     <meta charset="utf-8">
 
     
-    <title>How has the tech stack of this blog evolved? - Blog by Kalle Marjokorpi</title>
-    <meta name="description" content="Summary about how the tech stack of this blog has evolved and how I finalized automation of blog post publishing.">
+    <title>How to model and organize Azure resource groups in microservices environment? - Blog by Kalle Marjokorpi</title>
+    <meta name="description" content="This blog post introduces some principals to consider when modelling and organizing resource groups &amp; resources in microservices environment">
     <meta name="author" content="Kalle Marjokorpi">
 
 
@@ -22,9 +22,9 @@
 
     <!-- CSS
     ================================================== -->
-    <link rel="stylesheet" href="../css/base7839.css?dt=638062959724751474">
-    <link rel="stylesheet" href="../css/vendor7839.css?dt=638062959724751474">
-    <link rel="stylesheet" href="../css/main7839.css?dt=638062959724751474">
+    <link rel="stylesheet" href="../css/base7532.css?dt=638062959654892903">
+    <link rel="stylesheet" href="../css/vendor7532.css?dt=638062959654892903">
+    <link rel="stylesheet" href="../css/main7532.css?dt=638062959654892903">
     <script src="../js/modernizr.js"></script>
 
     <script type="text/javascript">
@@ -91,27 +91,26 @@
     ================================================== -->
 
         
-        <div class="page-header page-header--single page-hero" style=background-image:url(https://cdn.buttercms.com/IusWtarhRR2MVc5nklTr)>
+        <div class="page-header page-header--single page-hero" style=background-image:url(https://cdn.buttercms.com/lHIbOSQ2TX27rYxahiqc)>
 
             <div class="row page-header__content narrow">
                 <article class="col-full">
                     <div class="page-header__info">
                         <div class="page-header__cat">
-                                <a id="post-category-automation" href="category/automation.html">Automation</a>
+                                <a id="post-category-architecture" href="category/architecture.html">Architecture</a>
                                 <a id="post-category-azure" href="category/azure.html">Azure</a>
-                                <a id="post-category-azure-devops" href="category/azure-devops.html">Azure DevOps</a>
-                                <a id="post-category-azure-function" href="category/azure-function.html">Azure Function</a>
-                                <a id="post-category-yaml" href="category/yaml.html">yaml</a>
+                                <a id="post-category-governance" href="category/governance.html">Governance</a>
+                                <a id="post-category-infra" href="category/infra.html">Infra</a>
                         </div>
                     </div>
                     <h1 class="page-header__title">
                         <a href="#0" title="">
-                            How has the tech stack of this blog evolved?
+                            How to model and organize Azure resource groups in microservices environment?
                         </a>
                     </h1>
                     <ul class="page-header__meta">
                         <li class="date">
-02.10.2022 04:10                        </li>
+10.12.2022 08:42                        </li>
                         <li class="author">
                             By
                             <span>Kalle Marjokorpi</span>
@@ -127,92 +126,57 @@
         <div class="row blog-content">
             <div class="col-full blog-content__main">
 
-                <p><h2>Iterations during the years</h2>
-<h3>First iteration (2018): Headless CMS + Azure App Service</h3>
-<p>I started blogging over four years ago and then I decided to use Headless CMS solution for content creation and create the frontend layer by myself. Basically, setup contained an ASP.NET Core application which was deeply integrated to Headless CMS system via API, and everything was hosted in Azure App Service (B1 standard).</p>
-<p>If you are more interested about the technical details, check the first "Hello Headless Blog" blog post from <a href="https://www.kallemarjokorpi.fi/blog/hello-headless-blog.html" rel="follow">here</a>.</p>
-<h3>Second iteration (2021): Minimizing hosting costs + manual publishing to GitHub Pages</h3>
-<p>During this iteration the main theme was to minimize hosting costs. I decided to start using static web site (GitHub Pages) instead of using Azure App Service directly. GitHub Pages provided a free service to host static web site with custom domain support, so this was an easy choice. Azure Static Web site was another alternative, but I decided to try GitHub Pages because I haven't used that before.</p>
-<p>Azure App Service still hosted ASP.NET Core based blog application but it only provided dynamic content for web site crawler application (HTTrack). HTTrack application's role was to crawl through the blog site and produce static files which were published to GitHub Pages. Visitors of the blog were redirected to GitHub Pages which hosted static files of this blog. Because visitors were no longer using the Azure App Service site directly, I switched App Service Plan to F1 (free tier). Free tier provided limited time of CPU minutes (60) per day but it's more than enough for enable that site is up and running during the crawling.&nbsp;</p>
-<p>The pain point of this implementation was that blog crawling with HTTrack and publishing files to GitHub Pages weren't automated. It took 10-15 min extra time every time when you published a blog post. You can read more details about this iteration from my <a href="https://www.kallemarjokorpi.fi/blog/how-to-minimize-blog-hosting-costs.html" rel="follow">blog post</a>.</p>
-<h3>Third iteration (2022): Automated publishing to GitHub Pages</h3>
-<p>Like said second iteration wasn't perfect because I had to execute site crawling and publish changes to GitHub manually. During this latest iteration I automated those things, and you can read more about this iteration from this post.</p>
-<h2>How to automate site crawling and publishing to GitHub Pages?</h2>
-<p>Fully automated publishing looks like this.</p>
-<p><a href="https://cdn.buttercms.com/BLhOaAL4RW1wDmBPgDgr" rel="follow"><img src="https://cdn.buttercms.com/BLhOaAL4RW1wDmBPgDgr" alt="undefined" /></a></p>
-<p>Short explanation of each step:</p>
-<h3>1. Event-driven communication (Webhooks)</h3>
-<p>Headless CMS system (ButterCMS) used in this blog supports Webhooks which allows lightweight event-driven communication between two applications. Webhooks are the key component to enable different kind of automation. In this case I subscribed events from ButterCMS each time when blog post was published, updated or deleted. These WebHook events are used to enable automatic blog site crawling and publishing to GitHub Pages.</p>
-<h3>2. Event processing (Azure Function)</h3>
-<p>Webhooks requires an HTTP endpoint which receives and processes Webhook events. For that purpose, I created HTTP trigger-based Azure Function in Consumption Tier. Consumption plan pricing includes a monthly free grant of 1 million requests so I can easily use this for free.</p>
-<p>Azure Function is responsible for identify right Webhook events (published, updated, deleted) and start DevOps Pipeline via Azure DevOps REST API.</p>
-<p>If you're interested how the Azure Function is implemented, you can find codes from <a href="https://github.com/kalleantero/ButterCms.Webhook.Functions" rel="follow">this </a>repository (GitHub).</p>
-<h3>3. Azure DevOps Pipeline</h3>
-<p>Azure DevOps Pipeline orchestrates the process how ASP.NET Core based Blog site is crawled and how static files are published to GitHub Pages.</p>
-<p><strong>Pipeline has the following steps:</strong></p>
-<h4>Step 1: Install httrack CLI tool</h4>
-<p>HTTrack CLI tool is the main component which handles the crawling and producing static files from the ASP.NET Core based Blog site.</p>
-<pre class="language-undefined"><code>- script: |
-    sudo apt-get update
-    sudo apt install httrack webhttrack
-  displayName: 'Install httrack'</code></pre>
-<h4>Step 2: Clone GitHub Pages repository</h4>
-<p>$(GitHubPersonalAccessToken) is a Pipeline variable.</p>
-<pre class="language-undefined"><code>- script: |
-    mkdir /tmp/github
-    cd /tmp/github
-    git clone https://$(GitHubPersonalAccessToken)@github.com/[GIT_USERNAME]/[REPOSITORY].git . 
-  displayName: 'Clone repo'  </code></pre>
-<h4>Step 3: Add Azure DevOps IP address to access restriction</h4>
-<p>Public access to ASP.NET Core based Blog application is allowed only from my home IP address by default. This YAML-pipeline task uses Azure CLI to temporarily allow Azure DevOps IP address to the Azure App Service application (network restriction).&nbsp;</p>
-<pre class="language-undefined"><code>- task: AzureCLI@2
-  displayName: 'Allow DevOps IP to App Service'
-  inputs:
-    azureSubscription: ${{variables.azureServiceConnection}}
-    scriptType: 'pscore'
-    scriptLocation: 'inlineScript'
-    inlineScript: |
-      $devOpsIp = Invoke-RestMethod http://ipinfo.io/json | Select -exp ip
-      az webapp config access-restriction add `
-        -g ${{variables.deploymentResourceGroupName}} `
-        -n ${{variables.appserviceResourceName}} `
-        --rule-name AzureDevOps `
-        --action Allow `
-        --ip-address $devOpsIp `
-        --priority 200  </code></pre>
-<h4>Step 4: Crawl the Blog site</h4>
-<p>This task executes HTTrack CLI tool which crawls the ASP.NET Core Blog site and persists static files to a folder which was created earlier.</p>
-<pre class="language-undefined"><code>- script: |
-    httrack "https://[NAME_OF_THE_BLOG].azurewebsites.net" -O "/tmp/crawledsite" -v
-  displayName: 'Copy static data from the Blog'</code></pre>
-<h4>Step 5: Copy crawled static files to GitHub folder</h4>
-<pre class="language-undefined"><code>- script: |
-    cp -R /tmp/crawledsite/[SITE_DOMAIN]/* /tmp/github
-  displayName: 'Copy crawled static data to github folder'</code></pre>
-<h4>Step 6: Commit changes to GitHub Pages repository</h4>
-<pre class="language-undefined"><code>- script: |
-    cd /tmp/github
-    git config --global user.email "my@email.com"
-    git config --global user.name "Azure DevOps"
-    git add -A 
-    git commit -m "Blog update"
-    git push --set-upstream https://$(GitHubPersonalAccessToken)@github.com/[GIT_USERNAME]/[REPOSITORY] main
-  displayName: 'Commit changes to GitHub'</code></pre>
-<h4>Step 7:&nbsp;Remove Azure DevOps IP address to access restriction</h4>
-<pre class="language-undefined"><code>- task: AzureCLI@2
-  displayName: 'Remove DevOps IP to App Service'
-  inputs:
-      azureSubscription: ${{variables.azureServiceConnection}}
-      scriptType: 'bash'
-      scriptLocation: 'inlineScript'
-      inlineScript: |
-        az webapp config access-restriction remove \
-          -g ${{variables.deploymentResourceGroupName}} \
-          -n ${{variables.appserviceResourceName}} \
-          --rule-name AzureDevOps </code></pre>
-<p>It was really nice to get this finally automatized:)</p>
-<p></p>
-<p></p>
+                <p><p>This blog post introduces some principals to consider when modelling and organizing resource groups &amp; resources in microservices environment. Resource groups are one piece in the puzzle and you should also check Microsoft's great documentation (Cloud Adoption Framework) about how to model management groups and subscriptions. You can find more information from these links <a href="https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/landing-zone/design-area/resource-org-management-groups" rel="follow">management groups</a> and <a href="https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/decision-guides/subscriptions/" rel="follow">subscriptions.</a></p>
+<p>Overall each Azure environment should have a governance model. Governance model provides management tools to ensure that services across multiple subscriptions are created according to agreed patterns and security &amp; compliance requirements are fulfilled. Some actions in governance model can be automatized using ex. azure policies. &nbsp;I'll write more later about governance model in Azure.</p>
+<h2>Management hierarchy in Azure</h2>
+<p>This blog post concentrates to lowest hierarchy level and especially how to model resource groups in environment which is utilizing decentralized architecture (microservices). Azure building blocks like management groups, subscriptions and resource groups are flexible tools to model your technical environment based on your requirements.&nbsp;</p>
+<p>But before starting it's important to understand in general about management hierarchy in Azure:</p>
+<p><a href="https://cdn.buttercms.com/JgMrYeHiSqB3XikzQK7w" rel="follow"><img src="https://cdn.buttercms.com/JgMrYeHiSqB3XikzQK7w" alt="undefined" /></a></p>
+<p>Source: <a href="https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-setup-guide/organize-resources" rel="follow">Organize your Azure resources effectively</a></p>
+<h2>Scaling Azure subscriptions</h2>
+<p>Let's discuss first briefly about Azure subscriptions. Like shown in the previous section you need to have Azure subscription to create resource groups and resources. It's important to carefully define a strategy for scaling your Azure subscriptions. Subscriptions are powerful way to organize Azure environment and make it more manageable.</p>
+<p>This blog post doesn't concentrate modelling subscriptions and management groups because there is already a lot of good documentation provided by Microsoft. You can find more information from these sources: <a href="https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/scale-subscriptions" rel="follow">Create additional subscriptions to scale your Azure environment</a>,<a href="https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/landing-zone/" rel="follow"> What is an Azure landing zone?</a> and <a href="https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/landing-zone/design-principles" rel="follow">Azure landing zone design principles</a>.</p>
+<h2>How to model Resource Groups?</h2>
+<p>Consider the following principals when planning and organizing resource groups in a microservices environment. These are not in a prioritized order and you need to think case by case if one is important than another one.</p>
+<h3>Group by Microservice</h3>
+<p>Microservice architecture is a collection of independent microservices where each service typically reflect specific domain area. Let's imagine a product which has multiple independent microservices where one is responsible for invoicing and another about user management. Typically microservice is loosely coupled, independent deployable and scalable. Individual microservice owns the data and it's published to consumers via API.</p>
+<p>In Azure it's natural to create a resource group per microservice. Resource group contains all required Azure resources for that specific microservice. If microservice needs an API and SQL database then all resources are in the same resource group. Typically resources are dedicated only for that specific microservice which ensure independence. There might be some exceptions if you need to optimize resource utilization from the cost efficiency point of view but you need to understand pros and cons of that decision. More info about this in the next section.</p>
+<p>Resource group also enables that you easily manage access these resources in a resource group level. Basically you can determine that only Team X has access to specific microservice.</p>
+<p><img src="https://cdn.buttercms.com/7MZ5nn7ARVm0ON87xr9b" /></p>
+<h3>Cost efficiency</h3>
+<p>Even though microservices are independent sometimes might be wise from the cost efficiency point of view to share ex. compute and memory resources between multiple microservice. In this kind of scenario it's logical to group workload resources (App Service Plans) to a separate resource group (see below picture Workload Resource Group). Of course you need to be aware that then you cannot no longer scale microservices independently from compute/memory point of view.&nbsp;</p>
+<p>You need to carefully evaluate what resources are worth to share between microservices.</p>
+<p><img src="https://cdn.buttercms.com/flHVCIMmQIWBmJRNc5AA" /></p>
+<h3>Group shared resources by function</h3>
+<p>Shared resources are worth to group by the function. For example operations / maintenance related resources should be located to same resource group. This approach enables a powerful way to handle permissions to specific functions of the system.</p>
+<p><img src="https://cdn.buttercms.com/gmVzUPOVQHC9w1gz0wui" /></p>
+<h3>Access policy and permissions&nbsp;</h3>
+<p>In Azure you can determine permissions in different levels of management hierarchy including also a resource and resource group level. Sometimes there might be situations where easiest way is just create a separate resource group and grant permissions in a resource group level. Typical scenario like this could be ex. add network related to resources to separate resource group and assign permissions in a resource group level only for network team.</p>
+<p><img src="https://cdn.buttercms.com/SRvPagXT1Wa3YcfngmIC" /></p>
+<p>It's also good to remember that Azure has multiple built-in RBAC (role-based access control) roles which enables you to control access above resource groups. For example if you have user which has WebSite Contributor RBAC role it enables that user can modify all App Service Plan across resource groups.</p>
+<p><img src="https://cdn.buttercms.com/9IJzFA9iRS6vajh2B5bh" alt="undefined" /></p>
+<h3>Cost reporting</h3>
+<p>You can easily monitor Azure costs in a resource group level. Sometimes might be justified to group resources so that cost reporting is easy as possible.&nbsp;</p>
+<h2>Sample microservices environment in Azure</h2>
+<p>This section introduces a sample microservice environment and how subscriptions and resource groups are organized.</p>
+<h3>Management Groups and Subscriptions</h3>
+<p>Management Groups are used here to <span>help manage access, policy, and compliance across multiple subscriptions and area. Core area could have different policies than products area.</span></p>
+<h2><a href="https://cdn.buttercms.com/A31yDovkTSMIMWpEgTcg" rel="follow"><img src="https://cdn.buttercms.com/A31yDovkTSMIMWpEgTcg" alt="undefined" /></a></h2>
+<h3>Resource share-ability</h3>
+<p>Sample environment is designed so that services and resources can be shared from two levels. First core level enables resource and services sharing to multiple subscriptions and second level inside individual subscription.</p>
+<p><a href="https://cdn.buttercms.com/0MK4tLYSu67fLA7L2v2a" rel="follow"><img src="https://cdn.buttercms.com/0MK4tLYSu67fLA7L2v2a" alt="undefined" /></a></p>
+<h2>Core Azure subscription</h2>
+<p>Centralized resources and services like Express Route, Firewall and Audit Log storage are available for all subscriptions from Core Azure subscription. Core subscription has restricted access and product teams do not have direct access to these resources.</p>
+<p>Core management group provides specific policies and <span>compliance only for Core subscription.&nbsp;</span></p>
+<p><a href="https://cdn.buttercms.com/Qp0Bd8GTQCCpLaW0IHga" rel="follow"><img src="https://cdn.buttercms.com/Qp0Bd8GTQCCpLaW0IHga" alt="undefined" /></a></p>
+<h2>Product specific Azure subscription</h2>
+<p>Product development department has multiple teams developing their own products and each team have own Azure subscription (called Azure Subscription Product). Each product specific Azure subscription is owned by different product teams and these teams has access only to their own Azure subscription.</p>
+<h3>Resource groups are categorized based on the following types</h3>
+<h4>Shared Infra</h4>
+<p>Product specific Azure subscription has shared resources and services which are scope only for this specific Product Azure subscription. These shared resource groups are defined based on share-ability, cost efficiency and function.</p>
+<h4>Microservices</h4>
+<p>Each microservice ex. invoicing and user management have own resource groups.</p>
+<p><a href="https://cdn.buttercms.com/6YBzrWP3S6qo9J3mD3Xj" rel="follow"><img src="https://cdn.buttercms.com/6YBzrWP3S6qo9J3mD3Xj" alt="undefined" /></a></p>
 <p></p></p>
 
                 <h2>Comments</h2>
@@ -220,23 +184,17 @@
                 <div id="cusdis_thread"
                   data-host="https://cusdis.com"
                   data-app-id="86620953-7757-4f01-94f2-bfb88caff8a4"
-                  data-page-id="tech-stack-of-the-blog"
-                  data-page-url="https://kalle-blog.azurewebsites.net/blog/tech-stack-of-the-blog"
-                  data-page-title="How has the tech stack of this blog evolved?">
+                  data-page-id="resource-groups-and-microservices"
+                  data-page-url="https://kalle-blog.azurewebsites.net/blog/resource-groups-and-microservices"
+                  data-page-title="How to model and organize Azure resource groups in microservices environment?">
                 <script src="https://cusdis.com/js/cusdis.es.js"></script>
 
                 <div class="blog-content__pagenav">
                     <div class="blog-content__nav">
                             <div class="blog-content__prev">
-                                <a id="post-previous-lessons-learner-yaml-templates" href="lessons-learner-yaml-templates.html" rel="prev">
+                                <a id="post-previous-control-your-digital-footprint" href="control-your-digital-footprint.html" rel="prev">
                                     <span>Previous Post</span>
-                                    Lessons learned when creating reusable YAML-templates
-                                </a>
-                            </div>
-                            <div class="blog-content__next">
-                                <a id="post-next-azure-developer-cli" href="azure-developer-cli.html" rel="next">
-                                    <span>Next Post</span>
-                                    How to boost developer workflow activities with Azure Developer CLI?
+                                    Privacy matters - Control your digital footprint
                                 </a>
                             </div>
                         </div>
@@ -321,5 +279,5 @@
 
 </body>
 
-<!-- Mirrored from kalle-blog.azurewebsites.net/blog/tech-stack-of-the-blog by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 10 Dec 2022 19:08:39 GMT -->
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/resource-groups-and-microservices by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 10 Dec 2022 19:08:18 GMT -->
 </html>

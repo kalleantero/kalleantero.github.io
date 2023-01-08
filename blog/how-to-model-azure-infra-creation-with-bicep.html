@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/how-to-model-azure-infra-creation-with-bicep by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 08 Jan 2023 14:00:17 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+
+    
+    <title>How to model Azure infra creation with Bicep Modules? - Blog by Kalle Marjokorpi</title>
+    <meta name="description" content="This blog post shows how to model infrastructure creation with Bicep in a environment which contains multiple independent microservices.">
+    <meta name="author" content="Kalle Marjokorpi">
+
+
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="../css/base524d.css?dt=638087830852932770">
+    <link rel="stylesheet" href="../css/vendor524d.css?dt=638087830852932770">
+    <link rel="stylesheet" href="../css/main524d.css?dt=638087830852932770">
+
+    <script src="https://cdn.counter.dev/script.js" data-id="a019f4e1-6ec3-4293-8b98-7440925a9066" data-utcoffset="2"></script>
+
+</head>
+<body id="top">
+   
+    <!-- header
+    ================================================== -->
+
+    <!-- header
+   ================================================== -->
+
+<header class="s-header">
+
+    <div class="header-logo">
+        <a class="site-logo" href="../index.html"><img src="../images/logo2.png" alt="Homepage"></a>
+    </div>
+
+    
+
+    <nav class="header-nav-wrap">
+
+        <ul class="header-nav">
+
+
+            <li class=""><a id="top-navigation-link-root" href="../index.html" title="">Home</a></li>
+
+                <li id="top-navigation-link-about" class="smoothscroll"><a href="../about.html" title="">About me</a></li>
+
+        </ul>
+    </nav> <!-- end main-nav-wrap -->
+
+
+
+
+    <a class="header-menu-toggle" href="#0"><span>Menu</span></a>
+
+</header> <!-- end s-header -->
+
+
+
+    
+
+<!-- content
+   ================================================== -->
+
+
+    <article class="blog-single">
+
+        <!-- page header/blog hero
+    ================================================== -->
+
+        
+        <div class="page-header page-header--single page-hero" style=background-image:url(https://cdn.buttercms.com/f6o7VzmmQXCPwB6m37Lv)>
+
+            <div class="row page-header__content narrow">
+                <article class="col-full">
+                    <div class="page-header__info">
+                        <div class="page-header__cat">
+                                <a id="post-category-azure" href="category/azure.html">Azure</a>
+                                <a id="post-category-bicep" href="category/bicep.html">bicep</a>
+                                <a id="post-category-infrastructure-as-a-code" href="category/infrastructure-as-a-code.html">infrastructure as a code</a>
+                        </div>
+                    </div>
+                    <h1 class="page-header__title">
+                        <a href="#0" title="">
+                            How to model Azure infrastructure creation in microservice environment with Bicep Modules ?
+                        </a>
+                    </h1>
+                    <ul class="page-header__meta">
+                        <li class="date">
+08.01.2023 11:50                        </li>
+                        <li class="author">
+                            By
+                            <span>Kalle Marjokorpi</span>
+                        </li>
+                    </ul>
+
+                </article>
+                
+            </div>
+
+        </div> <!-- end page-header -->
+
+        <div class="row blog-content">
+            <div class="col-full blog-content__main">
+
+                <p><h2>Background</h2>
+<p>Are you operating in a complex Azure environment which contains multiple independent microservices and you're wondering how to model environment with infrastructure as a code? This blog post is for you.</p>
+<p>This blog post shows how to structure/model infrastructure creation effectively with Bicep Modules in a environment which contains multiple independent microservices. This presented approach assumes that whole Azure infrastructure is created via single centralized Azure DevOps pipeline. Microservice specific CI/CD pipelines are only responsible for deploying the application not Azure infrastructure.</p>
+<p>Centralized Azure infrastructure creation pipeline enables easily re-usability of Bicep Modules and makes microservice specific pipelines more light and faster to execute.</p>
+<p><a href="https://cdn.buttercms.com/Wni7iPcCTUqsxR2yjEwl" rel="follow"><img src="https://cdn.buttercms.com/Wni7iPcCTUqsxR2yjEwl" alt="undefined" /></a></p>
+<p>Another option is to a create Azure infrastructure in multiple smaller pieces in a microservice specific Azure DevOps pipelines. That approach requires some extra work and basically Azure Container Registry to effectively share Bicep Modules between multiple Azure DevOps pipelines/repositories. You can read more about this from my previous <a href="https://www.kallemarjokorpi.fi/blog/how-to-utilize-reusable-components-ado.html" rel="follow">blog post</a>.</p>
+<p><a href="https://cdn.buttercms.com/AewzTqTlS5yQvJuQc89V" rel="follow"><img src="https://cdn.buttercms.com/AewzTqTlS5yQvJuQc89V" alt="undefined" /></a></p>
+<h3></h3>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<h2>Bicep module hierarchy</h2>
+<p>I have divided Bicep modules to four hierarchy levels to enable powerful re-usability and modularity. I'll go through these hierarchy levels from down to top in the below sections.</p>
+<p>Like said earlier this presented approach assumes that whole Azure infrastructure is created via single centralized Azure DevOps pipeline and all Bicep Modules are in the same repository.</p>
+<p><a href="https://cdn.buttercms.com/ELnO53PGRVWcrAMcWLXp" rel="follow"><img src="https://cdn.buttercms.com/ELnO53PGRVWcrAMcWLXp" alt="undefined" /></a></p>
+<h3>Pre-configured Resources</h3>
+<p>Pre-configured Resources (Bicep Modules) are <span>prepared and configured according to company's security and compliance requirements. For example pre-configured App Service Module can force that FTP state is disabled and HTTP 2.0 &amp; HTTPS are always enabled. </span><span>Each module is independent and Azure resource specific. This model also enables to you can force specific resource naming policy efficiently. Pre-configured Resource modules are the foundation for Productized Resource Collections which I explain next.&nbsp;</span></p>
+<p><a href="https://cdn.buttercms.com/qR88d4hqQGmqfPGQUVup" rel="follow"><img src="https://cdn.buttercms.com/qR88d4hqQGmqfPGQUVup" alt="undefined" /></a></p>
+<h4>Sample Pre-configured App Service Module</h4>
+<p>This App Service Module forces automatically that FTP state is disabled and HTTP 2.0 &amp; HTTPS are enabled.</p>
+<pre class="language-undefined"><code>param location string
+param tags object
+param servicePrefix string
+param abbreviation string
+param appServicePlanId string
+param applicationInsightsConnectionString string
+param resourceToken string
+
+resource appService 'Microsoft.Web/sites@2022-03-01' = {
+  name: '${abbreviation}${servicePrefix}-${location}-${resourceToken}'
+  location: location
+  tags: tags
+  properties: {
+    serverFarmId: appServicePlanId
+    siteConfig: {
+      ftpsState: 'Disabled'
+      http20Enabled: true
+      netFrameworkVersion: 'v6.0'
+    }
+    httpsOnly: true
+  }
+
+  identity: {
+    type: 'SystemAssigned'
+  }
+
+  resource appSettings 'config' = {
+    name: 'appsettings'
+    properties: {
+      SCM_DO_BUILD_DURING_DEPLOYMENT: 'false'
+      APPLICATIONINSIGHTS_CONNECTION_STRING: applicationInsightsConnectionString
+      ASPNETCORE_ENVIRONMENT: 'Development'
+    }
+  }
+}
+
+output appServiceId string = appService.id
+output defaultHostName string = appService.properties.defaultHostName</code></pre>
+<h3>Productized Resource Collections</h3>
+<p><span>From Bicep Module hierarchy point of view Productized Resource Collection modules are built top of Pre-configured Resource modules.&nbsp;</span></p>
+<p><span>Productized Resource Collection modules are always created for a specific use case. </span><span>If your environment has multiple microservices which contains API+Database, it's beneficial to create Productized Resource Collection module for this purpose. With this</span> module template you can easily create new microservices to you environment in the future which increase productivity and make maintenance more straightforward.&nbsp;</p>
+<p><span>Typical resource collections which can be productized:</span></p>
+<p><span>- Microservice 1: App Service API + Application Insights + App Service Plan + Azure SQL database<br />- </span><span>Microservice 2: App Service API + Application Insights + App Service Plan + CosmosDB database<br />- Publish Subscribe: Azure Service Bus + Azure Function</span></p>
+<p><a href="https://cdn.buttercms.com/EC8kbGmLSuyp3dZbP2zO" rel="follow"><img src="https://cdn.buttercms.com/EC8kbGmLSuyp3dZbP2zO" alt="undefined" /></a></p>
+<h4>Sample Productized Resource Collection for Publish Subscribe type of scenario</h4>
+<pre class="language-markup"><code>targetScope='resourceGroup'
+
+param location string = resourceGroup().location
+param tags object
+param servicePrefix string
+param resourceToken string
+
+module appServicePlan '../../preconfigured/appservice/appServicePlan.bicep' = {
+  name: 'appServicePlan-resources'
+  params: {
+    location: location
+    tags: tags
+    servicePrefix: servicePrefix
+    sku: 'B1'
+    kind: 'app,windows'
+    resourceToken: resourceToken
+  }
+}
+
+module logAnalyticsWorkspace '../../preconfigured/logging/logAnalyticsWorkspace.bicep' = {
+  name: 'logAnalyticsWorkspace-resources'
+  params: {
+    location: location
+    tags: tags
+    servicePrefix: servicePrefix
+    resourceToken: resourceToken
+  }
+}
+
+module applicationInsightsResources '../../preconfigured/logging/applicationInsights.bicep' = {
+  name: 'applicationinsights-resources'
+  params: {
+    location: location
+    tags: tags
+    workspaceId: logAnalyticsWorkspace.outputs.logAnalyticsWorkspaceId
+    servicePrefix: servicePrefix
+    resourceToken: resourceToken
+  }
+}
+
+module storageAccount '../../preconfigured/storage/storageAccount.bicep' = {
+  name: 'storageAccount-resources'
+  params: {
+    location: location
+    tags: tags
+    servicePrefix: servicePrefix
+    resourceToken: resourceToken
+    storageAccountType: 'Standard_LRS'
+  }
+}
+
+module azureFunction '../../preconfigured/functions/azureFunction.bicep' = {
+  name: 'azureFunction-resources'
+  dependsOn:[
+    appServicePlan
+    logAnalyticsWorkspace
+    applicationInsightsResources
+    storageAccount
+  ]
+  params: {
+    location: location
+    tags: tags
+    servicePrefix: servicePrefix
+    resourceToken: resourceToken
+    serverfarmId: appServicePlan.outputs.appServicePlanId
+    instrumentationKey: applicationInsightsResources.outputs.applicationInsightsInstrumentationKey
+  }
+}
+
+module serviceBus '../../preconfigured/messaging/serviceBus.bicep' = {
+  name: 'serviceBus-resources'
+  dependsOn:[
+    azureFunction
+  ]
+  params: {
+    location: location
+    tags: tags
+    servicePrefix: servicePrefix
+    resourceToken: resourceToken
+    sku: 'Standard'
+  }
+}
+</code></pre>
+<h3>Core Infra</h3>
+<p><span>Core Infra determines each microservice and what Productized Resource Collection or Pre-Configured Resource modules are used to create that specific microservice. Core Infra is not only for microservices and it should determine also other shared resources.</span></p>
+<p><a href="https://cdn.buttercms.com/mPNwf6XQgKnmzUvichsQ" rel="follow"><img src="https://cdn.buttercms.com/mPNwf6XQgKnmzUvichsQ" alt="undefined" /></a></p>
+<p>Typically Core Infra contains multiple service specific Bicep Modules. From maintenance point of view it's easier to separate each service to own Bicep module file.</p>
+<pre class="language-undefined"><code>├── core
+│   ├── microservices
+│   │    ├── invoicing.bicep
+│   │    ├── ordering.bicep
+│   │    ├── products.bicep
+│   ├── shared
+│   │    ├── configuration.bicep</code></pre>
+<h4>Sample Core Infra</h4>
+<p>This sample determines a Products microservice with SQL database and adds also Publish Subscribe capabilities. This approach enables to utilize multiple different <span>Productized Resource Collections easily.</span></p>
+<pre class="language-undefined"><code>targetScope='resourceGroup'
+
+param tags object
+param location string
+
+var microserviceName = 'products'
+
+module microservicesWithSqlDatabase '../../modules/productized/microservices/microserviceSqlDatabase.bicep' = { 
+  name:'microservicesWithSqlDatabase'
+  params:{
+    location: location
+    resourceToken: toLower(uniqueString(subscription().id, microserviceName, location))
+    servicePrefix: microserviceName
+    tags: tags
+  }
+}
+
+module microservicesWithPubSub '../../modules/productized/messaging/publishSubscribeServicebus.bicep' = { 
+  name:'microservicesWithPubSub'
+  dependsOn:[
+    microservicesWithSqlDatabase
+  ]
+  params:{
+    location: location
+    resourceToken: toLower(uniqueString(subscription().id, microserviceName, location))
+    servicePrefix: microserviceName
+    tags: tags
+  }
+}
+</code></pre>
+<h3>Main Bicep</h3>
+<p><span>Main Bicep orchestrates creation of the Azure infrastructure which contains multiple microservices and shared resources.</span></p>
+<pre class="language-undefined"><code>//This Main Bicep Module orchestrates creation of the Azure infrastructure which contains multiple microservices
+
+targetScope='subscription'
+
+param tags object
+param location string
+@secure()
+param sqlAdminLogin string
+@secure()
+param sqlAdminPassword string
+
+var resourceGroupNames = [
+  'invoicing'
+  'ordering'
+  'products'
+  'config'
+]
+
+//This creates resource groups for each microservice
+module resourceGroups './modules/preconfigured/resourceGroup/resourceGroup.bicep' = [for resourceGroup in resourceGroupNames: { 
+  name: resourceGroup
+    params:{
+    location: location
+    name: 'rg-${resourceGroup}'
+    tags: tags
+  }
+}]
+
+//Shared services
+module configuration './modules/core/shared/configuration.bicep' = {
+  dependsOn:[
+    resourceGroups
+  ]
+  scope: resourceGroup('rg-config') 
+  name: 'configuration'
+    params:{
+    location: location
+    tags: tags
+  }
+}
+
+//Invoicing Microservice
+module invoicing './modules/core/microservices/invoicing.bicep' = {
+  dependsOn:[
+    resourceGroups
+  ]
+  scope: resourceGroup('rg-invoicing') 
+  name: 'invoicing'
+    params:{
+    location: location
+    tags: tags
+    sqlAdminLogin:sqlAdminLogin
+    sqlAdminPassword:sqlAdminPassword
+  }
+}
+
+//Products Microservice
+module products './modules/core/microservices/products.bicep' = {
+  dependsOn:[
+    resourceGroups
+  ]
+  scope: resourceGroup('rg-products') 
+  name: 'products'
+    params:{
+    location: location
+    tags: tags
+    sqlAdminLogin:sqlAdminLogin
+    sqlAdminPassword:sqlAdminPassword
+  }
+}
+
+//Ordering Microservice
+module ordering './modules/core/microservices/ordering.bicep' = {
+  dependsOn:[
+    resourceGroups
+  ]
+  scope: resourceGroup('rg-ordering') 
+  name: 'ordering'
+    params:{
+    location: location
+    tags: tags
+    sqlAdminLogin:sqlAdminLogin
+    sqlAdminPassword:sqlAdminPassword
+  }
+}
+</code></pre>
+<h2>Full Bicep Module hierarchy</h2>
+<p><a href="https://cdn.buttercms.com/SkCYFGk9SCOuNett8QPE" rel="follow"><img src="https://cdn.buttercms.com/SkCYFGk9SCOuNett8QPE" alt="undefined" /></a></p>
+<p>Sample Azure infrastructure creation with Bicep modules can be found from my <a href="https://github.com/kalleantero/Azure.Infra" rel="follow">GitHub</a>. Each Bicep Module hierarchy level has own folder in sample solution.</p>
+<pre class="language-undefined"><code>├── preconfigured
+│   ├── appservice
+│   │    ├── appservice.bicep
+│   ├── configuration
+│   │    ├── keyvault.bicep
+│   ├── messaging
+│   │    ├── servicebus.bicep
+├── productized
+│   ├── microservices
+│   │    ├── microserviceSqlDatabase.bicep
+│   ├── messaging
+│   │    ├── publishSubscribeServicebus.bicep
+├── core
+│   ├── microservices
+│   │    ├── invoicing.bicep
+│   │    ├── ordering.bicep
+│   │    ├── products.bicep
+│   ├── shared
+│   │    ├── configuration.bicep
+</code></pre>
+<p></p></p>
+
+                <h2>Comments</h2>
+                                    
+                <div id="cusdis_thread"
+                  data-host="https://cusdis.com"
+                  data-app-id="86620953-7757-4f01-94f2-bfb88caff8a4"
+                  data-page-id="how-to-model-azure-infra-creation-with-bicep"
+                  data-page-url="https://kalle-blog.azurewebsites.net/blog/how-to-model-azure-infra-creation-with-bicep"
+                  data-page-title="How to model Azure infrastructure creation in microservice environment with Bicep Modules ?">
+                <script src="https://cusdis.com/js/cusdis.es.js"></script>
+
+                <div class="blog-content__pagenav">
+                    <div class="blog-content__nav">
+                            <div class="blog-content__prev">
+                                <a id="post-previous-importance-azure-governance" href="importance-azure-governance.html" rel="prev">
+                                    <span>Previous Post</span>
+                                    Importance of Azure Platform Governance
+                                </a>
+                            </div>
+                        </div>
+
+
+                    <div class="blog-content__all">
+                        <a href="../index.html" class="btn btn--primary">
+                            View All Post
+                        </a>
+                    </div>
+                </div>
+
+            </div><!-- end blog-content__main -->
+        </div> <!-- end blog-content -->
+
+    </article>
+
+
+
+    
+
+<!-- footer
+    ================================================== -->
+<footer>
+    <div class="row">
+        <div class="col-full">
+
+            <div class="footer-logo">
+                <a class="footer-site-logo" href="#0"><img src="../images/name.png" alt="Homepage"></a>
+            </div>
+
+            <ul class="footer-social">
+                <li>
+                    <a href="https://www.twitter.com/kmarjok">
+                        <i class="im im-twitter" aria-hidden="true"></i>
+                        <span>Twitter</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.linkedin.com/in/kallemarjokorpi">
+                        <i class="im im-linkedin" aria-hidden="true"></i>
+                        <span>Linkedin</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://github.com/kalleantero">
+                        <i class="im im-github" aria-hidden="true"></i>
+                        <span>Github</span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+    <div class="row footer-bottom">
+
+        <div class="col-twelve">
+            <div class="copyright">
+                <span>Copyright Kalle Marjokorpi 2023</span>
+                <span>Design by <a href="http://www.styleshout.com/">styleshout</a></span>
+                <span>Content management by <a href="http://www.buttercms.com/">Headless ButterCMS</a></span>
+
+            </div>
+
+        </div>
+
+    </div> <!-- end footer-bottom -->
+
+</footer> <!-- end footer -->
+   
+    <!-- Java Script
+     ================================================== -->
+
+    
+    
+    <!-- Cloudflare Web Analytics -->
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cac9fd24c1c04b6d9984ea31685b0414"}'></script><!-- End Cloudflare Web Analytics -->       
+
+</body>
+
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/how-to-model-azure-infra-creation-with-bicep by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 08 Jan 2023 14:00:20 GMT -->
+</html>

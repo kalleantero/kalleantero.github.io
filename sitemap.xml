@@ -13,6 +13,11 @@
   <priority>1.00</priority>
 </url>
 <url>
+  <loc>https://www.kallemarjokorpi.fi/blog/how-to-model-azure-infra-creation-with-bicep.html</loc>
+  <lastmod>2023-01-08T14:06:26+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
   <loc>https://www.kallemarjokorpi.fi/index.html</loc>
   <lastmod>2022-12-23T11:43:56+00:00</lastmod>
   <priority>0.80</priority>

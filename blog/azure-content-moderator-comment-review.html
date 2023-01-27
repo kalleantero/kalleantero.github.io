@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 
-<!-- Mirrored from kalle-blog.azurewebsites.net/blog/azure-content-moderator-comment-review by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 27 Jan 2023 07:30:09 GMT -->
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/azure-content-moderator-comment-review by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 27 Jan 2023 08:10:29 GMT -->
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
 <head>
 
@@ -22,9 +22,9 @@
 
     <!-- CSS
     ================================================== -->
-    <link rel="stylesheet" href="../css/base700a.css?dt=638104012744287295">
-    <link rel="stylesheet" href="../css/vendor700a.css?dt=638104012744287295">
-    <link rel="stylesheet" href="../css/main700a.css?dt=638104012744287295">
+    <link rel="stylesheet" href="../css/basee0ef.css?dt=638104036944644438">
+    <link rel="stylesheet" href="../css/vendore0ef.css?dt=638104036944644438">
+    <link rel="stylesheet" href="../css/maine0ef.css?dt=638104036944644438">
 
     <script src="https://cdn.counter.dev/script.js" data-id="a019f4e1-6ec3-4293-8b98-7440925a9066" data-utcoffset="2"></script>
 
@@ -125,10 +125,10 @@
 <p>Cusdis also supports Webhook to deliver events when new comment is added. Webhook is a key component which enables to add Azure Content Moderator to be a part of the process.</p>
 <h3>Old comment approval flow</h3>
 <p>By default Cusdis sends email notification about new comments. Comment notification email contains a link with a authentication token which enables comment approval without login.</p>
-<p><img src="https://cdn.buttercms.com/dVsSVBsYTSqWK4IAbDvL" alt="undefined" /></p>
+<p><a href="https://cdn.buttercms.com/dVsSVBsYTSqWK4IAbDvL" rel="follow"><img src="https://cdn.buttercms.com/dVsSVBsYTSqWK4IAbDvL" alt="undefined" /></a></p>
 <h3>Updated comment approval flow</h3>
 <p>This new updated flow relays on Webhook to deliver events about new comments. Azure Logic App receives and orchestrates handling of new comment and moderates the content with Azure Content Moderator. Finally comment with moderation results are persisted to table storage and email notification is sent to moderator.</p>
-<p><img src="https://cdn.buttercms.com/gZCdU0CMQYmiHDdSSX0w" alt="undefined" /></p>
+<p><a href="https://cdn.buttercms.com/gZCdU0CMQYmiHDdSSX0w" rel="follow"><img src="https://cdn.buttercms.com/gZCdU0CMQYmiHDdSSX0w" alt="undefined" /></a></p>
 <h2>Required Azure infrastructure</h2>
 <p><strong>Resource group</strong></p>
 <pre class="language-undefined"><code>az group create --name rg-blog --location westeurope</code></pre>
@@ -148,13 +148,13 @@
 <h2>Technical implementation</h2>
 <h3>Logic App</h3>
 <p>Logic App orchestrates the comment approval flow from receiving an event, requesting content moderation from Azure Content Moderator, persisting the comment and results to Table Storage and sending an email to moderator.</p>
-<p><img src="https://cdn.buttercms.com/tBVc3ZYQR0ik5FXaUeOK" /></p>
+<p><a href="https://cdn.buttercms.com/tBVc3ZYQR0ik5FXaUeOK" rel="follow"><img src="https://cdn.buttercms.com/tBVc3ZYQR0ik5FXaUeOK" /></a></p>
 <h3>Step 1: When a HTTP request is received</h3>
 <p><span>This action creates HTTP POST endpoint which receives comment events from Cusdis. You can find new comment event schema documentation from <a href="https://cusdis.com/doc#/advanced/webhook" rel="follow">here</a>.</span></p>
-<p><img src="https://cdn.buttercms.com/MWoLPWsTuWr8Z8qAT0bD" /></p>
+<p><a href="https://cdn.buttercms.com/MWoLPWsTuWr8Z8qAT0bD" rel="follow"><img src="https://cdn.buttercms.com/MWoLPWsTuWr8Z8qAT0bD" /></a></p>
 <h3>Step 2: Request moderation from Azure Content Moderator</h3>
 <p>Request moderation action detects offensive &amp; profanity words and match against custom and shared block lists.&nbsp;</p>
-<p><img src="https://cdn.buttercms.com/f4kEaNblTkinqjDJh9Pf" /></p>
+<p><a href="https://cdn.buttercms.com/f4kEaNblTkinqjDJh9Pf" rel="follow"><img src="https://cdn.buttercms.com/f4kEaNblTkinqjDJh9Pf" /></a></p>
 <p>Output of this action (API call) is a JSON object which has classification in three categories. These categories are determined as follows according to <a href="https://learn.microsoft.com/en-us/azure/cognitive-services/content-moderator/text-moderation-api#classification" rel="follow">Microsoft documentation</a>:</p>
 <p><strong>Category1 </strong>refers to potential presence of language that may be considered sexually explicit or adult in certain situations.<br /><br /><strong>Category2 </strong>refers to potential presence of language that may be considered sexually suggestive or mature in certain situations.<br /><br /><strong>Category3 </strong>refers to potential presence of language that may be considered offensive in certain situations.</p>
 <p>Category score is between 0 and 1. The higher the score, the higher the model is predicting that the category may be applicable. This feature relies on a statistical model rather than manually coded outcomes. Microsoft recommends testing with your own content to determine how each category aligns to your requirements.<br /><br />ReviewRecommended is either true or false depending on the internal score thresholds.</p>
@@ -187,27 +187,27 @@
 }</code></pre>
 <h3>Step 3: Parse Content Moderation Result</h3>
 <p>This action creates user-friendly tokens from JavaScript Object Notation (JSON) object properties so you can easily use those properties in the workflow.</p>
-<p><img src="https://cdn.buttercms.com/S05fjGgGQZadTQN5GZMu" /></p>
+<p><a href="https://cdn.buttercms.com/S05fjGgGQZadTQN5GZMu" rel="follow"><img src="https://cdn.buttercms.com/S05fjGgGQZadTQN5GZMu" /></a></p>
 <h3>Step 4: Initialize Table Storage Entity</h3>
 <p>This action initializes the comment entity which has information from raw event and results of Azure Content Moderator.</p>
-<p><img src="https://cdn.buttercms.com/0vTdpPstSG2yyXagR0ug" /></p>
+<p><a href="https://cdn.buttercms.com/0vTdpPstSG2yyXagR0ug" rel="follow"><img src="https://cdn.buttercms.com/0vTdpPstSG2yyXagR0ug" /></a></p>
 <h3>Step 5: Persists Data to Table Storage</h3>
 <p>Comment entity is persisted to the table storage via this action.</p>
-<p><img src="https://cdn.buttercms.com/DChrshkJQEqi8C5FBylH" /></p>
+<p><a href="https://cdn.buttercms.com/DChrshkJQEqi8C5FBylH" rel="follow"><img src="https://cdn.buttercms.com/DChrshkJQEqi8C5FBylH" /></a></p>
 <h3>Step 6: Initialize Quickchart data</h3>
 <p>This action initializes a variable which contains Quickchart JSON object as a string. Quickchart is used to generate a diagram based on Azure Content Moderator classification results. Later this chart is embedded to notification email.</p>
-<p><img src="https://cdn.buttercms.com/YPGXdcJfSAisa4lMjwRC" /></p>
+<p><a href="https://cdn.buttercms.com/YPGXdcJfSAisa4lMjwRC" rel="follow"><img src="https://cdn.buttercms.com/YPGXdcJfSAisa4lMjwRC" /></a></p>
 <h3>Step 7: Encode Quickchart content</h3>
 <p>This variable creates an HTML image tag which refers to Quickchart API service to generate chart image. Querystring parameter "C" contains Quickchart JSON object as a URI encoded format.</p>
-<p><img src="https://cdn.buttercms.com/XIlgDhhuSze81hNOORq4" /></p>
+<p><a href="https://cdn.buttercms.com/XIlgDhhuSze81hNOORq4" rel="follow"><img src="https://cdn.buttercms.com/XIlgDhhuSze81hNOORq4" /></a></p>
 <h3>Step 8: Create Approval Link</h3>
 <p>Like said earlier Cusdis Webhook event contains a link with a authentication token which enables comment approval without login. This variable creates an HTML link with that approval link.</p>
-<p><img src="https://cdn.buttercms.com/2hGQL0DbRbW6gWsMgTAc" /></p>
+<p><a href="https://cdn.buttercms.com/2hGQL0DbRbW6gWsMgTAc" rel="follow"><img src="https://cdn.buttercms.com/2hGQL0DbRbW6gWsMgTAc" /></a></p>
 <h3>Step 9: Send notification email</h3>
 <p>This Send Email action of Azure Communication Service gathers all required information to body of email and delivers email notification to moderator.</p>
-<p><img src="https://cdn.buttercms.com/4Ufib2mSodn8XO60VXgQ" /></p>
+<p><a href="https://cdn.buttercms.com/4Ufib2mSodn8XO60VXgQ" rel="follow"><img src="https://cdn.buttercms.com/4Ufib2mSodn8XO60VXgQ" /></a></p>
 <p>Final email notification looks like this. It contains original comment, review recommendation provided by Azure Content Moderator and chart provided by Quickchart about classification details of moderation.</p>
-<p><img src="https://cdn.buttercms.com/8CzUbBTrSvGhxrHQe70C" /></p>
+<p><a href="https://cdn.buttercms.com/8CzUbBTrSvGhxrHQe70C" rel="follow"><img src="https://cdn.buttercms.com/8CzUbBTrSvGhxrHQe70C" /></a></p>
 <h2>Summary</h2>
 <p>My initial plan was to test Azure Content Moderator API via Azure Functions but quickly I noticed that same API capabilities are also available in Logic App with pre-built actions. Creating this orchestration of the approval flow was really easy and straightforward with Logic Apps. It was also interested to investigate a bit about Azure Communication Service capabilities.</p>
 <p>Hopefully, some day I can automate this so that moderator interaction is required only if Azure Content Moderator suggests manual review. Otherwise comment is approved automatically via API (which is not currently possible).&nbsp;</p>
@@ -310,5 +310,5 @@
 
 </body>
 
-<!-- Mirrored from kalle-blog.azurewebsites.net/blog/azure-content-moderator-comment-review by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 27 Jan 2023 07:30:12 GMT -->
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/azure-content-moderator-comment-review by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 27 Jan 2023 08:10:32 GMT -->
 </html>

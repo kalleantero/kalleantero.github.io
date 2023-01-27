@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/azure-content-moderator-comment-review by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 27 Jan 2023 07:30:09 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+
+    
+    <title>Review blog post comments with Azure Content Moderator - Blog by Kalle Marjokorpi</title>
+    <meta name="description" content="This blog post introduces you to Azure Content Moderator and shows how to integrate it to blog post commenting process as a text moderator.">
+    <meta name="author" content="Kalle Marjokorpi">
+
+
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="../css/base700a.css?dt=638104012744287295">
+    <link rel="stylesheet" href="../css/vendor700a.css?dt=638104012744287295">
+    <link rel="stylesheet" href="../css/main700a.css?dt=638104012744287295">
+
+    <script src="https://cdn.counter.dev/script.js" data-id="a019f4e1-6ec3-4293-8b98-7440925a9066" data-utcoffset="2"></script>
+
+</head>
+<body id="top">
+   
+    <!-- header
+    ================================================== -->
+
+    <!-- header
+   ================================================== -->
+
+<header class="s-header">
+
+    <div class="header-logo">
+        <a class="site-logo" href="../index.html"><img src="../images/logo2.png" alt="Homepage"></a>
+    </div>
+
+    
+
+    <nav class="header-nav-wrap">
+
+        <ul class="header-nav">
+
+
+            <li class=""><a id="top-navigation-link-root" href="../index.html" title="">Home</a></li>
+
+                <li id="top-navigation-link-about" class="smoothscroll"><a href="../about.html" title="">About me</a></li>
+
+        </ul>
+    </nav> <!-- end main-nav-wrap -->
+
+
+
+
+    <a class="header-menu-toggle" href="#0"><span>Menu</span></a>
+
+</header> <!-- end s-header -->
+
+
+
+    
+
+<!-- content
+   ================================================== -->
+
+
+    <article class="blog-single">
+
+        <!-- page header/blog hero
+    ================================================== -->
+
+        
+        <div class="page-header page-header--single page-hero" style=background-image:url(https://cdn.buttercms.com/aOOSq7ZURniEmy7Jkd4G)>
+
+            <div class="row page-header__content narrow">
+                <article class="col-full">
+                    <div class="page-header__info">
+                        <div class="page-header__cat">
+                                <a id="post-category-azure" href="category/azure.html">Azure</a>
+                                <a id="post-category-azure-cli" href="category/azure-cli.html">Azure CLI</a>
+                                <a id="post-category-azure-communication-services" href="category/azure-communication-services.html">Azure Communication Services</a>
+                                <a id="post-category-azure-content-moderator" href="category/azure-content-moderator.html">Azure Content Moderator</a>
+                                <a id="post-category-logic-apps" href="category/logic-apps.html">Logic Apps</a>
+                        </div>
+                    </div>
+                    <h1 class="page-header__title">
+                        <a href="#0" title="">
+                            Quick look to Azure Content Moderator and how it can be used to review blog comments?
+                        </a>
+                    </h1>
+                    <ul class="page-header__meta">
+                        <li class="date">
+27.01.2023 06:50                        </li>
+                        <li class="author">
+                            By
+                            <span>Kalle Marjokorpi</span>
+                        </li>
+                    </ul>
+
+                </article>
+                
+            </div>
+
+        </div> <!-- end page-header -->
+
+        <div class="row blog-content">
+            <div class="col-full blog-content__main">
+
+                <p><p>This blog post introduces you to Azure Content Moderator and shows how to integrate it to blog post commenting process as a text moderator. Azure Content Moderator gives recommendations during the process whether comment should be reviewed or not. Review is recommended by Azure Content Moderator if comment contains offensive words or detects profanity. Commenting system used in this example doesn't support automatic approval of the comments so instead of that email notification with review recommendation is generated.</p>
+<h2>What is Azure Content Moderator?</h2>
+<p>Let's cover first some details about Azure Content Moderator.</p>
+<blockquote>Azure Content Moderator is an AI service that lets you handle content that is potentially offensive, risky, or otherwise undesirable. It includes the AI-powered content moderation service which scans text, image, and videos and applies content flags automatically. <a href="https://learn.microsoft.com/en-us/azure/cognitive-services/content-moderator/overview" rel="follow">Source</a></blockquote>
+<p>Azure Content Moderator enables automation of processes which require reviewing the content before publishing. Content Moderator can review text and as well as image contents. You can also create own custom lists to screen against with <a href="https://learn.microsoft.com/en-us/azure/cognitive-services/content-moderator/text-moderation-api#creating-and-managing-your-custom-lists-of-terms" rel="follow">Terms API</a><span>. Current language support list is available in <a href="https://learn.microsoft.com/en-us/azure/cognitive-services/content-moderator/language-support" rel="follow">here</a>.</span></p>
+<p><span>This blog post concentrates to show how text moderation can be integrated comment approval process to give review recommendations for blog post comments.</span></p>
+<h2>Comment handling in this blog</h2>
+<p>Blog post commenting in this blog is handled with a service called <a href="https://cusdis.com/" rel="follow">Cusdis</a> which is a lightweight, privacy-first and open-source comment system. Cusdis is integrated to this blog via JS SDK which requires just adding commenting widget element and reference to Cusdis JS SDK to the page.</p>
+<p>Cusdis also supports Webhook to deliver events when new comment is added. Webhook is a key component which enables to add Azure Content Moderator to be a part of the process.</p>
+<h3>Old comment approval flow</h3>
+<p>By default Cusdis sends email notification about new comments. Comment notification email contains a link with a authentication token which enables comment approval without login.</p>
+<p><img src="https://cdn.buttercms.com/dVsSVBsYTSqWK4IAbDvL" alt="undefined" /></p>
+<h3>Updated comment approval flow</h3>
+<p>This new updated flow relays on Webhook to deliver events about new comments. Azure Logic App receives and orchestrates handling of new comment and moderates the content with Azure Content Moderator. Finally comment with moderation results are persisted to table storage and email notification is sent to moderator.</p>
+<p><img src="https://cdn.buttercms.com/gZCdU0CMQYmiHDdSSX0w" alt="undefined" /></p>
+<h2>Required Azure infrastructure</h2>
+<p><strong>Resource group</strong></p>
+<pre class="language-undefined"><code>az group create --name rg-blog --location westeurope</code></pre>
+<p><strong>Azure Content Moderator</strong></p>
+<p>Azure Content Moderator is responsible to provide review recommendation about the comment.</p>
+<pre class="language-undefined"><code>az cognitiveservices account create --name cog-comment-moderation --resource-group rg-blog --kind ContentModerator --sku S0 --location westeurope --yes</code></pre>
+<p><strong>Storage Account</strong></p>
+<p>Storage Account and especially Table Storage is used to persist all comments and review recommendation results provided by Azure Content Moderator.</p>
+<pre class="language-undefined"><code>az storage account create -n stblogcomments -g rg-blog -l westeurope --sku Standard_LRS</code></pre>
+<p><strong>Azure Communication Service</strong></p>
+<p>Azure Communication Service is used in this sample to send email notification to moderator.</p>
+<p>Note! You need to create also Azure Email Communication Service which is currently in a preview mode (01/2023) and available only from United States. Azure Communication Service must be located also to United States that you can use it for email communication.</p>
+<pre class="language-undefined"><code>az communication create --name comm-email --location "Global" --data-location "United States" --resource-group rg-blog</code></pre>
+<p><strong>Logic Apps</strong></p>
+<p>Logic App provides the Webhook endpoint and orchestrates the handling of comment.</p>
+<pre class="language-undefined"><code>az logic workflow create --resource-group rg-blog --location westeurope --name "logic-comment-webhook" --definition "definition.json"</code></pre>
+<h2>Technical implementation</h2>
+<h3>Logic App</h3>
+<p>Logic App orchestrates the comment approval flow from receiving an event, requesting content moderation from Azure Content Moderator, persisting the comment and results to Table Storage and sending an email to moderator.</p>
+<p><img src="https://cdn.buttercms.com/tBVc3ZYQR0ik5FXaUeOK" /></p>
+<h3>Step 1: When a HTTP request is received</h3>
+<p><span>This action creates HTTP POST endpoint which receives comment events from Cusdis. You can find new comment event schema documentation from <a href="https://cusdis.com/doc#/advanced/webhook" rel="follow">here</a>.</span></p>
+<p><img src="https://cdn.buttercms.com/MWoLPWsTuWr8Z8qAT0bD" /></p>
+<h3>Step 2: Request moderation from Azure Content Moderator</h3>
+<p>Request moderation action detects offensive &amp; profanity words and match against custom and shared block lists.&nbsp;</p>
+<p><img src="https://cdn.buttercms.com/f4kEaNblTkinqjDJh9Pf" /></p>
+<p>Output of this action (API call) is a JSON object which has classification in three categories. These categories are determined as follows according to <a href="https://learn.microsoft.com/en-us/azure/cognitive-services/content-moderator/text-moderation-api#classification" rel="follow">Microsoft documentation</a>:</p>
+<p><strong>Category1 </strong>refers to potential presence of language that may be considered sexually explicit or adult in certain situations.<br /><br /><strong>Category2 </strong>refers to potential presence of language that may be considered sexually suggestive or mature in certain situations.<br /><br /><strong>Category3 </strong>refers to potential presence of language that may be considered offensive in certain situations.</p>
+<p>Category score is between 0 and 1. The higher the score, the higher the model is predicting that the category may be applicable. This feature relies on a statistical model rather than manually coded outcomes. Microsoft recommends testing with your own content to determine how each category aligns to your requirements.<br /><br />ReviewRecommended is either true or false depending on the internal score thresholds.</p>
+<pre class="language-undefined"><code>{
+    "body": {
+        "OriginalText": "Thank you for sharing this. Very useful content.",
+        "NormalizedText": "Thank you  sharing .  useful content.",
+        "Misrepresentation": null,
+        "Classification": {
+            "ReviewRecommended": false,
+            "Category1": {
+                "Score": 0.057542379945516586
+            },
+            "Category2": {
+                "Score": 0.17334049940109253
+            },
+            "Category3": {
+                "Score": 0.04330739378929138
+            }
+        },
+        "Language": "eng",
+        "Terms": null,
+        "Status": {
+            "Code": 3000,
+            "Description": "OK",
+            "Exception": null
+        },
+        "TrackingId": "6c541d65-ccd6-4a0c-a157-cb6629323250"
+    }
+}</code></pre>
+<h3>Step 3: Parse Content Moderation Result</h3>
+<p>This action creates user-friendly tokens from JavaScript Object Notation (JSON) object properties so you can easily use those properties in the workflow.</p>
+<p><img src="https://cdn.buttercms.com/S05fjGgGQZadTQN5GZMu" /></p>
+<h3>Step 4: Initialize Table Storage Entity</h3>
+<p>This action initializes the comment entity which has information from raw event and results of Azure Content Moderator.</p>
+<p><img src="https://cdn.buttercms.com/0vTdpPstSG2yyXagR0ug" /></p>
+<h3>Step 5: Persists Data to Table Storage</h3>
+<p>Comment entity is persisted to the table storage via this action.</p>
+<p><img src="https://cdn.buttercms.com/DChrshkJQEqi8C5FBylH" /></p>
+<h3>Step 6: Initialize Quickchart data</h3>
+<p>This action initializes a variable which contains Quickchart JSON object as a string. Quickchart is used to generate a diagram based on Azure Content Moderator classification results. Later this chart is embedded to notification email.</p>
+<p><img src="https://cdn.buttercms.com/YPGXdcJfSAisa4lMjwRC" /></p>
+<h3>Step 7: Encode Quickchart content</h3>
+<p>This variable creates an HTML image tag which refers to Quickchart API service to generate chart image. Querystring parameter "C" contains Quickchart JSON object as a URI encoded format.</p>
+<p><img src="https://cdn.buttercms.com/XIlgDhhuSze81hNOORq4" /></p>
+<h3>Step 8: Create Approval Link</h3>
+<p>Like said earlier Cusdis Webhook event contains a link with a authentication token which enables comment approval without login. This variable creates an HTML link with that approval link.</p>
+<p><img src="https://cdn.buttercms.com/2hGQL0DbRbW6gWsMgTAc" /></p>
+<h3>Step 9: Send notification email</h3>
+<p>This Send Email action of Azure Communication Service gathers all required information to body of email and delivers email notification to moderator.</p>
+<p><img src="https://cdn.buttercms.com/4Ufib2mSodn8XO60VXgQ" /></p>
+<p>Final email notification looks like this. It contains original comment, review recommendation provided by Azure Content Moderator and chart provided by Quickchart about classification details of moderation.</p>
+<p><img src="https://cdn.buttercms.com/8CzUbBTrSvGhxrHQe70C" /></p>
+<h2>Summary</h2>
+<p>My initial plan was to test Azure Content Moderator API via Azure Functions but quickly I noticed that same API capabilities are also available in Logic App with pre-built actions. Creating this orchestration of the approval flow was really easy and straightforward with Logic Apps. It was also interested to investigate a bit about Azure Communication Service capabilities.</p>
+<p>Hopefully, some day I can automate this so that moderator interaction is required only if Azure Content Moderator suggests manual review. Otherwise comment is approved automatically via API (which is not currently possible).&nbsp;</p>
+<p>Logic App definition file is available in <a href="https://github.com/kalleantero/Cusdis.Webhook.LogicApp" rel="follow">Github</a>.</p></p>
+
+                <h2>Comments</h2>
+                                    
+                <div id="cusdis_thread"
+                  data-host="https://cusdis.com"
+                  data-app-id="86620953-7757-4f01-94f2-bfb88caff8a4"
+                  data-page-id="azure-content-moderator-comment-review"
+                  data-page-url="https://kalle-blog.azurewebsites.net/blog/azure-content-moderator-comment-review"
+                  data-page-title="Quick look to Azure Content Moderator and how it can be used to review blog comments?">
+                <script src="https://cusdis.com/js/cusdis.es.js"></script>
+
+                <div class="blog-content__pagenav">
+                    <div class="blog-content__nav">
+                            <div class="blog-content__prev">
+                                <a id="post-previous-how-to-model-azure-infra-creation-with-bicep" href="how-to-model-azure-infra-creation-with-bicep.html" rel="prev">
+                                    <span>Previous Post</span>
+                                    How to model Azure infrastructure creation in microservice environment with Bicep Modules ?
+                                </a>
+                            </div>
+                        </div>
+
+
+                    <div class="blog-content__all">
+                        <a href="../index.html" class="btn btn--primary">
+                            View All Post
+                        </a>
+                    </div>
+                </div>
+
+            </div><!-- end blog-content__main -->
+        </div> <!-- end blog-content -->
+
+    </article>
+
+
+
+    
+
+<!-- footer
+    ================================================== -->
+<footer>
+    <div class="row">
+        <div class="col-full">
+
+            <div class="footer-logo">
+                <a class="footer-site-logo" href="#0"><img src="../images/name.png" alt="Homepage"></a>
+            </div>
+
+            <ul class="footer-social">
+                <li>
+                    <a href="https://www.twitter.com/kmarjok">
+                        <i class="im im-twitter" aria-hidden="true"></i>
+                        <span>Twitter</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.linkedin.com/in/kallemarjokorpi">
+                        <i class="im im-linkedin" aria-hidden="true"></i>
+                        <span>Linkedin</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://github.com/kalleantero">
+                        <i class="im im-github" aria-hidden="true"></i>
+                        <span>Github</span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+    <div class="row footer-bottom">
+
+        <div class="col-twelve">
+            <div class="copyright">
+                <span>Copyright Kalle Marjokorpi 2023</span>
+                <span>Design by <a href="http://www.styleshout.com/">styleshout</a></span>
+                <span>Content management by <a href="http://www.buttercms.com/">Headless ButterCMS</a></span>
+
+            </div>
+
+        </div>
+
+    </div> <!-- end footer-bottom -->
+
+</footer> <!-- end footer -->
+   
+    <!-- Java Script
+     ================================================== -->
+
+    
+    
+    <!-- Cloudflare Web Analytics -->
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cac9fd24c1c04b6d9984ea31685b0414"}'></script><!-- End Cloudflare Web Analytics -->       
+
+</body>
+
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/azure-content-moderator-comment-review by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 27 Jan 2023 07:30:12 GMT -->
+</html>

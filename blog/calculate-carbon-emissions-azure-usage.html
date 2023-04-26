@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/calculate-carbon-emissions-azure-usage by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 26 Apr 2023 07:56:17 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+
+    
+    <title>Calculate your carbon emissions from Azure service usage - Blog by Kalle Marjokorpi</title>
+    <meta name="description" content="How you can estimate the carbon emissions associated to your Azure services usage.">
+    <meta name="author" content="Kalle Marjokorpi">
+
+
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="../css/base8bf4.css?dt=638180924333237784">
+    <link rel="stylesheet" href="../css/vendor8bf4.css?dt=638180924333237784">
+    <link rel="stylesheet" href="../css/main8bf4.css?dt=638180924333237784">
+
+    <script src="https://cdn.counter.dev/script.js" data-id="a019f4e1-6ec3-4293-8b98-7440925a9066" data-utcoffset="2"></script>
+
+</head>
+<body id="top">
+   
+    <!-- header
+    ================================================== -->
+
+    <!-- header
+   ================================================== -->
+
+<header class="s-header">
+
+    <div class="header-logo">
+        <a class="site-logo" href="../index.html"><img src="../images/logo2.png" alt="Homepage"></a>
+    </div>
+
+    
+
+    <nav class="header-nav-wrap">
+
+        <ul class="header-nav">
+
+
+            <li class=""><a id="top-navigation-link-root" href="../index.html" title="">Home</a></li>
+
+                <li id="top-navigation-link-about" class="smoothscroll"><a href="../about.html" title="">About me</a></li>
+
+        </ul>
+    </nav> <!-- end main-nav-wrap -->
+
+
+
+
+    <a class="header-menu-toggle" href="#0"><span>Menu</span></a>
+
+</header> <!-- end s-header -->
+
+
+
+    
+
+<!-- content
+   ================================================== -->
+
+
+    <article class="blog-single">
+
+        <!-- page header/blog hero
+    ================================================== -->
+
+        
+        <div class="page-header page-header--single page-hero" style=background-image:url(https://cdn.buttercms.com/1RsjIQzkT4K5Q1QgYUrx)>
+
+            <div class="row page-header__content narrow">
+                <article class="col-full">
+                    <div class="page-header__info">
+                        <div class="page-header__cat">
+                                <a id="post-category-api" href="category/api.html">API</a>
+                                <a id="post-category-azure" href="category/azure.html">Azure</a>
+                                <a id="post-category-powerbi" href="category/powerbi.html">PowerBI</a>
+                                <a id="post-category-sustainability" href="category/sustainability.html">Sustainability</a>
+                        </div>
+                    </div>
+                    <h1 class="page-header__title">
+                        <a href="#0" title="">
+                            Calculate your carbon emissions from Azure service usage
+                        </a>
+                    </h1>
+                    <ul class="page-header__meta">
+                        <li class="date">
+26.04.2023 06:49                        </li>
+                        <li class="author">
+                            By
+                            <span>Kalle Marjokorpi</span>
+                        </li>
+                    </ul>
+
+                </article>
+                
+            </div>
+
+        </div> <!-- end page-header -->
+
+        <div class="row blog-content">
+            <div class="col-full blog-content__main">
+
+                <p><p>I gathered to this blog post information about Azure Cloud sustainability and how you can estimate the carbon emissions associated to your Azure services usage.</p>
+<h2>About carbon dioxide CO2 emissions in general</h2>
+<p><span><a href="https://en.wikipedia.org/wiki/Carbon_dioxide" rel="follow">Carbon dioxide (CO2)</a> is a greenhouse gas which heavily influences for global warming and climate change. Burning fossil fuels and deforestation, have significantly increased the amount of CO2 in the atmosphere. This has been leading to rising temperatures, changing weather patterns, and other negative impacts on the environment.</span></p>
+<p><span>The success of Industrial Revolution in the late 18th century was heavily dependent about usage of fossil fuels such as coal and oil. Basically, </span><span>Carbon dioxide (CO2) emissions have been increasing since the Industrial Revolution.&nbsp;</span></p>
+<p><span>Carbon dioxide (CO2) emissions are still increasing in global level so there is still a lot of work to do. Most of the countries and different organizations &amp; corporations and individuals are already committed to decrease these carbon emissions.&nbsp;</span></p>
+<p><span>The European Parliament has adopted the European Climate Law, which raises the EU&rsquo;s 2030 emissions reduction target to at least 55% from 40% and makes climate neutrality by 2050 legally binding (<a href="https://www.europarl.europa.eu/news/en/headlines/society/20180305STO99003/reducing-carbon-emissions-eu-targets-and-measures" rel="follow">Reducing carbon emissions: EU targets and measures</a>, 2023)</span></p>
+<p><a href="https://cdn.buttercms.com/nLPQKoQRIaL8wDu9xsCS" rel="follow"><img src="https://cdn.buttercms.com/nLPQKoQRIaL8wDu9xsCS"></a></p>
+<p>Source: <a href="https://ourworldindata.org/co2-emissions" rel="follow">CO2 emissions - Our World in Data</a></p>
+<h2>Azure Sustainability</h2>
+<p><img src="https://cdn.buttercms.com/Piz4uUfgSSWgGXR8xY0Q" align="right" style="padding-left: 10px;"> Microsoft has declared that Azure has committed to focus on four key areas of environmental impact to local communities&mdash;carbon, water, waste, and ecosystems (<a href="https://azure.microsoft.com/en-us/explore/global-infrastructure/sustainability">Azure Sustainability)</a>.</p>
+<p>&nbsp;- 100% renewable energy by 2025<br>&nbsp;- Water positive by 2030 replenish more water than we consume by 2030.<br>&nbsp;- Zero-waste certification by 2030.<br>&nbsp;- Net-zerodeforestation from new construction.</p>
+<h3>How to find more sustainability information in Azure Region level?</h3>
+<p>Microsoft has created a&nbsp;<a href="https://datacenters.microsoft.com/globe/explore">Azure global infrastructure experience</a> tool which visualizes locations of Data centers in a globe and provides interesting sustainability information. This tool also visualizes Microsoft's participation to sustainability projects such as building wind or solar capabilities.</p>
+<p>Each Azure Region has an own sustainability fact sheet which presents interesting and useful information about Microsoft's local commitments in the area in those for key areas (mentioned in the above). You can find the sustainability fact sheet in the right panel when you have clicked one specific Region.</p>
+<p><a href="https://cdn.buttercms.com/eKotyec4Su9oFettlXyu" rel="follow"><img src="https://cdn.buttercms.com/eKotyec4Su9oFettlXyu" alt="undefined"></a></p>
+<h2>How to estimate the carbon emissions associated to your Azure services usage?</h2>
+<p>Currently there are at least two solutions available to estimate the carbon emissions associated to your Azure services usage.</p>
+<h3 class="ms-fontSize-28 ms-fontWeight-semibold title">Emissions Impact Dashboard for Azure</h3>
+<p>Emissions Impact Dashboard for Azure is a Power BI App which calculates your carbon emissions from the Azure cloud usage. Dashboard provides multiple views to carbon emission data such as emissions by Azure Service and emissions over the time. App has also an interesting view which explains thoroughly what kind of&nbsp;<a href="https://learn.microsoft.com/en-us/industry/sustainability/api-calculation-method" rel="follow">calculation methodologies</a> are used to present the data.</p>
+<p>You can find more information about this App from <a href="https://www.microsoft.com/en-us/sustainability/emissions-impact-dashboard" rel="follow">here</a>. This Power BI App is free and you can download it from&nbsp;<a href="https://appsource.microsoft.com/en-us/product/power-bi/coi-sustainability.emissions_impact_dashboard?exp=ubp8" rel="follow">here</a>.</p>
+<p><a href="https://cdn.buttercms.com/He4qD2oS6mLse4CUOPXZ" rel="follow"><img src="https://cdn.buttercms.com/He4qD2oS6mLse4CUOPXZ" alt="emissions-per-service.png"></a></p>
+<p><a href="https://cdn.buttercms.com/0oYd15qJQt2yWxOEYD2K" rel="follow"><img src="https://cdn.buttercms.com/0oYd15qJQt2yWxOEYD2K" alt="emissions-over-time.png"></a></p>
+<h3>Cloud for Sustainability API</h3>
+<p>Emissions Impact Dashboard for Azure is a ready and robust reporting tool to cloud carbon emission data.&nbsp;<a href="https://learn.microsoft.com/en-us/industry/sustainability/api-overview" rel="follow">Cloud for Sustainability API</a> provides an API level access to carbon emission data related to your Azure and also Microsoft 365 usage. Especially, if you need create a custom reporting or use the emission data e.g. to control your processes then Cloud for Sustainability API is your choice.&nbsp;</p>
+<p>Currently Cloud for Sustainability API is in public review and you need to request access to it from&nbsp;<a href="https://forms.office.com/pages/responsepage.aspx?id=v4j5cvGGr0GRqy180BHbR49k4f9GhgdKgobzK-I4SnNUME1UTkVWMThNVUdHUUNWRzNEQVNGMlkyTC4u" rel="follow">here</a>.</p>
+<p>You can find more information about the API from these links:</p>
+<p><a href="https://learn.microsoft.com/en-us/industry/sustainability/api-reference" rel="follow">Microsoft Cloud for Sustainability REST API reference</a><br><a href="https://learn.microsoft.com/en-us/industry/sustainability/api-odata" rel="follow">Cloud for Sustainability API (Preview) OData query examples</a></p>
+<h2>Green software development</h2>
+<p>The purpose of green software development is to develop software so that carbon emission reduction is considered in the architecture and processes. If you're interested about green software development I would suggest you to follow <a href="https://greensoftware.foundation/" rel="follow">The Green Software Foundation</a>. The Green Software Foundation&nbsp;is a non-profit organization with the mission to create a trusted ecosystem of people, standards, tooling and best practices for green software.&nbsp;</p>
+<h3>Carbon-Aware SDK</h3>
+<p>The Green Software Foundation has developed Carbon Aware SDK which helps you build the carbon aware software solutions with the intelligence to use the greenest energy sources. This enables that you can run your software when the electricity is clean and do less when the electricity is dirty, or runs in a location where the energy is cleaner (<a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk">Carbon-Aware SDK)</a></p></p>
+
+                <h2>Comments</h2>
+                                    
+                <div id="cusdis_thread"
+                  data-host="https://cusdis.com/"
+                  data-app-id="86620953-7757-4f01-94f2-bfb88caff8a4"
+                  data-page-id="calculate-carbon-emissions-azure-usage"
+                  data-page-url="calculate-carbon-emissions-azure-usage.html"
+                  data-page-title="Calculate your carbon emissions from Azure service usage">
+                <script src="https://cusdis.com/js/cusdis.es.js"></script>
+
+                <div class="blog-content__pagenav">
+                    <div class="blog-content__nav">
+                            <div class="blog-content__prev">
+                                <a id="post-previous-how-to-create-and-event-catalog" href="how-to-create-and-event-catalog.html" rel="prev">
+                                    <span>Previous Post</span>
+                                    How to create an Event Catalog?
+                                </a>
+                            </div>
+                        </div>
+
+
+                    <div class="blog-content__all">
+                        <a href="../index.html" class="btn btn--primary">
+                            View All Post
+                        </a>
+                    </div>
+                </div>
+
+            </div><!-- end blog-content__main -->
+        </div> <!-- end blog-content -->
+
+    </article>
+
+
+
+    
+
+<!-- footer
+    ================================================== -->
+<footer>
+    <div class="row">
+        <div class="col-full">
+
+            <div class="footer-logo">
+                <a class="footer-site-logo" href="#0"><img src="../images/name.png" alt="Homepage"></a>
+            </div>
+
+            <ul class="footer-social">
+                <li>
+                    <a href="https://www.twitter.com/kmarjok">
+                        <i class="im im-twitter" aria-hidden="true"></i>
+                        <span>Twitter</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.linkedin.com/in/kallemarjokorpi">
+                        <i class="im im-linkedin" aria-hidden="true"></i>
+                        <span>Linkedin</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://github.com/kalleantero">
+                        <i class="im im-github" aria-hidden="true"></i>
+                        <span>Github</span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+    <div class="row footer-bottom">
+
+        <div class="col-twelve">
+            <div class="copyright">
+                <span>Copyright Kalle Marjokorpi 2023</span>
+                <span>Design by <a href="http://www.styleshout.com/">styleshout</a></span>
+                <span>Content management by <a href="http://www.buttercms.com/">Headless ButterCMS</a></span>
+
+            </div>
+
+        </div>
+
+    </div> <!-- end footer-bottom -->
+
+</footer> <!-- end footer -->
+   
+    <!-- Java Script
+     ================================================== -->
+
+    
+    
+    <!-- Cloudflare Web Analytics -->
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cac9fd24c1c04b6d9984ea31685b0414"}'></script><!-- End Cloudflare Web Analytics -->       
+
+</body>
+
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/calculate-carbon-emissions-azure-usage by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 26 Apr 2023 07:56:20 GMT -->
+</html>

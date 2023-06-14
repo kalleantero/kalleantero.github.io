@@ -296,8 +296,8 @@ code {
     padding: .3rem .6rem;
     white-space: nowrap;
     background: #F1F1F1;
-    border: 1px solid #E1E1E1;
-    border-radius: 3px;
+    /*border: 1px solid #E1E1E1;
+    border-radius: 3px;*/
 }
 
 pre > code {
@@ -447,13 +447,17 @@ th, td {
     border-bottom: 1px solid #E8E8E8;
 }
 
+    td.noborder {
+        border-bottom: 0px!important;
+    }
+
 th {
     color: #0D0A0B;
     font-family: "montserrat-bold", sans-serif;
 }
 
 td {
-    line-height: 1.5;
+    /*line-height: 1.5;*/
 }
 
 th:first-child, td:first-child {
@@ -1288,13 +1292,13 @@ button::-moz-focus-inner, input::-moz-focus-inner {
     position: relative;
 }
 
-.section-intro.has-bottom-sep::after {
-    display: inline-block;
-    height: 1px;
-    width: 240px;
-    background-color: rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
+    .section-intro.has-bottom-sep::after {
+        display: inline-block;
+        height: 1px;
+        width: 240px;
+        /*background-color: rgba(0, 0, 0, 0.1);*/
+        text-align: center;
+    }
 
 
 /* ------------------------------------------------------------------- 

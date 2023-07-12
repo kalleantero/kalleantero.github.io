@@ -1,10 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html class="no-js" lang="en">
 
-<!-- Mirrored from kalle-blog.azurewebsites.net/blog/deploy-azure-infrastructure-with-azure-bicep by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 14 Jun 2023 08:06:48 GMT -->
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/deploy-azure-infrastructure-with-azure-bicep by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 12 Jul 2023 16:50:21 GMT -->
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
 <head>
 
+
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+    <title>Blog by Kalle Marjokorpi</title>
+    <meta name="description" content="This blog is concentrated to Microsoft and cloud technology, coding and architecture. Solutions, tips and knowledge from a developer to developer.">
+
+    <meta name="author" content="Kalle Marjokorpi">
+
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="../css/vendor7254.css?dt=638247770413467807">
+    <link rel="stylesheet" href="../css/styles7254.css?dt=638247770413467807">
+    <link rel="stylesheet" href="../css/cookieconsent7254.css?dt=638247770413467807" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="../css/tags7254.css?dt=638247770413467807">
+
+    <!-- script
+    ================================================== -->
+    <script src="../js/modernizr.js"></script>
+    <script defer src="../js/fontawesome/all.min.js"></script>
+
+    <!-- favicons
+    ================================================== -->
     <script type="text/plain" data-cookiecategory="analytics" async src="https://www.googletagmanager.com/gtag/js?id=G-DPTCQBZTWE"></script>
     <script type="text/plain" data-cookiecategory="analytics">
         window.dataLayer = window.dataLayer || [];
@@ -19,15 +46,7 @@
             t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
             y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
         })(window, document, "clarity", "script", "gr1x6zhls1");
-    </script><!---->
-
-    <!-- Deferred CSS loading (recommended)
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v2.9.0/dist/cookieconsent.css" media="print" onload="this.media='all'">
-    -->
-
-    <!--- basic page needs
-    ================================================== -->
-    <meta charset="utf-8">
+    </script>
 
     
     <title>Deploy Azure infrastructure with Azure Bicep - Blog by Kalle Marjokorpi</title>
@@ -35,17 +54,6 @@
     <meta name="author" content="Kalle Marjokorpi">
 
 
-    <!-- mobile specific metas
-    ================================================== -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-
-    <!-- CSS
-    ================================================== -->
-    <link rel="stylesheet" href="../css/cookieconsentb6b1.css?dt=638223264104092484" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="../css/baseb6b1.css?dt=638223264104092484">
-    <link rel="stylesheet" href="../css/vendorb6b1.css?dt=638223264104092484">
-    <link rel="stylesheet" href="../css/mainb6b1.css?dt=638223264104092484">
 
     <script defer src="../js/cookieconsent.js"></script>
     <script defer src="../js/cookieconsent-config.js"></script>
@@ -53,92 +61,86 @@
     <script defer src="../js/cusdis.es.js"></script>
 
 </head>
-<body id="top">    
+<body id="top">
 
-    <!-- header
+    <!-- preloader
     ================================================== -->
-
-    <!-- header
-   ================================================== -->
-
-<header class="s-header">
-
-    <div class="header-logo">
-        <a class="site-logo" href="../index.html"><img src="../images/logo2.png" alt="Homepage"></a>
+    <div id="preloader">
+        <div id="loader"></div>
     </div>
 
-    
+    <!-- header
+    ================================================== -->
 
-    <nav class="header-nav-wrap">
-
-        <ul class="header-nav">
-
-
-            <li class=""><a id="top-navigation-link-root" href="../index.html" title="">Home</a></li>
-
-                <li id="top-navigation-link-about" class="smoothscroll"><a href="../about.html" title="">About me</a></li>
-
-        </ul>
-    </nav> <!-- end main-nav-wrap -->
-
-
-
-
-    <a class="header-menu-toggle" href="#0"><span>Menu</span></a>
-
-</header> <!-- end s-header -->
-
-
-
-    
-
-<!-- content
+    <!-- header
    ================================================== -->
 
 
-    <article class="blog-single">
-
-        <!-- page header/blog hero
+ <!-- header
     ================================================== -->
+<header class="s-header s-header--opaque">
 
-        
-        <div class="page-header page-header--single page-hero" style=background-image:url(https://cdn.buttercms.com/hr2LCbgMTF6DKqDYwR3h)>
+        <div class="s-header__logo">
+            Kalle Marjokorpi
+        </div>
 
-            <div class="row page-header__content narrow">
-                <article class="col-full">
-                    <div class="page-header__info">
-                        <div class="page-header__cat">
-                                <a id="post-category-azure" href="category/azure.html">Azure</a>
-                                <a id="post-category-bicep" href="category/bicep.html">bicep</a>
-                                <a id="post-category-infrastructure-as-a-code" href="category/infrastructure-as-a-code.html">infrastructure as a code</a>
-                                <a id="post-category-net6" href="category/net6.html">.NET6</a>
-                                <a id="post-category-yaml" href="category/yaml.html">yaml</a>
-                        </div>
-                    </div>
-                    <h1 class="page-header__title">
-                        <a href="#0" title="">
-                            Deploy .NET 6 application and infrastructure to Azure with Bicep and YAML
-                        </a>
-                    </h1>
-                    <ul class="page-header__meta">
-                        <li class="date">
-30.10.2021 09:14                        </li>
-                        <li class="author">
-                            By
-                            <span>Kalle Marjokorpi</span>
-                        </li>
-                    </ul>
+        <div class="row s-header__navigation">
 
-                </article>
-                
-            </div>
+            
 
-        </div> <!-- end page-header -->
+    <nav class="s-header__nav-wrap">
+        <h3 class="s-header__nav-heading h6">Navigate to</h3>
 
-        <div class="row blog-content">
-            <div class="col-full blog-content__main">
+        <ul class="s-header__nav">
 
-                <p><p>This week I worked with Azure Bicep and YAML to deploy Azure infrastructure. This blog post shows how to utilize Azure Bicep and YAML ("build blocks") to deploy Weather Forecast application and infrastructure to the Azure. This sample utilizes Weather Forecast application which was created in the earlier <a href="https://www.kallemarjokorpi.fi/blog/no-tokens-in-browser-with-duende-bff.html" rel="follow">blog post</a>.</p>
+
+            <li><a id="top-navigation-link-root" href="../index.html" title="Home">Home</a></li>
+
+                <li><a id="top-navigation-link-about"  href="../about.html" title="About me">About me</a></li>
+
+
+        </ul> <!-- end s-header__nav -->
+
+        <a href="#0" title="Close Menu" class="s-header__overlay-close close-mobile-menu">Close</a>
+
+    </nav> <!-- end s-header__nav-wrap -->
+
+
+            
+
+        </div> <!-- end s-header__navigation -->
+
+        <a class="s-header__toggle-menu" href="#0" title="Menu"><span>Menu</span></a>
+
+
+    </header> <!-- end s-header -->
+
+
+
+
+    
+
+
+
+    <!-- content
+        ================================================== -->
+    <section class="s-content">
+
+        <div class="row">
+            <div class="column large-12">
+
+                <article class="s-content__entry format-standard">
+
+
+                    <div class="s-content__entry-header">
+                    <h1 class="s-content__title s-content__title--post">Deploy .NET 6 application and infrastructure to Azure with Bicep and YAML</h1>
+                    </div> <!-- end s-content__entry-header -->
+
+                    <div class="s-content__primary">
+
+                        <div class="s-content__entry-content">
+
+                            <p>This week I worked with Azure Bicep and YAML to deploy Azure infrastructure. This blog post shows how to utilize Azure Bicep and YAML ("build blocks") to deploy Weather Forecast application and infrastructure to the Azure. This sample utilizes Weather Forecast application which was created in the earlier <a href="https://www.kallemarjokorpi.fi/blog/no-tokens-in-browser-with-duende-bff.html" rel="follow">blog post</a>.</p>
 <h2>What is Azure Bicep?</h2>
 <p>Shortly Azure Bicep is a declarative domain-specific language (DSL) to deploy Azure resources. You can use Bicep instead of JSON to develop your Azure Resource Manager templates (ARM templates). Bicep is a transparent abstraction over ARM template JSON and doesn't lose any of the JSON template capabilities. During deployment, the Bicep CLI converts a Bicep file into ARM template JSON. Source: <a href="https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/overview" rel="follow">What is Bicep?</a></p>
 <p><img src="https://cdn.buttercms.com/N0lgQpykQqW7eqDe3BrN" alt="undefined" /></p>
@@ -421,100 +423,165 @@ module apiAppService './webapp.bicep' = {
 <p>You can check full samples of YAML pipelines from <a href="https://github.com/kalleantero/BFF-sample" rel="follow">here</a>.&nbsp;</p>
 <h2>Summary</h2>
 <p>This was my first touch with Bicep and YAML. I have earlier worked with ARM templates and graphical editor of Azure DevOps to build pipelines. I'm very impressed how easy it was to generate infrastructure templates with Bicep and utilize Bicep in YAML based pipelines.. I would say that Bicep syntax is very developer friendly. Bicep Modules are also a nice way to structure templates and increase reusability. I'm definitely using Bicep in the future.&nbsp;</p>
-<p></p></p>
+<p></p>
 
-                <h2>Comments</h2>
-                                    
-                <div id="cusdis_thread"
+                        </div> <!-- end s-entry__entry-content -->
+
+                        <div class="s-content__entry-meta">
+
+                            <div class="entry-author meta-blk">
+                                <div class="author-avatar">
+                                <img class="avatar" src="../images/avatars/kalle.jpg" alt="">
+                                </div>
+                                <div class="byline">
+                                    <span class="bytext">Posted By</span>
+                                    Kalle Marjokorpi
+                                </div>
+                            </div>
+
+                            <div class="meta-bottom">
+
+                                <div class="entry-cat-links meta-blk">
+
+                                    <span>On</span>
+30.10.2021                                </div>
+
+                                <div class="entry-tags meta-blk">
+                                    <span class="tagtext">Tags</span>
+                                            <a id="post-category-azure" href="category/azure.html">Azure</a>
+                                            <a id="post-category-bicep" href="category/bicep.html">bicep</a>
+                                            <a id="post-category-infrastructure-as-a-code" href="category/infrastructure-as-a-code.html">infrastructure as a code</a>
+                                            <a id="post-category-net6" href="category/net6.html">.NET6</a>
+                                            <a id="post-category-yaml" href="category/yaml.html">yaml</a>
+                                </div>
+
+                            </div>
+
+                        </div> <!-- s-content__entry-meta -->
+
+                        <div class="s-content__pagenav">
+                            <div class="prev-nav">
+                                    <a id="post-previous-get-notified-about-service-health-incidents-that-have-occurred-in-azure" href="get-notified-about-service-health-incidents-that-have-occurred-in-azure.html" rel="prev">
+                                        <span>Previous</span>
+                                        Get notified about service health incidents that have occurred in Azure
+                                    </a>
+                            </div>
+                            <div class="next-nav">
+
+                 
+                                <a id="post-next-assigning-access-policies-to-keyvault-with-bicep" href="assigning-access-policies-to-keyvault-with-bicep.html" rel="next">
+                                    <span>Next</span>
+                                    Lessons learned: Assigning Access Policies to KeyVault with Bicep
+                                </a>
+
+                            
+                            </div>
+                        </div> <!-- end s-content__pagenav -->
+
+                    </div> <!-- end s-content__primary -->
+                </article> <!-- end entry -->
+
+            </div> <!-- end column -->
+        </div> <!-- end row -->
+        <!-- comments
+        ================================================== -->
+        <div class="comments-wrap">
+
+            <div id="comments" class="row">
+                <div class="column large-12">
+
+                    <h3>Comments</h3>
+
+                          <div id="cusdis_thread"
                   data-host="https://cusdis.com"
                   data-app-id="86620953-7757-4f01-94f2-bfb88caff8a4"
                   data-page-id="deploy-azure-infrastructure-with-azure-bicep"
                   data-page-url="https://kalle-blog.azurewebsites.net/blog/deploy-azure-infrastructure-with-azure-bicep"
                   data-page-title="Deploy .NET 6 application and infrastructure to Azure with Bicep and YAML"></div>
-             
-
-                <div class="blog-content__pagenav">
-                    <div class="blog-content__nav">
-                            <div class="blog-content__prev">
-                                <a id="post-previous-get-notified-about-service-health-incidents-that-have-occurred-in-azure" href="get-notified-about-service-health-incidents-that-have-occurred-in-azure.html" rel="prev">
-                                    <span>Previous Post</span>
-                                    Get notified about service health incidents that have occurred in Azure
-                                </a>
-                            </div>
-                            <div class="blog-content__next">
-                                <a id="post-next-assigning-access-policies-to-keyvault-with-bicep" href="assigning-access-policies-to-keyvault-with-bicep.html" rel="next">
-                                    <span>Next Post</span>
-                                    Lessons learned: Assigning Access Policies to KeyVault with Bicep
-                                </a>
-                            </div>
-                        </div>
 
 
-                    <div class="blog-content__all">
-                        <a href="../index.html" class="btn btn--primary">
-                            View All Post
-                        </a>
-                    </div>
-                </div>
+                </div> <!-- end col-full -->
+            </div> <!-- end comments -->
 
-            </div><!-- end blog-content__main -->
-        </div> <!-- end blog-content -->
 
-    </article>
+
+        </div> <!-- end comments-wrap -->
+
+
+    </section> <!-- end s-content -->
+
 
 
 
     
 
+
 <!-- footer
-    ================================================== -->
-<footer>
-    <div class="row">
-        <div class="col-full">
+================================================== -->
+<footer class="s-footer">
 
-            <div class="footer-logo">
-                <a class="footer-site-logo" href="#0"><img src="../images/name.png" alt="Homepage"></a>
+    <div class="s-footer__main">
+
+        <div class="row">
+
+               <div class="column large-3 medium-6 tab-12 s-footer__info">
+
+                <h5>About Site</h5>
+                <p>
+                    This blog is concentrated to Microsoft and cloud technology, coding and architecture. Solutions, tips and knowledge from a developer to developer.
+                </p>
+
+
+
+            </div> <!-- end s-footer__info -->
+
+            <div class="column large-2 medium-3 tab-6 s-footer__site-links">
+
+                <h5>Site Links</h5>
+
+                <ul>
+                    <li><a href="../about.html">About me</a></li>
+                </ul>
+
+            </div> <!-- end s-footer__site-links -->
+
+             <div class="column large-2 medium-3 tab-6 s-footer__social-links">
+
+                <h5>Follow</h5>
+
+                <ul>
+                    <li><a href="https://twitter.com/kmarjok">Twitter</a></li>
+                    <li><a href="https://www.linkedin.com/in/kallemarjokorpi/">Linkedin</a></li>
+                    <li><a href="https://github.com/kalleantero">GitHub</a></li>
+                </ul>
+
+            </div> <!-- end s-footer__social links -->
+
+
+        </div> <!-- end row -->
+
+    </div> <!-- end s-footer__main -->
+
+    <div class="s-footer__bottom">
+        <div class="row">
+            <div class="column">
+                <div class="ss-copyright">
+                    <span>Copyright Kalle Marjokorpi 2023</span>
+                    <span>Design by <a href="http://www.styleshout.com/">styleshout</a></span>
+                    <span>Content management by <a href="http://www.buttercms.com/">Headless ButterCMS</a></span>
+
+                </div> <!-- end ss-copyright -->
             </div>
-
-            <ul class="footer-social">
-                <li>
-                    <a href="https://www.twitter.com/kmarjok">
-                        <i class="im im-twitter" aria-hidden="true"></i>
-                        <span>Twitter</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="https://www.linkedin.com/in/kallemarjokorpi">
-                        <i class="im im-linkedin" aria-hidden="true"></i>
-                        <span>Linkedin</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="https://github.com/kalleantero">
-                        <i class="im im-github" aria-hidden="true"></i>
-                        <span>Github</span>
-                    </a>
-                </li>
-            </ul>
-
-        </div>
-    </div>
-
-    <div class="row footer-bottom">
-
-        <div class="col-twelve">
-            <div class="copyright">
-                <span>Copyright Kalle Marjokorpi 2023</span>
-                <span>Design by <a href="http://www.styleshout.com/">styleshout</a></span>
-                <span>Content management by <a href="http://www.buttercms.com/">Headless ButterCMS</a></span>
-
-            </div>
-
         </div>
 
-    </div> <!-- end footer-bottom -->
+        <div class="ss-go-top">
+            <a class="smoothscroll" title="Back to Top" href="#top">
+                <svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" width="15" height="15"><path d="M7.5 1.5l.354-.354L7.5.793l-.354.353.354.354zm-.354.354l4 4 .708-.708-4-4-.708.708zm0-.708l-4 4 .708.708 4-4-.708-.708zM7 1.5V14h1V1.5H7z" fill="currentColor"></path></svg>
+            </a>
+        </div> <!-- end ss-go-top -->
+    </div> <!-- end s-footer__bottom -->
 
-</footer> <!-- end footer -->
+</footer> <!-- end s-footer -->
    
     <!-- Java Script
      ================================================== -->
@@ -522,9 +589,17 @@ module apiAppService './webapp.bicep' = {
     
     
     <!-- Cloudflare Web Analytics -->
-    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cac9fd24c1c04b6d9984ea31685b0414"}'></script><!-- End Cloudflare Web Analytics -->       
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cac9fd24c1c04b6d9984ea31685b0414"}'></script><!-- End Cloudflare Web Analytics -->
+    <!-- Java Script
+    ================================================== -->
+    <script src="../js/jquery-3.5.0.min.js"></script>
+    <script src="../js/plugins.js"></script>
+    <script src="../js/main.js"></script>
+
+    <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="kmarjok" data-description="Support me on Buy me a coffee!" data-message="" data-color="#40DCA5" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
+
 
 </body>
 
-<!-- Mirrored from kalle-blog.azurewebsites.net/blog/deploy-azure-infrastructure-with-azure-bicep by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 14 Jun 2023 08:06:52 GMT -->
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/deploy-azure-infrastructure-with-azure-bicep by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 12 Jul 2023 16:50:25 GMT -->
 </html>

@@ -1,0 +1,73 @@
+/* ------------------------------------------------------------------- 
+ * tags:
+ * ------------------------------------------------------------------- */
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 960px;
+    margin: auto;
+    padding: 2rem 0 1rem;
+    list-style: none;
+}
+
+.tag {
+    display: flex;
+    align-items: center;
+    margin: 0.25rem 1rem;
+}
+
+    .tag a {
+        text-align: center;
+        padding: 5px;
+        text-decoration: none;
+        font-size: 1.0rem;
+        text-transform: uppercase;
+        letter-spacing: .2rem;
+    }
+
+
+        .tag a.tagsize-2 {
+            font-size: 1.2rem;
+        }
+
+        .tag a.tagsize-3 {
+            font-size: 1.4rem;
+        }
+
+        .tag a.tagsize-4 {
+            font-size: 1.6rem;
+        }
+
+        .tag a.tagsize-5 {
+            font-size: 1.8rem;
+        }
+
+        .tag a.tagsize-6 {
+            font-size: 2.2rem;
+        }
+
+        .tag a.tagsize-7 {
+            font-size: 2.4rem;
+        }
+
+        .tag a.tagsize-8 {
+            font-size: 2.6rem;
+        }
+
+        .tag a.tagsize-9 {
+            font-size: 2.8rem;
+        }
+
+        .tag a.tagsize-10 {
+            font-size: 3.2rem;
+        }
+
+        .tag a.tagsize-11 {
+            font-size: 3.4rem;
+        }
+
+        .tag a.tagsize-12 {
+            font-size: 3.6rem;
+        }

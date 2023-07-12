@@ -1,10 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html class="no-js" lang="en">
 
-<!-- Mirrored from kalle-blog.azurewebsites.net/blog/category/azure-communication-services by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 14 Jun 2023 08:03:10 GMT -->
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/category/azure-communication-services by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 12 Jul 2023 16:46:48 GMT -->
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
 <head>
 
+
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+    <title>Blog by Kalle Marjokorpi</title>
+    <meta name="description" content="This blog is concentrated to Microsoft and cloud technology, coding and architecture. Solutions, tips and knowledge from a developer to developer.">
+
+    <meta name="author" content="Kalle Marjokorpi">
+
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="../../css/vendor9c28.css?dt=638247769893784331">
+    <link rel="stylesheet" href="../../css/styles9c28.css?dt=638247769893784331">
+    <link rel="stylesheet" href="../../css/cookieconsent9c28.css?dt=638247769893784331" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="../../css/tags9c28.css?dt=638247769893784331">
+
+    <!-- script
+    ================================================== -->
+    <script src="../../js/modernizr.js"></script>
+    <script defer src="../../js/fontawesome/all.min.js"></script>
+
+    <!-- favicons
+    ================================================== -->
     <script type="text/plain" data-cookiecategory="analytics" async src="https://www.googletagmanager.com/gtag/js?id=G-DPTCQBZTWE"></script>
     <script type="text/plain" data-cookiecategory="analytics">
         window.dataLayer = window.dataLayer || [];
@@ -19,32 +46,13 @@
             t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
             y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
         })(window, document, "clarity", "script", "gr1x6zhls1");
-    </script><!---->
-
-    <!-- Deferred CSS loading (recommended)
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v2.9.0/dist/cookieconsent.css" media="print" onload="this.media='all'">
-    -->
-
-    <!--- basic page needs
-    ================================================== -->
-    <meta charset="utf-8">
+    </script>
 
     
     <title>Blog by Kalle Marjokorpi</title>
     <meta name="description" content="This blog is concentrated to Microsoft and cloud technology, coding and architecture. Solutions, tips and knowledge from a developer to developer.">
 
 
-    <!-- mobile specific metas
-    ================================================== -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-
-    <!-- CSS
-    ================================================== -->
-    <link rel="stylesheet" href="../../css/cookieconsent6f71.css?dt=638223263535512151" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="../../css/base6f71.css?dt=638223263535512151">
-    <link rel="stylesheet" href="../../css/vendor6f71.css?dt=638223263535512151">
-    <link rel="stylesheet" href="../../css/main6f71.css?dt=638223263535512151">
 
     <script defer src="../../js/cookieconsent.js"></script>
     <script defer src="../../js/cookieconsent-config.js"></script>
@@ -52,7 +60,13 @@
     <script defer src="../../js/cusdis.es.js"></script>
 
 </head>
-<body id="top">    
+<body id="top">
+
+    <!-- preloader
+    ================================================== -->
+    <div id="preloader">
+        <div id="loader"></div>
+    </div>
 
     <!-- header
     ================================================== -->
@@ -60,32 +74,46 @@
     <!-- header
    ================================================== -->
 
-<header class="s-header">
 
-    <div class="header-logo">
-        <a class="site-logo" href="../../index.html"><img src="../../images/logo2.png" alt="Homepage"></a>
-    </div>
+ <!-- header
+    ================================================== -->
+<header class="s-header s-header--opaque">
 
-    
+        <div class="s-header__logo">
+            Kalle Marjokorpi
+        </div>
 
-    <nav class="header-nav-wrap">
+        <div class="row s-header__navigation">
 
-        <ul class="header-nav">
+            
 
+    <nav class="s-header__nav-wrap">
+        <h3 class="s-header__nav-heading h6">Navigate to</h3>
 
-            <li class=""><a id="top-navigation-link-root" href="../../index.html" title="">Home</a></li>
-
-                <li id="top-navigation-link-about" class="smoothscroll"><a href="../../about.html" title="">About me</a></li>
-
-        </ul>
-    </nav> <!-- end main-nav-wrap -->
+        <ul class="s-header__nav">
 
 
+            <li><a id="top-navigation-link-root" href="../../index.html" title="Home">Home</a></li>
+
+                <li><a id="top-navigation-link-about"  href="../../about.html" title="About me">About me</a></li>
 
 
-    <a class="header-menu-toggle" href="#0"><span>Menu</span></a>
+        </ul> <!-- end s-header__nav -->
 
-</header> <!-- end s-header -->
+        <a href="#0" title="Close Menu" class="s-header__overlay-close close-mobile-menu">Close</a>
+
+    </nav> <!-- end s-header__nav-wrap -->
+
+
+            
+
+        </div> <!-- end s-header__navigation -->
+
+        <a class="s-header__toggle-menu" href="#0" title="Menu"><span>Menu</span></a>
+
+
+    </header> <!-- end s-header -->
+
 
 
 
@@ -95,192 +123,162 @@
     ================================================== -->
 
 
-<section class="page-header page-hero" style=background-image:url(https://cdn.buttercms.com/aOOSq7ZURniEmy7Jkd4G)>
-       
-    <div class="row page-header__content">
-        <article class="col-full">
 
-            <div class="page-header__info">
-                <div class="page-header__cat">
-                        <a id="post-category-azure" href="azure.html">Azure</a>
-                        <a id="post-category-logic-apps" href="logic-apps.html">Logic Apps</a>
-                        <a id="post-category-azure-cli" href="azure-cli.html">Azure CLI</a>
-                        <a id="post-category-azure-communication-services" href="azure-communication-services.html">Azure Communication Services</a>
-                        <a id="post-category-azure-content-moderator" href="azure-content-moderator.html">Azure Content Moderator</a>
+<!-- hero
+   ================================================== -->
+<section id="hero" class="s-hero">
+
+    <div class="s-hero__slider">
+
+        <div class="s-hero__slide">
+
+            <div class="s-hero__slide-bg" style="background-image: url(https://cdn.buttercms.com/aOOSq7ZURniEmy7Jkd4G);"></div>
+
+            <div class="row s-hero__slide-content animate-this">
+                <div class="column">
+                    <div class="s-hero__slide-meta">
+                        <span class="cat-links">
+                                <a id="post-category-azure" href="azure.html">Azure</a>
+                                <a id="post-category-logic-apps" href="logic-apps.html">Logic Apps</a>
+                                <a id="post-category-azure-cli" href="azure-cli.html">Azure CLI</a>
+                                <a id="post-category-azure-communication-services" href="azure-communication-services.html">Azure Communication Services</a>
+                                <a id="post-category-azure-content-moderator" href="azure-content-moderator.html">Azure Content Moderator</a>
+
+                        </span>
+                        <span class="byline">
+                            Posted by
+                            <span class="author">
+                                <a href="#0">Kalle Marjokorpi</a>
+                            </span>
+                            at
+27.01.2023                        </span>
+                    </div>
+                    <h1 class="s-hero__slide-text">
+                        <a href="../azure-content-moderator-comment-review.html" title="">
+                            Quick look to Azure Content Moderator and how it can be used to review blog comments?
+                        </a>
+                    </h1>
                 </div>
-                <div class="page-header__date">
-27.01.2023 06:50                </div>
             </div>
 
-            <h1 class="page-header__title">
-                <a href="../azure-content-moderator-comment-review.html" title="">
-                    Quick look to Azure Content Moderator and how it can be used to review blog comments?
-                </a>
-            </h1>
-            <p>This blog post introduces you to Azure Content Moderator and shows how to integrate it to blog post commenting process as a text moderator.</p>
-            <p>
-                <a href="../azure-content-moderator-comment-review.html" class="btn btn--stroke page-header__btn">Read More</a>
-            </p>
-        </article>
-    </div>
+        </div> <!-- end s-hero__slide -->
 
-</section> <!-- end page-header -->
-<!-- blog
-================================================== -->
-<section class="blog-content-wrap">
+    </div> <!-- end s-hero__slider -->
 
-    <div class="row blog-content">
-        <div class="col-full">
-
-            <div class="blog-list block-1-2 block-tab-full">
-
-
-
-            </div> <!-- end blog-list -->
-
-            
-
-    <div class="blog-tags">
-   
-        <ul class="tags">
-
-                <li id="category-link-ai" class="tag"><a href="ai.html" data-weight="2" class="tagsize-2" title="">AI</a></li>
-                <li id="category-link-api" class="tag"><a href="api.html" data-weight="5" class="tagsize-5" title="">API</a></li>
-                <li id="category-link-api-testing" class="tag"><a href="api-testing.html" data-weight="2" class="tagsize-2" title="">API testing</a></li>
-                <li id="category-link-architecture" class="tag"><a href="architecture.html" data-weight="3" class="tagsize-3" title="">Architecture</a></li>
-                <li id="category-link-authentication" class="tag"><a href="authentication.html" data-weight="5" class="tagsize-5" title="">Authentication</a></li>
-                <li id="category-link-automation" class="tag"><a href="automation.html" data-weight="1" class="tagsize-1" title="">Automation</a></li>
-                <li id="category-link-azure" class="tag"><a href="azure.html" data-weight="10" class="tagsize-10" title="">Azure</a></li>
-                <li id="category-link-azure-ad" class="tag"><a href="azure-ad.html" data-weight="2" class="tagsize-2" title="">Azure AD</a></li>
-                <li id="category-link-azure-api-for-fhir" class="tag"><a href="azure-api-for-fhir.html" data-weight="3" class="tagsize-3" title="">Azure API for FHIR</a></li>
-                <li id="category-link-azure-app-service" class="tag"><a href="azure-app-service.html" data-weight="3" class="tagsize-3" title="">Azure App Service</a></li>
-                <li id="category-link-azure-b2b" class="tag"><a href="azure-b2b.html" data-weight="1" class="tagsize-1" title="">Azure B2B</a></li>
-                <li id="category-link-azure-b2c" class="tag"><a href="azure-b2c.html" data-weight="4" class="tagsize-4" title="">Azure B2C</a></li>
-                <li id="category-link-azure-cli" class="tag"><a href="azure-cli.html" data-weight="1" class="tagsize-1" title="">Azure CLI</a></li>
-                <li id="category-link-azure-cognitive-services" class="tag"><a href="azure-cognitive-services.html" data-weight="1" class="tagsize-1" title="">Azure Cognitive Services</a></li>
-                <li id="category-link-azure-communication-services" class="tag"><a href="azure-communication-services.html" data-weight="1" class="tagsize-1" title="">Azure Communication Services</a></li>
-                <li id="category-link-azure-content-moderator" class="tag"><a href="azure-content-moderator.html" data-weight="1" class="tagsize-1" title="">Azure Content Moderator</a></li>
-                <li id="category-link-azure-devops" class="tag"><a href="azure-devops.html" data-weight="9" class="tagsize-9" title="">Azure DevOps</a></li>
-                <li id="category-link-azure-function" class="tag"><a href="azure-function.html" data-weight="3" class="tagsize-3" title="">Azure Function</a></li>
-                <li id="category-link-azure-service-fabric" class="tag"><a href="azure-service-fabric.html" data-weight="1" class="tagsize-1" title="">Azure Service Fabric</a></li>
-                <li id="category-link-bff" class="tag"><a href="bff.html" data-weight="4" class="tagsize-4" title="">BFF</a></li>
-                <li id="category-link-bicep" class="tag"><a href="bicep.html" data-weight="8" class="tagsize-8" title="">bicep</a></li>
-                <li id="category-link-blazor" class="tag"><a href="blazor.html" data-weight="1" class="tagsize-1" title="">Blazor</a></li>
-                <li id="category-link-c" class="tag"><a href="c.html" data-weight="1" class="tagsize-1" title="">C#</a></li>
-                <li id="category-link-cognitive-services" class="tag"><a href="cognitive-services.html" data-weight="1" class="tagsize-1" title="">Cognitive Services</a></li>
-                <li id="category-link-database" class="tag"><a href="database.html" data-weight="1" class="tagsize-1" title="">Database</a></li>
-                <li id="category-link-data-collection" class="tag"><a href="data-collection.html" data-weight="1" class="tagsize-1" title="">data collection</a></li>
-                <li id="category-link-data-export" class="tag"><a href="data-export.html" data-weight="1" class="tagsize-1" title="">Data Export</a></li>
-                <li id="category-link-data-import" class="tag"><a href="data-import.html" data-weight="1" class="tagsize-1" title="">Data Import</a></li>
-                <li id="category-link-developer-tools" class="tag"><a href="developer-tools.html" data-weight="2" class="tagsize-2" title="">developer tools</a></li>
-                <li id="category-link-eventcatalog" class="tag"><a href="eventcatalog.html" data-weight="1" class="tagsize-1" title="">eventcatalog</a></li>
-                <li id="category-link-eventgrid" class="tag"><a href="eventgrid.html" data-weight="2" class="tagsize-2" title="">EventGrid</a></li>
-                <li id="category-link-eventhub" class="tag"><a href="eventhub.html" data-weight="1" class="tagsize-1" title="">eventhub</a></li>
-                <li id="category-link-fhir-converter" class="tag"><a href="fhir-converter.html" data-weight="1" class="tagsize-1" title="">FHIR Converter</a></li>
-                <li id="category-link-github-pages" class="tag"><a href="github-pages.html" data-weight="1" class="tagsize-1" title="">GitHub Pages</a></li>
-                <li id="category-link-google-cloud" class="tag"><a href="google-cloud.html" data-weight="1" class="tagsize-1" title="">Google Cloud</a></li>
-                <li id="category-link-governance" class="tag"><a href="governance.html" data-weight="2" class="tagsize-2" title="">Governance</a></li>
-                <li id="category-link-headless-cms" class="tag"><a href="headless-cms.html" data-weight="1" class="tagsize-1" title="">Headless CMS</a></li>
-                <li id="category-link-health-care" class="tag"><a href="health-care.html" data-weight="6" class="tagsize-6" title="">Health Care</a></li>
-                <li id="category-link-identity-magement" class="tag"><a href="identity-magement.html" data-weight="1" class="tagsize-1" title="">Identity Magement</a></li>
-                <li id="category-link-infra" class="tag"><a href="infra.html" data-weight="1" class="tagsize-1" title="">Infra</a></li>
-                <li id="category-link-infrastructure-as-a-code" class="tag"><a href="infrastructure-as-a-code.html" data-weight="5" class="tagsize-5" title="">infrastructure as a code</a></li>
-                <li id="category-link-integration" class="tag"><a href="integration.html" data-weight="1" class="tagsize-1" title="">Integration</a></li>
-                <li id="category-link-keyvault" class="tag"><a href="keyvault.html" data-weight="2" class="tagsize-2" title="">KeyVault</a></li>
-                <li id="category-link-key-vault" class="tag"><a href="key-vault.html" data-weight="1" class="tagsize-1" title="">Key Vault</a></li>
-                <li id="category-link-linux" class="tag"><a href="linux.html" data-weight="1" class="tagsize-1" title="">Linux</a></li>
-                <li id="category-link-logic-apps" class="tag"><a href="logic-apps.html" data-weight="3" class="tagsize-3" title="">Logic Apps</a></li>
-                <li id="category-link-mfa" class="tag"><a href="mfa.html" data-weight="1" class="tagsize-1" title="">MFA</a></li>
-                <li id="category-link-micro-frontend-architecture" class="tag"><a href="micro-frontend-architecture.html" data-weight="2" class="tagsize-2" title="">Micro-Frontend Architecture</a></li>
-                <li id="category-link-migrations" class="tag"><a href="migrations.html" data-weight="1" class="tagsize-1" title="">Migrations</a></li>
-                <li id="category-link-minimal-api" class="tag"><a href="minimal-api.html" data-weight="3" class="tagsize-3" title="">Minimal API</a></li>
-                <li id="category-link-monitoring" class="tag"><a href="monitoring.html" data-weight="1" class="tagsize-1" title="">Monitoring</a></li>
-                <li id="category-link-net6" class="tag"><a href="net6.html" data-weight="5" class="tagsize-5" title="">.NET6</a></li>
-                <li id="category-link-notes" class="tag"><a href="notes.html" data-weight="1" class="tagsize-1" title="">Notes</a></li>
-                <li id="category-link-onenote" class="tag"><a href="onenote.html" data-weight="1" class="tagsize-1" title="">OneNote</a></li>
-                <li id="category-link-philips-hue" class="tag"><a href="philips-hue.html" data-weight="1" class="tagsize-1" title="">Philips Hue</a></li>
-                <li id="category-link-postman" class="tag"><a href="postman.html" data-weight="2" class="tagsize-2" title="">Postman</a></li>
-                <li id="category-link-powerbi" class="tag"><a href="powerbi.html" data-weight="1" class="tagsize-1" title="">PowerBI</a></li>
-                <li id="category-link-powershell" class="tag"><a href="powershell.html" data-weight="2" class="tagsize-2" title="">PowerShell</a></li>
-                <li id="category-link-privacy" class="tag"><a href="privacy.html" data-weight="1" class="tagsize-1" title="">privacy</a></li>
-                <li id="category-link-remote-working" class="tag"><a href="remote-working.html" data-weight="1" class="tagsize-1" title="">Remote working</a></li>
-                <li id="category-link-reverse-proxy" class="tag"><a href="reverse-proxy.html" data-weight="2" class="tagsize-2" title="">Reverse Proxy</a></li>
-                <li id="category-link-security" class="tag"><a href="security.html" data-weight="1" class="tagsize-1" title="">Security</a></li>
-                <li id="category-link-service-health" class="tag"><a href="service-health.html" data-weight="1" class="tagsize-1" title="">Service Health</a></li>
-                <li id="category-link-slack" class="tag"><a href="slack.html" data-weight="1" class="tagsize-1" title="">Slack</a></li>
-                <li id="category-link-sustainability" class="tag"><a href="sustainability.html" data-weight="1" class="tagsize-1" title="">Sustainability</a></li>
-                <li id="category-link-team" class="tag"><a href="team.html" data-weight="3" class="tagsize-3" title="">Team</a></li>
-                <li id="category-link-teams" class="tag"><a href="teams.html" data-weight="2" class="tagsize-2" title="">Teams</a></li>
-                <li id="category-link-visual-studio-code" class="tag"><a href="visual-studio-code.html" data-weight="2" class="tagsize-2" title="">Visual Studio Code</a></li>
-                <li id="category-link-way-of-working" class="tag"><a href="way-of-working.html" data-weight="3" class="tagsize-3" title="">Way of Working</a></li>
-                <li id="category-link-web-component" class="tag"><a href="web-component.html" data-weight="2" class="tagsize-2" title="">Web Component</a></li>
-                <li id="category-link-webhook" class="tag"><a href="webhook.html" data-weight="1" class="tagsize-1" title="">Webhook</a></li>
-                <li id="category-link-yaml" class="tag"><a href="yaml.html" data-weight="8" class="tagsize-8" title="">yaml</a></li>
-                <li id="category-link-yarp" class="tag"><a href="yarp.html" data-weight="2" class="tagsize-2" title="">YARP</a></li>
-
+    <div class="s-hero__social hide-on-mobile-small">
+        <p>Follow</p>
+        <span></span>
+        <ul class="s-hero__social-icons">
+            <li><a href="https://twitter.com/kmarjok"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
+            <li><a href="https://www.linkedin.com/in/kallemarjokorpi/"><i class="fab fa-linkedin" aria-hidden="true"></i></a></li>
+            <li><a href="https://github.com/kalleantero"><i class="fab fa-github" aria-hidden="true"></i></a></li>
         </ul>
- </div>
+    </div> <!-- end s-hero__social -->
+
+</section> <!-- end s-hero -->
+
+
+
+<!-- content
+    ================================================== -->
+<section class="s-content s-content--no-top-padding">
 
 
 
 
-        </div> <!-- end col-full -->
-    </div> <!-- end blog-content -->
+    <!-- masonry
+    ================================================== -->
+    <div class="s-bricks">
 
-</section> <!-- end blog-content-wrap -->
+        <div class="masonry">
+            <div class="bricks-wrapper h-group">
 
+                <div class="grid-sizer"></div>
+
+                <div class="lines">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+
+            </div> <!-- end brick-wrapper -->
+
+        </div> <!-- end masonry -->
+
+    </div> <!-- end s-bricks -->
+
+</section> <!-- end s-content -->
 
     
 
+
 <!-- footer
-    ================================================== -->
-<footer>
-    <div class="row">
-        <div class="col-full">
+================================================== -->
+<footer class="s-footer">
 
-            <div class="footer-logo">
-                <a class="footer-site-logo" href="#0"><img src="../../images/name.png" alt="Homepage"></a>
+    <div class="s-footer__main">
+
+        <div class="row">
+
+               <div class="column large-3 medium-6 tab-12 s-footer__info">
+
+                <h5>About Site</h5>
+                <p>
+                    This blog is concentrated to Microsoft and cloud technology, coding and architecture. Solutions, tips and knowledge from a developer to developer.
+                </p>
+
+
+
+            </div> <!-- end s-footer__info -->
+
+            <div class="column large-2 medium-3 tab-6 s-footer__site-links">
+
+                <h5>Site Links</h5>
+
+                <ul>
+                    <li><a href="../../about.html">About me</a></li>
+                </ul>
+
+            </div> <!-- end s-footer__site-links -->
+
+             <div class="column large-2 medium-3 tab-6 s-footer__social-links">
+
+                <h5>Follow</h5>
+
+                <ul>
+                    <li><a href="https://twitter.com/kmarjok">Twitter</a></li>
+                    <li><a href="https://www.linkedin.com/in/kallemarjokorpi/">Linkedin</a></li>
+                    <li><a href="https://github.com/kalleantero">GitHub</a></li>
+                </ul>
+
+            </div> <!-- end s-footer__social links -->
+
+
+        </div> <!-- end row -->
+
+    </div> <!-- end s-footer__main -->
+
+    <div class="s-footer__bottom">
+        <div class="row">
+            <div class="column">
+                <div class="ss-copyright">
+                    <span>Copyright Kalle Marjokorpi 2023</span>
+                    <span>Design by <a href="http://www.styleshout.com/">styleshout</a></span>
+                    <span>Content management by <a href="http://www.buttercms.com/">Headless ButterCMS</a></span>
+
+                </div> <!-- end ss-copyright -->
             </div>
-
-            <ul class="footer-social">
-                <li>
-                    <a href="https://www.twitter.com/kmarjok">
-                        <i class="im im-twitter" aria-hidden="true"></i>
-                        <span>Twitter</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="https://www.linkedin.com/in/kallemarjokorpi">
-                        <i class="im im-linkedin" aria-hidden="true"></i>
-                        <span>Linkedin</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="https://github.com/kalleantero">
-                        <i class="im im-github" aria-hidden="true"></i>
-                        <span>Github</span>
-                    </a>
-                </li>
-            </ul>
-
-        </div>
-    </div>
-
-    <div class="row footer-bottom">
-
-        <div class="col-twelve">
-            <div class="copyright">
-                <span>Copyright Kalle Marjokorpi 2023</span>
-                <span>Design by <a href="http://www.styleshout.com/">styleshout</a></span>
-                <span>Content management by <a href="http://www.buttercms.com/">Headless ButterCMS</a></span>
-
-            </div>
-
         </div>
 
-    </div> <!-- end footer-bottom -->
+        <div class="ss-go-top">
+            <a class="smoothscroll" title="Back to Top" href="#top">
+                <svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" width="15" height="15"><path d="M7.5 1.5l.354-.354L7.5.793l-.354.353.354.354zm-.354.354l4 4 .708-.708-4-4-.708.708zm0-.708l-4 4 .708.708 4-4-.708-.708zM7 1.5V14h1V1.5H7z" fill="currentColor"></path></svg>
+            </a>
+        </div> <!-- end ss-go-top -->
+    </div> <!-- end s-footer__bottom -->
 
-</footer> <!-- end footer -->
+</footer> <!-- end s-footer -->
    
     <!-- Java Script
      ================================================== -->
@@ -288,9 +286,17 @@
     
     
     <!-- Cloudflare Web Analytics -->
-    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cac9fd24c1c04b6d9984ea31685b0414"}'></script><!-- End Cloudflare Web Analytics -->       
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cac9fd24c1c04b6d9984ea31685b0414"}'></script><!-- End Cloudflare Web Analytics -->
+    <!-- Java Script
+    ================================================== -->
+    <script src="../../js/jquery-3.5.0.min.js"></script>
+    <script src="../../js/plugins.js"></script>
+    <script src="../../js/main.js"></script>
+
+    <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="kmarjok" data-description="Support me on Buy me a coffee!" data-message="" data-color="#40DCA5" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
+
 
 </body>
 
-<!-- Mirrored from kalle-blog.azurewebsites.net/blog/category/azure-communication-services by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 14 Jun 2023 08:03:14 GMT -->
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/category/azure-communication-services by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 12 Jul 2023 16:46:52 GMT -->
 </html>

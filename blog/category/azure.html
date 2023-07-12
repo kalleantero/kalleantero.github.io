@@ -1,10 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html class="no-js" lang="en">
 
-<!-- Mirrored from kalle-blog.azurewebsites.net/blog/category/azure by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 14 Jun 2023 08:01:42 GMT -->
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/category/azure by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 12 Jul 2023 16:45:20 GMT -->
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
 <head>
 
+
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+    <title>Blog by Kalle Marjokorpi</title>
+    <meta name="description" content="This blog is concentrated to Microsoft and cloud technology, coding and architecture. Solutions, tips and knowledge from a developer to developer.">
+
+    <meta name="author" content="Kalle Marjokorpi">
+
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="../../css/vendor14cf.css?dt=638247769673385011">
+    <link rel="stylesheet" href="../../css/styles14cf.css?dt=638247769673385011">
+    <link rel="stylesheet" href="../../css/cookieconsent14cf.css?dt=638247769673385011" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="../../css/tags14cf.css?dt=638247769673385011">
+
+    <!-- script
+    ================================================== -->
+    <script src="../../js/modernizr.js"></script>
+    <script defer src="../../js/fontawesome/all.min.js"></script>
+
+    <!-- favicons
+    ================================================== -->
     <script type="text/plain" data-cookiecategory="analytics" async src="https://www.googletagmanager.com/gtag/js?id=G-DPTCQBZTWE"></script>
     <script type="text/plain" data-cookiecategory="analytics">
         window.dataLayer = window.dataLayer || [];
@@ -19,32 +46,13 @@
             t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
             y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
         })(window, document, "clarity", "script", "gr1x6zhls1");
-    </script><!---->
-
-    <!-- Deferred CSS loading (recommended)
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v2.9.0/dist/cookieconsent.css" media="print" onload="this.media='all'">
-    -->
-
-    <!--- basic page needs
-    ================================================== -->
-    <meta charset="utf-8">
+    </script>
 
     
     <title>Blog by Kalle Marjokorpi</title>
     <meta name="description" content="This blog is concentrated to Microsoft and cloud technology, coding and architecture. Solutions, tips and knowledge from a developer to developer.">
 
 
-    <!-- mobile specific metas
-    ================================================== -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-
-    <!-- CSS
-    ================================================== -->
-    <link rel="stylesheet" href="../../css/cookieconsent64eb.css?dt=638223263294664754" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="../../css/base64eb.css?dt=638223263294664754">
-    <link rel="stylesheet" href="../../css/vendor64eb.css?dt=638223263294664754">
-    <link rel="stylesheet" href="../../css/main64eb.css?dt=638223263294664754">
 
     <script defer src="../../js/cookieconsent.js"></script>
     <script defer src="../../js/cookieconsent-config.js"></script>
@@ -52,7 +60,13 @@
     <script defer src="../../js/cusdis.es.js"></script>
 
 </head>
-<body id="top">    
+<body id="top">
+
+    <!-- preloader
+    ================================================== -->
+    <div id="preloader">
+        <div id="loader"></div>
+    </div>
 
     <!-- header
     ================================================== -->
@@ -60,32 +74,46 @@
     <!-- header
    ================================================== -->
 
-<header class="s-header">
 
-    <div class="header-logo">
-        <a class="site-logo" href="../../index.html"><img src="../../images/logo2.png" alt="Homepage"></a>
-    </div>
+ <!-- header
+    ================================================== -->
+<header class="s-header s-header--opaque">
 
-    
+        <div class="s-header__logo">
+            Kalle Marjokorpi
+        </div>
 
-    <nav class="header-nav-wrap">
+        <div class="row s-header__navigation">
 
-        <ul class="header-nav">
+            
 
+    <nav class="s-header__nav-wrap">
+        <h3 class="s-header__nav-heading h6">Navigate to</h3>
 
-            <li class=""><a id="top-navigation-link-root" href="../../index.html" title="">Home</a></li>
-
-                <li id="top-navigation-link-about" class="smoothscroll"><a href="../../about.html" title="">About me</a></li>
-
-        </ul>
-    </nav> <!-- end main-nav-wrap -->
+        <ul class="s-header__nav">
 
 
+            <li><a id="top-navigation-link-root" href="../../index.html" title="Home">Home</a></li>
+
+                <li><a id="top-navigation-link-about"  href="../../about.html" title="About me">About me</a></li>
 
 
-    <a class="header-menu-toggle" href="#0"><span>Menu</span></a>
+        </ul> <!-- end s-header__nav -->
 
-</header> <!-- end s-header -->
+        <a href="#0" title="Close Menu" class="s-header__overlay-close close-mobile-menu">Close</a>
+
+    </nav> <!-- end s-header__nav-wrap -->
+
+
+            
+
+        </div> <!-- end s-header__navigation -->
+
+        <a class="s-header__toggle-menu" href="#0" title="Menu"><span>Menu</span></a>
+
+
+    </header> <!-- end s-header -->
+
 
 
 
@@ -95,652 +123,1013 @@
     ================================================== -->
 
 
-<section class="page-header page-hero" style=background-image:url(https://cdn.buttercms.com/1RsjIQzkT4K5Q1QgYUrx)>
-       
-    <div class="row page-header__content">
-        <article class="col-full">
 
-            <div class="page-header__info">
-                <div class="page-header__cat">
-                        <a id="post-category-azure" href="azure.html">Azure</a>
-                        <a id="post-category-api" href="api.html">API</a>
-                        <a id="post-category-sustainability" href="sustainability.html">Sustainability</a>
-                        <a id="post-category-powerbi" href="powerbi.html">PowerBI</a>
+<!-- hero
+   ================================================== -->
+<section id="hero" class="s-hero">
+
+    <div class="s-hero__slider">
+
+        <div class="s-hero__slide">
+
+            <div class="s-hero__slide-bg" style="background-image: url(https://cdn.buttercms.com/1RsjIQzkT4K5Q1QgYUrx);"></div>
+
+            <div class="row s-hero__slide-content animate-this">
+                <div class="column">
+                    <div class="s-hero__slide-meta">
+                        <span class="cat-links">
+                                <a id="post-category-azure" href="azure.html">Azure</a>
+                                <a id="post-category-api" href="api.html">API</a>
+                                <a id="post-category-sustainability" href="sustainability.html">Sustainability</a>
+                                <a id="post-category-powerbi" href="powerbi.html">PowerBI</a>
+
+                        </span>
+                        <span class="byline">
+                            Posted by
+                            <span class="author">
+                                <a href="#0">Kalle Marjokorpi</a>
+                            </span>
+                            at
+26.04.2023                        </span>
+                    </div>
+                    <h1 class="s-hero__slide-text">
+                        <a href="../calculate-carbon-emissions-azure-usage.html" title="">
+                            Calculate your carbon emissions from Azure service usage
+                        </a>
+                    </h1>
                 </div>
-                <div class="page-header__date">
-26.04.2023 06:49                </div>
             </div>
 
-            <h1 class="page-header__title">
-                <a href="../calculate-carbon-emissions-azure-usage.html" title="">
-                    Calculate your carbon emissions from Azure service usage
-                </a>
-            </h1>
-            <p>I gathered to this blog post information about Azure Cloud sustainability and how you can estimate the carbon emissions associated to your Azure services usage.</p>
-            <p>
-                <a href="../calculate-carbon-emissions-azure-usage.html" class="btn btn--stroke page-header__btn">Read More</a>
-            </p>
-        </article>
-    </div>
-
-</section> <!-- end page-header -->
-<!-- blog
-================================================== -->
-<section class="blog-content-wrap">
-
-    <div class="row blog-content">
-        <div class="col-full">
-
-            <div class="blog-list block-1-2 block-tab-full">
-
-                    <article class="col-block">
-
-                        <div class="blog-date">
-                            <a href="../how-to-create-and-event-catalog.html">
-17.04.2023 14:50                            </a>
-                        </div>
-
-                        <h2 class="h01"><a href="../how-to-create-and-event-catalog.html">How to create an Event Catalog?</a></h2>
-                        <p>
-                            I&#x27;m recently worked in a project where event driven architecture was used to distribute different events to multiple consumers. During the project we spend some time to think how to document events easily and how to create centralized repository for event schemas. I share some thoughts about event catalog in this blog post.
-                        </p>
-
-                        <div class="blog-cat">
-                                <a id="post-category-azure" href="azure.html">Azure</a>
-                                <a id="post-category-eventgrid" href="eventgrid.html">EventGrid</a>
-                                <a id="post-category-eventhub" href="eventhub.html">eventhub</a>
-                                <a id="post-category-eventcatalog" href="eventcatalog.html">eventcatalog</a>
-                        </div>
-
-                    </article> <!-- end article -->
-                    <article class="col-block">
-
-                        <div class="blog-date">
-                            <a href="../deferring-architecture-decisions.html">
-14.03.2023 18:21                            </a>
-                        </div>
-
-                        <h2 class="h01"><a href="../deferring-architecture-decisions.html">Deferring architecture decisions</a></h2>
-                        <p>
-                            How to deferring architecture decision process was used in one software development project?
-                        </p>
-
-                        <div class="blog-cat">
-                                <a id="post-category-azure" href="azure.html">Azure</a>
-                                <a id="post-category-team" href="team.html">Team</a>
-                                <a id="post-category-way-of-working" href="way-of-working.html">Way of Working</a>
-                                <a id="post-category-architecture" href="architecture.html">Architecture</a>
-                        </div>
-
-                    </article> <!-- end article -->
-                    <article class="col-block">
-
-                        <div class="blog-date">
-                            <a href="../how-to-create-infrastructure-for-eventgrid-and-webhook.html">
-18.02.2023 07:19                            </a>
-                        </div>
-
-                        <h2 class="h01"><a href="../how-to-create-infrastructure-for-eventgrid-and-webhook.html">How to create an infrastructure for EventGrid and Webhook event handler?</a></h2>
-                        <p>
-                            I recently worked with even-driven solution which used Azure Event Grid to route different events to Webhook endpoint. This blog post shows how to configure and create Azure infrastructure for EventGrid and Webhook based event handler.
-                        </p>
-
-                        <div class="blog-cat">
-                                <a id="post-category-azure" href="azure.html">Azure</a>
-                                <a id="post-category-azure-devops" href="azure-devops.html">Azure DevOps</a>
-                                <a id="post-category-azure-function" href="azure-function.html">Azure Function</a>
-                                <a id="post-category-bicep" href="bicep.html">bicep</a>
-                                <a id="post-category-eventgrid" href="eventgrid.html">EventGrid</a>
-                                <a id="post-category-webhook" href="webhook.html">Webhook</a>
-                        </div>
-
-                    </article> <!-- end article -->
-                    <article class="col-block">
-
-                        <div class="blog-date">
-                            <a href="../azure-content-moderator-comment-review.html">
-27.01.2023 06:50                            </a>
-                        </div>
-
-                        <h2 class="h01"><a href="../azure-content-moderator-comment-review.html">Quick look to Azure Content Moderator and how it can be used to review blog comments?</a></h2>
-                        <p>
-                            This blog post introduces you to Azure Content Moderator and shows how to integrate it to blog post commenting process as a text moderator.
-                        </p>
-
-                        <div class="blog-cat">
-                                <a id="post-category-azure" href="azure.html">Azure</a>
-                                <a id="post-category-logic-apps" href="logic-apps.html">Logic Apps</a>
-                                <a id="post-category-azure-cli" href="azure-cli.html">Azure CLI</a>
-                                <a id="post-category-azure-communication-services" href="azure-communication-services.html">Azure Communication Services</a>
-                                <a id="post-category-azure-content-moderator" href="azure-content-moderator.html">Azure Content Moderator</a>
-                        </div>
-
-                    </article> <!-- end article -->
-                    <article class="col-block">
-
-                        <div class="blog-date">
-                            <a href="../how-to-model-azure-infra-creation-with-bicep.html">
-08.01.2023 11:50                            </a>
-                        </div>
-
-                        <h2 class="h01"><a href="../how-to-model-azure-infra-creation-with-bicep.html">How to model Azure infrastructure creation in microservice environment with Bicep Modules ?</a></h2>
-                        <p>
-                            This blog post shows how to structure/model infrastructure creation with Bicep in a environment which contains multiple independent microservices.
-                        </p>
-
-                        <div class="blog-cat">
-                                <a id="post-category-azure" href="azure.html">Azure</a>
-                                <a id="post-category-bicep" href="bicep.html">bicep</a>
-                                <a id="post-category-infrastructure-as-a-code" href="infrastructure-as-a-code.html">infrastructure as a code</a>
-                        </div>
-
-                    </article> <!-- end article -->
-                    <article class="col-block">
-
-                        <div class="blog-date">
-                            <a href="../importance-azure-governance.html">
-20.12.2022 16:52                            </a>
-                        </div>
-
-                        <h2 class="h01"><a href="../importance-azure-governance.html">Importance of Azure Platform Governance</a></h2>
-                        <p>
-                            Azure Platform Governance is a strategic enabler which determines guidelines, processes and technologies how to build a secure Azure environment according to best practices and organization requirements.
-                        </p>
-
-                        <div class="blog-cat">
-                                <a id="post-category-azure" href="azure.html">Azure</a>
-                                <a id="post-category-governance" href="governance.html">Governance</a>
-                        </div>
-
-                    </article> <!-- end article -->
-                    <article class="col-block">
-
-                        <div class="blog-date">
-                            <a href="../resource-groups-and-microservices.html">
-10.12.2022 08:42                            </a>
-                        </div>
-
-                        <h2 class="h01"><a href="../resource-groups-and-microservices.html">How to model and organize Azure resource groups in microservices environment?</a></h2>
-                        <p>
-                            This blog post introduces some principals to consider when modelling and organizing resource groups &amp; resources in microservices environment.
-                        </p>
-
-                        <div class="blog-cat">
-                                <a id="post-category-azure" href="azure.html">Azure</a>
-                                <a id="post-category-governance" href="governance.html">Governance</a>
-                                <a id="post-category-architecture" href="architecture.html">Architecture</a>
-                                <a id="post-category-infra" href="infra.html">Infra</a>
-                        </div>
-
-                    </article> <!-- end article -->
-                    <article class="col-block">
-
-                        <div class="blog-date">
-                            <a href="../azure-developer-cli.html">
-26.10.2022 03:09                            </a>
-                        </div>
-
-                        <h2 class="h01"><a href="../azure-developer-cli.html">How to boost developer workflow activities with Azure Developer CLI?</a></h2>
-                        <p>
-                            This blog post is an overview to Azure Developer CLI tool and how it helps to boost developer workflow activities.
-                        </p>
-
-                        <div class="blog-cat">
-                                <a id="post-category-azure" href="azure.html">Azure</a>
-                                <a id="post-category-bicep" href="bicep.html">bicep</a>
-                                <a id="post-category-developer-tools" href="developer-tools.html">developer tools</a>
-                        </div>
-
-                    </article> <!-- end article -->
-                    <article class="col-block">
-
-                        <div class="blog-date">
-                            <a href="../tech-stack-of-the-blog.html">
-02.10.2022 04:10                            </a>
-                        </div>
-
-                        <h2 class="h01"><a href="../tech-stack-of-the-blog.html">How has the tech stack of this blog evolved?</a></h2>
-                        <p>
-                            Summary about how the tech stack of this blog has evolved and how I finalized automation of blog post publishing.
-                        </p>
-
-                        <div class="blog-cat">
-                                <a id="post-category-azure" href="azure.html">Azure</a>
-                                <a id="post-category-azure-devops" href="azure-devops.html">Azure DevOps</a>
-                                <a id="post-category-automation" href="automation.html">Automation</a>
-                                <a id="post-category-azure-function" href="azure-function.html">Azure Function</a>
-                                <a id="post-category-yaml" href="yaml.html">yaml</a>
-                        </div>
-
-                    </article> <!-- end article -->
-                    <article class="col-block">
-
-                        <div class="blog-date">
-                            <a href="../how-to-use-azure-anomaly-detector-to-find-anomalies-from-electricity-consumption.html">
-14.09.2022 09:51                            </a>
-                        </div>
-
-                        <h2 class="h01"><a href="../how-to-use-azure-anomaly-detector-to-find-anomalies-from-electricity-consumption.html">How to use Azure Anomaly Detector to find anomalies from electricity consumption?</a></h2>
-                        <p>
-                            How to create a small console application (C#) which processes hourly electricity consumption time serie data from one year period and utilizes Azure Anomaly Detector to find anomalies.
-                        </p>
-
-                        <div class="blog-cat">
-                                <a id="post-category-azure" href="azure.html">Azure</a>
-                                <a id="post-category-ai" href="ai.html">AI</a>
-                                <a id="post-category-cognitive-services" href="cognitive-services.html">Cognitive Services</a>
-                        </div>
-
-                    </article> <!-- end article -->
-                    <article class="col-block">
-
-                        <div class="blog-date">
-                            <a href="../voice-controlled-application-with-azure-cognitive-services.html">
-05.09.2022 06:48                            </a>
-                        </div>
-
-                        <h2 class="h01"><a href="../voice-controlled-application-with-azure-cognitive-services.html">Voice controlled Knowledge base application with Azure Cognitive Services</a></h2>
-                        <p>
-                            This blog post introduce you briefly to Azure Cognitive Service &amp; Azure Question Answering Service and shows how to create a voice controlled sample application which listens user&#x27;s speech (question) and based on that try to find answer from knowledge base sources.
-                        </p>
-
-                        <div class="blog-cat">
-                                <a id="post-category-azure" href="azure.html">Azure</a>
-                                <a id="post-category-ai" href="ai.html">AI</a>
-                                <a id="post-category-azure-cognitive-services" href="azure-cognitive-services.html">Azure Cognitive Services</a>
-                        </div>
-
-                    </article> <!-- end article -->
-                    <article class="col-block">
-
-                        <div class="blog-date">
-                            <a href="../how-to-use-fluent-migrator-in-azure-devops-pipelines.html">
-13.05.2022 08:12                            </a>
-                        </div>
-
-                        <h2 class="h01"><a href="../how-to-use-fluent-migrator-in-azure-devops-pipelines.html">How to automate database migrations with Fluent Migrator in Azure DevOps?</a></h2>
-                        <p>
-                            This blog post shows how to use Fluent Migrator and how to automate database migrations in Azure DevOps.
-                        </p>
-
-                        <div class="blog-cat">
-                                <a id="post-category-azure" href="azure.html">Azure</a>
-                                <a id="post-category-azure-devops" href="azure-devops.html">Azure DevOps</a>
-                                <a id="post-category-yaml" href="yaml.html">yaml</a>
-                                <a id="post-category-keyvault" href="keyvault.html">KeyVault</a>
-                                <a id="post-category-database" href="database.html">Database</a>
-                                <a id="post-category-migrations" href="migrations.html">Migrations</a>
-                        </div>
-
-                    </article> <!-- end article -->
-                    <article class="col-block">
-
-                        <div class="blog-date">
-                            <a href="../application-settings-comparison-app-service.html">
-03.12.2021 05:47                            </a>
-                        </div>
-
-                        <h2 class="h01"><a href="../application-settings-comparison-app-service.html">How to handle application specific settings in Azure App Service platform?</a></h2>
-                        <p>
-                            This blog post presents a short comparison about what kind of application setting configuration capabilities exists in the Azure for App Service.
-                        </p>
-
-                        <div class="blog-cat">
-                                <a id="post-category-azure" href="azure.html">Azure</a>
-                                <a id="post-category-azure-devops" href="azure-devops.html">Azure DevOps</a>
-                                <a id="post-category-key-vault" href="key-vault.html">Key Vault</a>
-                                <a id="post-category-azure-app-service" href="azure-app-service.html">Azure App Service</a>
-                        </div>
-
-                    </article> <!-- end article -->
-                    <article class="col-block">
-
-                        <div class="blog-date">
-                            <a href="../deploy-net-6-web-app-to-linux-based-app-service.html">
-05.11.2021 05:48                            </a>
-                        </div>
-
-                        <h2 class="h01"><a href="../deploy-net-6-web-app-to-linux-based-app-service.html">What you should know when deploying .NET 6 application to Linux based App Service?</a></h2>
-                        <p>
-                            I recently worked with .NET 6 application and from cost efficiency reasons I decided to deploy application to Linux based App Service. Everything didn&#x27;t happen without problems so this blog post describes what you should know when deploying .NET 6 application to Linux based App Service in Azure.
-                        </p>
-
-                        <div class="blog-cat">
-                                <a id="post-category-azure" href="azure.html">Azure</a>
-                                <a id="post-category-net6" href="net6.html">.NET6</a>
-                                <a id="post-category-bicep" href="bicep.html">bicep</a>
-                                <a id="post-category-yaml" href="yaml.html">yaml</a>
-                                <a id="post-category-infrastructure-as-a-code" href="infrastructure-as-a-code.html">infrastructure as a code</a>
-                                <a id="post-category-linux" href="linux.html">Linux</a>
-                                <a id="post-category-azure-app-service" href="azure-app-service.html">Azure App Service</a>
-                        </div>
-
-                    </article> <!-- end article -->
-                    <article class="col-block">
-
-                        <div class="blog-date">
-                            <a href="../assigning-access-policies-to-keyvault-with-bicep.html">
-03.11.2021 07:39                            </a>
-                        </div>
-
-                        <h2 class="h01"><a href="../assigning-access-policies-to-keyvault-with-bicep.html">Lessons learned: Assigning Access Policies to KeyVault with Bicep</a></h2>
-                        <p>
-                            This blog post covers how to assign Access Policies to KeyVault with Bicep.
-                        </p>
-
-                        <div class="blog-cat">
-                                <a id="post-category-azure" href="azure.html">Azure</a>
-                                <a id="post-category-bicep" href="bicep.html">bicep</a>
-                                <a id="post-category-infrastructure-as-a-code" href="infrastructure-as-a-code.html">infrastructure as a code</a>
-                                <a id="post-category-keyvault" href="keyvault.html">KeyVault</a>
-                        </div>
-
-                    </article> <!-- end article -->
-                    <article class="col-block">
-
-                        <div class="blog-date">
-                            <a href="../deploy-azure-infrastructure-with-azure-bicep.html">
-30.10.2021 09:14                            </a>
-                        </div>
-
-                        <h2 class="h01"><a href="../deploy-azure-infrastructure-with-azure-bicep.html">Deploy .NET 6 application and infrastructure to Azure with Bicep and YAML</a></h2>
-                        <p>
-                            This blog post shows how to utilize Azure Bicep and YAML pipelines to deploy .NET 6 application and infrastructure to Azure.
-                        </p>
-
-                        <div class="blog-cat">
-                                <a id="post-category-azure" href="azure.html">Azure</a>
-                                <a id="post-category-net6" href="net6.html">.NET6</a>
-                                <a id="post-category-bicep" href="bicep.html">bicep</a>
-                                <a id="post-category-yaml" href="yaml.html">yaml</a>
-                                <a id="post-category-infrastructure-as-a-code" href="infrastructure-as-a-code.html">infrastructure as a code</a>
-                        </div>
-
-                    </article> <!-- end article -->
-                    <article class="col-block">
-
-                        <div class="blog-date">
-                            <a href="../azure-b2c-custom-mfa-implementation.html">
-17.04.2021 03:53                            </a>
-                        </div>
-
-                        <h2 class="h01"><a href="../azure-b2c-custom-mfa-implementation.html">Azure B2C custom MFA implementation</a></h2>
-                        <p>
-                            This blog post shows how to configure custom MFA implementation to Azure B2C with custom policies. Azure MFA can be easily configured to the custom policies but sometimes custom implementation is required.
-                        </p>
-
-                        <div class="blog-cat">
-                                <a id="post-category-azure" href="azure.html">Azure</a>
-                                <a id="post-category-azure-b2c" href="azure-b2c.html">Azure B2C</a>
-                                <a id="post-category-mfa" href="mfa.html">MFA</a>
-                                <a id="post-category-authentication" href="authentication.html">Authentication</a>
-                        </div>
-
-                    </article> <!-- end article -->
-                    <article class="col-block">
-
-                        <div class="blog-date">
-                            <a href="../strava-webhook-azure-api-for-fhir.html">
-04.04.2021 05:49                            </a>
-                        </div>
-
-                        <h2 class="h01"><a href="../strava-webhook-azure-api-for-fhir.html">How to setup Strava to Azure API for FHIR integration?</a></h2>
-                        <p>
-                            Do you need to automatically import data from Strava to Azure API for FHIR? This blog post shows how to create a simple integration from Strava to Azure API for FHIR.
-                        </p>
-
-                        <div class="blog-cat">
-                                <a id="post-category-azure" href="azure.html">Azure</a>
-                                <a id="post-category-api" href="api.html">API</a>
-                                <a id="post-category-azure-api-for-fhir" href="azure-api-for-fhir.html">Azure API for FHIR</a>
-                                <a id="post-category-azure-function" href="azure-function.html">Azure Function</a>
-                                <a id="post-category-health-care" href="health-care.html">Health Care</a>
-                        </div>
-
-                    </article> <!-- end article -->
-                    <article class="col-block">
-
-                        <div class="blog-date">
-                            <a href="../export-apple-health-data-to-azure-api-for-fhir.html">
-20.03.2021 06:43                            </a>
-                        </div>
-
-                        <h2 class="h01"><a href="../export-apple-health-data-to-azure-api-for-fhir.html">How to export Apple Health data to Azure API for FHIR?</a></h2>
-                        <p>
-                            Purpose of this blog post is to test Azure FHIR services and export Apple Health data to Azure API for FHIR.
-                        </p>
-
-                        <div class="blog-cat">
-                                <a id="post-category-azure" href="azure.html">Azure</a>
-                                <a id="post-category-api" href="api.html">API</a>
-                                <a id="post-category-azure-api-for-fhir" href="azure-api-for-fhir.html">Azure API for FHIR</a>
-                                <a id="post-category-logic-apps" href="logic-apps.html">Logic Apps</a>
-                                <a id="post-category-health-care" href="health-care.html">Health Care</a>
-                        </div>
-
-                    </article> <!-- end article -->
-                    <article class="col-block">
-
-                        <div class="blog-date">
-                            <a href="../azure-ad-b2c-devops-automation.html">
-25.02.2021 22:00                            </a>
-                        </div>
-
-                        <h2 class="h01"><a href="../azure-ad-b2c-devops-automation.html">How to automate Azure B2C custom policy deployment?</a></h2>
-                        <p>
-                            This blob post describes one example how automate Azure B2C custom policy deployment to different environments.
-                        </p>
-
-                        <div class="blog-cat">
-                                <a id="post-category-azure" href="azure.html">Azure</a>
-                                <a id="post-category-azure-b2c" href="azure-b2c.html">Azure B2C</a>
-                                <a id="post-category-powershell" href="powershell.html">PowerShell</a>
-                                <a id="post-category-azure-devops" href="azure-devops.html">Azure DevOps</a>
-                                <a id="post-category-authentication" href="authentication.html">Authentication</a>
-                        </div>
-
-                    </article> <!-- end article -->
-                    <article class="col-block">
-
-                        <div class="blog-date">
-                            <a href="../azure-b2c-custom-policies-and-federated-authentication.html">
-21.02.2021 04:43                            </a>
-                        </div>
-
-                        <h2 class="h01"><a href="../azure-b2c-custom-policies-and-federated-authentication.html">Key findings and learnings of Azure AD B2C custom policy configuration with federated authentication</a></h2>
-                        <p>
-                            How federated sign in with OpenIdConnect based IDP is configured by using Identity Experience Framework (custom policy)
-                        </p>
-
-                        <div class="blog-cat">
-                                <a id="post-category-azure" href="azure.html">Azure</a>
-                                <a id="post-category-azure-b2c" href="azure-b2c.html">Azure B2C</a>
-                        </div>
-
-                    </article> <!-- end article -->
-                    <article class="col-block">
-
-                        <div class="blog-date">
-                            <a href="../technical-changes-of-the-blog-inspired-by-az-202-certification-study.html">
-19.05.2019 06:38                            </a>
-                        </div>
-
-                        <h2 class="h01"><a href="../technical-changes-of-the-blog-inspired-by-az-202-certification-study.html">Service Fabric testing inspired by AZ-202 certification study</a></h2>
-                        <p>
-                            This blog post shows how I refactored this Blog application to use Service Fabric.
-                        </p>
-
-                        <div class="blog-cat">
-                                <a id="post-category-azure" href="azure.html">Azure</a>
-                                <a id="post-category-azure-service-fabric" href="azure-service-fabric.html">Azure Service Fabric</a>
-                        </div>
-
-                    </article> <!-- end article -->
-                    <article class="col-block">
-
-                        <div class="blog-date">
-                            <a href="../participant-registration-system.html">
-12.08.2018 11:37                            </a>
-                        </div>
-
-                        <h2 class="h01"><a href="../participant-registration-system.html">Participant registration system for runners event</a></h2>
-                        <p>
-                            This blog post shows how simple participant registration system is created top of Wordpress site using Google and Azure platforms.
-                        </p>
-
-                        <div class="blog-cat">
-                                <a id="post-category-google-cloud" href="google-cloud.html">Google Cloud</a>
-                                <a id="post-category-azure" href="azure.html">Azure</a>
-                        </div>
-
-                    </article> <!-- end article -->
-
-
-            </div> <!-- end blog-list -->
-
-            
-
-    <div class="blog-tags">
-   
-        <ul class="tags">
-
-                <li id="category-link-ai" class="tag"><a href="ai.html" data-weight="2" class="tagsize-2" title="">AI</a></li>
-                <li id="category-link-api" class="tag"><a href="api.html" data-weight="5" class="tagsize-5" title="">API</a></li>
-                <li id="category-link-api-testing" class="tag"><a href="api-testing.html" data-weight="2" class="tagsize-2" title="">API testing</a></li>
-                <li id="category-link-architecture" class="tag"><a href="architecture.html" data-weight="3" class="tagsize-3" title="">Architecture</a></li>
-                <li id="category-link-authentication" class="tag"><a href="authentication.html" data-weight="5" class="tagsize-5" title="">Authentication</a></li>
-                <li id="category-link-automation" class="tag"><a href="automation.html" data-weight="1" class="tagsize-1" title="">Automation</a></li>
-                <li id="category-link-azure" class="tag"><a href="azure.html" data-weight="10" class="tagsize-10" title="">Azure</a></li>
-                <li id="category-link-azure-ad" class="tag"><a href="azure-ad.html" data-weight="2" class="tagsize-2" title="">Azure AD</a></li>
-                <li id="category-link-azure-api-for-fhir" class="tag"><a href="azure-api-for-fhir.html" data-weight="3" class="tagsize-3" title="">Azure API for FHIR</a></li>
-                <li id="category-link-azure-app-service" class="tag"><a href="azure-app-service.html" data-weight="3" class="tagsize-3" title="">Azure App Service</a></li>
-                <li id="category-link-azure-b2b" class="tag"><a href="azure-b2b.html" data-weight="1" class="tagsize-1" title="">Azure B2B</a></li>
-                <li id="category-link-azure-b2c" class="tag"><a href="azure-b2c.html" data-weight="4" class="tagsize-4" title="">Azure B2C</a></li>
-                <li id="category-link-azure-cli" class="tag"><a href="azure-cli.html" data-weight="1" class="tagsize-1" title="">Azure CLI</a></li>
-                <li id="category-link-azure-cognitive-services" class="tag"><a href="azure-cognitive-services.html" data-weight="1" class="tagsize-1" title="">Azure Cognitive Services</a></li>
-                <li id="category-link-azure-communication-services" class="tag"><a href="azure-communication-services.html" data-weight="1" class="tagsize-1" title="">Azure Communication Services</a></li>
-                <li id="category-link-azure-content-moderator" class="tag"><a href="azure-content-moderator.html" data-weight="1" class="tagsize-1" title="">Azure Content Moderator</a></li>
-                <li id="category-link-azure-devops" class="tag"><a href="azure-devops.html" data-weight="9" class="tagsize-9" title="">Azure DevOps</a></li>
-                <li id="category-link-azure-function" class="tag"><a href="azure-function.html" data-weight="3" class="tagsize-3" title="">Azure Function</a></li>
-                <li id="category-link-azure-service-fabric" class="tag"><a href="azure-service-fabric.html" data-weight="1" class="tagsize-1" title="">Azure Service Fabric</a></li>
-                <li id="category-link-bff" class="tag"><a href="bff.html" data-weight="4" class="tagsize-4" title="">BFF</a></li>
-                <li id="category-link-bicep" class="tag"><a href="bicep.html" data-weight="8" class="tagsize-8" title="">bicep</a></li>
-                <li id="category-link-blazor" class="tag"><a href="blazor.html" data-weight="1" class="tagsize-1" title="">Blazor</a></li>
-                <li id="category-link-c" class="tag"><a href="c.html" data-weight="1" class="tagsize-1" title="">C#</a></li>
-                <li id="category-link-cognitive-services" class="tag"><a href="cognitive-services.html" data-weight="1" class="tagsize-1" title="">Cognitive Services</a></li>
-                <li id="category-link-database" class="tag"><a href="database.html" data-weight="1" class="tagsize-1" title="">Database</a></li>
-                <li id="category-link-data-collection" class="tag"><a href="data-collection.html" data-weight="1" class="tagsize-1" title="">data collection</a></li>
-                <li id="category-link-data-export" class="tag"><a href="data-export.html" data-weight="1" class="tagsize-1" title="">Data Export</a></li>
-                <li id="category-link-data-import" class="tag"><a href="data-import.html" data-weight="1" class="tagsize-1" title="">Data Import</a></li>
-                <li id="category-link-developer-tools" class="tag"><a href="developer-tools.html" data-weight="2" class="tagsize-2" title="">developer tools</a></li>
-                <li id="category-link-eventcatalog" class="tag"><a href="eventcatalog.html" data-weight="1" class="tagsize-1" title="">eventcatalog</a></li>
-                <li id="category-link-eventgrid" class="tag"><a href="eventgrid.html" data-weight="2" class="tagsize-2" title="">EventGrid</a></li>
-                <li id="category-link-eventhub" class="tag"><a href="eventhub.html" data-weight="1" class="tagsize-1" title="">eventhub</a></li>
-                <li id="category-link-fhir-converter" class="tag"><a href="fhir-converter.html" data-weight="1" class="tagsize-1" title="">FHIR Converter</a></li>
-                <li id="category-link-github-pages" class="tag"><a href="github-pages.html" data-weight="1" class="tagsize-1" title="">GitHub Pages</a></li>
-                <li id="category-link-google-cloud" class="tag"><a href="google-cloud.html" data-weight="1" class="tagsize-1" title="">Google Cloud</a></li>
-                <li id="category-link-governance" class="tag"><a href="governance.html" data-weight="2" class="tagsize-2" title="">Governance</a></li>
-                <li id="category-link-headless-cms" class="tag"><a href="headless-cms.html" data-weight="1" class="tagsize-1" title="">Headless CMS</a></li>
-                <li id="category-link-health-care" class="tag"><a href="health-care.html" data-weight="6" class="tagsize-6" title="">Health Care</a></li>
-                <li id="category-link-identity-magement" class="tag"><a href="identity-magement.html" data-weight="1" class="tagsize-1" title="">Identity Magement</a></li>
-                <li id="category-link-infra" class="tag"><a href="infra.html" data-weight="1" class="tagsize-1" title="">Infra</a></li>
-                <li id="category-link-infrastructure-as-a-code" class="tag"><a href="infrastructure-as-a-code.html" data-weight="5" class="tagsize-5" title="">infrastructure as a code</a></li>
-                <li id="category-link-integration" class="tag"><a href="integration.html" data-weight="1" class="tagsize-1" title="">Integration</a></li>
-                <li id="category-link-keyvault" class="tag"><a href="keyvault.html" data-weight="2" class="tagsize-2" title="">KeyVault</a></li>
-                <li id="category-link-key-vault" class="tag"><a href="key-vault.html" data-weight="1" class="tagsize-1" title="">Key Vault</a></li>
-                <li id="category-link-linux" class="tag"><a href="linux.html" data-weight="1" class="tagsize-1" title="">Linux</a></li>
-                <li id="category-link-logic-apps" class="tag"><a href="logic-apps.html" data-weight="3" class="tagsize-3" title="">Logic Apps</a></li>
-                <li id="category-link-mfa" class="tag"><a href="mfa.html" data-weight="1" class="tagsize-1" title="">MFA</a></li>
-                <li id="category-link-micro-frontend-architecture" class="tag"><a href="micro-frontend-architecture.html" data-weight="2" class="tagsize-2" title="">Micro-Frontend Architecture</a></li>
-                <li id="category-link-migrations" class="tag"><a href="migrations.html" data-weight="1" class="tagsize-1" title="">Migrations</a></li>
-                <li id="category-link-minimal-api" class="tag"><a href="minimal-api.html" data-weight="3" class="tagsize-3" title="">Minimal API</a></li>
-                <li id="category-link-monitoring" class="tag"><a href="monitoring.html" data-weight="1" class="tagsize-1" title="">Monitoring</a></li>
-                <li id="category-link-net6" class="tag"><a href="net6.html" data-weight="5" class="tagsize-5" title="">.NET6</a></li>
-                <li id="category-link-notes" class="tag"><a href="notes.html" data-weight="1" class="tagsize-1" title="">Notes</a></li>
-                <li id="category-link-onenote" class="tag"><a href="onenote.html" data-weight="1" class="tagsize-1" title="">OneNote</a></li>
-                <li id="category-link-philips-hue" class="tag"><a href="philips-hue.html" data-weight="1" class="tagsize-1" title="">Philips Hue</a></li>
-                <li id="category-link-postman" class="tag"><a href="postman.html" data-weight="2" class="tagsize-2" title="">Postman</a></li>
-                <li id="category-link-powerbi" class="tag"><a href="powerbi.html" data-weight="1" class="tagsize-1" title="">PowerBI</a></li>
-                <li id="category-link-powershell" class="tag"><a href="powershell.html" data-weight="2" class="tagsize-2" title="">PowerShell</a></li>
-                <li id="category-link-privacy" class="tag"><a href="privacy.html" data-weight="1" class="tagsize-1" title="">privacy</a></li>
-                <li id="category-link-remote-working" class="tag"><a href="remote-working.html" data-weight="1" class="tagsize-1" title="">Remote working</a></li>
-                <li id="category-link-reverse-proxy" class="tag"><a href="reverse-proxy.html" data-weight="2" class="tagsize-2" title="">Reverse Proxy</a></li>
-                <li id="category-link-security" class="tag"><a href="security.html" data-weight="1" class="tagsize-1" title="">Security</a></li>
-                <li id="category-link-service-health" class="tag"><a href="service-health.html" data-weight="1" class="tagsize-1" title="">Service Health</a></li>
-                <li id="category-link-slack" class="tag"><a href="slack.html" data-weight="1" class="tagsize-1" title="">Slack</a></li>
-                <li id="category-link-sustainability" class="tag"><a href="sustainability.html" data-weight="1" class="tagsize-1" title="">Sustainability</a></li>
-                <li id="category-link-team" class="tag"><a href="team.html" data-weight="3" class="tagsize-3" title="">Team</a></li>
-                <li id="category-link-teams" class="tag"><a href="teams.html" data-weight="2" class="tagsize-2" title="">Teams</a></li>
-                <li id="category-link-visual-studio-code" class="tag"><a href="visual-studio-code.html" data-weight="2" class="tagsize-2" title="">Visual Studio Code</a></li>
-                <li id="category-link-way-of-working" class="tag"><a href="way-of-working.html" data-weight="3" class="tagsize-3" title="">Way of Working</a></li>
-                <li id="category-link-web-component" class="tag"><a href="web-component.html" data-weight="2" class="tagsize-2" title="">Web Component</a></li>
-                <li id="category-link-webhook" class="tag"><a href="webhook.html" data-weight="1" class="tagsize-1" title="">Webhook</a></li>
-                <li id="category-link-yaml" class="tag"><a href="yaml.html" data-weight="8" class="tagsize-8" title="">yaml</a></li>
-                <li id="category-link-yarp" class="tag"><a href="yarp.html" data-weight="2" class="tagsize-2" title="">YARP</a></li>
-
+        </div> <!-- end s-hero__slide -->
+
+    </div> <!-- end s-hero__slider -->
+
+    <div class="s-hero__social hide-on-mobile-small">
+        <p>Follow</p>
+        <span></span>
+        <ul class="s-hero__social-icons">
+            <li><a href="https://twitter.com/kmarjok"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
+            <li><a href="https://www.linkedin.com/in/kallemarjokorpi/"><i class="fab fa-linkedin" aria-hidden="true"></i></a></li>
+            <li><a href="https://github.com/kalleantero"><i class="fab fa-github" aria-hidden="true"></i></a></li>
         </ul>
- </div>
+    </div> <!-- end s-hero__social -->
+
+</section> <!-- end s-hero -->
+
+
+
+<!-- content
+    ================================================== -->
+<section class="s-content s-content--no-top-padding">
 
 
 
 
-        </div> <!-- end col-full -->
-    </div> <!-- end blog-content -->
+    <!-- masonry
+    ================================================== -->
+    <div class="s-bricks">
 
-</section> <!-- end blog-content-wrap -->
+        <div class="masonry">
+            <div class="bricks-wrapper h-group">
 
+                <div class="grid-sizer"></div>
+
+                <div class="lines">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+                            <article class="brick entry">
+
+                                <div class="entry__thumb">
+                                    <a href="../how-to-create-and-event-catalog.html" class="thumb-link">
+                                        <img src="https://cdn.buttercms.com/oyB9UuY1RK2T8n06eTlx" alt="">
+                                    </a>
+                                </div> <!-- end entry__thumb -->
+
+                                <div class="entry__text">
+                                    <div class="entry__header">
+                                        <h1 class="entry__title"><a href="../how-to-create-and-event-catalog.html">How to create an Event Catalog?</a></h1>
+
+                                        <div class="entry__meta">
+                                            <span>
+17.04.2023                                            </span>
+                                            <span class="byline">
+                                                by
+                                                <span class='author'>
+                                                    Kalle Marjokorpi
+                                                </span>
+                                            </span>
+                                            <span class="cat-links">
+                                                    <a id="post-category-azure" href="azure.html">Azure</a>
+                                                    <a id="post-category-eventgrid" href="eventgrid.html">EventGrid</a>
+                                                    <a id="post-category-eventhub" href="eventhub.html">eventhub</a>
+                                                    <a id="post-category-eventcatalog" href="eventcatalog.html">eventcatalog</a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="entry__excerpt">
+                                        <p>
+                                            I&#x27;m recently worked in a project where event driven architecture was used to distribute different events to multiple consumers. During the project we spend some time to think how to document events easily and how to create centralized repository for event schemas. I share some thoughts about event catalog in this blog post.
+                                        </p>
+                                    </div>
+                                </div> <!-- end entry__text -->
+
+                            </article> <!-- end article -->
+                            <article class="brick entry">
+
+                                <div class="entry__thumb">
+                                    <a href="../deferring-architecture-decisions.html" class="thumb-link">
+                                        <img src="https://cdn.buttercms.com/R0N6tpOBQ0mR9aM8XO7J" alt="">
+                                    </a>
+                                </div> <!-- end entry__thumb -->
+
+                                <div class="entry__text">
+                                    <div class="entry__header">
+                                        <h1 class="entry__title"><a href="../deferring-architecture-decisions.html">Deferring architecture decisions</a></h1>
+
+                                        <div class="entry__meta">
+                                            <span>
+14.03.2023                                            </span>
+                                            <span class="byline">
+                                                by
+                                                <span class='author'>
+                                                    Kalle Marjokorpi
+                                                </span>
+                                            </span>
+                                            <span class="cat-links">
+                                                    <a id="post-category-azure" href="azure.html">Azure</a>
+                                                    <a id="post-category-team" href="team.html">Team</a>
+                                                    <a id="post-category-way-of-working" href="way-of-working.html">Way of Working</a>
+                                                    <a id="post-category-architecture" href="architecture.html">Architecture</a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="entry__excerpt">
+                                        <p>
+                                            How to deferring architecture decision process was used in one software development project?
+                                        </p>
+                                    </div>
+                                </div> <!-- end entry__text -->
+
+                            </article> <!-- end article -->
+                            <article class="brick entry">
+
+                                <div class="entry__thumb">
+                                    <a href="../how-to-create-infrastructure-for-eventgrid-and-webhook.html" class="thumb-link">
+                                        <img src="https://cdn.buttercms.com/sef463IrRx69XdtfqL50" alt="">
+                                    </a>
+                                </div> <!-- end entry__thumb -->
+
+                                <div class="entry__text">
+                                    <div class="entry__header">
+                                        <h1 class="entry__title"><a href="../how-to-create-infrastructure-for-eventgrid-and-webhook.html">How to create an infrastructure for EventGrid and Webhook event handler?</a></h1>
+
+                                        <div class="entry__meta">
+                                            <span>
+18.02.2023                                            </span>
+                                            <span class="byline">
+                                                by
+                                                <span class='author'>
+                                                    Kalle Marjokorpi
+                                                </span>
+                                            </span>
+                                            <span class="cat-links">
+                                                    <a id="post-category-azure" href="azure.html">Azure</a>
+                                                    <a id="post-category-azure-devops" href="azure-devops.html">Azure DevOps</a>
+                                                    <a id="post-category-azure-function" href="azure-function.html">Azure Function</a>
+                                                    <a id="post-category-bicep" href="bicep.html">bicep</a>
+                                                    <a id="post-category-eventgrid" href="eventgrid.html">EventGrid</a>
+                                                    <a id="post-category-webhook" href="webhook.html">Webhook</a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="entry__excerpt">
+                                        <p>
+                                            I recently worked with even-driven solution which used Azure Event Grid to route different events to Webhook endpoint. This blog post shows how to configure and create Azure infrastructure for EventGrid and Webhook based event handler.
+                                        </p>
+                                    </div>
+                                </div> <!-- end entry__text -->
+
+                            </article> <!-- end article -->
+                            <article class="brick entry">
+
+                                <div class="entry__thumb">
+                                    <a href="../azure-content-moderator-comment-review.html" class="thumb-link">
+                                        <img src="https://cdn.buttercms.com/aOOSq7ZURniEmy7Jkd4G" alt="">
+                                    </a>
+                                </div> <!-- end entry__thumb -->
+
+                                <div class="entry__text">
+                                    <div class="entry__header">
+                                        <h1 class="entry__title"><a href="../azure-content-moderator-comment-review.html">Quick look to Azure Content Moderator and how it can be used to review blog comments?</a></h1>
+
+                                        <div class="entry__meta">
+                                            <span>
+27.01.2023                                            </span>
+                                            <span class="byline">
+                                                by
+                                                <span class='author'>
+                                                    Kalle Marjokorpi
+                                                </span>
+                                            </span>
+                                            <span class="cat-links">
+                                                    <a id="post-category-azure" href="azure.html">Azure</a>
+                                                    <a id="post-category-logic-apps" href="logic-apps.html">Logic Apps</a>
+                                                    <a id="post-category-azure-cli" href="azure-cli.html">Azure CLI</a>
+                                                    <a id="post-category-azure-communication-services" href="azure-communication-services.html">Azure Communication Services</a>
+                                                    <a id="post-category-azure-content-moderator" href="azure-content-moderator.html">Azure Content Moderator</a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="entry__excerpt">
+                                        <p>
+                                            This blog post introduces you to Azure Content Moderator and shows how to integrate it to blog post commenting process as a text moderator.
+                                        </p>
+                                    </div>
+                                </div> <!-- end entry__text -->
+
+                            </article> <!-- end article -->
+                            <article class="brick entry">
+
+                                <div class="entry__thumb">
+                                    <a href="../how-to-model-azure-infra-creation-with-bicep.html" class="thumb-link">
+                                        <img src="https://cdn.buttercms.com/f6o7VzmmQXCPwB6m37Lv" alt="">
+                                    </a>
+                                </div> <!-- end entry__thumb -->
+
+                                <div class="entry__text">
+                                    <div class="entry__header">
+                                        <h1 class="entry__title"><a href="../how-to-model-azure-infra-creation-with-bicep.html">How to model Azure infrastructure creation in microservice environment with Bicep Modules ?</a></h1>
+
+                                        <div class="entry__meta">
+                                            <span>
+08.01.2023                                            </span>
+                                            <span class="byline">
+                                                by
+                                                <span class='author'>
+                                                    Kalle Marjokorpi
+                                                </span>
+                                            </span>
+                                            <span class="cat-links">
+                                                    <a id="post-category-azure" href="azure.html">Azure</a>
+                                                    <a id="post-category-bicep" href="bicep.html">bicep</a>
+                                                    <a id="post-category-infrastructure-as-a-code" href="infrastructure-as-a-code.html">infrastructure as a code</a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="entry__excerpt">
+                                        <p>
+                                            This blog post shows how to structure/model infrastructure creation with Bicep in a environment which contains multiple independent microservices.
+                                        </p>
+                                    </div>
+                                </div> <!-- end entry__text -->
+
+                            </article> <!-- end article -->
+                            <article class="brick entry">
+
+                                <div class="entry__thumb">
+                                    <a href="../importance-azure-governance.html" class="thumb-link">
+                                        <img src="https://cdn.buttercms.com/CmI2dRxYS6aZLU3bIvDu" alt="">
+                                    </a>
+                                </div> <!-- end entry__thumb -->
+
+                                <div class="entry__text">
+                                    <div class="entry__header">
+                                        <h1 class="entry__title"><a href="../importance-azure-governance.html">Importance of Azure Platform Governance</a></h1>
+
+                                        <div class="entry__meta">
+                                            <span>
+20.12.2022                                            </span>
+                                            <span class="byline">
+                                                by
+                                                <span class='author'>
+                                                    Kalle Marjokorpi
+                                                </span>
+                                            </span>
+                                            <span class="cat-links">
+                                                    <a id="post-category-azure" href="azure.html">Azure</a>
+                                                    <a id="post-category-governance" href="governance.html">Governance</a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="entry__excerpt">
+                                        <p>
+                                            Azure Platform Governance is a strategic enabler which determines guidelines, processes and technologies how to build a secure Azure environment according to best practices and organization requirements.
+                                        </p>
+                                    </div>
+                                </div> <!-- end entry__text -->
+
+                            </article> <!-- end article -->
+                            <article class="brick entry">
+
+                                <div class="entry__thumb">
+                                    <a href="../resource-groups-and-microservices.html" class="thumb-link">
+                                        <img src="https://cdn.buttercms.com/lHIbOSQ2TX27rYxahiqc" alt="">
+                                    </a>
+                                </div> <!-- end entry__thumb -->
+
+                                <div class="entry__text">
+                                    <div class="entry__header">
+                                        <h1 class="entry__title"><a href="../resource-groups-and-microservices.html">How to model and organize Azure resource groups in microservices environment?</a></h1>
+
+                                        <div class="entry__meta">
+                                            <span>
+10.12.2022                                            </span>
+                                            <span class="byline">
+                                                by
+                                                <span class='author'>
+                                                    Kalle Marjokorpi
+                                                </span>
+                                            </span>
+                                            <span class="cat-links">
+                                                    <a id="post-category-azure" href="azure.html">Azure</a>
+                                                    <a id="post-category-governance" href="governance.html">Governance</a>
+                                                    <a id="post-category-architecture" href="architecture.html">Architecture</a>
+                                                    <a id="post-category-infra" href="infra.html">Infra</a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="entry__excerpt">
+                                        <p>
+                                            This blog post introduces some principals to consider when modelling and organizing resource groups &amp; resources in microservices environment.
+                                        </p>
+                                    </div>
+                                </div> <!-- end entry__text -->
+
+                            </article> <!-- end article -->
+                            <article class="brick entry">
+
+                                <div class="entry__thumb">
+                                    <a href="../azure-developer-cli.html" class="thumb-link">
+                                        <img src="https://cdn.buttercms.com/GDe6Zl0RQSG2ayPQxs45" alt="">
+                                    </a>
+                                </div> <!-- end entry__thumb -->
+
+                                <div class="entry__text">
+                                    <div class="entry__header">
+                                        <h1 class="entry__title"><a href="../azure-developer-cli.html">How to boost developer workflow activities with Azure Developer CLI?</a></h1>
+
+                                        <div class="entry__meta">
+                                            <span>
+26.10.2022                                            </span>
+                                            <span class="byline">
+                                                by
+                                                <span class='author'>
+                                                    Kalle Marjokorpi
+                                                </span>
+                                            </span>
+                                            <span class="cat-links">
+                                                    <a id="post-category-azure" href="azure.html">Azure</a>
+                                                    <a id="post-category-bicep" href="bicep.html">bicep</a>
+                                                    <a id="post-category-developer-tools" href="developer-tools.html">developer tools</a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="entry__excerpt">
+                                        <p>
+                                            This blog post is an overview to Azure Developer CLI tool and how it helps to boost developer workflow activities.
+                                        </p>
+                                    </div>
+                                </div> <!-- end entry__text -->
+
+                            </article> <!-- end article -->
+                            <article class="brick entry">
+
+                                <div class="entry__thumb">
+                                    <a href="../tech-stack-of-the-blog.html" class="thumb-link">
+                                        <img src="https://cdn.buttercms.com/IusWtarhRR2MVc5nklTr" alt="">
+                                    </a>
+                                </div> <!-- end entry__thumb -->
+
+                                <div class="entry__text">
+                                    <div class="entry__header">
+                                        <h1 class="entry__title"><a href="../tech-stack-of-the-blog.html">How has the tech stack of this blog evolved?</a></h1>
+
+                                        <div class="entry__meta">
+                                            <span>
+02.10.2022                                            </span>
+                                            <span class="byline">
+                                                by
+                                                <span class='author'>
+                                                    Kalle Marjokorpi
+                                                </span>
+                                            </span>
+                                            <span class="cat-links">
+                                                    <a id="post-category-azure" href="azure.html">Azure</a>
+                                                    <a id="post-category-azure-devops" href="azure-devops.html">Azure DevOps</a>
+                                                    <a id="post-category-automation" href="automation.html">Automation</a>
+                                                    <a id="post-category-azure-function" href="azure-function.html">Azure Function</a>
+                                                    <a id="post-category-yaml" href="yaml.html">yaml</a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="entry__excerpt">
+                                        <p>
+                                            Summary about how the tech stack of this blog has evolved and how I finalized automation of blog post publishing.
+                                        </p>
+                                    </div>
+                                </div> <!-- end entry__text -->
+
+                            </article> <!-- end article -->
+                            <article class="brick entry">
+
+                                <div class="entry__thumb">
+                                    <a href="../how-to-use-azure-anomaly-detector-to-find-anomalies-from-electricity-consumption.html" class="thumb-link">
+                                        <img src="https://cdn.buttercms.com/a9iTYr5ZTZCtRcitGXCB" alt="">
+                                    </a>
+                                </div> <!-- end entry__thumb -->
+
+                                <div class="entry__text">
+                                    <div class="entry__header">
+                                        <h1 class="entry__title"><a href="../how-to-use-azure-anomaly-detector-to-find-anomalies-from-electricity-consumption.html">How to use Azure Anomaly Detector to find anomalies from electricity consumption?</a></h1>
+
+                                        <div class="entry__meta">
+                                            <span>
+14.09.2022                                            </span>
+                                            <span class="byline">
+                                                by
+                                                <span class='author'>
+                                                    Kalle Marjokorpi
+                                                </span>
+                                            </span>
+                                            <span class="cat-links">
+                                                    <a id="post-category-azure" href="azure.html">Azure</a>
+                                                    <a id="post-category-ai" href="ai.html">AI</a>
+                                                    <a id="post-category-cognitive-services" href="cognitive-services.html">Cognitive Services</a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="entry__excerpt">
+                                        <p>
+                                            How to create a small console application (C#) which processes hourly electricity consumption time serie data from one year period and utilizes Azure Anomaly Detector to find anomalies.
+                                        </p>
+                                    </div>
+                                </div> <!-- end entry__text -->
+
+                            </article> <!-- end article -->
+                            <article class="brick entry">
+
+                                <div class="entry__thumb">
+                                    <a href="../voice-controlled-application-with-azure-cognitive-services.html" class="thumb-link">
+                                        <img src="https://cdn.buttercms.com/qg0dc5LT4u19ln2Yvbd4" alt="">
+                                    </a>
+                                </div> <!-- end entry__thumb -->
+
+                                <div class="entry__text">
+                                    <div class="entry__header">
+                                        <h1 class="entry__title"><a href="../voice-controlled-application-with-azure-cognitive-services.html">Voice controlled Knowledge base application with Azure Cognitive Services</a></h1>
+
+                                        <div class="entry__meta">
+                                            <span>
+05.09.2022                                            </span>
+                                            <span class="byline">
+                                                by
+                                                <span class='author'>
+                                                    Kalle Marjokorpi
+                                                </span>
+                                            </span>
+                                            <span class="cat-links">
+                                                    <a id="post-category-azure" href="azure.html">Azure</a>
+                                                    <a id="post-category-ai" href="ai.html">AI</a>
+                                                    <a id="post-category-azure-cognitive-services" href="azure-cognitive-services.html">Azure Cognitive Services</a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="entry__excerpt">
+                                        <p>
+                                            This blog post introduce you briefly to Azure Cognitive Service &amp; Azure Question Answering Service and shows how to create a voice controlled sample application which listens user&#x27;s speech (question) and based on that try to find answer from knowledge base sources.
+                                        </p>
+                                    </div>
+                                </div> <!-- end entry__text -->
+
+                            </article> <!-- end article -->
+                            <article class="brick entry">
+
+                                <div class="entry__thumb">
+                                    <a href="../how-to-use-fluent-migrator-in-azure-devops-pipelines.html" class="thumb-link">
+                                        <img src="https://cdn.buttercms.com/Tn9hUbS7QAexJWux33OL" alt="">
+                                    </a>
+                                </div> <!-- end entry__thumb -->
+
+                                <div class="entry__text">
+                                    <div class="entry__header">
+                                        <h1 class="entry__title"><a href="../how-to-use-fluent-migrator-in-azure-devops-pipelines.html">How to automate database migrations with Fluent Migrator in Azure DevOps?</a></h1>
+
+                                        <div class="entry__meta">
+                                            <span>
+13.05.2022                                            </span>
+                                            <span class="byline">
+                                                by
+                                                <span class='author'>
+                                                    Kalle Marjokorpi
+                                                </span>
+                                            </span>
+                                            <span class="cat-links">
+                                                    <a id="post-category-azure" href="azure.html">Azure</a>
+                                                    <a id="post-category-azure-devops" href="azure-devops.html">Azure DevOps</a>
+                                                    <a id="post-category-yaml" href="yaml.html">yaml</a>
+                                                    <a id="post-category-keyvault" href="keyvault.html">KeyVault</a>
+                                                    <a id="post-category-database" href="database.html">Database</a>
+                                                    <a id="post-category-migrations" href="migrations.html">Migrations</a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="entry__excerpt">
+                                        <p>
+                                            This blog post shows how to use Fluent Migrator and how to automate database migrations in Azure DevOps.
+                                        </p>
+                                    </div>
+                                </div> <!-- end entry__text -->
+
+                            </article> <!-- end article -->
+                            <article class="brick entry">
+
+                                <div class="entry__thumb">
+                                    <a href="../application-settings-comparison-app-service.html" class="thumb-link">
+                                        <img src="https://cdn.buttercms.com/IM72xsHTR8OoDWjKewwj" alt="">
+                                    </a>
+                                </div> <!-- end entry__thumb -->
+
+                                <div class="entry__text">
+                                    <div class="entry__header">
+                                        <h1 class="entry__title"><a href="../application-settings-comparison-app-service.html">How to handle application specific settings in Azure App Service platform?</a></h1>
+
+                                        <div class="entry__meta">
+                                            <span>
+03.12.2021                                            </span>
+                                            <span class="byline">
+                                                by
+                                                <span class='author'>
+                                                    Kalle Marjokorpi
+                                                </span>
+                                            </span>
+                                            <span class="cat-links">
+                                                    <a id="post-category-azure" href="azure.html">Azure</a>
+                                                    <a id="post-category-azure-devops" href="azure-devops.html">Azure DevOps</a>
+                                                    <a id="post-category-key-vault" href="key-vault.html">Key Vault</a>
+                                                    <a id="post-category-azure-app-service" href="azure-app-service.html">Azure App Service</a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="entry__excerpt">
+                                        <p>
+                                            This blog post presents a short comparison about what kind of application setting configuration capabilities exists in the Azure for App Service.
+                                        </p>
+                                    </div>
+                                </div> <!-- end entry__text -->
+
+                            </article> <!-- end article -->
+                            <article class="brick entry">
+
+                                <div class="entry__thumb">
+                                    <a href="../deploy-net-6-web-app-to-linux-based-app-service.html" class="thumb-link">
+                                        <img src="https://cdn.buttercms.com/PJxU2492RU6QQdRzuGAg" alt="">
+                                    </a>
+                                </div> <!-- end entry__thumb -->
+
+                                <div class="entry__text">
+                                    <div class="entry__header">
+                                        <h1 class="entry__title"><a href="../deploy-net-6-web-app-to-linux-based-app-service.html">What you should know when deploying .NET 6 application to Linux based App Service?</a></h1>
+
+                                        <div class="entry__meta">
+                                            <span>
+05.11.2021                                            </span>
+                                            <span class="byline">
+                                                by
+                                                <span class='author'>
+                                                    Kalle Marjokorpi
+                                                </span>
+                                            </span>
+                                            <span class="cat-links">
+                                                    <a id="post-category-azure" href="azure.html">Azure</a>
+                                                    <a id="post-category-net6" href="net6.html">.NET6</a>
+                                                    <a id="post-category-bicep" href="bicep.html">bicep</a>
+                                                    <a id="post-category-yaml" href="yaml.html">yaml</a>
+                                                    <a id="post-category-infrastructure-as-a-code" href="infrastructure-as-a-code.html">infrastructure as a code</a>
+                                                    <a id="post-category-linux" href="linux.html">Linux</a>
+                                                    <a id="post-category-azure-app-service" href="azure-app-service.html">Azure App Service</a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="entry__excerpt">
+                                        <p>
+                                            I recently worked with .NET 6 application and from cost efficiency reasons I decided to deploy application to Linux based App Service. Everything didn&#x27;t happen without problems so this blog post describes what you should know when deploying .NET 6 application to Linux based App Service in Azure.
+                                        </p>
+                                    </div>
+                                </div> <!-- end entry__text -->
+
+                            </article> <!-- end article -->
+                            <article class="brick entry">
+
+                                <div class="entry__thumb">
+                                    <a href="../assigning-access-policies-to-keyvault-with-bicep.html" class="thumb-link">
+                                        <img src="https://cdn.buttercms.com/wRY6suhRPyociJPuoo1F" alt="">
+                                    </a>
+                                </div> <!-- end entry__thumb -->
+
+                                <div class="entry__text">
+                                    <div class="entry__header">
+                                        <h1 class="entry__title"><a href="../assigning-access-policies-to-keyvault-with-bicep.html">Lessons learned: Assigning Access Policies to KeyVault with Bicep</a></h1>
+
+                                        <div class="entry__meta">
+                                            <span>
+03.11.2021                                            </span>
+                                            <span class="byline">
+                                                by
+                                                <span class='author'>
+                                                    Kalle Marjokorpi
+                                                </span>
+                                            </span>
+                                            <span class="cat-links">
+                                                    <a id="post-category-azure" href="azure.html">Azure</a>
+                                                    <a id="post-category-bicep" href="bicep.html">bicep</a>
+                                                    <a id="post-category-infrastructure-as-a-code" href="infrastructure-as-a-code.html">infrastructure as a code</a>
+                                                    <a id="post-category-keyvault" href="keyvault.html">KeyVault</a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="entry__excerpt">
+                                        <p>
+                                            This blog post covers how to assign Access Policies to KeyVault with Bicep.
+                                        </p>
+                                    </div>
+                                </div> <!-- end entry__text -->
+
+                            </article> <!-- end article -->
+                            <article class="brick entry">
+
+                                <div class="entry__thumb">
+                                    <a href="../deploy-azure-infrastructure-with-azure-bicep.html" class="thumb-link">
+                                        <img src="https://cdn.buttercms.com/hr2LCbgMTF6DKqDYwR3h" alt="">
+                                    </a>
+                                </div> <!-- end entry__thumb -->
+
+                                <div class="entry__text">
+                                    <div class="entry__header">
+                                        <h1 class="entry__title"><a href="../deploy-azure-infrastructure-with-azure-bicep.html">Deploy .NET 6 application and infrastructure to Azure with Bicep and YAML</a></h1>
+
+                                        <div class="entry__meta">
+                                            <span>
+30.10.2021                                            </span>
+                                            <span class="byline">
+                                                by
+                                                <span class='author'>
+                                                    Kalle Marjokorpi
+                                                </span>
+                                            </span>
+                                            <span class="cat-links">
+                                                    <a id="post-category-azure" href="azure.html">Azure</a>
+                                                    <a id="post-category-net6" href="net6.html">.NET6</a>
+                                                    <a id="post-category-bicep" href="bicep.html">bicep</a>
+                                                    <a id="post-category-yaml" href="yaml.html">yaml</a>
+                                                    <a id="post-category-infrastructure-as-a-code" href="infrastructure-as-a-code.html">infrastructure as a code</a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="entry__excerpt">
+                                        <p>
+                                            This blog post shows how to utilize Azure Bicep and YAML pipelines to deploy .NET 6 application and infrastructure to Azure.
+                                        </p>
+                                    </div>
+                                </div> <!-- end entry__text -->
+
+                            </article> <!-- end article -->
+                            <article class="brick entry">
+
+                                <div class="entry__thumb">
+                                    <a href="../azure-b2c-custom-mfa-implementation.html" class="thumb-link">
+                                        <img src="https://cdn.buttercms.com/KJllhG9TROeQq1A7x18Z" alt="">
+                                    </a>
+                                </div> <!-- end entry__thumb -->
+
+                                <div class="entry__text">
+                                    <div class="entry__header">
+                                        <h1 class="entry__title"><a href="../azure-b2c-custom-mfa-implementation.html">Azure B2C custom MFA implementation</a></h1>
+
+                                        <div class="entry__meta">
+                                            <span>
+17.04.2021                                            </span>
+                                            <span class="byline">
+                                                by
+                                                <span class='author'>
+                                                    Kalle Marjokorpi
+                                                </span>
+                                            </span>
+                                            <span class="cat-links">
+                                                    <a id="post-category-azure" href="azure.html">Azure</a>
+                                                    <a id="post-category-azure-b2c" href="azure-b2c.html">Azure B2C</a>
+                                                    <a id="post-category-mfa" href="mfa.html">MFA</a>
+                                                    <a id="post-category-authentication" href="authentication.html">Authentication</a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="entry__excerpt">
+                                        <p>
+                                            This blog post shows how to configure custom MFA implementation to Azure B2C with custom policies. Azure MFA can be easily configured to the custom policies but sometimes custom implementation is required.
+                                        </p>
+                                    </div>
+                                </div> <!-- end entry__text -->
+
+                            </article> <!-- end article -->
+                            <article class="brick entry">
+
+                                <div class="entry__thumb">
+                                    <a href="../strava-webhook-azure-api-for-fhir.html" class="thumb-link">
+                                        <img src="https://cdn.buttercms.com/f8uLwkisR7eyfPjmPote" alt="">
+                                    </a>
+                                </div> <!-- end entry__thumb -->
+
+                                <div class="entry__text">
+                                    <div class="entry__header">
+                                        <h1 class="entry__title"><a href="../strava-webhook-azure-api-for-fhir.html">How to setup Strava to Azure API for FHIR integration?</a></h1>
+
+                                        <div class="entry__meta">
+                                            <span>
+04.04.2021                                            </span>
+                                            <span class="byline">
+                                                by
+                                                <span class='author'>
+                                                    Kalle Marjokorpi
+                                                </span>
+                                            </span>
+                                            <span class="cat-links">
+                                                    <a id="post-category-azure" href="azure.html">Azure</a>
+                                                    <a id="post-category-api" href="api.html">API</a>
+                                                    <a id="post-category-azure-api-for-fhir" href="azure-api-for-fhir.html">Azure API for FHIR</a>
+                                                    <a id="post-category-azure-function" href="azure-function.html">Azure Function</a>
+                                                    <a id="post-category-health-care" href="health-care.html">Health Care</a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="entry__excerpt">
+                                        <p>
+                                            Do you need to automatically import data from Strava to Azure API for FHIR? This blog post shows how to create a simple integration from Strava to Azure API for FHIR.
+                                        </p>
+                                    </div>
+                                </div> <!-- end entry__text -->
+
+                            </article> <!-- end article -->
+                            <article class="brick entry">
+
+                                <div class="entry__thumb">
+                                    <a href="../export-apple-health-data-to-azure-api-for-fhir.html" class="thumb-link">
+                                        <img src="https://cdn.buttercms.com/Y8qxUw69QImIUhyWXt5e" alt="">
+                                    </a>
+                                </div> <!-- end entry__thumb -->
+
+                                <div class="entry__text">
+                                    <div class="entry__header">
+                                        <h1 class="entry__title"><a href="../export-apple-health-data-to-azure-api-for-fhir.html">How to export Apple Health data to Azure API for FHIR?</a></h1>
+
+                                        <div class="entry__meta">
+                                            <span>
+20.03.2021                                            </span>
+                                            <span class="byline">
+                                                by
+                                                <span class='author'>
+                                                    Kalle Marjokorpi
+                                                </span>
+                                            </span>
+                                            <span class="cat-links">
+                                                    <a id="post-category-azure" href="azure.html">Azure</a>
+                                                    <a id="post-category-api" href="api.html">API</a>
+                                                    <a id="post-category-azure-api-for-fhir" href="azure-api-for-fhir.html">Azure API for FHIR</a>
+                                                    <a id="post-category-logic-apps" href="logic-apps.html">Logic Apps</a>
+                                                    <a id="post-category-health-care" href="health-care.html">Health Care</a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="entry__excerpt">
+                                        <p>
+                                            Purpose of this blog post is to test Azure FHIR services and export Apple Health data to Azure API for FHIR.
+                                        </p>
+                                    </div>
+                                </div> <!-- end entry__text -->
+
+                            </article> <!-- end article -->
+                            <article class="brick entry">
+
+                                <div class="entry__thumb">
+                                    <a href="../azure-ad-b2c-devops-automation.html" class="thumb-link">
+                                        <img src="https://cdn.buttercms.com/f1MS4DSTde3ZO7lGyg1Q" alt="">
+                                    </a>
+                                </div> <!-- end entry__thumb -->
+
+                                <div class="entry__text">
+                                    <div class="entry__header">
+                                        <h1 class="entry__title"><a href="../azure-ad-b2c-devops-automation.html">How to automate Azure B2C custom policy deployment?</a></h1>
+
+                                        <div class="entry__meta">
+                                            <span>
+25.02.2021                                            </span>
+                                            <span class="byline">
+                                                by
+                                                <span class='author'>
+                                                    Kalle Marjokorpi
+                                                </span>
+                                            </span>
+                                            <span class="cat-links">
+                                                    <a id="post-category-azure" href="azure.html">Azure</a>
+                                                    <a id="post-category-azure-b2c" href="azure-b2c.html">Azure B2C</a>
+                                                    <a id="post-category-powershell" href="powershell.html">PowerShell</a>
+                                                    <a id="post-category-azure-devops" href="azure-devops.html">Azure DevOps</a>
+                                                    <a id="post-category-authentication" href="authentication.html">Authentication</a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="entry__excerpt">
+                                        <p>
+                                            This blob post describes one example how automate Azure B2C custom policy deployment to different environments.
+                                        </p>
+                                    </div>
+                                </div> <!-- end entry__text -->
+
+                            </article> <!-- end article -->
+                            <article class="brick entry">
+
+                                <div class="entry__thumb">
+                                    <a href="../azure-b2c-custom-policies-and-federated-authentication.html" class="thumb-link">
+                                        <img src="https://cdn.buttercms.com/1kmGKt8STNSlIAOnGr9o" alt="">
+                                    </a>
+                                </div> <!-- end entry__thumb -->
+
+                                <div class="entry__text">
+                                    <div class="entry__header">
+                                        <h1 class="entry__title"><a href="../azure-b2c-custom-policies-and-federated-authentication.html">Key findings and learnings of Azure AD B2C custom policy configuration with federated authentication</a></h1>
+
+                                        <div class="entry__meta">
+                                            <span>
+21.02.2021                                            </span>
+                                            <span class="byline">
+                                                by
+                                                <span class='author'>
+                                                    Kalle Marjokorpi
+                                                </span>
+                                            </span>
+                                            <span class="cat-links">
+                                                    <a id="post-category-azure" href="azure.html">Azure</a>
+                                                    <a id="post-category-azure-b2c" href="azure-b2c.html">Azure B2C</a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="entry__excerpt">
+                                        <p>
+                                            How federated sign in with OpenIdConnect based IDP is configured by using Identity Experience Framework (custom policy)
+                                        </p>
+                                    </div>
+                                </div> <!-- end entry__text -->
+
+                            </article> <!-- end article -->
+                            <article class="brick entry">
+
+                                <div class="entry__thumb">
+                                    <a href="../technical-changes-of-the-blog-inspired-by-az-202-certification-study.html" class="thumb-link">
+                                        <img src="https://cdn.buttercms.com/xhvuRCyRYqFMR13G5nae" alt="">
+                                    </a>
+                                </div> <!-- end entry__thumb -->
+
+                                <div class="entry__text">
+                                    <div class="entry__header">
+                                        <h1 class="entry__title"><a href="../technical-changes-of-the-blog-inspired-by-az-202-certification-study.html">Service Fabric testing inspired by AZ-202 certification study</a></h1>
+
+                                        <div class="entry__meta">
+                                            <span>
+19.05.2019                                            </span>
+                                            <span class="byline">
+                                                by
+                                                <span class='author'>
+                                                    Kalle Marjokorpi
+                                                </span>
+                                            </span>
+                                            <span class="cat-links">
+                                                    <a id="post-category-azure" href="azure.html">Azure</a>
+                                                    <a id="post-category-azure-service-fabric" href="azure-service-fabric.html">Azure Service Fabric</a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="entry__excerpt">
+                                        <p>
+                                            This blog post shows how I refactored this Blog application to use Service Fabric.
+                                        </p>
+                                    </div>
+                                </div> <!-- end entry__text -->
+
+                            </article> <!-- end article -->
+                            <article class="brick entry">
+
+                                <div class="entry__thumb">
+                                    <a href="../participant-registration-system.html" class="thumb-link">
+                                        <img src="https://cdn.buttercms.com/6od0P0jURUqBGHmWP9bB" alt="">
+                                    </a>
+                                </div> <!-- end entry__thumb -->
+
+                                <div class="entry__text">
+                                    <div class="entry__header">
+                                        <h1 class="entry__title"><a href="../participant-registration-system.html">Participant registration system for runners event</a></h1>
+
+                                        <div class="entry__meta">
+                                            <span>
+12.08.2018                                            </span>
+                                            <span class="byline">
+                                                by
+                                                <span class='author'>
+                                                    Kalle Marjokorpi
+                                                </span>
+                                            </span>
+                                            <span class="cat-links">
+                                                    <a id="post-category-google-cloud" href="google-cloud.html">Google Cloud</a>
+                                                    <a id="post-category-azure" href="azure.html">Azure</a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="entry__excerpt">
+                                        <p>
+                                            This blog post shows how simple participant registration system is created top of Wordpress site using Google and Azure platforms.
+                                        </p>
+                                    </div>
+                                </div> <!-- end entry__text -->
+
+                            </article> <!-- end article -->
+
+            </div> <!-- end brick-wrapper -->
+
+        </div> <!-- end masonry -->
+
+    </div> <!-- end s-bricks -->
+
+</section> <!-- end s-content -->
 
     
 
+
 <!-- footer
-    ================================================== -->
-<footer>
-    <div class="row">
-        <div class="col-full">
+================================================== -->
+<footer class="s-footer">
 
-            <div class="footer-logo">
-                <a class="footer-site-logo" href="#0"><img src="../../images/name.png" alt="Homepage"></a>
+    <div class="s-footer__main">
+
+        <div class="row">
+
+               <div class="column large-3 medium-6 tab-12 s-footer__info">
+
+                <h5>About Site</h5>
+                <p>
+                    This blog is concentrated to Microsoft and cloud technology, coding and architecture. Solutions, tips and knowledge from a developer to developer.
+                </p>
+
+
+
+            </div> <!-- end s-footer__info -->
+
+            <div class="column large-2 medium-3 tab-6 s-footer__site-links">
+
+                <h5>Site Links</h5>
+
+                <ul>
+                    <li><a href="../../about.html">About me</a></li>
+                </ul>
+
+            </div> <!-- end s-footer__site-links -->
+
+             <div class="column large-2 medium-3 tab-6 s-footer__social-links">
+
+                <h5>Follow</h5>
+
+                <ul>
+                    <li><a href="https://twitter.com/kmarjok">Twitter</a></li>
+                    <li><a href="https://www.linkedin.com/in/kallemarjokorpi/">Linkedin</a></li>
+                    <li><a href="https://github.com/kalleantero">GitHub</a></li>
+                </ul>
+
+            </div> <!-- end s-footer__social links -->
+
+
+        </div> <!-- end row -->
+
+    </div> <!-- end s-footer__main -->
+
+    <div class="s-footer__bottom">
+        <div class="row">
+            <div class="column">
+                <div class="ss-copyright">
+                    <span>Copyright Kalle Marjokorpi 2023</span>
+                    <span>Design by <a href="http://www.styleshout.com/">styleshout</a></span>
+                    <span>Content management by <a href="http://www.buttercms.com/">Headless ButterCMS</a></span>
+
+                </div> <!-- end ss-copyright -->
             </div>
-
-            <ul class="footer-social">
-                <li>
-                    <a href="https://www.twitter.com/kmarjok">
-                        <i class="im im-twitter" aria-hidden="true"></i>
-                        <span>Twitter</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="https://www.linkedin.com/in/kallemarjokorpi">
-                        <i class="im im-linkedin" aria-hidden="true"></i>
-                        <span>Linkedin</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="https://github.com/kalleantero">
-                        <i class="im im-github" aria-hidden="true"></i>
-                        <span>Github</span>
-                    </a>
-                </li>
-            </ul>
-
-        </div>
-    </div>
-
-    <div class="row footer-bottom">
-
-        <div class="col-twelve">
-            <div class="copyright">
-                <span>Copyright Kalle Marjokorpi 2023</span>
-                <span>Design by <a href="http://www.styleshout.com/">styleshout</a></span>
-                <span>Content management by <a href="http://www.buttercms.com/">Headless ButterCMS</a></span>
-
-            </div>
-
         </div>
 
-    </div> <!-- end footer-bottom -->
+        <div class="ss-go-top">
+            <a class="smoothscroll" title="Back to Top" href="#top">
+                <svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" width="15" height="15"><path d="M7.5 1.5l.354-.354L7.5.793l-.354.353.354.354zm-.354.354l4 4 .708-.708-4-4-.708.708zm0-.708l-4 4 .708.708 4-4-.708-.708zM7 1.5V14h1V1.5H7z" fill="currentColor"></path></svg>
+            </a>
+        </div> <!-- end ss-go-top -->
+    </div> <!-- end s-footer__bottom -->
 
-</footer> <!-- end footer -->
+</footer> <!-- end s-footer -->
    
     <!-- Java Script
      ================================================== -->
@@ -748,9 +1137,17 @@
     
     
     <!-- Cloudflare Web Analytics -->
-    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cac9fd24c1c04b6d9984ea31685b0414"}'></script><!-- End Cloudflare Web Analytics -->       
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cac9fd24c1c04b6d9984ea31685b0414"}'></script><!-- End Cloudflare Web Analytics -->
+    <!-- Java Script
+    ================================================== -->
+    <script src="../../js/jquery-3.5.0.min.js"></script>
+    <script src="../../js/plugins.js"></script>
+    <script src="../../js/main.js"></script>
+
+    <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="kmarjok" data-description="Support me on Buy me a coffee!" data-message="" data-color="#40DCA5" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
+
 
 </body>
 
-<!-- Mirrored from kalle-blog.azurewebsites.net/blog/category/azure by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 14 Jun 2023 08:01:46 GMT -->
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/category/azure by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 12 Jul 2023 16:45:24 GMT -->
 </html>

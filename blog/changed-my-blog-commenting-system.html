@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="no-js" lang="en">
 
-<!-- Mirrored from kalle-blog.azurewebsites.net/blog/how-to-use-postman-collection-in-api-testing by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 13 Jul 2023 18:03:44 GMT -->
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/changed-my-blog-commenting-system by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 13 Jul 2023 18:03:43 GMT -->
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
 <head>
 
@@ -49,8 +49,8 @@
     </script>
 
     
-    <title>How to use Postman Workspace API tests in Azure Devops? - Blog by Kalle Marjokorpi</title>
-    <meta name="description" content="This blog post shows how you can use Postman Workspace to maintain your API tests in cloud and share access for the team.">
+    <title>Changed my blog commenting system - Blog by Kalle Marjokorpi</title>
+    <meta name="description" content="How I changed to commenting system of my Blog.">
     <meta name="author" content="Kalle Marjokorpi">
 
 
@@ -133,69 +133,31 @@
 
 
                     <div class="s-content__entry-header">
-                    <h1 class="s-content__title s-content__title--post">How to integrate API tests hosted in Postman&#x27;s Team Workspace to Azure DevOps?</h1>
+                    <h1 class="s-content__title s-content__title--post">Changed my blog commenting system</h1>
                     </div> <!-- end s-content__entry-header -->
 
                     <div class="s-content__primary">
 
                         <div class="s-content__entry-content">
 
-                            <p>My previous <a href="https://www.kallemarjokorpi.fi/blog/how-to-automate-api-testing-with-azure-devops-and-postman.html" rel="follow">blog post</a> covered how to use Postman in API testing and integrate API test execution to Azure DevOps pipeline. Described solution assumed that API tests where exported to JSON-file which was added to the source control. Handling and maintaining API test JSON files in source control is not the most straightforward solution. This blog post shows how you can use Postman Workspace to maintain your API tests in cloud and share access for the team.</p>
-<h2>What is Postman's Team Workspace?</h2>
-<p>Postman's Team Workspace is a collaboration space for the team in the cloud. With team workspace, you can invite team members to collaborate on your API work within a workspace. Depends on the Postman plan you can invite multiple team members to the Workspace. Currently Postman Free plan enables to invite up to three members. To use team workspace for more than three members, you'll need the Postman Team, Business, or Enterprise plan.</p>
-<p>Workspace members can comment on elements, use and change elements, or even fork from existing elements. Versioned history of all your changes is also available so anyone you invite to your team workspace can collaborate safely and effectively. <a href="https://www.postman.com/product/workspaces/" rel="follow">Source</a></p>
-<p>Especially from API test point of view notice that Postman Plans has different limitations for how many calls to Postman API is allowed per monthly. If you have a Basic Plan you can call Postman API 10000 times per month.</p>
-<p><a href="https://cdn.buttercms.com/XEkAUf6vQ2OeOlOCyqwC" rel="follow"><img src="https://cdn.buttercms.com/XEkAUf6vQ2OeOlOCyqwC" alt="undefined" width="828" height="673" /></a></p>
-<p>Source: <a href="https://www.postman.com/pricing/" rel="follow">Postman API Platform - Plans and Pricing</a></p>
-<h2>How to create Team Workspace?</h2>
-<p>Team Workspace can be created directly from the native Postman client or from the web interface. You can decide visibility level of the workspace between the following choices: <strong>Personal</strong>, <strong>Private</strong>, <strong>Team </strong>or <strong>Public</strong>.</p>
-<p><a href="https://cdn.buttercms.com/bqXB3cZQhCC3oFud5iG8" rel="follow"><img src="https://cdn.buttercms.com/bqXB3cZQhCC3oFud5iG8" alt="undefined" width="367" height="347" /></a></p>
-<p>When workspace is created you can start creating Collections and API tests.</p>
-<p><a href="https://cdn.buttercms.com/zfTiGRpDRgqC9mYemNYQ" rel="follow"><img src="https://cdn.buttercms.com/zfTiGRpDRgqC9mYemNYQ" alt="undefined" width="270" height="328" /></a></p>
-<h2>How to integrate API tests from Team Workspace to YAML based pipeline in Azure DevOps?</h2>
-<h3>Integration overview</h3>
-<p>YAML based CI/CD pipeline orchestrates build, deployment and execution of the API tests which are hosted in the Postman Team Workspace. API-tests requires system-to-system authentication (client credential flow) in this case.&nbsp;</p>
-<p><a href="https://cdn.buttercms.com/6QyCsoOT4icpIbB5m1YQ" rel="follow"><img src="https://cdn.buttercms.com/6QyCsoOT4icpIbB5m1YQ" alt="undefined" /></a></p>
-<h2>Integration between Postman and Azure DevOps</h2>
-<p>Newman CLI tool supports directly Postman's Team workspace so you can just easily point configuration to workspace instead of JSON based API test files.</p>
-<h3>Before starting</h3>
-<p>You need to have <strong>Postman Collection Id</strong> and <strong>API key</strong> to able to use Postman API endpoint when executing API Tests.</p>
-<p><strong>Postman API key</strong></p>
-<p>Postman API key enables you to communicate with Postman API endpoint. API key can be generated from Team workspace settings page <strong>https://[my-workspace].postman.co/settings/me/api-keys</strong>. After API key is generated persist key to Azure Keyvault.&nbsp;</p>
-<p>Note that API key will be invalidated after 60 days of inactivity by default.</p>
-<p><img src="https://cdn.buttercms.com/Kehrt2jRE6nNxjfGrk9R" alt="undefined" /></p>
-<p><strong>Postman Collection Id</strong></p>
-<p>Postman Collection Id is a unique identifier for API test collection. Typically I have structured Postman Collections so that each API has an own collection. You can get collection Id from the Postman client or executing the following GET-operation</p>
-<pre class="language-undefined"><code>GET https://api.getpostman.com/collections?apikey={{postman_api_key} </code></pre>
-<h3>Integration steps</h3>
-<p>Configure the following tasks to your YAML-pipeline / template.</p>
-<p><strong>1. Install Newman CLI tool</strong></p>
-<p>Newman is a command-line Collection Runner for Postman. It enables you to run and test a Postman Collection directly from the command line. It's built with extensibility in mind so that you can integrate it with your continuous integration servers and build systems. <a href="https://learning.postman.com/docs/running-collections/using-newman-cli/command-line-integration-with-newman/" rel="follow">Source</a></p>
-<pre class="language-undefined"><code>- task: Npm@1
-  displayName: Install newman CLI
-  inputs:
-    command: custom
-    verbose: false
-    customCommand: install -g newman</code></pre>
-<p><strong>2. Get Postman API key from Azure Keyvault</strong></p>
-<p>Later you can get Postman API key from the variable called $(postman-api-key)&nbsp;</p>
-<pre class="language-undefined"><code>- task: AzureKeyVault@2
-  displayName: 'Get Postman API key value'
-  inputs:
-      azureSubscription: ${{parameters.azureDevOpsServicePrincipalName}}
-      KeyVaultName: ${{parameters.keyVaultResourceName}}
-      SecretsFilter: 'postman-api-key'</code></pre>
-<p><strong>3. Execute API tests</strong></p>
-<p>First parameter of Newman is Postman API address with API key and Collection Id. This sample command reads Postman environment variables from the file and appends some sensitive variables.</p>
-<pre class="language-undefined"><code>- task: CmdLine@2
-  displayName: Execute integration tests
-  inputs:
-    script: newman run https://api.getpostman.com/collections/${{parameters.postmanCollectionId}}?apikey=$(postman-api-key) 
--e $(Build.SourcesDirectory)/${{parameters.environmentFilePath}} 
---env-var clientId=${{parameters.idpClientId}} 
---env-var clientSecret=$(${{parameters.idpClientSecretKeyName}}) </code></pre>
-<h2>Summary</h2>
-<p>If you want to use Postman based API tests then integration to Team workspace is really nice possibility. Basically you can maintain your API tests directly in Postman and latest version is always available when API tests are executed in Azure DevOps.&nbsp;</p>
+                            <h2>Bye Bye Cusdis</h2>
+<p>I have been using a commenting system called&nbsp;<a href="https://cusdis.com/" rel="follow">Cusdis</a> in this blog for a year now. Cusdis is an open-source based, lightweight and created with privacy focus.&nbsp;</p>
+<p>Now I started to consider other commenting systems, because I have had random errors with it and issues especially with spamming. Spamming is an issue, because Cusdis doesn't support <a href="https://en.wikipedia.org/wiki/CAPTCHA" rel="follow">CAPTCHA</a>. Recently I have received quite many comments with spam content. Of course there is a approval process of comments, but still I don't want to receive spam.</p>
+<p>Spamming wasn't the only problem. Most of the blog post pages render Cusdis commenting UI nicely, but for some reason some pages just won't render. Usually, loading the content of iframe.umd.js (external location) file will fail.</p>
+<p>I noticed, that I wasn't alone with this problem - <a href="https://github.com/djyde/cusdis/issues/135" rel="follow">Sometimes form shows on page, sometimes not - CORS issue</a>. Someone have fixed the issue by changing the Access-Control-Allow-Origin header. I'm using <a href="https://pages.github.com/" rel="follow">GitHub Pages</a> and according to <a href="https://stackoverflow.com/questions/18923328/is-there-a-way-to-enable-cors-on-github-pages" rel="follow">Stack overflow</a> discussion GitHub Pages adds CORS header by default on all responses. Still no idea why this works only in specific pages (in my case in GitHub Pages).</p>
+<p>I didn't want to spend more time for investigating this and decided to switch whole commenting system to another one.</p>
+<h2>Welcome Utterances</h2>
+<p>After some exploration I found <a href="https://utteranc.es/" rel="follow">Utterances</a>.&nbsp;Utterances is a lightweight and also open-source commenting widget built on GitHub issues. It doesn't track users or show advertisements. All commenting data will be persisted to the GitHub issues. Spamming issue is also taken care of better way, because writing a comment requires authentication with GitHub.</p>
+<p>Installation is super easy, just add the following Javascript reference to your site:</p>
+<pre class="language-javascript"><code>&lt;script src="https://utteranc.es/client.js"
+        repo="[GitHub_UserName]/[GitHub_RepositoryName]"
+        issue-term="url"
+        theme="github-light"
+        crossorigin="anonymous"
+        async&gt;
+&lt;/script&gt;</code></pre>
+<p>Read more about Utterances from <a href="https://utteranc.es/" rel="follow">here</a> and see what kind of configuration options are available. Later I will investigate more, how to migrate existing Cusdis comments to this new system.</p>
+<p>Thanks for reading. Happy commenting!</p>
 
                         </div> <!-- end s-entry__entry-content -->
 
@@ -216,14 +178,11 @@
                                 <div class="entry-cat-links meta-blk">
 
                                     <span>On</span>
-29.08.2022                                </div>
+13.07.2023                                </div>
 
                                 <div class="entry-tags meta-blk">
                                     <span class="tagtext">Tags</span>
-                                            <a id="post-category-api-testing" href="category/api-testing.html">API testing</a>
-                                            <a id="post-category-azure-devops" href="category/azure-devops.html">Azure DevOps</a>
-                                            <a id="post-category-postman" href="category/postman.html">Postman</a>
-                                            <a id="post-category-yaml" href="category/yaml.html">yaml</a>
+                                            <a id="post-category-github" href="category/github.html">GitHub</a>
                                 </div>
 
                             </div>
@@ -232,18 +191,14 @@
 
                         <div class="s-content__pagenav">
                             <div class="prev-nav">
-                                    <a id="post-previous-how-to-utilize-reusable-components-ado" href="how-to-utilize-reusable-components-ado.html" rel="prev">
+                                    <a id="post-previous-passwordless-authentication-for-blazor-server-application" href="passwordless-authentication-for-blazor-server-application.html" rel="prev">
                                         <span>Previous</span>
-                                        How to utilize reusable components in Azure DevOps pipelines?
+                                        Blazor Server App with Passwordless authentication
                                     </a>
                             </div>
                             <div class="next-nav">
 
                  
-                                <a id="post-next-voice-controlled-application-with-azure-cognitive-services" href="voice-controlled-application-with-azure-cognitive-services.html" rel="next">
-                                    <span>Next</span>
-                                    Voice controlled Knowledge base application with Azure Cognitive Services
-                                </a>
 
                             
                             </div>
@@ -333,5 +288,5 @@
 
 </body>
 
-<!-- Mirrored from kalle-blog.azurewebsites.net/blog/how-to-use-postman-collection-in-api-testing by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 13 Jul 2023 18:03:44 GMT -->
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/changed-my-blog-commenting-system by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 13 Jul 2023 18:03:44 GMT -->
 </html>

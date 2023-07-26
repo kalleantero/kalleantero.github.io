@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/how-to-run-scheduled-processes-in-azure by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 26 Jul 2023 06:35:38 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+
+
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+    <title>Blog by Kalle Marjokorpi</title>
+    <meta name="description" content="This blog is concentrated to Microsoft and cloud technology, coding and architecture. Solutions, tips and knowledge from a developer to developer.">
+
+    <meta name="author" content="Kalle Marjokorpi">
+
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="../css/vendor.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/cookieconsent.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="../css/tags.css">
+
+    <!-- script
+    ================================================== -->
+    <script src="../js/modernizr.js"></script>
+    <script defer src="../js/fontawesome/all.min.js"></script>
+
+    <!-- favicons
+    ================================================== -->
+    <script type="text/plain" data-cookiecategory="analytics" async src="https://www.googletagmanager.com/gtag/js?id=G-DPTCQBZTWE"></script>
+    <script type="text/plain" data-cookiecategory="analytics">
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){window.dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DPTCQBZTWE');
+    </script>
+    
+    <script defer type="text/javascript">
+        (function (c, l, a, r, i, t, y) {
+            c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
+            t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
+            y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+        })(window, document, "clarity", "script", "gr1x6zhls1");
+    </script>
+
+    
+    <title>How to run scheduled processes in Azure? - Blog by Kalle Marjokorpi</title>
+    <meta name="description" content="This blog posts introduces some Azure services which can be used to execute scheduled background processes.">
+    <meta name="author" content="Kalle Marjokorpi">
+
+
+
+    <script defer src="../js/cookieconsent.js"></script>
+    <script defer src="../js/cookieconsent-config.js"></script>
+    <script src="https://cdn.counter.dev/script.js" data-id="a019f4e1-6ec3-4293-8b98-7440925a9066" data-utcoffset="2"></script>
+    <script defer src="../js/cusdis.es.js"></script>
+
+</head>
+<body id="top">
+
+    <!-- preloader
+    ================================================== -->
+    <div id="preloader">
+        <div id="loader"></div>
+    </div>
+
+    <!-- header
+    ================================================== -->
+
+    <!-- header
+   ================================================== -->
+
+
+ <!-- header
+    ================================================== -->
+<header class="s-header s-header--opaque">
+
+        <div class="s-header__logo">
+            Kalle Marjokorpi
+        </div>
+
+        <div class="row s-header__navigation">
+
+            
+
+    <nav class="s-header__nav-wrap">
+        <h3 class="s-header__nav-heading h6">Navigate to</h3>
+
+        <ul class="s-header__nav">
+
+
+            <li><a id="top-navigation-link-root" href="../index.html" title="Home">Home</a></li>
+
+                <li><a id="top-navigation-link-about"  href="../about.html" title="About me">About me</a></li>
+
+
+        </ul> <!-- end s-header__nav -->
+
+        <a href="#0" title="Close Menu" class="s-header__overlay-close close-mobile-menu">Close</a>
+
+    </nav> <!-- end s-header__nav-wrap -->
+
+
+            
+
+        </div> <!-- end s-header__navigation -->
+
+        <a class="s-header__toggle-menu" href="#0" title="Menu"><span>Menu</span></a>
+
+
+    </header> <!-- end s-header -->
+
+
+
+
+    
+
+
+
+    <!-- content
+        ================================================== -->
+    <section class="s-content">
+
+        <div class="row">
+            <div class="column large-12">
+
+                <article class="s-content__entry format-standard">
+
+
+                    <div class="s-content__entry-header">
+                    <h1 class="s-content__title s-content__title--post">How to run scheduled processes in Azure?</h1>
+                    </div> <!-- end s-content__entry-header -->
+
+                    <div class="s-content__primary">
+
+                        <div class="s-content__entry-content">
+
+                            <p>I had a discussion with a colleague before summer holiday about how to schedule background processes in Azure. There are lot of options available for many use cases. This blog posts introduces some Azure services which can be used to execute scheduled background processes.</p>
+<p>A scheduled background process refers to a task or operation which is automatically executed in specific times or intervals and typically it doesn't require user intervention. Scheduled processes are useful when system need to execute something "behind the scenes" which is invisible for the end-user. Typically scheduled background processes are related to maintenance or operational tasks. Scheduled background processes are typically part of the almost any systems because especially maintenance related tasks or operations can decrease infrastructure costs.</p>
+<p><strong>A few samples of maintenance related scheduled background processes: </strong></p>
+<ol>
+<li>Cleaning unused user sessions from the database.&nbsp;</li>
+<li>Cleaning Azure resources from test environments and re-provision resources by schedule.</li>
+<li>Execute health checks</li>
+</ol>
+<p><strong>Operations tasks which can be executed in scheduled background processes:</strong></p>
+<ol>
+<li>Aggregate data from multiple sources and generate reports.</li>
+<li>Train AI model.</li>
+<li>Data syncronization between different internal or external systems.&nbsp;</li>
+</ol>
+<h2>Scheduling services provided by Azure</h2>
+<h3>Azure Automation Account</h3>
+<p><img src="https://cdn.buttercms.com/tMrgYvTvR4mOmb5BUCcO" align="left" style="padding-right: 50px;"></p>
+<p><a href="https://learn.microsoft.com/en-us/azure/automation/overview" rel="follow">Azure Automation Account</a> is a process automation service which enables to run Python and PowerShell scripts (Runbooks) in Azure by a schedule. Azure Automation Account is useful especially for people who maintain the IT infrastructure and are already familiar with PowerShell. PowerShell and Python basically enable to create almost anything in scripts if necessary. Azure Automation Account supports Managed Identity and provides role-based access control and secure store for variables &amp; credentials &amp; cerfiticates.&nbsp;</p>
+<p>Execution of process automation (=running scheduled scripts) <a href="https://azure.microsoft.com/en-us/pricing/details/automation/#pricing" rel="follow">jobs are billed per minute</a>. Currently (7/23) 500 minutes per month are provided by free which is nice amount of time to execute some basic light tasks or operations.</p>
+<p>Azure Automation Account is a good choice if you want to create scheduled operations or tasks with PowerShell and you're running long running tasks (see&nbsp;<a href="https://azure.microsoft.com/de-de/blog/azure-automation-reliable-fault-tolerant-runbook-execution-using-checkpoints/" rel="follow">Checkpoints</a>).</p>
+<p><strong>Use cases for scheduling</strong>:&nbsp;<br>- Scaling down SQL server during night and weekends in test environment to save costs<br>- Execute SQL database maintenance tasks<br><br></p>
+<h3>Azure Function</h3>
+<p><img src="https://cdn.buttercms.com/NX2gA6AJTnq0zNRXBndz" align="left" style="padding-right: 50px;"></p>
+<p><a href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-overview?pivots=programming-language-csharp" rel="follow">Azure Function</a> is a serverless computing platform provided by Azure which enables you to write less code, maintain less infrastructure and save costs. Azure Function runtime supports&nbsp;<a href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-versions?tabs=v4&amp;pivots=programming-language-csharp" rel="follow">multiple languages</a> i.e. C#, Javascript, F#, Java, Powershell, Python and Typescript. Azure Function widely supports event triggers from multiple Azure services i.e. Service Bus and Storage Account. <a href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-timer?tabs=python-v2%2Cin-process&amp;pivots=programming-language-csharp" rel="follow">Timer Trigger</a> is also supported which enables to execute Function on a schedule. When using Azure Functions in Consumption plan you need to remember that default timeout is 5 minutes and it can be extended to 10 minutes. More expensive Premium plan provides a longer timeout.</p>
+<p>Azure Function is <a href="https://azure.microsoft.com/en-us/pricing/details/functions/" rel="follow">billed</a> by the time and total amount of executions.&nbsp;</p>
+<p>Azure Function has wide support for multiple languages so there is a suitable language available for all to create scheduled background processes. Azure Function is a good choice especially when creating something more complex and process is more advanced than just script with a few lines of code. Serveless platform enables great scalability, but you should know limits of timeouts.</p>
+<p><strong>Use cases for scheduling</strong>:&nbsp;<br>- Execute fraud detection model twice a day<br>- Execute complex business rules to detect which users should be notified by email</p>
+<pre class="language-csharp"><code>[FunctionName("ScheduledBackgroundTrigger")]
+public static void Run([TimerTrigger("0 */5 * * * *")]TimerInfo myTimer, ILogger log)
+{
+    // Business logic
+}</code></pre>
+<h3>Azure Logic Apps</h3>
+<p><img src="https://cdn.buttercms.com/CZGkzdgMR96MN7jK75TZ" align="left" style="padding-right: 50px;"></p>
+<p><a href="https://learn.microsoft.com/en-us/azure/logic-apps/logic-apps-overview" rel="follow">Azure Logic Apps</a> is an integration platform as a service (iPaaS) where workflows can be created with small amount of coding. Powerfull visual designer of Azure Logic Apps enables quick creation of workflows using drag-and-drop type of working. Azure Logic Apps platform supports large amount of <a href="https://learn.microsoft.com/en-us/azure/connectors/introduction" rel="follow">connectors</a> which provide integrations to multiple services provided by Microsoft or external (ex. Salesforce). Azure Logic Apps support <a href="https://learn.microsoft.com/en-us/azure/connectors/connectors-native-recurrence?tabs=consumption" rel="follow">recurrence trigger</a> which enables to create varied scheduling rules i.e. repeat weekly on specific days etc.</p>
+<p>Azure Logic Apps is a powerful tool to create scheduled background processes via visual designer and take advance of great scalability. Azure Logic App is great match for simpler scheduled tasks or operations because many scenario can be created without writing any code. If business logic becomes large then the maintenance of Azure Logic App might become hard and other solutions i.e. Azure Functions might be better.</p>
+<p><strong>Use cases for scheduling</strong>:&nbsp;<br>- Send email notification for admin users about failed orders in Service Bus Dead-Letter</p>
+<h3><br>Azure App Service with scheduled WebJobs</h3>
+<p><img src="https://cdn.buttercms.com/Q631AJlTkGufItmFLqaM" align="left" style="padding-right: 50px;"></p>
+<p><a href="https://learn.microsoft.com/en-us/azure/app-service/webjobs-create" rel="follow">WebJobs</a> are tighly coupled with Azure App Service. WebJobs supports scheduling tasks or operations based on CRON expression. With version 3.x of the <a href="https://learn.microsoft.com/en-us/azure/app-service/webjobs-dotnet-deploy-vs" rel="follow">Azure WebJobs SDK</a>, you can create and publish WebJobs as .NET Core console apps. If you deploy WebJobs alongside with another application in App Service, you should remember that WebJob consumes the same CPU and memory capacity. WebJobs also has limits with timeout and timeout can be adjusted via WEBJOBS_IDLE_TIMEOUT configuration in App Settings.</p>
+<p>There has been some discussion that WebJobs will be depracated, but this hasn't confirmed by the Microsoft. I would prefer Azure Functions or Azure App Service with .NET hosted service for all new scheduled solutions which require more advanced handling and business logic.</p>
+<p></p>
+<h3></h3>
+<pre class="language-csharp"><code>public class ScheduledBackgroundWebJob
+{
+    public async Task TimerTriggerOperation([TimerTrigger("0 */5 * * * *", RunOnStartup = true)] TimerInfo timerInfo, ILogger logger, CancellationToken cancellationToken)
+    {
+        // Business logic
+    }
+}</code></pre>
+<h3><br><br>Azure App Service with .NET hosted service</h3>
+<p><img src="https://cdn.buttercms.com/Yf5M3XxYQR6QqQwgQgAT" align="left" style="padding-right: 50px;"></p>
+<p>.NET supports to create and run background operations or tasks using <a href="https://learn.microsoft.com/en-us/aspnet/core/fundamentals/host/hosted-services?view=aspnetcore-7.0&amp;tabs=visual-studio" rel="follow">Hosted Services</a>. Basically a hosted service is a class which implements the <a href="https://learn.microsoft.com/en-us/dotnet/api/microsoft.extensions.hosting.ihostedservice?view=dotnet-plat-ext-7.0" rel="follow">IHostedService interface</a>. IHostedService requires you to implement StartAsync() method which is called at startup and StopAsync() method which executes in shutdown. Hosted Services are registered in the dependency injection. You can schedule background operation in StartUp() using i.e. <a href="https://learn.microsoft.com/en-us/aspnet/core/fundamentals/host/hosted-services?view=aspnetcore-7.0&amp;tabs=visual-studio#timed-background-tasks" rel="follow">Timer class</a>.</p>
+<p>Hosted service is a good scheduling solution like Azure Function for more advanced use cases which require more business logic and handling. Hosted service like WebJobs consume same</p>
+<p><strong>Use cases for scheduling:&nbsp;</strong><br>- Clean-up expired user sessions from the database<br>- Process order queue</p>
+<h3></h3>
+<pre class="language-csharp"><code>public class ScheduledBackgroundHostedService : IHostedService
+{
+    private readonly ILogger _logger;
+    private Timer _timer;
+
+    public ScheduledBackgroundHostedService(ILogger&lt;ScheduledBackgroundHostedService&gt; logger)
+    {
+        _logger = logger;
+    }
+
+    public Task StartAsync(CancellationToken cancellationToken)
+    {
+        _logger.LogInformation("Timed Hosted Service running.");
+
+        _timer = new Timer(DoWork, null, TimeSpan.Zero, 
+            TimeSpan.FromSeconds(5));
+
+        return Task.CompletedTask;
+    }
+
+    private void DoWork(object state)
+    {
+        _logger.LogInformation("Timed Hosted Service is working...");
+        
+        // Business logic
+    }
+
+    public Task StopAsync(CancellationToken cancellationToken)
+    {
+        _logger.LogInformation("Timed Hosted Service is stopping...");
+        _timer?.Change(Timeout.Infinite, 0);
+        return Task.CompletedTask;
+    }
+}</code></pre>
+<h3>Azure Batch</h3>
+<p><img src="https://cdn.buttercms.com/X2VFm1BpTFWqVWp3iRjV" align="left" style="padding-right: 50px;"></p>
+<p><a href="https://learn.microsoft.com/en-us/azure/batch/batch-technical-overview" rel="follow">Azure Batch</a> enables to run large-scale parallel and high-performance computing batch jobs in Azure. Azure Batch is a good solution i.e. nighly data processing, testing or analysis operations which requires high-performance and scalability. Behind the scenes Azure Batch creates and manages a pool of compute nodes (virtual machines), installs the applications you want to run, and schedules jobs to run on the nodes.&nbsp;<br><br><strong>Use cases for scheduling</strong>: <br>- AI model training<br>- Processing large volume of image data</p>
+<h3>Azure Data Factory</h3>
+<p><img src="https://cdn.buttercms.com/iHMY0P6MRfq6d3ulapuu" align="left" style="padding-right: 50px;"></p>
+<p><a href="https://learn.microsoft.com/en-us/azure/data-factory/introduction" rel="follow">Azure Data Factory</a> is a cloud based ETL (Extract Transform Load) and data integration service. It natively integrates with large number of Azure services and enables creating workflows of orchestrating the data movement and tranformation. Azure Data Factory supports <a href="https://learn.microsoft.com/en-us/azure/data-factory/how-to-create-schedule-trigger?tabs=data-factory" rel="follow">scheduled triggers</a> for pipelines which enables the scheduling based on your rules.</p>
+<p><strong>Use cases for scheduling</strong>: <br>- Moving audit log data from Blob Storage to another long-term Blob Account (archieve)<br>- Create AVRO files from latest order rows and send them to SFTP server</p>
+<h3 id="jobs-in-azure-container-apps-preview">Jobs in Azure Container Apps</h3>
+<p><img src="https://cdn.buttercms.com/3mtt0zvRgWC6sESqTt2X" align="left" style="padding-right: 50px;"></p>
+<p><a href="https://learn.microsoft.com/en-us/azure/container-apps/jobs?tabs=azure-cli" rel="follow">Jobs in Azure Container Apps (preview)</a> enables to create containerized tasks which are executed by the schedule (CRON expression). Jobs supports Manual, Schedule and Event type of triggers. If you're already working in containerized environment, Jobs are good solution to consider for scheduled background processes.</p>
+<p><strong>Use cases for scheduling</strong>:<br>-&nbsp; Notify users by email about abandoned shopping carts</p>
+<p></p>
+<h3>Scheduled pipelines in Azure DevOps</h3>
+<p><img src="https://cdn.buttercms.com/RXX3yT1TOo90dOzgZddw" align="left" style="padding-right: 50px;"></p>
+<p>Pipelines in Azure DevOps support executing different kind of scripts (Powershell etc.) which can do i.e. maintenance type of operations. Pipelines can be scheduled to execute in right moment of time.</p>
+<p><strong><br>Use cases for scheduling</strong>: <br>- Nightly Security check of environment<br>- Nightly execution of UI automation tests<br>- Scaling down Azure resources during night and weekends in test environment<br>- Scaling up Azure resource before office hours in test environment<br>- Cleaning up sandbox Azure environments</p>
+
+                        </div> <!-- end s-entry__entry-content -->
+
+                        <div class="s-content__entry-meta">
+
+                            <div class="entry-author meta-blk">
+                                <div class="author-avatar">
+                                <img class="avatar" src="../images/avatars/kalle.jpg" alt="">
+                                </div>
+                                <div class="byline">
+                                    <span class="bytext">Posted By</span>
+                                    Kalle Marjokorpi
+                                </div>
+                            </div>
+
+                            <div class="meta-bottom">
+
+                                <div class="entry-cat-links meta-blk">
+
+                                    <span>On</span>
+11.06.2023                                </div>
+
+                                <div class="entry-tags meta-blk">
+                                    <span class="tagtext">Tags</span>
+                                            <a id="post-category-architecture" href="category/architecture.html">Architecture</a>
+                                            <a id="post-category-automation" href="category/automation.html">Automation</a>
+                                            <a id="post-category-azure" href="category/azure.html">Azure</a>
+                                            <a id="post-category-azure-function" href="category/azure-function.html">Azure Function</a>
+                                            <a id="post-category-infra" href="category/infra.html">Infra</a>
+                                            <a id="post-category-logic-apps" href="category/logic-apps.html">Logic Apps</a>
+                                            <a id="post-category-net" href="category/net.html">.NET</a>
+                                </div>
+
+                            </div>
+
+                        </div> <!-- s-content__entry-meta -->
+
+                        <div class="s-content__pagenav">
+                            <div class="prev-nav">
+                                    <a id="post-previous-calculate-carbon-emissions-azure-usage" href="calculate-carbon-emissions-azure-usage.html" rel="prev">
+                                        <span>Previous</span>
+                                        Calculate your carbon emissions from Azure service usage
+                                    </a>
+                            </div>
+                            <div class="next-nav">
+
+                 
+                                <a id="post-next-passwordless-authentication-for-blazor-server-application" href="passwordless-authentication-for-blazor-server-application.html" rel="next">
+                                    <span>Next</span>
+                                    Blazor Server App with Passwordless authentication
+                                </a>
+
+                            
+                            </div>
+                        </div> <!-- end s-content__pagenav -->
+
+                    </div> <!-- end s-content__primary -->
+                </article> <!-- end entry -->
+
+            </div> <!-- end column -->
+        </div> <!-- end row -->
+        <!-- comments
+        ================================================== -->
+        <div class="comments-wrap">
+
+            <div id="comments" class="row">
+                <div class="column large-12">
+
+                    <h3>Comments</h3>
+
+                    <script src="https://utteranc.es/client.js"
+                            repo="kalleantero/kalleantero.github.io"
+                            issue-term="url"
+                            theme="github-light"
+                            crossorigin="anonymous"
+                            async>
+                    </script>
+
+
+
+                </div> <!-- end col-full -->
+            </div> <!-- end comments -->
+
+
+
+        </div> <!-- end comments-wrap -->
+
+
+    </section> <!-- end s-content -->
+
+
+
+
+    
+
+
+<!-- footer
+================================================== -->
+<footer class="s-footer">
+
+
+
+
+    <div class="s-footer__bottom">
+        <div class="row">
+            <div class="column">
+                <div class="ss-copyright">
+                    <span>Copyright Kalle Marjokorpi 2023</span>
+                    <span>Design by <a href="http://www.styleshout.com/">styleshout</a></span>
+                    <span>Content management by <a href="http://www.buttercms.com/">Headless ButterCMS</a></span>
+
+                </div> <!-- end ss-copyright -->
+            </div>
+        </div>
+
+        <div class="ss-go-top">
+            <a class="smoothscroll" title="Back to Top" href="#top">
+                <svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" width="15" height="15"><path d="M7.5 1.5l.354-.354L7.5.793l-.354.353.354.354zm-.354.354l4 4 .708-.708-4-4-.708.708zm0-.708l-4 4 .708.708 4-4-.708-.708zM7 1.5V14h1V1.5H7z" fill="currentColor"></path></svg>
+            </a>
+        </div> <!-- end ss-go-top -->
+    </div> <!-- end s-footer__bottom -->
+
+</footer> <!-- end s-footer -->
+   
+    <!-- Java Script
+     ================================================== -->
+
+    
+    
+    <!-- Cloudflare Web Analytics -->
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cac9fd24c1c04b6d9984ea31685b0414"}'></script><!-- End Cloudflare Web Analytics -->
+    
+    <script src="../js/jquery-3.5.0.min.js"></script>
+    <script src="../js/plugins.js"></script>
+    <script src="../js/main.js"></script>
+
+    <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="kmarjok" data-description="Support me on Buy me a coffee!" data-message="" data-color="#40DCA5" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
+
+</body>
+
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/how-to-run-scheduled-processes-in-azure by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 26 Jul 2023 06:35:38 GMT -->
+</html>

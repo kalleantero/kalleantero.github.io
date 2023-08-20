@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/how-to-visualize-home-assistant-events-with-azure-data-explorer by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 20 Aug 2023 18:25:58 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+
+
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+    <meta name="description" content="This blog is concentrated to Microsoft and cloud technology, coding and architecture. Solutions, tips and knowledge from a developer to developer.">
+
+    <meta name="author" content="Kalle Marjokorpi">
+
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="../css/vendor.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/cookieconsent.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="../css/tags.css">
+
+    <!-- script
+    ================================================== -->
+    <script src="../js/modernizr.js"></script>
+    <script defer src="../js/fontawesome/all.min.js"></script>
+
+    <!-- favicons
+    ================================================== -->
+    <script type="text/plain" data-cookiecategory="analytics" async src="https://www.googletagmanager.com/gtag/js?id=G-DPTCQBZTWE"></script>
+    <script type="text/plain" data-cookiecategory="analytics">
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){window.dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DPTCQBZTWE');
+    </script>
+    
+    <script defer type="text/javascript">
+        (function (c, l, a, r, i, t, y) {
+            c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
+            t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
+            y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+        })(window, document, "clarity", "script", "gr1x6zhls1");
+    </script>
+
+    
+    <title>How to visualize HA data with Azure Data Explorer? - Blog by Kalle Marjokorpi</title>
+    <meta name="description" content="This blog post covers, how to use Azure Data Explorer to visualize the event data provided by the Home Assistant.">
+    <meta name="author" content="Kalle Marjokorpi">
+
+
+
+    <script defer src="../js/cookieconsent.js"></script>
+    <script defer src="../js/cookieconsent-config.js"></script>
+    <script src="https://cdn.counter.dev/script.js" data-id="a019f4e1-6ec3-4293-8b98-7440925a9066" data-utcoffset="2"></script>
+    <script defer src="../js/cusdis.es.js"></script>
+
+</head>
+<body id="top">
+
+    <!-- preloader
+    ================================================== -->
+    <div id="preloader">
+        <div id="loader"></div>
+    </div>
+
+    <!-- header
+    ================================================== -->
+
+    <!-- header
+   ================================================== -->
+
+
+ <!-- header
+    ================================================== -->
+<header class="s-header s-header--opaque">
+
+        <div class="s-header__logo">
+            Kalle Marjokorpi
+        </div>
+
+        <div class="row s-header__navigation">
+
+            
+
+    <nav class="s-header__nav-wrap">
+        <h3 class="s-header__nav-heading h6">Navigate to</h3>
+
+        <ul class="s-header__nav">
+
+
+            <li><a id="top-navigation-link-root" href="../index.html" title="Home">Home</a></li>
+
+                <li><a id="top-navigation-link-about"  href="../about.html" title="About me">About me</a></li>
+
+
+        </ul> <!-- end s-header__nav -->
+
+        <a href="#0" title="Close Menu" class="s-header__overlay-close close-mobile-menu">Close</a>
+
+    </nav> <!-- end s-header__nav-wrap -->
+
+
+            
+
+        </div> <!-- end s-header__navigation -->
+
+        <a class="s-header__toggle-menu" href="#0" title="Menu"><span>Menu</span></a>
+
+
+    </header> <!-- end s-header -->
+
+
+
+
+    
+
+
+
+    <!-- content
+        ================================================== -->
+    <section class="s-content">
+
+        <div class="row">
+            <div class="column large-12">
+
+                <article class="s-content__entry format-standard">
+
+
+                    <div class="s-content__entry-header">
+                    <h1 class="s-content__title s-content__title--post">How to visualize Home Assistant events data with Azure Data Explorer?</h1>
+                    </div> <!-- end s-content__entry-header -->
+
+                    <div class="s-content__primary">
+
+                        <div class="s-content__entry-content">
+
+                            <p>This post is related to the first <a href="https://www.kallemarjokorpi.fi/blog/stream-home-assistant-events-to-azure.html" rel="follow">Home Assistant post</a> published earlier. I recommend you start reading the first part before this. This blog post covers, how to use Azure Data Explorer to visualize the event data provided by the Home Assistant.&nbsp;</p>
+<h2>Querying the Azure Data Explorer data</h2>
+<p>A query language that you need to use is called KQL (Kusto Query Language). Practically, a KQL query is a read-only request to process data and return results. KQL is widely used in various Azure products like <a href="https://learn.microsoft.com/en-us/azure/data-explorer/data-explorer-overview" rel="follow">Azure Data Explorer</a>, <a href="https://learn.microsoft.com/en-us/azure/azure-monitor/logs/log-analytics-overview" rel="follow">Log Analytics</a>, and <a href="https://learn.microsoft.com/en-us/azure/sentinel/overview" rel="follow">Microsoft Sentinel</a>.</p>
+<p>I don't go through all details and nuances of KQL in this blog post. I'll recommend you to read more about KQL from the below links.</p>
+<p>- <a href="https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/">Kusto Query Language (KQL) overview</a><br>- <a href="https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/tutorials/learn-common-operators" rel="follow">Learn common operators</a><br>- <a href="https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/tutorials/use-aggregation-functions" rel="follow">Use aggregation functions</a><br>- <a href="https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/tutorials/join-data-from-multiple-tables" rel="follow">Join data from multiple tables</a><br>- <a href="https://www.pluralsight.com/courses/kusto-query-language-kql-from-scratch">The Basics of Kusto Query Language</a><br>- <a href="https://github.com/rod-trent/MustLearnKQL">MustLearnKQL blog series</a></p>
+<h3>Query limits</h3>
+<p><a href="https://learn.microsoft.com/en-us/azure/data-explorer/kusto/concepts/querylimits" rel="follow">This</a> Microsoft documentation explains query limits that you should know.</p>
+<blockquote>Kusto is an ad-hoc query engine that hosts large data sets and attempts to satisfy queries by holding all relevant data in-memory. There's an inherent risk that queries will monopolize the service resources without bounds. Kusto provides several built-in protections in the form of default query limits.</blockquote>
+<p>Documentation says that KQL limits the number of records returned to the client to <strong>500000</strong>, and the overall data size for those records to <strong>64 MB. </strong>I'm using the Free cluster and actually, I started to receive warnings when the result set exceeded <strong>50000</strong> records.</p>
+<h2>Create Data Explorer Dashboard</h2>
+<p>A dashboard is a container where you can add Tiles. Tile can be a KQL query that presents data in a table or chart diagram (also maps are supported) or markdown supported text area. If you have used Dashboard in Azure Management Portal you know the drill. In this case, Azure Data Explorer Dashboards will be used to visualize Home Assistant data, especially RuuviTag sensor data (temperature, air humidity, and air pressure).&nbsp;</p>
+<h4>Azure Data Explorer Portal</h4>
+<p>First login to Azure Data Explorer portal (<a href="https://dataexplorer.azure.com/">https://dataexplorer.azure.com/</a>). Before continuing verify that the right Azure AD tenant is selected. You can check that by clicking your profile icon on the right top corner and selecting Switch Directory. For some reason, I typically need to do this tenant switching at least twice until it's properly selected.</p>
+<p><img src="https://cdn.buttercms.com/WUCeG10WTD2NYyhv3jDx"></p>
+<h4>Creating the actual Dashboard</h4>
+<p>Select Dashboards from the left navigation menu and click New Dashboard.</p>
+<p><img src="https://cdn.buttercms.com/eoRibumcRgvdOuCXgJz9"></p>
+<p>Give a name for the Dashboard.</p>
+<p><img src="https://cdn.buttercms.com/tsxsomj5QWikGDKxgMbq"></p>
+<p>Now Dashboard is ready. Let's add some content.</p>
+<h4>Dashboard Pages</h4>
+<p>Dashboards support Pages so you can have a single Dashboard that contains multiple Pages. In this sample, I'll create a separate page for each RuuviTag sensor.</p>
+<h4>Dashboard Tiles</h4>
+<p>To add the first Tile to your Dashboard, click Add tile</p>
+<p><img src="https://cdn.buttercms.com/QJPq6suXRs2ZbuO1qvyA"></p>
+<p>Next, you probably see a message that there are no data sources connected. Click Add new data source. After connecting to your Azure Data Explorer cluster, you can select the database. If you don't remember the Cluster URI, you can check it from the My Cluster view.</p>
+<p><img src="https://cdn.buttercms.com/qDBpsajRVSaEqO4JFMLo"></p>
+<h4>Queries</h4>
+<p>Now we're ready to create the first KQL queries. I'll show a few examples of how I have queried the Home Assistant event data.</p>
+<p><strong>Retrieve humidity and temperature data</strong></p>
+<p>This query fetches RuuviTag device's humidity and temperature sensor data and renders data to a line chart. You can either configure visualization in the KQL query or configure visualization via Azure Data Explorer web user interface. The <a href="https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/renderoperator?pivots=azuredataexplorer" rel="follow">render operator</a> in KQL supports multiple diagram types from line charts to treemaps etc.</p>
+<p>This query uses&nbsp;<a href="https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/takeoperator" rel="follow">take operator</a> to return the latest top 50000 rows.</p>
+<div>
+<div>
+<pre class="language-undefined"><code>Events
+| where (entity_id has "sensor.ruuvitag_64f5_humidity" or 
+        entity_id has "sensor.ruuvitag_64f5_temperature")
+| order by last_changed desc
+| take 50000
+| render linechart with (xcolumn=last_updated, ycolumns=state, series=entity_id)</code></pre>
+</div>
+</div>
+<p>The final result looks like this:</p>
+<p><img src="https://cdn.buttercms.com/EdWd8YnR9yjAcJtiEc4w"></p>
+<p>I also added an air pressure diagram Tile and another Tile which shows the total event count of this specific RuuviTag to the Dashboard. The final Dashboard looks like this.</p>
+<p><img src="https://cdn.buttercms.com/OxfPFvDRc636vCyeyBgE"></p>
+<p>Next, I'll create new Dashboard pages for each RuuviTag sensor.&nbsp;</p>
+<h3>What else to visualize?</h3>
+<p>Besides the temperature Dashboard, I'll create a new Dashboard that shows some general statistics from Home Assistant event data.</p>
+<p><strong>Show Home Assistant event count per day</strong></p>
+<p>Above query uses&nbsp;<a href="https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/summarizeoperator" rel="follow">summarize operator</a> which aggregates the total count of events per day. This is useful to follow the total event amounts per day.</p>
+<pre class="language-undefined"><code>Events
+| summarize event_count=count() by format_datetime(last_updated, 'yyyy-MM-dd')
+| order by event_count desc
+| take 50000
+| render linechart with (xcolumn=last_updated, ycolumns=event_count)</code></pre>
+<p><strong><img src="https://cdn.buttercms.com/EhP8K0XZRTanFd9qvcbK"></strong></p>
+<p><strong>Group events per device type</strong></p>
+<p>This query uses <a href="https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/unionoperator?pivots=azuredataexplorer" rel="follow">union operator</a> to merge two result sets which groups temperature and motion device event counts per day.</p>
+<pre class="language-undefined"><code>let temperature = view () {  Events 
+| where entity_id contains "sensor.ruuvitag"
+| summarize Count=count() by 'temperature', last_updated, format_datetime(last_updated, 'yyyy-MM-dd')
+ };  
+let motion = view () {  Events 
+| where entity_id contains "motion"
+| summarize Count=count() by 'motion', last_updated, format_datetime(last_updated, 'yyyy-MM-dd')
+ };  
+union withsource=tablename temperature, motion
+| summarize count() by format_datetime(last_updated, 'yyyy-MM-dd'), tablename
+| order by last_updated desc
+| take 50000
+| render linechart with (xcolumn=last_updated, ycolumns=count_, series=tablename)</code></pre>
+<p><strong><img src="https://cdn.buttercms.com/fyviC2lyTWC27H1l1Svz"></strong></p>
+<h2>What next?</h2>
+<p>Home Assistant data ingestion to Azure is super easy and effortless with Event Hub and Azure Data Explorer. I definitely recommend using this kind of service combination if you want to analyze and visualize data easily in Azure.&nbsp;<a href="https://learn.microsoft.com/en-us/azure/data-explorer/start-for-free" rel="follow">A free cluster</a> of Azure Data Explorer is also spot on because it allows to ingest a lot of data for free.</p>
+<p>Later I'll write more about, how to use Azure Data Explorer SDK to ingest data and how to integrate Anomaly detection to the flow.</p>
+<p>Thank you for reading!</p>
+
+                        </div> <!-- end s-entry__entry-content -->
+
+                        <div class="s-content__entry-meta">
+
+                            <div class="entry-author meta-blk">
+                                <div class="author-avatar">
+                                <img class="avatar" src="../images/avatars/kalle.jpg" alt="">
+                                </div>
+                                <div class="byline">
+                                    <span class="bytext">Posted By</span>
+                                    Kalle Marjokorpi
+                                </div>
+                            </div>
+
+                            <div class="meta-bottom">
+
+                                <div class="entry-cat-links meta-blk">
+
+                                    <span>On</span>
+20.08.2023                                </div>
+
+                                <div class="entry-tags meta-blk">
+                                    <span class="tagtext">Tags</span>
+                                            <a id="post-category-automation" href="category/automation.html">Automation</a>
+                                            <a id="post-category-azure" href="category/azure.html">Azure</a>
+                                            <a id="post-category-data-platform" href="category/data-platform.html">Data Platform</a>
+                                </div>
+
+                            </div>
+
+                        </div> <!-- s-content__entry-meta -->
+
+                        <div class="s-content__pagenav">
+                            <div class="prev-nav">
+                                    <a id="post-previous-stream-home-assistant-events-to-azure" href="stream-home-assistant-events-to-azure.html" rel="prev">
+                                        <span>Previous</span>
+                                        How to stream all Home Assistant events to Azure?
+                                    </a>
+                            </div>
+                            <div class="next-nav">
+
+                 
+
+                            
+                            </div>
+                        </div> <!-- end s-content__pagenav -->
+
+                    </div> <!-- end s-content__primary -->
+                </article> <!-- end entry -->
+
+            </div> <!-- end column -->
+        </div> <!-- end row -->
+        <!-- comments
+        ================================================== -->
+        <div class="comments-wrap">
+
+            <div id="comments" class="row">
+                <div class="column large-12">
+
+                    <h3>Comments</h3>
+
+                    <script src="https://utteranc.es/client.js"
+                            repo="kalleantero/kalleantero.github.io"
+                            issue-term="url"
+                            theme="github-light"
+                            crossorigin="anonymous"
+                            async>
+                    </script>
+
+
+
+                </div> <!-- end col-full -->
+            </div> <!-- end comments -->
+
+
+
+        </div> <!-- end comments-wrap -->
+
+
+    </section> <!-- end s-content -->
+
+
+
+
+    
+
+
+<!-- footer
+================================================== -->
+<footer class="s-footer">
+
+
+
+
+    <div class="s-footer__bottom">
+        <div class="row">
+            <div class="column">
+                <div class="ss-copyright">
+                    <span>Copyright Kalle Marjokorpi 2023</span>
+                    <span>Design by <a href="http://www.styleshout.com/">styleshout</a></span>
+                    <span>Content management by <a href="http://www.buttercms.com/">Headless ButterCMS</a></span>
+
+                </div> <!-- end ss-copyright -->
+            </div>
+        </div>
+
+        <div class="ss-go-top">
+            <a class="smoothscroll" title="Back to Top" href="#top">
+                <svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" width="15" height="15"><path d="M7.5 1.5l.354-.354L7.5.793l-.354.353.354.354zm-.354.354l4 4 .708-.708-4-4-.708.708zm0-.708l-4 4 .708.708 4-4-.708-.708zM7 1.5V14h1V1.5H7z" fill="currentColor"></path></svg>
+            </a>
+        </div> <!-- end ss-go-top -->
+    </div> <!-- end s-footer__bottom -->
+
+</footer> <!-- end s-footer -->
+   
+    <!-- Java Script
+     ================================================== -->
+
+    
+    
+    <!-- Cloudflare Web Analytics -->
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cac9fd24c1c04b6d9984ea31685b0414"}'></script><!-- End Cloudflare Web Analytics -->
+    
+    <script src="../js/jquery-3.5.0.min.js"></script>
+    <script src="../js/plugins.js"></script>
+    <script src="../js/main.js"></script>
+
+    <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="kmarjok" data-description="Support me on Buy me a coffee!" data-message="" data-color="#40DCA5" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
+
+</body>
+
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/how-to-visualize-home-assistant-events-with-azure-data-explorer by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 20 Aug 2023 18:25:59 GMT -->
+</html>

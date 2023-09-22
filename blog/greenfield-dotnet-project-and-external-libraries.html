@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/greenfield-dotnet-project-and-external-libraries by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 22 Sep 2023 06:03:48 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+
+
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+    <meta name="description" content="This blog is concentrated to Microsoft and cloud technology, coding and architecture. Solutions, tips and knowledge from a developer to developer.">
+
+    <meta name="author" content="Kalle Marjokorpi">
+
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="../css/vendor.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/cookieconsent.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="../css/tags.css">
+
+    <!-- script
+    ================================================== -->
+    <script src="../js/modernizr.js"></script>
+    <script defer src="../js/fontawesome/all.min.js"></script>
+
+    <!-- favicons
+    ================================================== -->
+    <script type="text/plain" data-cookiecategory="analytics" async src="https://www.googletagmanager.com/gtag/js?id=G-DPTCQBZTWE"></script>
+    <script type="text/plain" data-cookiecategory="analytics">
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){window.dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DPTCQBZTWE');
+    </script>
+    
+    <script defer type="text/javascript">
+        (function (c, l, a, r, i, t, y) {
+            c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
+            t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
+            y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+        })(window, document, "clarity", "script", "gr1x6zhls1");
+    </script>
+
+    
+    <title>My favorite libraries for a new Greenfield .NET project - Blog by Kalle Marjokorpi</title>
+    <meta name="description" content="I gathered to this blog post a list of external libraries which I usually add to a greenfield .NET API project.">
+    <meta name="author" content="Kalle Marjokorpi">
+
+
+
+    <script defer src="../js/cookieconsent.js"></script>
+    <script defer src="../js/cookieconsent-config.js"></script>
+    <script src="https://cdn.counter.dev/script.js" data-id="a019f4e1-6ec3-4293-8b98-7440925a9066" data-utcoffset="2"></script>
+    <script defer src="../js/cusdis.es.js"></script>
+
+</head>
+<body id="top">
+
+    <!-- preloader
+    ================================================== -->
+    <div id="preloader">
+        <div id="loader"></div>
+    </div>
+
+    <!-- header
+    ================================================== -->
+
+    <!-- header
+   ================================================== -->
+
+
+ <!-- header
+    ================================================== -->
+<header class="s-header s-header--opaque">
+
+        <div class="s-header__logo">
+            Kalle Marjokorpi
+        </div>
+
+        <div class="row s-header__navigation">
+
+            
+
+    <nav class="s-header__nav-wrap">
+        <h3 class="s-header__nav-heading h6">Navigate to</h3>
+
+        <ul class="s-header__nav">
+
+
+            <li><a id="top-navigation-link-root" href="../index.html" title="Home">Home</a></li>
+
+                <li><a id="top-navigation-link-about"  href="../about.html" title="About me">About me</a></li>
+
+
+        </ul> <!-- end s-header__nav -->
+
+        <a href="#0" title="Close Menu" class="s-header__overlay-close close-mobile-menu">Close</a>
+
+    </nav> <!-- end s-header__nav-wrap -->
+
+
+            
+
+        </div> <!-- end s-header__navigation -->
+
+        <a class="s-header__toggle-menu" href="#0" title="Menu"><span>Menu</span></a>
+
+
+    </header> <!-- end s-header -->
+
+
+
+
+    
+
+
+
+    <!-- content
+        ================================================== -->
+    <section class="s-content">
+
+        <div class="row">
+            <div class="column large-12">
+
+                <article class="s-content__entry format-standard">
+
+
+                    <div class="s-content__entry-header">
+                    <h1 class="s-content__title s-content__title--post">My favorite libraries for a new Greenfield .NET project</h1>
+                    </div> <!-- end s-content__entry-header -->
+
+                    <div class="s-content__primary">
+
+                        <div class="s-content__entry-content">
+
+                            <p>I gathered to this blog post a list of external libraries which I usually add to a greenfield .NET API project. Most of these libraries can be used also in other project types as well. These libraries streamlines the developer work and make code more maintainable and easier to follow &amp; understand.</p>
+<p>This post gives you a quick overview to those libraries and I recommend you to read more from the documentation of the libraries. Read always carefully the license of the library and evaluate is the license suitable for your purposes.</p>
+<ul>
+<li><a href="#serilog" rel="follow">Serilog</a></li>
+<li><a href="#swashbuckle" rel="follow">Swashbuckle</a></li>
+<li><a href="#fluentvalidation" rel="follow">FluentValidation</a></li>
+<li><a href="#guard" rel="follow">Ardalis Guard Clauses</a></li>
+<li><a href="#fluertassertions" rel="follow">FluertAssertions</a></li>
+<li><a href="#bogus" rel="follow">Bogus</a></li>
+<li><a href="#benchmark" rel="follow">BenchmarkDotNet</a></li>
+<li><a href="#mapster" rel="follow">Mapster</a></li>
+<li><a href="#dapper" rel="follow">Dapper</a></li>
+<li><a href="#ef" rel="follow">Entity Framework Core</a></li>
+<li><a href="#fluentresults" rel="follow">FluentResults</a></li>
+<li><a href="#carter" rel="follow">Carter</a></li>
+</ul>
+<h2>Logging</h2>
+<h4><a id="serilog"></a>Serilog</h4>
+<p><a href="https://serilog.net/" rel="follow">Serilog</a> is a flexible and extendable logging library (Apache-2.0 license) for .NET applications which supports structured logging. Serilog is very known and popular library in .NET community. It has vital community which further develops and supports the library.&nbsp;</p>
+<p>Typically non-structured logging message is something like this:</p>
+<pre class="language-undefined"><code>03/02/2019 3bc7bc46-2337-11ee-be56-0242ac120002 Error Error occured while loading the data from the database</code></pre>
+<p>Structure logging message:</p>
+<pre class="language-undefined"><code>JSON payload: { "userId": "3bc7bc46-2337-11ee-be56-0242ac120002", "type": "Error", "Message": "Error occured while loading the data from the database" }</code></pre>
+<p>As you can see, structured logging message has key value pairs and it's much easier to read. Also logging analytic applications can filter logging message a bit easier.</p>
+<p>Serilog can be added as a third party&nbsp;<a href="https://learn.microsoft.com/en-us/dotnet/core/extensions/logging-providers" rel="follow">logging provider</a> to the .NET logging pipeline. It's very extendable and configurable. Serilog supports various different <a href="https://github.com/serilog/serilog/wiki/Provided-Sinks" rel="follow">sinks</a> for writing log events to storage in various formats. I have recently used Azure Blob Storage, Azure Service Bus and Azure EvenHub sinks in my projects.</p>
+<p>Serilog <a href="https://github.com/serilog/serilog/wiki/Enrichment" rel="follow">enrichers</a> are also powerful mechanism to enrich log events which additional data i.e. User Id of the authenticated user can be automatically added to all logs.</p>
+<h2>Documentation</h2>
+<h4><a id="swashbuckle"></a>Swashbuckle</h4>
+<p><a href="https://github.com/domaindrivendev/Swashbuckle.WebApi" rel="follow">Swashbuckle</a> is a popular library (BSD-3-Clause license) for generating Open API documentation of the API. Swashbuckle will be added to your .NET Web API project, if you check Open API checkbox while creating the new project via Visual Studio. Library also provides an user interface which presents the API documentation.</p>
+<p>All details of the API endpoint cannot be automatically identified by the library, but you can add metadata with decorator Attributes.</p>
+<pre class="language-csharp"><code>[HttpPost]
+[ProducesResponseType(StatusCodes.Status201Created)]
+[ProducesResponseType(StatusCodes.Status400BadRequest)]
+public async Task&lt;IActionResult&gt; Create(Product product)</code></pre>
+<p>If Open API documentation site provided by Swashbuckle cannot be reached from the public internet, you can convert Open API definition to the static HTML site with&nbsp;<a href="https://github.com/Redocly/redoc" rel="follow">Redoc</a>. I have used this a few times when API documentation had to deliver for the external service provider by secure email.</p>
+<h2>Validation</h2>
+<h4><a id="fluentvalidation"></a>FluentValidation</h4>
+<p dir="auto"><a href="https://github.com/FluentValidation/FluentValidation" rel="follow">FluentValidation</a> is a extendable validation library (Apache-2.0 license) for .NET which uses a fluent interface and lambda expressions for building strongly-typed validation rules.</p>
+<p dir="auto">When FluentValidation is added to the project, you can determine all validation rules for the object in Validator class which is inherited from AbstractValidator&lt;T&gt;. If <a href="https://docs.fluentvalidation.net/en/latest/built-in-validators.html" rel="follow">Built-in validators</a> are not enough, <a href="https://docs.fluentvalidation.net/en/latest/custom-validators.html" rel="follow">Custom validators</a> enable to determine more complex rules if necessary. Typically, I locate Validator class side by side with actual Domain object. This approach enables that validation rules are easy to find from the solution structure in Visual Studio.</p>
+<pre class="language-csharp"><code>public class Product
+{
+    public Guid Id { get; set; }
+    public string Name { get; set; }
+    public string Description { get; set; }
+}
+
+public class ProductValidator : AbstractValidator&lt;Product&gt;
+{
+    public ProductValidator()
+    {
+        RuleFor(x =&gt; x.Id).NotNull();
+        RuleFor(x =&gt; x.Name).NotNull();
+        RuleFor(x =&gt; x.Name).Length(0, 25);
+        RuleFor(x =&gt; x.Description).NotNull();
+    }
+}</code></pre>
+<p>With the manual validation approach, you need to inject the IValidator&lt;T&gt;into your API controller / Minimal API and then invoke it against the model.</p>
+<pre class="language-csharp"><code>[HttpPost]
+public async Task&lt;IActionResult&gt; Create(Product product)
+{
+    ValidationResult result = await _validator.ValidateAsync(product);
+
+    if (result.IsValid)
+    {
+
+    }
+}</code></pre>
+<h4><a id="guard"></a>Ardalis Guard Clauses</h4>
+<p><a href="https://github.com/ardalis/GuardClauses" rel="follow">Ardalis Guard Clauses</a> is an extensible guard clause extension library (MIT license) for .NET which streamlines validation and makes everything more simpler. A guard clause is a software pattern that simplifies complex functions by "failing fast".</p>
+<p>Typically, you can write argument validations like this.</p>
+<pre class="language-csharp"><code>public Product(string name, string description)
+{
+    if (name == null)
+        throw new ArgumentNullException(nameof(name), "Name cannot be null.");
+
+    Name = name;
+    Description = description;
+}</code></pre>
+<p>With Ardalis Guard Clauses you can write same argument validation much simpler and cleaner way.</p>
+<pre class="language-csharp"><code>public Product(string name, string description)
+{
+    Name = Guard.Against.NullOrWhiteSpace(name, nameof(name));
+    Description = description;
+}</code></pre>
+<h2>Testing</h2>
+<h4><a id="fluertassertions"></a>FluertAssertions</h4>
+<p><a href="https://fluentassertions.com/" rel="follow">Fluent Assertions</a> is a library (Apache-2.0 license) with set of .NET extension methods that allow you to more naturally specify the expected outcome of a TDD or BDD-style unit test. This enables a simple intuitive syntax and makes very easy to read assertions.</p>
+<pre class="language-csharp"><code>string actual = "ABCDEFGHI";
+actual.Should().StartWith("AB").And.EndWith("HI").And.Contain("EF").And.HaveLength(9);
+</code></pre>
+<h4><a id="bogus"></a>Bogus</h4>
+<p>Do you need fake data for your testing purposes? If yes, then Bogus is the answer.&nbsp;<a href="https://github.com/bchavez/Bogus" rel="follow">Bogus</a> is a simple fake data generator library (MIT License) for .NET. Bogus supports various different type of <a href="https://github.com/bchavez/Bogus#bogus-api-support" rel="follow">fake data sets</a> from Commerce to Company data.</p>
+<p>Using the Fluent API, you can easily generate i.e. random Products.</p>
+<pre class="language-csharp"><code>var testProducts = new Faker&lt;Product&gt;()
+    .RuleFor(u =&gt; u.Name, (f, u) =&gt; f.Commerce.ProductName())
+    .RuleFor(u =&gt; u.Description, (f, u) =&gt; f.Commerce.ProductDescription())
+    .RuleFor(u =&gt; u.Id, (f, u) =&gt; Guid.NewGuid());
+
+var products = testProducts.Generate();</code></pre>
+<h4><a id="benchmark"></a>BenchmarkDotNet</h4>
+<p><a href="https://github.com/dotnet/BenchmarkDotNet" rel="follow">BenchmarkDotNet</a> is a powerful .NET library (MIT license) which provides tools for measuring and comparing performance of your code. Attribute based benchmark definitions powered by BenchmarkDotNet are flexible and powerful way to determine which methods should be benchmarked.&nbsp;</p>
+<pre class="language-csharp"><code>[Benchmark]
+public void GetProductById()
+{
+
+}</code></pre>
+<p>After benchmarking you'll receive a summary table with information about benchmark run.&nbsp;</p>
+<pre class="language-undefined"><code>BenchmarkDotNet v0.13.6, Windows 11 (10.0.22621.1992/22H2/2022Update/SunValley2)
+AMD Ryzen 5 3600, 1 CPU, 12 logical and 6 physical cores
+.NET SDK 6.0.400
+  [Host]     : .NET 6.0.8 (6.0.822.36306), X64 RyuJIT AVX2
+  DefaultJob : .NET 6.0.8 (6.0.822.36306), X64 RyuJIT AVX2
+
+|         Method |    Mean |    Error |   StdDev |
+|--------------- |--------:|---------:|---------:|
+| GetProductById | 1.563 s | 0.0055 s | 0.0052 s |</code></pre>
+<h4><a id="moq"></a></h4>
+<h2>Object Mapping</h2>
+<h4><a id="mapster"></a>Mapster</h4>
+<p><a href="https://github.com/MapsterMapper/Mapster" rel="follow">Mapster</a> is a developer-friendly and performance optimized object-to-object mapping library (MIT License) for .NET applications. Mapster supports Fluent API which makes it very intuitive to use.&nbsp;</p>
+<p>This maps Product object to ProductDto. Mapster supports also advanced rules for the mapping if you need a special handling or even transformation in advanced scenarios.</p>
+<pre class="language-csharp"><code>var productDto = product.Adapt&lt;ProductDto&gt;();
+</code></pre>
+<p>Mapster also provides a tool called&nbsp;<a href="https://github.com/MapsterMapper/Mapster/wiki/Mapster.Tool" rel="follow">Mapster.Tool</a> which can be used to generate DTO classes automatically.&nbsp;</p>
+<h4><a id="dapper"></a>Dapper</h4>
+<p><a href="https://github.com/DapperLib/Dapper" rel="follow">Dapper</a> is a lightweight and high performance ORM (object-relational mapping) library (Apache 2.0) for .NET. Dapper is a good choice, especially in use cases where you want to write performant raw SQL queries.&nbsp;<a href="https://fluentmigrator.github.io/" rel="follow">Fluent Migrator</a> is a good companion with Dapper when considering, how to manage database migrations.</p>
+<pre class="language-csharp"><code>var products = new List&lt;Product&gt;();
+
+using(var db = new SqlConnection(connectionString))
+{
+    products = db.Query("select * from products").ToList();
+}</code></pre>
+<h4><a id="ef"></a>Entity Framework Core</h4>
+<p>Entity Framework Core is a Object-Relational Mapper (ORM) for .NET which enables developers to work with relational data in an object-oriented way using .NET objects. It supports LINQ queries, change tracking and schema migrations.</p>
+<pre class="language-csharp"><code>var products = new List&lt;Product&gt;();
+
+using (var context = new DbContext())
+{
+    products = await context.Products.Where(x =&gt; x.Price &gt; 10).ToList();
+}</code></pre>
+<h2>Common</h2>
+<h4><a id="fluentresults"></a>FluentResults</h4>
+<p><a href="https://github.com/altmann/FluentResults" rel="follow">FluentResults</a> is a lightweight .NET library (MIT license) which returns an object indicating success or failure instead of throwing/using exceptions. Read best practices from <a href="https://github.com/altmann/FluentResults#samplesbest-practices" rel="follow">here</a>.</p>
+<pre class="language-csharp"><code>public Result Create(Product product)
+{
+    if (product == null)
+        return Result.Fail("Product item was null.");
+
+    return Result.Ok();
+}</code></pre>
+<h4><a id="carter"></a>Carter</h4>
+<p><a href="https://github.com/CarterCommunity/Carter" rel="follow">Carter</a> is a framework (MIT license) that is a thin layer of extension methods and functionality over ASP.NET Core allowing the code to be more explicit and most importantly more enjoyable.</p>
+<p>I especially like, how Carter enables you to organize your Minimal API endpoints more effectively. You can separate easily your Minimal API endpoints to e.g. Module classes which are inherited from ICarterModule.</p>
+<pre class="language-csharp"><code>public class ProductModuleEndpoints : ICarterModule
+{
+    private readonly IProductService _productService;
+
+    public ProductModuleEndpoints(IProductService productService)
+    {
+        _productService = productService;
+    }
+
+    public void AddRoutes(IEndpointRouteBuilder app)
+    {
+        app.MapGet("/product", GetProductById)
+            .WithName("GetProductById")
+            .WithDisplayName("Get Product by Id")
+            .WithTags("ProductModule")
+            .Produces&lt;ProductResponseModel&gt;()
+            .Produces(500);
+    }
+
+    private async Task&lt;IResult&gt; GetProductById(Guid productId, CancellationToken cancellationToken)
+    {
+        var product = await _productService.GetExampleByIdASync(productId, cancellationToken);
+        return Results.Ok(product);
+    }
+}</code></pre>
+<p>Carter takes care of discovery of Minimal API endpoints when AddCarter extension method is called.</p>
+<pre class="language-csharp"><code>internal static class ServiceCollectionExtensions
+{
+    public static IServiceCollection AddCommonServices(this IServiceCollection services, WebApplicationBuilder builder)
+    {     
+        builder.Services.AddCarter();
+        return builder.Services;
+    }
+}</code></pre>
+<p>Carter can do a lot more and I recommend you to check <a href="https://github.com/CarterCommunity/Carter/tree/main/samples" rel="follow">these samples</a>.</p>
+
+                        </div> <!-- end s-entry__entry-content -->
+
+                        <div class="s-content__entry-meta">
+
+                            <div class="entry-author meta-blk">
+                                <div class="author-avatar">
+                                <img class="avatar" src="../images/avatars/kalle.jpg" alt="">
+                                </div>
+                                <div class="byline">
+                                    <span class="bytext">Posted By</span>
+                                    Kalle Marjokorpi
+                                </div>
+                            </div>
+
+                            <div class="meta-bottom">
+
+                                <div class="entry-cat-links meta-blk">
+
+                                    <span>On</span>
+22.09.2023                                </div>
+
+                                <div class="entry-tags meta-blk">
+                                    <span class="tagtext">Tags</span>
+                                            <a id="post-category-net" href="category/net.html">.NET</a>
+                                </div>
+
+                            </div>
+
+                        </div> <!-- s-content__entry-meta -->
+
+                        <div class="s-content__pagenav">
+                            <div class="prev-nav">
+                                    <a id="post-previous-how-to-visualize-home-assistant-events-with-azure-data-explorer" href="how-to-visualize-home-assistant-events-with-azure-data-explorer.html" rel="prev">
+                                        <span>Previous</span>
+                                        How to visualize Home Assistant events data with Azure Data Explorer?
+                                    </a>
+                            </div>
+                            <div class="next-nav">
+
+                 
+
+                            
+                            </div>
+                        </div> <!-- end s-content__pagenav -->
+
+                    </div> <!-- end s-content__primary -->
+                </article> <!-- end entry -->
+
+            </div> <!-- end column -->
+        </div> <!-- end row -->
+        <!-- comments
+        ================================================== -->
+        <div class="comments-wrap">
+
+            <div id="comments" class="row">
+                <div class="column large-12">
+
+                    <h3>Comments</h3>
+
+                    <script src="https://utteranc.es/client.js"
+                            repo="kalleantero/kalleantero.github.io"
+                            issue-term="url"
+                            theme="github-light"
+                            crossorigin="anonymous"
+                            async>
+                    </script>
+
+
+
+                </div> <!-- end col-full -->
+            </div> <!-- end comments -->
+
+
+
+        </div> <!-- end comments-wrap -->
+
+
+    </section> <!-- end s-content -->
+
+
+
+
+    
+
+
+<!-- footer
+================================================== -->
+<footer class="s-footer">
+
+
+
+
+    <div class="s-footer__bottom">
+        <div class="row">
+            <div class="column">
+                <div class="ss-copyright">
+                    <span>Copyright Kalle Marjokorpi 2023</span>
+                    <span>Design by <a href="http://www.styleshout.com/">styleshout</a></span>
+                    <span>Content management by <a href="http://www.buttercms.com/">Headless ButterCMS</a></span>
+
+                </div> <!-- end ss-copyright -->
+            </div>
+        </div>
+
+        <div class="ss-go-top">
+            <a class="smoothscroll" title="Back to Top" href="#top">
+                <svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" width="15" height="15"><path d="M7.5 1.5l.354-.354L7.5.793l-.354.353.354.354zm-.354.354l4 4 .708-.708-4-4-.708.708zm0-.708l-4 4 .708.708 4-4-.708-.708zM7 1.5V14h1V1.5H7z" fill="currentColor"></path></svg>
+            </a>
+        </div> <!-- end ss-go-top -->
+    </div> <!-- end s-footer__bottom -->
+
+</footer> <!-- end s-footer -->
+   
+    <!-- Java Script
+     ================================================== -->
+
+    
+    
+    <!-- Cloudflare Web Analytics -->
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cac9fd24c1c04b6d9984ea31685b0414"}'></script><!-- End Cloudflare Web Analytics -->
+    
+    <script src="../js/jquery-3.5.0.min.js"></script>
+    <script src="../js/plugins.js"></script>
+    <script src="../js/main.js"></script>
+
+    <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="kmarjok" data-description="Support me on Buy me a coffee!" data-message="" data-color="#40DCA5" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
+
+</body>
+
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/greenfield-dotnet-project-and-external-libraries by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 22 Sep 2023 06:03:49 GMT -->
+</html>

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/lessons-learned-with-net-aspire by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 13 Dec 2023 08:57:03 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+
+
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+    <meta name="description" content="This blog is concentrated to Microsoft and cloud technology, coding and architecture. Solutions, tips and knowledge from a developer to developer.">
+
+    <meta name="author" content="Kalle Marjokorpi">
+
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="../css/vendor.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/cookieconsent.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="../css/tags.css">
+
+    <!-- script
+    ================================================== -->
+    <script src="../js/modernizr.js"></script>
+    <script defer src="../js/fontawesome/all.min.js"></script>
+
+    <!-- favicons
+    ================================================== -->
+    <script type="text/plain" data-cookiecategory="analytics" async src="https://www.googletagmanager.com/gtag/js?id=G-DPTCQBZTWE"></script>
+    <script type="text/plain" data-cookiecategory="analytics">
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){window.dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DPTCQBZTWE');
+    </script>
+    
+    <script defer type="text/javascript">
+        (function (c, l, a, r, i, t, y) {
+            c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
+            t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
+            y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+        })(window, document, "clarity", "script", "gr1x6zhls1");
+    </script>
+
+    
+    <title>.NET Aspire lessons learned so far - Blog by Kalle Marjokorpi</title>
+    <meta name="description" content="This blog post shares some experiences and lessons learned while using .NET Aspire in Azure.">
+    <meta name="author" content="Kalle Marjokorpi">
+
+
+
+    <script defer src="../js/cookieconsent.js"></script>
+    <script defer src="../js/cookieconsent-config.js"></script>
+    <script src="https://cdn.counter.dev/script.js" data-id="a019f4e1-6ec3-4293-8b98-7440925a9066" data-utcoffset="2"></script>
+    <script defer src="../js/cusdis.es.js"></script>
+
+</head>
+<body id="top">
+
+    <!-- preloader
+    ================================================== -->
+    <div id="preloader">
+        <div id="loader"></div>
+    </div>
+
+    <!-- header
+    ================================================== -->
+
+    <!-- header
+   ================================================== -->
+
+
+ <!-- header
+    ================================================== -->
+<header class="s-header s-header--opaque">
+
+        <div class="s-header__logo">
+            Kalle Marjokorpi
+        </div>
+
+        <div class="row s-header__navigation">
+
+            
+
+    <nav class="s-header__nav-wrap">
+        <h3 class="s-header__nav-heading h6">Navigate to</h3>
+
+        <ul class="s-header__nav">
+
+
+            <li><a id="top-navigation-link-root" href="../index.html" title="Home">Home</a></li>
+
+                <li><a id="top-navigation-link-about"  href="../about.html" title="About me">About me</a></li>
+
+
+        </ul> <!-- end s-header__nav -->
+
+        <a href="#0" title="Close Menu" class="s-header__overlay-close close-mobile-menu">Close</a>
+
+    </nav> <!-- end s-header__nav-wrap -->
+
+
+            
+
+        </div> <!-- end s-header__navigation -->
+
+        <a class="s-header__toggle-menu" href="#0" title="Menu"><span>Menu</span></a>
+
+
+    </header> <!-- end s-header -->
+
+
+
+
+    
+
+
+
+    <!-- content
+        ================================================== -->
+    <section class="s-content">
+
+        <div class="row">
+            <div class="column large-12">
+
+                <article class="s-content__entry format-standard">
+
+
+                    <div class="s-content__entry-header">
+                    <h1 class="s-content__title s-content__title--post">.NET Aspire lessons learned so far</h1>
+                    </div> <!-- end s-content__entry-header -->
+
+                    <div class="s-content__primary">
+
+                        <div class="s-content__entry-content">
+
+                            <p>.NET Aspire was published a couple of weeks ago and we started to utilize it immediately in one new project. We knew that there would be some hiccups because .NET Aspire is still in preview. The official release is planned for the first half of 2024.</p>
+<p>This blog post shares some experiences and lessons learned while using .NET Aspire in Azure. I recommend you read also my earlier post about the&nbsp;<a href="https://www.kallemarjokorpi.fi/blog/azure-developer-cli.html" rel="follow">Azure Developer CLI</a> because it's a highly recommended tool with .NET Aspire.&nbsp;</p>
+<h2>What is .NET Aspire?</h2>
+<blockquote>.NET Aspire is an opinionated stack for building resilient, observable, and configurable cloud-native applications with .NET. It includes a curated set of components enhanced for cloud-native by including service discovery, telemetry, resilience, and health checks by default. Combined with a sophisticated but simple local developer experience, .NET Aspire makes it easy to discover, acquire, and configure essential dependencies for cloud-native apps.&nbsp;<a href="https://devblogs.microsoft.com/dotnet/introducing-dotnet-aspire-simplifying-cloud-native-development-with-dotnet-8/">Introducing .NET Aspire: Simplifying Cloud-Native Development with .NET 8</a> <a href="https://learn.microsoft.com/en-us/dotnet/aspire/get-started/aspire-overview"></a></blockquote>
+<p>Practically, .NET Aspire is designed to improve developer's productivity and experience of building cloud-native microservices and distributed applications. Especially, it helps to handle and streamline the orchestration between different parts of your cloud-native app which makes developers' life more easier. Combined use of Azure Developer CLI and .NET Aspire makes deployments super smooth and straightforward.</p>
+<p>You may have heard about&nbsp;<a href="https://github.com/dotnet/tye" rel="follow">Project Tye</a> already before .NET Aspire which is an orchestrator tool developed by Microsoft to make developing microservices easier. Most probably Project Tye has also influenced the development of .NET Aspire.</p>
+<h2>Lessons learned so far</h2>
+<p>.NET Aspire is currently (12/23) in preview and it's evolving rapidly so some of these issues may have been resolved already while reading this.</p>
+<h3>1. Azure Functions are not supported (yet)</h3>
+<p>According to <a href="https://learn.microsoft.com/en-us/dotnet/aspire/reference/aspire-faq" rel="follow">FAQ</a>, Azure Functions are not supported in preview 1 of .NET Aspire. Microsoft has stated that they are planning to add support later in the future.</p>
+<p>The initial plan in our project was to use Azure Functions for subscribing events. Due to a lack of Azure Function support, we decided to implement an event subscribing capability using background worker processes. This is one workaround until Azure Functions are supported.</p>
+<h3>2. Deployment to Azure without defining the infrastructure</h3>
+<p>.NET Aspire application hosted in Azure Container App Environment can be deployed to Azure using Azure Developer CLI without defining infrastructure with Bicep. This was confusing to notice at first. I tried to find bicep files from the solution but there is no any. It seems that Azure Developer CLI/.NET Aspire has some internal logic to handle the infrastructure deployment of Azure Container App Environment.</p>
+<p>All you need to do is initialize your .NET Aspire project with <strong>azd init</strong> and deploy. By default, the following Azure resources are created during the infrastructure provisioning:</p>
+<ul>
+<li>Azure Container Registry</li>
+<li>Azure Log Analytics Workspace</li>
+<li>User Managed Identity</li>
+<li>Azure Container Apps Environment</li>
+</ul>
+<p>This is a quick way to test applications but in a more complex environment, full control of infrastructure creation is required. If you want to include infrastructure files in your project and perhaps modify the infrastructure then&nbsp;you need to execute infrastructure synthetization.&nbsp;</p>
+<pre class="language-undefined"><code>azd infra synth</code></pre>
+<p>This command creates an infra folder with bicep modules and all modules are free to modify. infrastructure synthetization command is currently (12/23) an alpha release.</p>
+<h3>3. Confusion with local environment configurations</h3>
+<p>By default Azure Developer CLI's project initialization command (<strong>azd init</strong>) creates the following environment-specific folder structure under .azure folder.</p>
+<pre class="language-undefined"><code>├── .azure               
+│   ├── dev               [ Environment folder ]
+│   │    ├── .env         [ Environment configuration file]
+│   └── config.json       [ AZD and Container Apps Environment configuration file  ]</code></pre>
+<p>The folder structure contains the <strong>environment variable file</strong> (.env) for key-value pair types of configurations and <strong>config.json</strong> file for common configurations. Azure Container Apps / .NET Aspire uses a config.json file to determine e.g. services that will be exposed to the public internet. It's not clear to me what it's the actual purpose of this "local" configuration because these exposed services are also determined in application-specific YAML-manifest files.</p>
+<p>By default, these local environment folders are excluded from the source control in .gitignore file.&nbsp;</p>
+<p><strong>Sample config.json</strong></p>
+<pre class="language-undefined"><code>{
+    "services": {
+        "app": {
+          "config": {
+            "exposedServices": [
+              "apiservice",
+              "webfrontend"
+            ]
+          }
+        }
+    }
+}</code></pre>
+<p>After initialization .NET Aspire application can be deployed to Azure from a local machine by using&nbsp;<strong>azd up</strong> command.</p>
+<p><strong>Issues in Azure deployment pipelines</strong></p>
+<p>Local application provision and deployment from a local machine to Azure works fine with <strong>azd up</strong> command but then some challenges occured in Azure deployment pipelines.</p>
+<p>Execution of <strong>azd up</strong> command in the deployment pipeline causes the following error:</p>
+<blockquote>ERROR: failed registering service hooks, failed getting services: importing services: generating app host manifest: selecting public services: no default response for prompt 'Select which services to expose to the Internet'</blockquote>
+<pre class="language-undefined"><code>  - task: AzureCLI@2
+    displayName: Provision Infrastructure
+    inputs:
+      azureSubscription: $(service-connection-name-test)
+      scriptLocation: InlineScript
+      scriptType: pscore
+      TargetAzurePs: LatestVersion
+      inlineScript: |
+        $environment = $Env:AZURE_ENV_NAME;
+        azd up --environment $environment --no-prompt</code></pre>
+<p>As the error says local agent in Azure DevOps tries to find the config.json file's exposed services configuration but it cannot find it because it's not in the source control.</p>
+<p>This error can be bypassed including environment-specific files in the source control, and especially config.json. We decided to include only config.json file in the source control.</p>
+<h3>4. Should we use local environment files (.env) in Azure?</h3>
+<p>The deployment pipeline originally used Azure DevOps pipeline variables to use different settings per environment. I started to consider if we would use these local environment-specific files from source control in deployment pipelines and leave only sensitive variables in pipeline variables / KeyVault. This would enable to use of the same kind of configuration handling in local development and deployment pipelines. Let's try this.</p>
+<p>After some try and error, I concluded that only the default variables (<strong>AZURE_LOCATION </strong>and <strong>AZURE_SUBSCRIPTION</strong>) were automatically detected from .env files. For some reason, custom environment variables are not working which is a show-stopper for this option.</p>
+<pre class="language-undefined"><code>AZURE_LOCATION="westeurope"
+AZURE_SUBSCRIPTION_ID="00000000-0000-0000-0000-000000000000"</code></pre>
+<p></p>
+<p></p>
+
+                        </div> <!-- end s-entry__entry-content -->
+
+                        <div class="s-content__entry-meta">
+
+                            <div class="entry-author meta-blk">
+                                <div class="author-avatar">
+                                <img class="avatar" src="../images/avatars/kalle.jpg" alt="">
+                                </div>
+                                <div class="byline">
+                                    <span class="bytext">Posted By</span>
+                                    Kalle Marjokorpi
+                                </div>
+                            </div>
+
+                            <div class="meta-bottom">
+
+                                <div class="entry-cat-links meta-blk">
+
+                                    <span>On</span>
+13.12.2023                                </div>
+
+                                <div class="entry-tags meta-blk">
+                                    <span class="tagtext">Tags</span>
+                                            <a id="post-category-azure" href="category/azure.html">Azure</a>
+                                            <a id="post-category-net-aspire" href="category/net-aspire.html">.NET Aspire</a>
+                                </div>
+
+                            </div>
+
+                        </div> <!-- s-content__entry-meta -->
+
+                        <div class="s-content__pagenav">
+                            <div class="prev-nav">
+                                    <a id="post-previous-greenfield-dotnet-project-and-external-libraries" href="greenfield-dotnet-project-and-external-libraries.html" rel="prev">
+                                        <span>Previous</span>
+                                        My favorite libraries for a new Greenfield .NET project
+                                    </a>
+                            </div>
+                            <div class="next-nav">
+
+                 
+
+                            
+                            </div>
+                        </div> <!-- end s-content__pagenav -->
+
+                    </div> <!-- end s-content__primary -->
+                </article> <!-- end entry -->
+
+            </div> <!-- end column -->
+        </div> <!-- end row -->
+        <!-- comments
+        ================================================== -->
+        <div class="comments-wrap">
+
+            <div id="comments" class="row">
+                <div class="column large-12">
+
+                    <h3>Comments</h3>
+
+                    <script src="https://utteranc.es/client.js"
+                            repo="kalleantero/kalleantero.github.io"
+                            issue-term="url"
+                            theme="github-light"
+                            crossorigin="anonymous"
+                            async>
+                    </script>
+
+
+
+                </div> <!-- end col-full -->
+            </div> <!-- end comments -->
+
+
+
+        </div> <!-- end comments-wrap -->
+
+
+    </section> <!-- end s-content -->
+
+
+
+
+    
+
+
+<!-- footer
+================================================== -->
+<footer class="s-footer">
+
+
+
+
+    <div class="s-footer__bottom">
+        <div class="row">
+            <div class="column">
+                <div class="ss-copyright">
+                    <span>Copyright Kalle Marjokorpi 2023</span>
+                    <span>Design by <a href="http://www.styleshout.com/">styleshout</a></span>
+                    <span>Content management by <a href="http://www.buttercms.com/">Headless ButterCMS</a></span>
+
+                </div> <!-- end ss-copyright -->
+            </div>
+        </div>
+
+        <div class="ss-go-top">
+            <a class="smoothscroll" title="Back to Top" href="#top">
+                <svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" width="15" height="15"><path d="M7.5 1.5l.354-.354L7.5.793l-.354.353.354.354zm-.354.354l4 4 .708-.708-4-4-.708.708zm0-.708l-4 4 .708.708 4-4-.708-.708zM7 1.5V14h1V1.5H7z" fill="currentColor"></path></svg>
+            </a>
+        </div> <!-- end ss-go-top -->
+    </div> <!-- end s-footer__bottom -->
+
+</footer> <!-- end s-footer -->
+   
+    <!-- Java Script
+     ================================================== -->
+
+    
+    
+    <!-- Cloudflare Web Analytics -->
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cac9fd24c1c04b6d9984ea31685b0414"}'></script><!-- End Cloudflare Web Analytics -->
+    
+    <script src="../js/jquery-3.5.0.min.js"></script>
+    <script src="../js/plugins.js"></script>
+    <script src="../js/main.js"></script>
+
+    <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="kmarjok" data-description="Support me on Buy me a coffee!" data-message="" data-color="#40DCA5" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
+
+</body>
+
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/lessons-learned-with-net-aspire by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 13 Dec 2023 08:57:04 GMT -->
+</html>

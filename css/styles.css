@@ -85,7 +85,7 @@
 /* ------------------------------------------------------------------- 
  * ## fonts
  * ------------------------------------------------------------------- */
-@import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display&amp;family=DM+Serif+Text&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Serif+Text&family=Inter:wght@300;400;500;600;700&display=swap");
 
 :root {
     --font-1: "Inter", sans-serif;

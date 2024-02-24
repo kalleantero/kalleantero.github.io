@@ -154,13 +154,14 @@
 
         imagesLoaded(containerBricks, function() {
 
+            /*
             const msnry = new Masonry(containerBricks, {
                 itemSelector: '.entry',
                 columnWidth: '.grid-sizer',
                 percentPosition: true,
                 resize: true
             });
-
+            */
         });
 
     }; // end ssMasonry

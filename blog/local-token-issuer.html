@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/local-token-issuer by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 24 Feb 2024 17:49:38 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+
+
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+    <meta name="description" content="This blog is concentrated to Microsoft and cloud technology, coding and architecture. Solutions, tips and knowledge from a developer to developer.">
+
+    <meta name="author" content="Kalle Marjokorpi">
+
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="../css/vendor.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/cookieconsent.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="../css/tags.css">
+
+    <!-- script
+    ================================================== -->
+    <script src="../js/modernizr.js"></script>
+    <script defer src="../js/fontawesome/all.min.js"></script>
+
+    <script type="text/plain" data-cookiecategory="analytics" async src="https://www.googletagmanager.com/gtag/js?id=G-DPTCQBZTWE"></script>
+    <script type="text/plain" data-cookiecategory="analytics">
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){window.dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DPTCQBZTWE');
+    </script>
+    
+    <script defer type="text/javascript">
+        (function (c, l, a, r, i, t, y) {
+            c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
+            t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
+            y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+        })(window, document, "clarity", "script", "gr1x6zhls1");
+    </script>
+
+    
+    <title>How to issue JWT Web tokens locally using dotnet user-jwts? - Blog by Kalle Marjokorpi</title>
+    <meta name="description" content="How to use dotnet user-jwts command line tool to generate local JSON JWT tokens.">
+    <meta name="author" content="Kalle Marjokorpi">
+
+
+    <script defer src="../js/cookieconsent.js"></script>
+    <script defer src="../js/cookieconsent-config.js"></script>
+    <script src="https://cdn.counter.dev/script.js" data-id="a019f4e1-6ec3-4293-8b98-7440925a9066" data-utcoffset="2"></script>
+
+</head>
+<body id="top">
+
+    <!-- preloader
+    ================================================== -->
+    <div id="preloader">
+        <div id="loader"></div>
+    </div>
+
+    <!-- header
+    ================================================== -->
+
+     <!-- header
+    ================================================== -->
+<header class="s-header s-header--opaque">
+
+        <div class="s-header__logo">
+            Kalle Marjokorpi
+        </div>
+
+        <div class="row s-header__navigation">
+
+            
+
+    <nav class="s-header__nav-wrap">
+        <h3 class="s-header__nav-heading h6">Navigate to</h3>
+
+        <ul class="s-header__nav">
+
+
+            <li><a id="top-navigation-link-root" href="../index.html" title="Home">Home</a></li>
+
+                <li><a id="top-navigation-link-about"  href="../about.html" title="About me">About me</a></li>
+                <li><a id="top-navigation-link-talks"  href="../talks.html" title="Talks">Talks</a></li>
+
+
+        </ul> <!-- end s-header__nav -->
+
+        <a href="#0" title="Close Menu" class="s-header__overlay-close close-mobile-menu">Close</a>
+
+    </nav> <!-- end s-header__nav-wrap -->
+
+
+            
+
+        </div> <!-- end s-header__navigation -->
+
+        <a class="s-header__toggle-menu" href="#0" title="Menu"><span>Menu</span></a>
+
+    </header> <!-- end s-header -->
+
+    
+
+
+
+    <!-- content
+        ================================================== -->
+    <section class="s-content">
+
+        <div class="row">
+            <div class="column large-12">
+
+                <article class="s-content__entry format-standard">
+
+                    <div class="s-content__entry-header">
+                    <h1 class="s-content__title s-content__title--post">How to issue JWT Web tokens locally using dotnet user-jwts?</h1>
+                    </div> <!-- end s-content__entry-header -->
+
+                    <div class="s-content__primary">
+
+                        <div class="s-content__entry-content">
+
+                            <p><img src="https://cdn.buttercms.com/tJTFc8tfT9aKMOZTebPO" alt="undefined" align="right" style="padding-left: 20px;"></p>
+<p>I recently got a task to implement standard OpenIdConnect/OAuth authentication/authorization with JWT Web tokens to a .NET 8-based API. It's been a while since when I last configured this, so I needed to check a few things first. While searching I spotted an <a href="https://learn.microsoft.com/en-us/aspnet/core/security/authentication/jwt-authn?view=aspnetcore-8.0&amp;tabs=windows" rel="follow">article</a> about generating JWT tokens with built-in dotnet CLI tool. How have I missed this? This is super useful because you can generate tokens locally on your machine. You have full freedom to adjust scopes and claims as you like.</p>
+<p>There are already blog posts and articles available about this topic. This blog post is written in the spirit of lessons learned what I discovered and what wasn't mentioned in other mediums.</p>
+<h3>Glossary</h3>
+<p>Before starting it's good to define some key terms which are used in this blog post.</p>
+<p><a href="https://learn.microsoft.com/en-us/aspnet/core/security/authentication/jwt-authn?view=aspnetcore-8.0&amp;tabs=windows"></a><strong><span style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">JSON Web tokens (JWT)</span></strong></p>
+<blockquote>JSON Web Tokens (JWT) are an open standard (RFC 7519) that defines a compact and self-contained way to securely transmit information between parties as a JSON object. This information can be verified and trusted because it is digitally signed.</blockquote>
+<p>Source: <a href="https://jwt.io/introduction">JSON Web Token Introduction - jwt.io</a></p>
+<p><strong>Authority</strong></p>
+<blockquote>Authority is the address of the token-issuing authentication server. The JWT bearer authentication middleware will use this URI to find and retrieve the public key that can be used to validate the token's signature.</blockquote>
+<p>Source: <a href="https://devblogs.microsoft.com/dotnet/jwt-validation-and-authorization-in-asp-net-core/">JWT Validation and Authorization in ASP.NET Core - .NET Blog (microsoft.com)</a></p>
+<p><strong>Issuer</strong></p>
+<blockquote>OpenID Connect specifies the iss field to be used in ID Tokens in order to describe who the issuer of the token is. The issuer is the one that assembles the token and signs it (for signed JWTs). The iss field should be a HTTPS URL pointing to the Identity Provider. If a token is received with issuer address other than the Identity Provider currently in use, it will have a different authority.</blockquote>
+<p>Source: <a href="https://curity.io/resources/learn/what-is-a-claims-authority/">The Claims Authority and its Role in Issuing Claims | Curity</a></p>
+<p><strong>Token signing</strong></p>
+<blockquote>JWTs can be signed using a secret (with the HMAC algorithm) or a public/private key pair using RSA or ECDSA.</blockquote>
+<p>Source: <a href="https://jwt.io/introduction">JSON Web Token Introduction - jwt.io</a></p>
+<h2>What is dotnet user-jwts tool and why should you use it?</h2>
+<p>The dotnet user-jwts is a command line tool that creates local app-specific JSON Web Tokens (JWTs).&nbsp;</p>
+<p>The biggest benefits of using dotnet user-jwts are <strong>flexibility </strong>and <strong>increased development experience</strong>.&nbsp;</p>
+<p>The tool can highly increase the development experience because developers can quickly create and adjust tokens locally without issuing tokens from the external server which always takes some time. Typically tokens issued by the external server are short-handed which means that the developer needs to issue tokens multiple times during the e.g. API testing (clients credential flow). Developers can save a nice amount of time just by creating a local token with specific claims and a long expiration time.</p>
+<h2>Commands</h2>
+<p>See all commands from <a href="https://learn.microsoft.com/en-us/aspnet/core/security/authentication/jwt-authn?view=aspnetcore-8.0&amp;tabs=windows" rel="follow">here</a>. I listed here the most common commands that I have used.</p>
+<p><strong>Issue a new JSON Web Token</strong></p>
+<pre class="language-undefined"><code>dotnet user-jwts create</code></pre>
+<p>When the first token is issued command line tool first creates the signing key which is used to sign JSON Web Tokens. The tool uses <a href="https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-8.0&amp;tabs=windows" rel="follow">Secret Manager</a> to persist the signing key and JSON Web Tokens in JSON files in the local machine's user profile folder. User secret Id is defined in the Visual Studio project settings which maps the specific project to files created by Secret Manager.</p>
+<p>Signing key:&nbsp;<strong>%APPDATA%\Microsoft\UserSecrets\&lt;user_secrets_id&gt;\secrets.json<br></strong>JSON Web Tokens: <strong>%APPDATA%\Microsoft\UserSecrets\&lt;user_secrets_id&gt;\user-jwts.json</strong></p>
+<p>Issued JSON Web token is always project-specific. When the create command is executed the tool automatically creates the following app settings configuration for a project with a valid audience and issuer.</p>
+<pre class="language-undefined"><code> "Authentication": {
+   "Schemes": {
+     "Bearer": {
+       "ValidAudiences": [
+         "http://localhost:64755",
+         "https://localhost:44379",
+         "http://localhost:5048",
+         "https://localhost:7103"
+       ],
+       "ValidIssuer": "dotnet-user-jwts"
+     }
+   }
+ }</code></pre>
+<p><strong>Issue a new JSON Web Token with custom sub, scope, and claim</strong></p>
+<pre class="language-undefined"><code>dotnet user-jwts create -n kalle@test.local --scope "api.read" --claim "role=admin"</code></pre>
+<p><strong>Display or reset the signing key used to issue JWTs</strong></p>
+<pre class="language-undefined"><code>dotnet user-jwts key</code></pre>
+<p><strong>Lists the JWTs issued for the project</strong></p>
+<pre class="language-undefined"><code>dotnet user-jwts list</code></pre>
+<p><strong>Display the details of a given JWT</strong></p>
+<pre class="language-undefined"><code>dotnet user-jwts print [ID]</code></pre>
+<h2>First iteration</h2>
+<p>I decided to first test how this works as introduced in the&nbsp;<a href="https://learn.microsoft.com/en-us/aspnet/core/security/authentication/jwt-authn?view=aspnetcore-8.0&amp;tabs=windows" rel="follow">Microsoft article</a>.&nbsp;</p>
+<pre class="language-csharp"><code>using System.Security.Claims;
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddAuthorization();
+builder.Services.AddAuthentication("Bearer").AddJwtBearer();
+var app = builder.Build();
+app.UseAuthorization();
+app.MapGet("/", () =&gt; "Hello, World!");
+app.MapGet("/secret", (ClaimsPrincipal user) =&gt; $"Hello {user.Identity?.Name}. My secret")
+    .RequireAuthorization();
+app.Run();
+</code></pre>
+<p>This worked smoothly. However, I want to configure explicitly authentication-related settings in the code instead of using all settings from app settings. Let's try this in the next iteration.</p>
+<h2>Second iteration</h2>
+<p>As said I want to explicitly configure authentication in a code like this.</p>
+<pre class="language-csharp"><code>using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+var authority = builder.Configuration.GetValue&lt;string&gt;("Authentication:Schemes:Bearer:ValidAuthority");
+var audiences = builder.Configuration.GetSection("Authentication:Schemes:Bearer:ValidAudiences").Get&lt;string[]&gt;();
+var issuer = builder.Configuration.GetValue&lt;string&gt;("Authentication:Schemes:Bearer:ValidIssuer");
+
+builder.Services
+    .AddAuthorization(options =&gt;
+    {
+        options.FallbackPolicy = new AuthorizationPolicyBuilder()
+            .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+            .RequireAuthenticatedUser()
+            .Build();
+    })
+    .AddAuthentication(options =&gt;
+    {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =&gt;
+    {
+        options.Authority = authority;
+
+        var tokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateIssuerSigningKey = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ClockSkew = TimeSpan.Zero,
+            ValidAudiences = audiences,
+            ValidIssuer = issuer,
+            RequireSignedTokens = true
+        };
+        options.TokenValidationParameters = tokenValidationParameters;
+    });
+
+var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.UseHttpsRedirection();
+app.MapControllers();
+app.Run();</code></pre>
+<p>But this didn't work. I started to receive the following error:<br><br><strong>Bearer error="invalid_token", error_description="The signature key was not found".</strong>&nbsp;</p>
+<p>Yeah, let's add the IssuerSigningKey for TokenValidationParameters so this should fix the problem, right? I copy-pasted IssuerSigningKey to the app settings configuration from <strong>dotnet user-jwts key</strong> command.</p>
+<pre class="language-undefined"><code> if (builder.Environment.IsDevelopment())
+ {
+     // This is for dotnet user-jwts
+     var signingKey = builder.Configuration.GetValue&lt;string&gt;("Authentication:Schemes:Bearer:SigningKey");
+
+     if (!string.IsNullOrEmpty(signingKey))
+     {
+         tokenValidationParameters.IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(signingKey));
+     }
+ }</code></pre>
+<p>No, still the same error.</p>
+<p>After a couple of hours of investigation without idea, I decided to take a look dotnet user-jwts's source code. Hopefully, I could find something to help fix this issue. Yeah, I found new clues. I noticed from the&nbsp;<a href="https://github.com/dotnet/aspnetcore/blob/main/src/Tools/dotnet-user-jwts/src/Commands/KeyCommand.cs" rel="follow">KeyCommand class</a> that the output is converted to Base 64. That must be the reason.</p>
+<pre class="language-csharp"><code>reporter.Output(Resources.FormatKeyCommand_Confirmed(Convert.ToBase64String(signingKeyMaterial)));</code></pre>
+<p>Let's add the one-liner to convert from the Base64 string.</p>
+<pre class="language-undefined"><code>if (builder.Environment.IsDevelopment())
+{
+    // This is for dotnet user-jwts
+    var signingKey = builder.Configuration.GetValue&lt;string&gt;("Authentication:Schemes:Bearer:SigningKey");
+
+    if(!string.IsNullOrEmpty(signingKey))
+    {
+        var signingKeyBytes = Convert.FromBase64String(signingKey);
+        tokenValidationParameters.IssuerSigningKey = new SymmetricSecurityKey(signingKeyBytes);
+    } 
+}</code></pre>
+<p>Yes, that was the trick. Now it works also with this code-based configuration.</p>
+<p><img src="https://cdn.buttercms.com/25xTM6t4QES7PuILuDXs" alt="undefined"></p>
+<h2>Other alternatives</h2>
+<p>I found that there is also a similar tool available called&nbsp;<a href="https://github.com/Phoesion/Phoesion.DevJwt" rel="follow">Phoesion.DevJwt</a>. There is also Nuget package available so you can generate tokens programmatically for different kinds of testing scenarios.</p>
+
+                        </div> <!-- end s-entry__entry-content -->
+
+                        <div class="s-content__entry-meta">
+
+                            <div class="entry-author meta-blk">
+                                <div class="author-avatar">
+                                <img class="avatar" src="../images/avatars/kalle.jpg" alt="">
+                                </div>
+                                <div class="byline">
+                                    <span class="bytext">Posted By</span>
+                                    Kalle Marjokorpi
+                                </div>
+                            </div>
+
+                            <div class="meta-bottom">
+
+                                <div class="entry-cat-links meta-blk">
+
+                                    <span>On</span>
+16.02.2024                                </div>
+
+                                <div class="entry-tags meta-blk">
+                                    <span class="tagtext">Tags</span>
+                                            <a id="post-category-2024" href="category/2024.html">2024</a>
+                                            <a id="post-category-c" href="category/c.html">C#</a>
+                                            <a id="post-category-developer-experience" href="category/developer-experience.html">Developer Experience</a>
+                                            <a id="post-category-net" href="category/net.html">.NET</a>
+                                </div>
+
+                            </div>
+
+                        </div> <!-- s-content__entry-meta -->
+
+                        <div class="s-content__pagenav">
+                            <div class="prev-nav">
+                                    <a id="post-previous-personal-reflections-2023" href="personal-reflections-2023.html" rel="prev">
+                                        <span>Previous</span>
+                                        2023: Personal Reflections
+                                    </a>
+                            </div>
+                            <div class="next-nav">
+
+                 
+
+                            
+                            </div>
+                        </div> <!-- end s-content__pagenav -->
+
+                    </div> <!-- end s-content__primary -->
+                </article> <!-- end entry -->
+
+            </div> <!-- end column -->
+        </div> <!-- end row -->
+        <!-- comments
+        ================================================== -->
+        <div class="comments-wrap">
+
+            <div id="comments" class="row">
+                <div class="column large-12">
+
+                    <h3>Comments</h3>
+
+                    <script src="https://utteranc.es/client.js"
+                            repo="kalleantero/kalleantero.github.io"
+                            issue-term="url"
+                            theme="github-light"
+                            crossorigin="anonymous"
+                            async>
+                    </script>                   
+
+                </div> <!-- end col-full -->
+            </div> <!-- end comments -->
+
+        </div> <!-- end comments-wrap -->
+
+    </section> <!-- end s-content -->
+
+    
+
+<!-- footer
+================================================== -->
+<footer class="s-footer">
+
+    <div class="s-footer__bottom">
+        <div class="row">
+            <div class="column">
+                <div class="ss-copyright">
+                    <span>Copyright Kalle Marjokorpi 2024</span>
+                    <span>Design by <a href="http://www.styleshout.com/">styleshout</a></span>
+                    <span>Content management by <a href="http://www.buttercms.com/">Headless ButterCMS</a></span>
+
+                </div> <!-- end ss-copyright -->
+            </div>
+        </div>
+
+        <div class="ss-go-top">
+            <a class="smoothscroll" title="Back to Top" href="#top">
+                <svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" width="15" height="15"><path d="M7.5 1.5l.354-.354L7.5.793l-.354.353.354.354zm-.354.354l4 4 .708-.708-4-4-.708.708zm0-.708l-4 4 .708.708 4-4-.708-.708zM7 1.5V14h1V1.5H7z" fill="currentColor"></path></svg>
+            </a>
+        </div> <!-- end ss-go-top -->
+    </div> <!-- end s-footer__bottom -->
+
+</footer> <!-- end s-footer -->
+   
+    <!-- Java Script
+     ================================================== -->
+
+    
+    
+    <!-- Cloudflare Web Analytics -->
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cac9fd24c1c04b6d9984ea31685b0414"}'></script><!-- End Cloudflare Web Analytics -->
+    
+    <script src="../js/jquery-3.5.0.min.js"></script>
+    <script src="../js/plugins.js"></script>
+    <script src="../js/main.js"></script>
+
+    <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="kmarjok" data-description="Support me on Buy me a coffee!" data-message="" data-color="#40DCA5" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
+
+</body>
+
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/local-token-issuer by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 24 Feb 2024 17:49:39 GMT -->
+</html>

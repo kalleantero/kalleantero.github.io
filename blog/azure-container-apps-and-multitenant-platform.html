@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/azure-container-apps-and-multitenant-platform by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 16 Mar 2024 06:09:36 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+
+
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+    <meta name="description" content="This blog is concentrated to Microsoft and cloud technology, coding and architecture. Solutions, tips and knowledge from a developer to developer.">
+
+    <meta name="author" content="Kalle Marjokorpi">
+
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="../css/vendor.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/cookieconsent.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="../css/tags.css">
+
+    <!-- script
+    ================================================== -->
+    <script src="../js/modernizr.js"></script>
+    <script defer src="../js/fontawesome/all.min.js"></script>
+
+    <script type="text/plain" data-cookiecategory="analytics" async src="https://www.googletagmanager.com/gtag/js?id=G-DPTCQBZTWE"></script>
+    <script type="text/plain" data-cookiecategory="analytics">
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){window.dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DPTCQBZTWE');
+    </script>
+    
+    <script defer type="text/javascript">
+        (function (c, l, a, r, i, t, y) {
+            c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
+            t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
+            y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+        })(window, document, "clarity", "script", "gr1x6zhls1");
+    </script>
+
+    
+    <title>How to implement multi-tenant platform with .NET Aspire and Azure Container Apps? - Blog by Kalle Marjokorpi</title>
+    <meta name="description" content="How to design the architecture of the platform which supports multiple independent teams and domain services.">
+    <meta name="author" content="Kalle Marjokorpi">
+
+
+    <script defer src="../js/cookieconsent.js"></script>
+    <script defer src="../js/cookieconsent-config.js"></script>
+    <script src="https://cdn.counter.dev/script.js" data-id="a019f4e1-6ec3-4293-8b98-7440925a9066" data-utcoffset="2"></script>
+
+</head>
+<body id="top">
+
+    <!-- preloader
+    ================================================== -->
+    <div id="preloader">
+        <div id="loader"></div>
+    </div>
+
+    <!-- header
+    ================================================== -->
+
+     <!-- header
+    ================================================== -->
+<header class="s-header s-header--opaque">
+
+        <div class="s-header__logo">
+            Kalle Marjokorpi
+        </div>
+
+        <div class="row s-header__navigation">
+
+            
+
+    <nav class="s-header__nav-wrap">
+        <h3 class="s-header__nav-heading h6">Navigate to</h3>
+
+        <ul class="s-header__nav">
+
+
+            <li><a id="top-navigation-link-root" href="../index.html" title="Home">Home</a></li>
+
+                <li><a id="top-navigation-link-about"  href="../about.html" title="About me">About me</a></li>
+                <li><a id="top-navigation-link-talks"  href="../talks.html" title="Talks">Talks</a></li>
+
+
+        </ul> <!-- end s-header__nav -->
+
+        <a href="#0" title="Close Menu" class="s-header__overlay-close close-mobile-menu">Close</a>
+
+    </nav> <!-- end s-header__nav-wrap -->
+
+
+            
+
+        </div> <!-- end s-header__navigation -->
+
+        <a class="s-header__toggle-menu" href="#0" title="Menu"><span>Menu</span></a>
+
+    </header> <!-- end s-header -->
+
+    
+
+
+
+    <!-- content
+        ================================================== -->
+    <section class="s-content">
+
+        <div class="row">
+            <div class="column large-12">
+
+                <article class="s-content__entry format-standard">
+
+                    <div class="s-content__entry-header">
+                    <h1 class="s-content__title s-content__title--post">How to implement multi-tenant platform with .NET Aspire and Azure Container Apps?</h1>
+                    </div> <!-- end s-content__entry-header -->
+
+                    <div class="s-content__primary">
+
+                        <div class="s-content__entry-content">
+
+                            <p>We started to build a service totality for a specific domain area with a small team a while ago. The foundation of the solution was <a href="https://learn.microsoft.com/en-us/dotnet/aspire/get-started/aspire-overview" rel="follow">.NET Aspire</a> and <a href="https://learn.microsoft.com/en-us/azure/container-apps/environment" rel="follow">Azure Container Apps Environment</a>. We saw the potential of this technology combination already soon. This then raised questions about how to scale up the platform to support multiple different domain services. Probably later several teams would start developing their own services on this platform.</p>
+<p>How to design the architecture of the platform so it supports multiple independent teams and domain services. We liked a lot how the combination of .NET Aspire and Azure Developer CLI boosted the development experience and deployment of containerized applications to Azure Container Apps Environment. We would consider this technology combination as a base of the platform.</p>
+<p>This blog post presents how to create a multi-tenant platform using .NET Aspire and Azure Container Apps Environment.</p>
+<h3>Platform design guidelines</h3>
+<p>We set the following design criteria for the platform:</p>
+<ul>
+<li>Enhanced developer experience and productivity.</li>
+<li>Less working with infrastructure and deployment pipelines, more developing the application, and solving business problems. Increased time to market.</li>
+<li>Shared deployment pipeline templates and Azure infrastructure modules.</li>
+<li>Simplified, partly shared, and cost-efficient Azure Infrastructure for application hosting.</li>
+<li>Microservices can decide whether to use the Dedicated or Consumption resource model.</li>
+<li>Clear domain boundaries and ownership for each domain service</li>
+<li>Each domain service has its own repository for source control, deployment pipelines (using shared templates), and Azure resources (Resource Group).</li>
+<li>Isolated data storage.</li>
+</ul>
+<h2>Multitenancy models in Azure Container App</h2>
+<p>Microsoft has published a good <a href="https://learn.microsoft.com/en-us/azure/architecture/guide/multitenant/service/container-apps" rel="follow">article</a> about considerations for using Azure Container Apps in a multitenant solution. The article presents the following Azure Container Apps multitenancy models which determine the required level of isolation:</p>
+<ul style="list-style-type: none;">
+<li style="list-style-type: disc;"><strong>Trusted multitenancy</strong> by using a shared environment. This model might be appropriate when your tenants are all from within your organization.</li>
+<li style="list-style-type: disc;"><strong>Hostile multitenancy</strong> by deploying separate environments for each tenant. This model might be appropriate when you don't trust the code that your tenants run.</li>
+</ul>
+<p style="list-style-type: disc;"><strong>Trusted multitenancy</strong></p>
+<p>Optimizing cost, networking resources, and operations for trusted multitenant applications.</p>
+<p><img src="https://cdn.buttercms.com/kSMBc1ArQz2qvAZE6Oxx" alt="undefined"></p>
+<p><strong>Hostile multitenancy</strong></p>
+<p>Running hostile multitenant workloads in isolated environments for security and compliance.</p>
+<ul style="list-style-type: none;"></ul>
+<p><strong><img src="https://cdn.buttercms.com/z7PAfYZzTCSGCldf4YRO" alt="undefined"></strong></p>
+<p>Multi-tenant platform in our case shares the application hosting platform and its infrastructure (trusted multitenancy) for several applications developed by multiple teams. Each application has its own customers and isolated data storage.</p>
+<h2>Infrastructure of the platform</h2>
+<p>As said, the foundation of the platform is built on top of the trusted multitenancy model where application hosting capabilities are shared.&nbsp;</p>
+<p><img src="https://cdn.buttercms.com/zlJ2IS9zRxyAhmyLRvAu" alt="undefined"></p>
+<p><strong>Shared infrastructure</strong></p>
+<ul>
+<li>Own resource group which contains&nbsp;<strong>Azure Container Registry</strong> and <strong>Azure Container App Environment</strong> resources.</li>
+<li>Azure Container App Environment has predefined Workload profiles for microservices of the platform. Setup has predefined Dedicated and Consumption profiles.</li>
+<li>Own source control repository and deployment pipelines.</li>
+<li>The source control repository contains IaC code to create the shared infrastructure, shared YAML templates, and a pipeline to publish shared Bicep modules to the Azure Container Registry.</li>
+</ul>
+<p><strong>The infrastructure of domain-specific microservices</strong></p>
+<ul>
+<li>Each microservice has its own resource group where all domain-specific Azure resources are located. This enables resources like data storage to be completely isolated.</li>
+<li>Azure access rights are handled at the resource group level. Teams have access only to their own resource group.</li>
+<li>Own source control repository and deployment pipelines.</li>
+<li>As said, applications are hosted in the shared Azure Container App Environment. The actual domain-specific Container App resource is located in a microservice-specific resource group.</li>
+<li>Each microservice decides independently container-specific configurations like replication, ingress, scaling rules, and resource capacity in the Manifest YAML.</li>
+</ul>
+<h2>.NET Aspire solutions in the platform</h2>
+<p>The foundation of the solution is that each microservice solution is independent and separate teams are developing the code in their own source control repositories. Aspire application model is enabled on each microservice solution. Practically it means that each solution has own AppHost orchestration project which is responsible for connecting and configuring projects and services in your solution.</p>
+<p><img src="https://cdn.buttercms.com/clQ3cY4eQ9av6dzS3Rlg" alt="undefined"></p>
+<p><strong>Shared bicep modules</strong></p>
+<p>Each microservice has its own <strong>main.bicep</strong> file which orchestrates the creation of domain-specific Azure infrastructure. All microservice-specific resources are defined in main.bicep file except Container Apps. Publishing the containers to Azure Container Registry and deployment to Azure Container App Environment is handled automatically by Azure Developer CLI.</p>
+<p>Microservices don't have their own bicep modules (except main.bicep). All resources are created using shared reusable bicep modules from Azure Container Registry.</p>
+<p>For example creation of Application Insights resource:</p>
+<pre class="language-undefined"><code>module logAnalyticsWorkspace 'br/repo:bicep/modules/loganalyticsworkspace:v0.1' = {
+  name: logAnalyticsWorkspaceName
+  scope: resourceGroup(resourceGroupName)
+  dependsOn: [
+    rg
+  ]
+  params:{
+    location: location
+    tags: tags
+    name: logAnalyticsWorkspaceName
+  }
+}</code></pre>
+<p><strong>Shared Azure Container Registry to publish Container Apps</strong></p>
+<p>As said, the platform uses a shared Azure Container App Environment which is created in a shared infrastructure pipeline. Main.bicep uses outputs to determine Azure Container App Environment id value to environment variables. Later on Container manifest reads this value from environment variables.</p>
+<pre class="language-undefined"><code>resource containerAppEnvironment 'Microsoft.App/managedEnvironments@2023-08-01-preview' existing = {
+  scope: resourceGroup(sharedRgName)
+  name: containerAppEnvironmentName
+}
+
+output AZURE_CONTAINER_APPS_ENVIRONMENT_ID string = containerAppEnvironment.id</code></pre>
+<p><strong>Manifest</strong></p>
+<p>Container App-specific manifest file has reference to Azure Container App Environment Id. This configuration determines which is the Azure Container App Environment where the container is deployed.</p>
+<pre class="language-undefined"><code>location: {{ .Env.AZURE_LOCATION }}
+properties:
+  environmentId: {{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_ID }}
+  workloadProfileName: Dedicated</code></pre>
+<p><strong>Shared YAML-templates</strong></p>
+<p>Shared YAML-templates are published to an infrastructure repository where microservice-specific deployment pipelines can consume those templates. The usage of Azure Developer CLI makes pipelines very compact.&nbsp;</p>
+<p>Install .NET 8 and Aspire template:</p>
+<pre class="language-undefined"><code>steps:
+  - task: Bash@3
+    displayName: Install azd
+    inputs:
+      targetType: 'inline'
+      script: |
+        curl -fsSL https://aka.ms/install-azd.sh | bash -s -- --version daily
+
+  - pwsh: |
+      azd config set auth.useAzCliAuth "true"
+    displayName: Configure AZD to Use AZ CLI Authentication.
+
+  - task: UseDotNet@2
+    displayName: "Setup .NET 8"
+    inputs:
+      version: "8.0.x"
+
+  - pwsh: |
+      dotnet workload install aspire
+    displayName: Setup .NET Aspire</code></pre>
+<p>Infrastructure provision template:</p>
+<pre class="language-undefined"><code>parameters:
+  - name: environment
+    type: string
+    default: test
+  - name: serviceConnection
+    type: string
+
+steps:
+  - task: azureCLI@2
+    displayName: Provision Infrastructure
+    inputs:
+      azureSubscription: ${{ parameters.serviceConnection }}
+      scriptLocation: InlineScript
+      scriptType: pscore
+      TargetAzurePs: LatestVersion
+      inlineScript: |
+        azd provision --environment ${{ parameters.environment }} --no-prompt --no-state
+</code></pre>
+<p>Application deployment template:</p>
+<pre class="language-undefined"><code>parameters:
+  - name: environment
+    type: string
+    default: test
+  - name: serviceConnection
+    type: string
+
+steps:
+  - task: azureCLI@2
+    displayName: Deploy to ${{ parameters.environment }}
+    inputs:
+      azureSubscription: ${{ parameters.serviceConnection }}
+      scriptLocation: InlineScript
+      scriptType: pscore
+      TargetAzurePs: LatestVersion
+      inlineScript: |
+        azd deploy --environment ${{ parameters.environment }} --no-prompt
+</code></pre>
+<p><strong>Microservice-specific solution structure</strong></p>
+<p>When everything is in place folder structure of the domain-specific solution looks something like this (of course the content under the src-folder varies):</p>
+<pre class="language-undefined"><code>├── .azdo
+│   ├── pipelines
+│   │    ├── publish.yaml
+├── .azure
+│   ├── dev
+│   │    ├── .env
+│   └── config.json
+├── infra
+│   ├── main.bicep
+│   └── main.parameters.json
+├── src
+│   ├── Domain.Api
+│   ├── Domain.AppHost
+│   ├── Domain.ServiceDefaults
+├── Domain.sln
+├── azure.yaml</code></pre>
+<h2>Considerations of this setup</h2>
+<p><strong>Managed Identities for each Container App</strong></p>
+<p>You should create a User Assigned Managed Identity for each Container App that you can easily limit e.g. which resource can access microservice-specific data storage.</p>
+<p><strong>Virtual network</strong></p>
+<p>Azure Container Apps has Virtual Network support to facilitate communication between containers and external services. In a multi-tenant model, you may need to implement network policies to restrict communication between tenants' applications and domain-specific resources.</p>
+<p><strong>Log Analytics Workspace</strong></p>
+<p>Azure Container Apps Environment has its own Log Analytics Workspace where <strong>System and Container specific console logs</strong> are persisted. You should consider carefully where to locate this shared Log Analytics Workspace. It should be in a place where all teams can have access to follow their own Container Apps logs. The preferred way is also to create Application Insight with Log Analytics Workspace integration for the application traces etc. into a microservice-specific resource group.</p>
+<p><strong>Cost monitoring</strong></p>
+<p>If you want to monitor costs at a microservice (=domain service) level you need to combine costs also from the shared infrastructure Resource Group if a Dedicated plan is used.</p>
+<p><strong>Resource Allocation</strong></p>
+<p>As said earlier, Azure Container Apps allows you to specify resource limits for each container instance, including CPU, and memory. You can adjust these settings in YAML manifest. In a multi-tenant environment, you'll need to carefully allocate resources to ensure that one tenant's application doesn't consume excessive resources and impact the performance of other tenants' applications.</p>
+
+                        </div> <!-- end s-entry__entry-content -->
+
+                        <div class="s-content__entry-meta">
+
+                            <div class="entry-author meta-blk">
+                                <div class="author-avatar">
+                                <img class="avatar" src="../images/avatars/kalle.jpg" alt="">
+                                </div>
+                                <div class="byline">
+                                    <span class="bytext">Posted By</span>
+                                    Kalle Marjokorpi
+                                </div>
+                            </div>
+
+                            <div class="meta-bottom">
+
+                                <div class="entry-cat-links meta-blk">
+
+                                    <span>On</span>
+16.03.2024                                </div>
+
+                                <div class="entry-tags meta-blk">
+                                    <span class="tagtext">Tags</span>
+                                            <a id="post-category-2024" href="category/2024.html">2024</a>
+                                            <a id="post-category-azure" href="category/azure.html">Azure</a>
+                                            <a id="post-category-net-aspire" href="category/net-aspire.html">.NET Aspire</a>
+                                            <a id="post-category-teams" href="category/teams.html">Teams</a>
+                                </div>
+
+                            </div>
+
+                        </div> <!-- s-content__entry-meta -->
+
+                        <div class="s-content__pagenav">
+                            <div class="prev-nav">
+                                    <a id="post-previous-local-token-issuer" href="local-token-issuer.html" rel="prev">
+                                        <span>Previous</span>
+                                        How to issue JWT Web tokens locally using dotnet user-jwts?
+                                    </a>
+                            </div>
+                            <div class="next-nav">
+
+                 
+
+                            
+                            </div>
+                        </div> <!-- end s-content__pagenav -->
+
+                    </div> <!-- end s-content__primary -->
+                </article> <!-- end entry -->
+
+            </div> <!-- end column -->
+        </div> <!-- end row -->
+        <!-- comments
+        ================================================== -->
+        <div class="comments-wrap">
+
+            <div id="comments" class="row">
+                <div class="column large-12">
+
+                    <h3>Comments</h3>
+
+                    <script src="https://utteranc.es/client.js"
+                            repo="kalleantero/kalleantero.github.io"
+                            issue-term="url"
+                            theme="github-light"
+                            crossorigin="anonymous"
+                            async>
+                    </script>                   
+
+                </div> <!-- end col-full -->
+            </div> <!-- end comments -->
+
+        </div> <!-- end comments-wrap -->
+
+    </section> <!-- end s-content -->
+
+    
+
+<!-- footer
+================================================== -->
+<footer class="s-footer">
+
+    <div class="s-footer__bottom">
+        <div class="row">
+            <div class="column">
+                <div class="ss-copyright">
+                    <span>Copyright Kalle Marjokorpi 2024</span>
+                    <span>Design by <a href="http://www.styleshout.com/">styleshout</a></span>
+                    <span>Content management by <a href="http://www.buttercms.com/">Headless ButterCMS</a></span>
+
+                </div> <!-- end ss-copyright -->
+            </div>
+        </div>
+
+        <div class="ss-go-top">
+            <a class="smoothscroll" title="Back to Top" href="#top">
+                <svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" width="15" height="15"><path d="M7.5 1.5l.354-.354L7.5.793l-.354.353.354.354zm-.354.354l4 4 .708-.708-4-4-.708.708zm0-.708l-4 4 .708.708 4-4-.708-.708zM7 1.5V14h1V1.5H7z" fill="currentColor"></path></svg>
+            </a>
+        </div> <!-- end ss-go-top -->
+    </div> <!-- end s-footer__bottom -->
+
+</footer> <!-- end s-footer -->
+   
+    <!-- Java Script
+     ================================================== -->
+
+    
+    
+    <!-- Cloudflare Web Analytics -->
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cac9fd24c1c04b6d9984ea31685b0414"}'></script><!-- End Cloudflare Web Analytics -->
+    
+    <script src="../js/jquery-3.5.0.min.js"></script>
+    <script src="../js/plugins.js"></script>
+    <script src="../js/main.js"></script>
+
+    <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="kmarjok" data-description="Support me on Buy me a coffee!" data-message="" data-color="#40DCA5" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
+
+</body>
+
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/azure-container-apps-and-multitenant-platform by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 16 Mar 2024 06:09:37 GMT -->
+</html>

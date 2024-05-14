@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/rag-application-with-net-aspire-and-semantic-kernel by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 14 May 2024 13:20:38 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+
+
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+    <meta name="description" content="This blog is concentrated to Microsoft and cloud technology, coding and architecture. Solutions, tips and knowledge from a developer to developer.">
+
+    <meta name="author" content="Kalle Marjokorpi">
+
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="../css/vendor.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/cookieconsent.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="../css/tags.css">
+
+    <!-- script
+    ================================================== -->
+    <script src="../js/modernizr.js"></script>
+    <script defer src="../js/fontawesome/all.min.js"></script>
+
+    <script type="text/plain" data-cookiecategory="analytics" async src="https://www.googletagmanager.com/gtag/js?id=G-DPTCQBZTWE"></script>
+    <script type="text/plain" data-cookiecategory="analytics">
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){window.dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DPTCQBZTWE');
+    </script>
+    
+    <script defer type="text/javascript">
+        (function (c, l, a, r, i, t, y) {
+            c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
+            t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
+            y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+        })(window, document, "clarity", "script", "gr1x6zhls1");
+    </script>
+
+    
+    <title>How to create a RAG application using .NET Aspire, Ollama, and Semantic Kernel (Part 1) - Blog by Kalle Marjokorpi</title>
+    <meta name="description" content="How to create a .NET Aspire-powered RAG application that hosts a chat user interface, API, and Ollama with Phi language model.">
+    <meta name="author" content="Kalle Marjokorpi">
+
+
+    <script defer src="../js/cookieconsent.js"></script>
+    <script defer src="../js/cookieconsent-config.js"></script>
+    <script src="https://cdn.counter.dev/script.js" data-id="a019f4e1-6ec3-4293-8b98-7440925a9066" data-utcoffset="2"></script>
+
+</head>
+<body id="top">
+
+    <!-- preloader
+    ================================================== -->
+    <div id="preloader">
+        <div id="loader"></div>
+    </div>
+
+    <!-- header
+    ================================================== -->
+
+     <!-- header
+    ================================================== -->
+<header class="s-header s-header--opaque">
+
+        <div class="s-header__logo">
+            Kalle Marjokorpi
+        </div>
+
+        <div class="row s-header__navigation">
+
+            
+
+    <nav class="s-header__nav-wrap">
+        <h3 class="s-header__nav-heading h6">Navigate to</h3>
+
+        <ul class="s-header__nav">
+
+
+            <li><a id="top-navigation-link-root" href="../index.html" title="Home">Home</a></li>
+
+                <li><a id="top-navigation-link-about"  href="../about.html" title="About me">About me</a></li>
+                <li><a id="top-navigation-link-talks"  href="../talks.html" title="Talks">Talks</a></li>
+
+
+        </ul> <!-- end s-header__nav -->
+
+        <a href="#0" title="Close Menu" class="s-header__overlay-close close-mobile-menu">Close</a>
+
+    </nav> <!-- end s-header__nav-wrap -->
+
+
+            
+
+        </div> <!-- end s-header__navigation -->
+
+        <a class="s-header__toggle-menu" href="#0" title="Menu"><span>Menu</span></a>
+
+    </header> <!-- end s-header -->
+
+    
+
+
+
+    <!-- content
+        ================================================== -->
+    <section class="s-content">
+
+        <div class="row">
+            <div class="column large-12">
+
+                <article class="s-content__entry format-standard">
+
+                    <div class="s-content__entry-header">
+                    <h1 class="s-content__title s-content__title--post">How to create a RAG application using .NET Aspire, Ollama, and Semantic Kernel (Part 1)</h1>
+                    </div> <!-- end s-content__entry-header -->
+
+                    <div class="s-content__primary">
+
+                        <div class="s-content__entry-content">
+
+                            <p>I have been planning this now for a while and now I had time to investigate and explore this topic a bit more. In this blog post, I'll show how to create a .NET Aspire-powered RAG application that hosts a chat user interface, API, and Ollama container with pre-downloaded Phi language model. The purpose is to test the usage of local small language models, Semantic Kernel, and learn how to make this happen with <a href="https://learn.microsoft.com/en-us/dotnet/aspire/get-started/aspire-overview" rel="follow">.NET Aspire</a> (preview 6).</p>
+<p>In a high-level totality looks like this:</p>
+<p><img src="https://cdn.buttercms.com/1NTNY5fkTSiOrNfgBBda" alt="undefined"></p>
+<p>Before starting let's go first through the key terminologies used in this blog post.</p>
+<h2>Key terminology</h2>
+<p><strong>.NET Aspire</strong></p>
+<p>.NET Aspire is designed to improve the experience of building .NET cloud-native apps. It provides a consistent, opinionated set of tools and patterns that help you build and run distributed apps.</p>
+<p>Sources: <a href="https://learn.microsoft.com/en-us/dotnet/aspire/get-started/aspire-overview" rel="follow">Aspire overview</a></p>
+<p><strong>Small language model (SLM)</strong></p>
+<p>A Small Language Model (SLM) is a compact AI model that uses a smaller neural network, fewer parameters, and less training data than larger language models. SLMs are designed for efficiency and faster training times. SLMs are smaller versions of their LLM (large language model) counterparts. There are multiple SLM models in the market and Phi-3 is one of them.</p>
+<p>Sources: <a href="https://www.techopedia.com/definition/small-language-model-slm" rel="follow">What is a Small Language Model?</a>, <a href="https://azure.microsoft.com/en-us/blog/introducing-phi-3-redefining-whats-possible-with-slms/" rel="follow">Introducing Phi-3: Redefining what&rsquo;s possible with SLMs</a></p>
+<p><strong>Retrieval Augmented Generation (RAG)&nbsp;</strong></p>
+<p>As we know language models provide generic answers based on the training data. This means that the language model cannot provide accurate answers related to an organization or product if that information is not part of the trained model.</p>
+<p>RAG is a powerful technique for improving and optimizing the output of a language model by integrating applications with relevant data sources. RAG extends the already powerful capabilities of LLMs to specific domains or an organization's internal knowledge base without retraining the model.</p>
+<p>Sources:&nbsp;<a href="https://aws.amazon.com/what-is/retrieval-augmented-generation/" rel="follow">What is Retrieval-Augmented Generation?</a></p>
+<p><strong>Ollama</strong></p>
+<p>Ollama is an open-source application that allows you to run language models locally. Can be said that Ollama is a bridge between the language model and your application. Ollama provides an OpenAI-compatible API to enable communication between your application and language models.</p>
+<p>Sources:&nbsp;<a href="https://ollama.com/">Ollama</a>, <a href="https://ollama.com/blog/openai-compatibility" rel="follow">OpenAI API compatibility</a></p>
+<p><strong>Semantic Kernel (SK)</strong></p>
+<p>Semantic Kernel (SK) is a lightweight and open-sourced SDK that enables developers to create powerful AI solutions by integrating language models with conventional programming languages like C# and Python. Basically, SK acts as an orchestration layer between AI models and your application. Semantic Kernel has powerful features that enable you to integrate your application into existing services and data sources and utilize to power of the language models. Currently, SK supports models from OpenAI, including GPT-4, and Azure OpenAI Service.</p>
+<p>Sources:&nbsp;<a href="https://learn.microsoft.com/en-us/semantic-kernel/overview/?tabs=Csharp" rel="follow">What is Semantic Kernel?</a>, <a href="https://devblogs.microsoft.com/semantic-kernel/hello-world/" rel="follow">Hello, Semantic Kernel!</a></p>
+<h2>Application Overview</h2>
+<p><img src="https://cdn.buttercms.com/3BGh8dizSGmW4DKXXsE9" alt="undefined"></p>
+<p>Solution has three main components:</p>
+<p><strong>1. Ollama Web UI Lite Chat User Interface</strong></p>
+<p>I didn't want to spend time building the chat user interface so I decided to use <a href="https://github.com/ollama-webui/ollama-webui-lite" rel="follow">Ollama Web UI Lite</a> which is a streamlined, simplified, and more compact version of <a href="https://github.com/ollama-webui/ollama-webui">Ollama Web UI</a>. Ollama Web UI provides a complete user interface and solution that communicates with OpenAI-compatible API.</p>
+<p><strong>2. OpenAI-compatible Custom API</strong></p>
+<p>Ollama Web UI can be integrated directly with Ollama container's built-in OpenAI-compatible API. Instead of doing that, the purpose is to create an own custom OpenAI-compatible API between UI and Ollama Container. This custom API utilizes Semantic Kernel to communicate with Ollama container's OpenAI API endpoint. The next blog post will cover the handling of Semantic Kernel's plugins.</p>
+<p><strong>3. Ollama Phi SLM Container</strong></p>
+<p>This sample solution uses an image provided by langchain4j which contains the Ollama and pre-downloaded Phi small language model. As said earlier, Ollama provides by default built-in OpenAI-compatible API which will be used from our custom API using Semantic Kernel.</p>
+<h2>Setting up the .NET Aspire solution</h2>
+<h3>Application Host project</h3>
+<p>In .NET Aspire, the Application Host Project, also known as the Orchestrator Project, is a .NET project that orchestrates the app model. It is responsible for running all of the projects that are part of the .NET Aspire application.</p>
+<p>This configuration adds <strong>Ollama container with pre-downloaded Phi LLM</strong>, <strong>Ollama Web UI Lite chat user interface</strong>, and <strong>OpenAI-compatible custom API</strong> to the .NET Aspire solution.</p>
+<pre class="language-csharp"><code>var builder = DistributedApplication.CreateBuilder(args);
+
+// Ollama Phi SLM Container
+// * By default, Ollama container exposes OpenAI API in port 11434. This configuration changes the port to 7876.
+
+var ollama = builder.AddContainer("ollama", "langchain4j/ollama-phi")
+       .WithVolume("/root/.ollama")
+       .WithBindMount("./ollamaconfig", "/root/")
+       .WithHttpEndpoint(port: 7876, targetPort: 11434, name: "OllamaOpenApiEndpointUri")
+       .WithContainerRunArgs("--gpus=all");
+
+var ollamaOpenApiEndpointUri = ollama.GetEndpoint("OllamaOpenApiEndpointUri");
+
+// Ollama Web UI Lite Chat User Interface
+// * Aspire.Hosting.NodeJs must be installed to enable adding Npm applications to the solution.
+// * Copy Ollama Web UI Lite's files and folders from Github to the folder (/OllamWebUi) under the solution.
+
+builder.AddNpmApp("ollamawebui", "../OllamWebUi", "dev")
+    .WithEnvironment("BROWSER", "none")
+    .WithExternalHttpEndpoints();
+
+// OpenAI-compatible Custom API
+// * Semantic Kernel needs the Ollama container's OpenAI API endpoint url
+
+builder.AddProject&lt;Projects.Aspire_OpenAI_Api&gt;("openai-api")
+    .WithEnvironment("OllamaOpenApiEndpointUri", ollamaOpenApiEndpointUri);
+
+builder.Build().Run();</code></pre>
+<h3>OpenAI-compatible Custom API</h3>
+<p>As said this custom API serves the data for Ollama Web UI and utilizes the Semantic Kernel to communicate with local Ollama service.</p>
+<h4>Program.cs configuration</h4>
+<p>Install Microsoft.SemanticKernel NuGet package and add Kernel to the Dependency Injection.</p>
+<pre class="language-csharp"><code>var builder = WebApplication.CreateBuilder(args);
+
+builder.AddServiceDefaults();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+var ollamaOpenApiEndpoint = builder.Configuration["OllamaOpenApiEndpointUri"];
+
+if(!string.IsNullOrEmpty(ollamaOpenApiEndpoint))
+{
+    // Install Microsoft.SemanticKernel NuGet package and add Kernel to the Dependency Injection.
+    builder.Services
+    .AddKernel()
+        .AddOpenAIChatCompletion("phi", new Uri(ollamaOpenApiEndpoint), null);
+}
+
+builder.Services.AddScoped&lt;IOllamaService, OllamaService&gt;();
+
+builder.Services.AddCors(options =&gt;
+{
+    options.AddPolicy("AllowAll", builder =&gt;
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyHeader()
+               .AllowAnyMethod();
+    });
+});
+
+var app = builder.Build();
+
+app.UseCors("AllowAll");
+
+app.MapDefaultEndpoints();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.UseHttpsRedirection();
+
+// Register Minimal API endpoints
+app.RegisterOllamaEndpoints();
+
+app.Run();</code></pre>
+<h4>OllamaService</h4>
+<p>OllamaService is a wrapper service that abstracts the Semantic Kernel. In this sample, GetStreamingChatMessageContentsAsync method is used to return messages as a stream. Response is constructed as a complete sentence that is returned to the front end.</p>
+<pre class="language-csharp"><code>public interface IOllamaService
+{
+    Task&lt;Dictionary&lt;int, ChatResponse&gt;&gt; GetStreamingChatMessageContentsAsync(ChatRequest request);
+    Task&lt;string&gt; GetChatMessageContentAsync(string prompt);
+}
+
+public class OllamaService: IOllamaService
+{
+    private Kernel _kernel;
+    private IChatCompletionService _chatCompletionService;
+
+    public OllamaService(Kernel kernel) 
+    {
+        _kernel = kernel;
+        _chatCompletionService = _kernel.GetRequiredService&lt;IChatCompletionService&gt;();
+    }
+
+    /// &lt;summary&gt;
+    /// Get a single chat message content for the prompt and settings.
+    /// &lt;/summary&gt;
+    public async Task&lt;string&gt; GetChatMessageContentAsync(string prompt)
+    {
+        var aiData = await _chatCompletionService.GetChatMessageContentAsync(prompt);
+        return aiData.ToString();
+    }
+
+    /// &lt;summary&gt;
+    /// Get streaming chat contents for the chat history provided using the specified settings.
+    /// &lt;/summary&gt;
+    public async Task&lt;Dictionary&lt;int, ChatResponse&gt;&gt; GetStreamingChatMessageContentsAsync(ChatRequest request)
+    {
+        var chat = PrepareChatHistory(request);
+        var aiData = _chatCompletionService.GetStreamingChatMessageContentsAsync(chat, kernel: _kernel);
+        Dictionary&lt;int, ChatResponse&gt; chatResponses = [];
+
+        // Gather the full sentences of response
+        await foreach (var result in aiData)
+        {
+            chatResponses.TryGetValue(result.ChoiceIndex, out ChatResponse chatResponse);
+
+            if (chatResponse == null)
+            {
+                chatResponses[result.ChoiceIndex] = new ChatResponse()
+                {
+                    model = result?.ModelId,
+                    created_at = result?.Metadata["Created"].ToString(),
+                    message = new Message()
+                    {
+                        content = result?.Content,
+                        role = result?.Role.ToString()
+                    }
+                };
+            }
+            else
+            {
+                chatResponse.message.content += result.Content;
+            }
+        }
+
+        return chatResponses;
+    }
+
+    private ChatHistory PrepareChatHistory(ChatRequest request)
+    {
+        ChatHistory chat = new("Hello!");
+
+        if (request?.messages != null)
+        {
+            foreach (var item in request.messages)
+            {
+                var role = item.role == "user" ? AuthorRole.User : AuthorRole.Assistant;
+                chat.AddMessage(role, item.content);
+            }
+        }
+        return chat;
+    }
+}</code></pre>
+<h4>Needed API endpoints</h4>
+<p>Ollama Web UI needs a few endpoints that provide information about the version number, available language models, chat title, and of course LLM generated answers for the front end.</p>
+<p><strong>GET /tags endpoint</strong></p>
+<p>Ollama Web UI enables to choose which language model to use. The tags endpoint returns a list of language models that can be used. In this example, we used a hard coded phi-2 model.</p>
+<pre class="language-csharp"><code>endpoints.MapGet("/api/tags", () =&gt; new
+{
+    models = new[] {
+        new
+        {
+            name = "phi:latest",
+            model = "phi:latest",
+            modified_at = DateTime.UtcNow,
+            size = 1602463378,
+            digest = "e2fd6321a5fe6bb3ac8a4e6f1cf04477fd2dea2924cf53237a995387e152ee9c",
+            details = new
+            {
+                parent_model = "",
+                format = "gguf",
+                family = "phi2",
+                families = new[] { "phi2" },
+                parameter_size = "3B",
+                quantization_level = "Q4_0"
+            }
+        }
+    }
+}).WithName("Tags");</code></pre>
+<p><strong>GET /version endpoint</strong></p>
+<p>The version endpoint returns the version of the Ollama.</p>
+<pre class="language-csharp"><code>endpoints.MapGet("/api/version", () =&gt; new
+{
+    version = "0.1.32"
+}).WithName("Version");</code></pre>
+<p><strong>POST /generate endpoint</strong></p>
+<p>The generate endpoint generates a short title for a chat conversation that is shown in the chat history.</p>
+<pre class="language-csharp"><code>endpoints.MapPost("/api/generate", async (HttpContext httpContext, IOllamaService ollamaService) =&gt;
+{
+    var request = httpContext.GetRequestBody&lt;GenerateRequest&gt;();
+    var response = await ollamaService.GetChatMessageContentAsync(request.prompt);
+    return new
+    {
+        response
+    };
+}).WithName("Generate");</code></pre>
+<p>The endpoint receives this kind of request model from the front end.</p>
+<pre class="language-undefined"><code>{
+    "model": "phi:latest",
+    "prompt": "Generate a brief 3-5 word title for this question, excluding the term 'title.' Then, please reply with only the title: What is the capital of Finland?",
+    "stream": false
+}</code></pre>
+<p><strong>POST /chat endpoint</strong></p>
+<p>The chat endpoint is the most important one to provide answers generated by LLM for the front end. The front end sends this kind of request model to the back-end:</p>
+<pre class="language-undefined"><code>{
+    "model": "phi:latest",
+    "messages": [
+        {
+            "role": "user",
+            "content": "What is the capital of Finland?"
+        },
+        {
+            "role": "assistant",
+            "content": ""
+        }
+    ],
+    "options": {}
+}</code></pre>
+<p>Ollama Web UI Lite uses&nbsp;<strong>text/event-stream</strong> content type when requesting chat completion data from the back-end API. This indicates to the client that it&rsquo;s an SSE (Server-Sent Events) response. A Server-Sent Event is a way for a server to stream data to the browser. Roko Kovač has written a good article about <a href="https://medium.com/@kova98/server-sent-events-in-net-7f700b21cdb7" rel="follow">Server-Sent events in .NET</a> and I recommend you to read it.</p>
+<p>Actual API endpoint utilizes OllamaService to get the data via Semantic Kernel.</p>
+<pre class="language-csharp"><code>endpoints.MapPost("/api/chat", async Task (HttpContext httpContext, IOllamaService ollamaservice, CancellationToken ct) =&gt;
+{
+    httpContext.Response.Headers.Add("Content-Type", "text/event-stream");
+
+    var request = httpContext.GetRequestBody&lt;ChatRequest&gt;();
+    var responses = await ollamaservice.GetStreamingChatMessageContentsAsync(request);
+
+    foreach (var response in responses.Values)
+    {
+        // Server-Sent Events
+        var sseMessage = $"{JsonSerializer.Serialize(response)}";
+        await httpContext.Response.Body.WriteAsync(Encoding.UTF8.GetBytes(sseMessage));
+        await httpContext.Response.Body.FlushAsync();
+    }
+
+}).WithName("ChatCompletion");</code></pre>
+<p>The response model returned back to front end:</p>
+<pre class="language-undefined"><code>{
+    "model": "phi",
+    "created_at": "10.5.2024 8.55.09",
+    "message": {
+        "role": "assistant",
+        "content": " The capital of Finland is Helsinki.\n"
+    },
+    "done": false,
+    "total_duration": 0,
+    "load_duration": 0,
+    "prompt_eval_count": 0,
+    "prompt_eval_duration": 0,
+    "eval_count": 0,
+    "eval_duration": 0
+}</code></pre>
+<h3>Ollama Web UI Lite</h3>
+<p>When the solution is up and running you can change the API address to point to our custom API from the Ollama Web UI settings.</p>
+<p><img src="https://cdn.buttercms.com/82jyBJUSTxi5sB2yxsCn"></p>
+<p>Now everything is ready for testing :)</p>
+<p><img src="https://cdn.buttercms.com/FG0tEe72TMiwmNf52dKX"></p>
+<h2>Summary</h2>
+<p>This was an interesting experience to test and learn more about language models and how to run them locally. Aspire is also a great match and convenient when hosting this kind of containerized services.</p>
+<p>In the next blog post, I'll integrate Semantic Kernel plugins into this existing solution so stay tuned.</p>
+
+                        </div> <!-- end s-entry__entry-content -->
+
+                        <div class="s-content__entry-meta">
+
+                            <div class="entry-author meta-blk">
+                                <div class="author-avatar">
+                                <img class="avatar" src="../images/avatars/kalle.jpg" alt="">
+                                </div>
+                                <div class="byline">
+                                    <span class="bytext">Posted By</span>
+                                    Kalle Marjokorpi
+                                </div>
+                            </div>
+
+                            <div class="meta-bottom">
+
+                                <div class="entry-cat-links meta-blk">
+
+                                    <span>On</span>
+14.05.2024                                </div>
+
+                                <div class="entry-tags meta-blk">
+                                    <span class="tagtext">Tags</span>
+                                            <a id="post-category-aspire" href="category/aspire.html">Aspire</a>
+                                            <a id="post-category-c" href="category/c.html">C#</a>
+                                            <a id="post-category-llm" href="category/llm.html">LLM</a>
+                                            <a id="post-category-net" href="category/net.html">.NET</a>
+                                            <a id="post-category-semantic-kernel" href="category/semantic-kernel.html">Semantic Kernel</a>
+                                </div>
+
+                            </div>
+
+                        </div> <!-- s-content__entry-meta -->
+
+                        <div class="s-content__pagenav">
+                            <div class="prev-nav">
+                                    <a id="post-previous-azure-container-apps-and-multitenant-platform" href="azure-container-apps-and-multitenant-platform.html" rel="prev">
+                                        <span>Previous</span>
+                                        How to implement multi-tenant platform with .NET Aspire and Azure Container Apps?
+                                    </a>
+                            </div>
+                            <div class="next-nav">
+
+                 
+
+                            
+                            </div>
+                        </div> <!-- end s-content__pagenav -->
+
+                    </div> <!-- end s-content__primary -->
+                </article> <!-- end entry -->
+
+            </div> <!-- end column -->
+        </div> <!-- end row -->
+        <!-- comments
+        ================================================== -->
+        <div class="comments-wrap">
+
+            <div id="comments" class="row">
+                <div class="column large-12">
+
+                    <h3>Comments</h3>
+
+                    <script src="https://utteranc.es/client.js"
+                            repo="kalleantero/kalleantero.github.io"
+                            issue-term="url"
+                            theme="github-light"
+                            crossorigin="anonymous"
+                            async>
+                    </script>                   
+
+                </div> <!-- end col-full -->
+            </div> <!-- end comments -->
+
+        </div> <!-- end comments-wrap -->
+
+    </section> <!-- end s-content -->
+
+    
+
+<!-- footer
+================================================== -->
+<footer class="s-footer">
+
+    <div class="s-footer__bottom">
+        <div class="row">
+            <div class="column">
+                <div class="ss-copyright">
+                    <span>Copyright Kalle Marjokorpi 2024</span>
+                    <span>Design by <a href="http://www.styleshout.com/">styleshout</a></span>
+                    <span>Content management by <a href="http://www.buttercms.com/">Headless ButterCMS</a></span>
+
+                </div> <!-- end ss-copyright -->
+            </div>
+        </div>
+
+        <div class="ss-go-top">
+            <a class="smoothscroll" title="Back to Top" href="#top">
+                <svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" width="15" height="15"><path d="M7.5 1.5l.354-.354L7.5.793l-.354.353.354.354zm-.354.354l4 4 .708-.708-4-4-.708.708zm0-.708l-4 4 .708.708 4-4-.708-.708zM7 1.5V14h1V1.5H7z" fill="currentColor"></path></svg>
+            </a>
+        </div> <!-- end ss-go-top -->
+    </div> <!-- end s-footer__bottom -->
+
+</footer> <!-- end s-footer -->
+   
+    <!-- Java Script
+     ================================================== -->
+
+    
+    
+    <!-- Cloudflare Web Analytics -->
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cac9fd24c1c04b6d9984ea31685b0414"}'></script><!-- End Cloudflare Web Analytics -->
+    
+    <script src="../js/jquery-3.5.0.min.js"></script>
+    <script src="../js/plugins.js"></script>
+    <script src="../js/main.js"></script>
+
+    <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="kmarjok" data-description="Support me on Buy me a coffee!" data-message="" data-color="#40DCA5" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
+
+</body>
+
+<!-- Mirrored from kalle-blog.azurewebsites.net/blog/rag-application-with-net-aspire-and-semantic-kernel by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 14 May 2024 13:20:39 GMT -->
+</html>
